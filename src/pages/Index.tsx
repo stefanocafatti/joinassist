@@ -37,18 +37,18 @@ const Index = () => {
     ];
 
     const initialCircles: Circle[] = [];
-    const circleCount = window.innerWidth < 768 ? 5 : 8;
+    const circleCount = window.innerWidth < 768 ? 12 : 20; // More circles
 
     for (let i = 0; i < circleCount; i++) {
       initialCircles.push({
         id: i,
         x: Math.random() * 100, // percentage position
         y: Math.random() * 100,
-        size: Math.random() * 15 + 5, // size in vw units (5-20vw)
+        size: Math.random() * 5 + 1, // much smaller size in vw units (1-6vw)
         color: colors[Math.floor(Math.random() * colors.length)],
-        speedX: (Math.random() - 0.5) * 0.03, // speed as percentage of screen
-        speedY: (Math.random() - 0.5) * 0.03,
-        opacity: Math.random() * 0.3 + 0.1, // opacity between 0.1-0.4
+        speedX: (Math.random() - 0.5) * 0.1, // faster speed as percentage of screen
+        speedY: (Math.random() - 0.5) * 0.1, // faster speed as percentage of screen
+        opacity: Math.random() * 0.4 + 0.1, // opacity between 0.1-0.5
       });
     }
 
@@ -138,7 +138,7 @@ const Index = () => {
         {circles.map((circle) => (
           <div
             key={circle.id}
-            className="absolute rounded-full transition-transform"
+            className="absolute rounded-full"
             style={{
               left: `${circle.x}%`,
               top: `${circle.y}%`,
@@ -147,7 +147,7 @@ const Index = () => {
               backgroundColor: circle.color,
               opacity: circle.opacity,
               transform: `translate(-50%, -50%)`,
-              filter: 'blur(50px)',
+              filter: 'blur(15px)',
               zIndex: -1,
             }}
           />
