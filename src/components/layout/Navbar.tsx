@@ -1,7 +1,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, ChevronUp, Briefcase, GraduationCap, Target, Search, CheckCircle, ListChecks } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronUp, Briefcase, GraduationCap, Search, CheckCircle, ListChecks } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/ui/Logo";
 
@@ -70,21 +70,6 @@ const Navbar = () => {
     },
   ];
 
-  const resourcesMenu = [
-    { 
-      title: "How It Works", 
-      subtitle: "LEARN ABOUT ASSIST", 
-      icon: <Target className="w-8 h-8 text-assist-blue" />,
-      link: "/how-it-works"
-    },
-    { 
-      title: "Student Success", 
-      subtitle: "CASE STUDIES", 
-      icon: <GraduationCap className="w-8 h-8 text-assist-blue" />,
-      link: "/success-stories"
-    },
-  ];
-
   const isActive = (path: string) => {
     return location.pathname === path;
   };
@@ -105,12 +90,12 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-2" ref={dropdownRef}>
+          <div className="hidden md:flex items-center space-x-4" ref={dropdownRef}>
             {/* Browse Tasks Dropdown */}
             <div className="relative">
               <button 
                 onClick={() => toggleDropdown('browse')}
-                className={`flex items-center px-4 py-2 rounded-xl text-gray-800 hover:bg-soft-purple/70 font-semibold transition-colors ${
+                className={`flex items-center px-5 py-2 rounded-xl text-gray-800 hover:bg-soft-purple/70 font-semibold transition-colors ${
                   activeDropdown === 'browse' ? 'bg-soft-purple text-gray-900' : ''
                 }`}
               >
@@ -153,7 +138,7 @@ const Navbar = () => {
             {/* Request Task Button - Direct link, no dropdown */}
             <Link 
               to="/request-task" 
-              className={`px-4 py-2 rounded-xl ${
+              className={`px-5 py-2 rounded-xl ${
                 isActive('/request-task') 
                   ? 'bg-assist-blue text-white' 
                   : 'text-gray-800 hover:bg-soft-yellow/70'
@@ -166,7 +151,7 @@ const Navbar = () => {
             <div className="relative">
               <button 
                 onClick={() => toggleDropdown('students')}
-                className={`flex items-center px-4 py-2 rounded-xl text-gray-800 hover:bg-soft-green/70 font-semibold transition-colors ${
+                className={`flex items-center px-5 py-2 rounded-xl text-gray-800 hover:bg-soft-green/70 font-semibold transition-colors ${
                   activeDropdown === 'students' ? 'bg-soft-green text-gray-900' : ''
                 }`}
               >
@@ -197,50 +182,6 @@ const Navbar = () => {
                           </div>
                         </div>
                         {index < forStudentsMenu.length - 1 && (
-                          <div className="border-b border-gray-100 mt-3 mx-auto"></div>
-                        )}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Resources Dropdown */}
-            <div className="relative">
-              <button 
-                onClick={() => toggleDropdown('resources')}
-                className={`flex items-center px-4 py-2 rounded-xl text-gray-800 hover:bg-soft-orange/70 font-semibold transition-colors ${
-                  activeDropdown === 'resources' ? 'bg-soft-orange text-gray-900' : ''
-                }`}
-              >
-                RESOURCES
-                {activeDropdown === 'resources' ? <ChevronUp className="ml-2 h-4 w-4" /> : <ChevronDown className="ml-2 h-4 w-4" />}
-              </button>
-              
-              {activeDropdown === 'resources' && (
-                <div className="absolute left-0 mt-2 w-80 bg-white rounded-xl shadow-elevation overflow-hidden z-50 animate-scale-in">
-                  <div className="bg-gradient-to-r from-soft-orange to-soft-peach p-4 text-gray-900 font-bold text-xl">
-                    Resources
-                  </div>
-                  
-                  <div className="py-2">
-                    {resourcesMenu.map((item, index) => (
-                      <Link 
-                        key={index} 
-                        to={item.link}
-                        className="block px-4 py-3 hover:bg-soft-gray transition-colors"
-                      >
-                        <div className="flex items-start space-x-4">
-                          <div className="p-2 bg-soft-orange/20 rounded-lg">
-                            {item.icon}
-                          </div>
-                          <div>
-                            <h3 className="text-lg font-semibold text-gray-800">{item.title}</h3>
-                            <p className="text-gray-500 text-sm">{item.subtitle}</p>
-                          </div>
-                        </div>
-                        {index < resourcesMenu.length - 1 && (
                           <div className="border-b border-gray-100 mt-3 mx-auto"></div>
                         )}
                       </Link>
@@ -334,34 +275,6 @@ const Navbar = () => {
                     <Link key={index} to={item.link} className="block py-2">
                       <div className="flex items-center space-x-3">
                         <div className="p-2 bg-soft-green/20 rounded-lg">
-                          {item.icon}
-                        </div>
-                        <div>
-                          <h3 className="font-medium text-gray-800">{item.title}</h3>
-                          <p className="text-gray-500 text-xs">{item.subtitle}</p>
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-            
-            <div className="border-b border-gray-200 py-3">
-              <button 
-                className="flex items-center justify-between w-full text-left font-semibold"
-                onClick={() => toggleDropdown('resources-mobile')}
-              >
-                <span>RESOURCES</span>
-                {activeDropdown === 'resources-mobile' ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-              </button>
-              
-              {activeDropdown === 'resources-mobile' && (
-                <div className="mt-2 space-y-2 pl-4 animate-fade-in">
-                  {resourcesMenu.map((item, index) => (
-                    <Link key={index} to={item.link} className="block py-2">
-                      <div className="flex items-center space-x-3">
-                        <div className="p-2 bg-soft-orange/20 rounded-lg">
                           {item.icon}
                         </div>
                         <div>
