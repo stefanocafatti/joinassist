@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Star, Sparkles } from "lucide-react";
@@ -124,7 +125,7 @@ const Hero = () => {
         </div>
       </div>
       
-      <style jsx="true">{`
+      <style>{`
         @keyframes gradient-animation {
           0% { background-position: 0% 50% }
           50% { background-position: 100% 50% }

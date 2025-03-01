@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown, ChevronUp, Briefcase, GraduationCap, Search, CheckCircle, ListChecks, FileEdit } from "lucide-react";
@@ -93,7 +94,7 @@ const Navbar = () => {
             <Logo />
           </div>
 
-          <div className="hidden md:flex items-center space-x-2">
+          <div ref={dropdownRef} className="hidden md:flex items-center space-x-5 flex-grow justify-center">
             <button
               onClick={() => toggleDropdown('browse')}
               className={`flex items-center px-4 py-2 rounded-xl text-gray-800 transition-colors ${
@@ -191,7 +192,7 @@ const Navbar = () => {
             )}
           </div>
 
-          <div className="hidden md:flex items-center space-x-3">
+          <div className="hidden md:flex items-center space-x-4">
             <Button 
               variant="outline" 
               className="rounded-xl border-assist-blue text-assist-blue hover:bg-assist-blue/10 hover:text-assist-blue"
