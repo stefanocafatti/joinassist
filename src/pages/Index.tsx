@@ -10,19 +10,7 @@ import {
   Sparkles, 
   GraduationCap, 
   BookOpen, 
-  Code, 
-  Hammer, 
-  Briefcase, 
-  ShoppingBag,
-  Car, 
-  Truck, 
-  Package, 
-  Trash2, 
-  Dumbbell, 
-  PartyPopper,
-  FileCheck,
-  Key,
-  Camera 
+  Code
 } from "lucide-react";
 
 type Star = {
@@ -180,21 +168,11 @@ const Index = () => {
       'graduation',
       'book',
       'code',
-      'hammer',
-      'briefcase',
-      'car',
-      'package',
-      'trash',
-      'dumbbell',
-      'party',
-      'filecheck',
-      'key',
-      'camera',
       'sparkle'
     ];
 
     const initialElements: PatternElement[] = [];
-    const elementCount = window.innerWidth < 768 ? 35 : 60;
+    const elementCount = window.innerWidth < 768 ? 15 : 25;
 
     for (let i = 0; i < elementCount; i++) {
       initialElements.push({
@@ -202,7 +180,7 @@ const Index = () => {
         x: Math.random() * 100,
         y: Math.random() * 100,
         type: elementTypes[Math.floor(Math.random() * elementTypes.length)],
-        size: Math.random() * 2.5 + 1.3,
+        size: Math.random() * 1.8 + 1,
         color: colors[Math.floor(Math.random() * colors.length)],
         opacity: Math.random() * 0.3 + 0.6,
         rotation: Math.random() * 360,
@@ -333,86 +311,6 @@ const Index = () => {
             )}
             {element.type === 'code' && (
               <Code 
-                size={`${element.size}vw`} 
-                color={element.color} 
-                strokeWidth={2.5}
-                className="drop-shadow-md"
-              />
-            )}
-            {element.type === 'hammer' && (
-              <Hammer 
-                size={`${element.size}vw`} 
-                color={element.color} 
-                strokeWidth={2.5}
-                className="drop-shadow-md"
-              />
-            )}
-            {element.type === 'briefcase' && (
-              <Briefcase 
-                size={`${element.size}vw`} 
-                color={element.color} 
-                strokeWidth={2.5}
-                className="drop-shadow-md"
-              />
-            )}
-            {element.type === 'car' && (
-              <Car 
-                size={`${element.size}vw`} 
-                color={element.color} 
-                strokeWidth={2.5}
-                className="drop-shadow-md"
-              />
-            )}
-            {element.type === 'package' && (
-              <Package 
-                size={`${element.size}vw`} 
-                color={element.color} 
-                strokeWidth={2.5}
-                className="drop-shadow-md"
-              />
-            )}
-            {element.type === 'trash' && (
-              <Trash2 
-                size={`${element.size}vw`} 
-                color={element.color} 
-                strokeWidth={2.5}
-                className="drop-shadow-md"
-              />
-            )}
-            {element.type === 'dumbbell' && (
-              <Dumbbell 
-                size={`${element.size}vw`} 
-                color={element.color} 
-                strokeWidth={2.5}
-                className="drop-shadow-md"
-              />
-            )}
-            {element.type === 'party' && (
-              <PartyPopper 
-                size={`${element.size}vw`} 
-                color={element.color} 
-                strokeWidth={2.5}
-                className="drop-shadow-md"
-              />
-            )}
-            {element.type === 'filecheck' && (
-              <FileCheck 
-                size={`${element.size}vw`} 
-                color={element.color} 
-                strokeWidth={2.5}
-                className="drop-shadow-md"
-              />
-            )}
-            {element.type === 'key' && (
-              <Key 
-                size={`${element.size}vw`} 
-                color={element.color} 
-                strokeWidth={2.5}
-                className="drop-shadow-md"
-              />
-            )}
-            {element.type === 'camera' && (
-              <Camera 
                 size={`${element.size}vw`} 
                 color={element.color} 
                 strokeWidth={2.5}
