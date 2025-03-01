@@ -1,3 +1,4 @@
+
 import { useEffect, useState, useCallback } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -6,12 +7,6 @@ import Features from "@/components/home/Features";
 import TaskCategories from "@/components/home/TaskCategories";
 import Testimonials from "@/components/home/Testimonials";
 import CTASection from "@/components/home/CTASection";
-import { 
-  Sparkles, 
-  GraduationCap, 
-  BookOpen, 
-  Code
-} from "lucide-react";
 
 type Star = {
   id: number;
@@ -165,10 +160,10 @@ const Index = () => {
     ];
 
     const elementTypes = [
-      'graduation',
-      'book',
-      'code',
-      'sparkle'
+      'square',
+      'circle',
+      'diamond',
+      'triangle'
     ];
 
     const initialElements: PatternElement[] = [];
@@ -182,7 +177,7 @@ const Index = () => {
         type: elementTypes[Math.floor(Math.random() * elementTypes.length)],
         size: Math.random() * 1.8 + 1,
         color: colors[Math.floor(Math.random() * colors.length)],
-        opacity: Math.random() * 0.3 + 0.6,
+        opacity: Math.random() * 0.3 + 0.7,
         rotation: Math.random() * 360,
         speedX: (Math.random() - 0.5) * 0.05,
         speedY: (Math.random() - 0.5) * 0.05,
@@ -293,35 +288,49 @@ const Index = () => {
               zIndex: 1,
             }}
           >
-            {element.type === 'graduation' && (
-              <GraduationCap 
-                size={`${element.size}vw`} 
-                color={element.color} 
-                strokeWidth={2.5}
+            {element.type === 'square' && (
+              <div 
+                style={{
+                  width: `${element.size}vw`,
+                  height: `${element.size}vw`,
+                  backgroundColor: element.color,
+                  borderRadius: '4px',
+                }}
                 className="drop-shadow-md"
               />
             )}
-            {element.type === 'book' && (
-              <BookOpen 
-                size={`${element.size}vw`} 
-                color={element.color} 
-                strokeWidth={2.5}
+            {element.type === 'circle' && (
+              <div 
+                style={{
+                  width: `${element.size}vw`,
+                  height: `${element.size}vw`,
+                  backgroundColor: element.color,
+                  borderRadius: '50%',
+                }}
                 className="drop-shadow-md"
               />
             )}
-            {element.type === 'code' && (
-              <Code 
-                size={`${element.size}vw`} 
-                color={element.color} 
-                strokeWidth={2.5}
+            {element.type === 'diamond' && (
+              <div 
+                style={{
+                  width: `${element.size}vw`,
+                  height: `${element.size}vw`,
+                  backgroundColor: element.color,
+                  transform: 'rotate(45deg)',
+                  borderRadius: '10%',
+                }}
                 className="drop-shadow-md"
               />
             )}
-            {element.type === 'sparkle' && (
-              <Sparkles 
-                size={`${element.size}vw`} 
-                color={element.color} 
-                strokeWidth={2.5}
+            {element.type === 'triangle' && (
+              <div 
+                style={{
+                  width: 0,
+                  height: 0,
+                  borderLeft: `${element.size/2}vw solid transparent`,
+                  borderRight: `${element.size/2}vw solid transparent`,
+                  borderBottom: `${element.size}vw solid ${element.color}`,
+                }}
                 className="drop-shadow-md"
               />
             )}
