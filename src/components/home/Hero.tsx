@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Star, Sparkles } from "lucide-react";
@@ -85,13 +86,13 @@ const Hero = () => {
               <span>Trusted by 10,000+ students nationwide</span>
             </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 animate-slide-in" style={{ animationDelay: "0.2s" }}>
-              <div className="h-24 md:h-32 overflow-hidden">
-                <span>What do you need help with today?</span> <br />
-                <span className="text-assist-blue relative inline-flex">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-gray-900 animate-slide-in" style={{ animationDelay: "0.2s" }}>
+              <div className="min-h-28 md:min-h-36 flex flex-col justify-start">
+                <span>What do you need help with today?</span>
+                <span className="text-assist-blue relative mt-2 md:mt-3">
                   <span className="after:content-['|'] after:ml-1 after:animate-pulse">{displayText}</span>
-                </span> <br />
-                <span>More Time.</span>
+                </span>
+                <span className="mt-2 md:mt-3">More Time.</span>
               </div>
             </h1>
             
