@@ -34,7 +34,7 @@ const CTASection = () => {
               variant="outline" 
               className="rounded-full border-white text-white hover:bg-white/10 hover:text-white h-14 px-8 text-base"
             >
-              Join <span className="font-bold">Assist</span> as a Student <ArrowRight className="ml-2 w-4 h-4" />
+              Join Assist as a Student <ArrowRight className="ml-2 w-4 h-4" />
             </Button>
           </div>
         </div>
