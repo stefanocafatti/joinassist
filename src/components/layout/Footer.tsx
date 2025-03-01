@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 
 const Footer = () => {
   return (
-    <footer className="bg-assist-gray py-16">
+    <footer className="bg-assist-gray py-16 relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Company Info */}
@@ -14,20 +14,20 @@ const Footer = () => {
             <Link to="/" className="text-2xl font-bold text-assist-blue flex items-center gap-2">
               <span className="font-display">Assist</span>
             </Link>
-            <p className="text-gray-600 mt-4 max-w-xs">
+            <p className="text-gray-800 mt-4 max-w-xs font-medium">
               The next-generation platform redefining how people connect with vetted college students for a wide range of tasks.
             </p>
             <div className="flex space-x-5 pt-4">
-              <a href="#" className="text-gray-500 hover:text-assist-blue transition-colors">
+              <a href="#" className="text-gray-700 hover:text-assist-blue transition-colors">
                 <Instagram size={20} />
               </a>
-              <a href="#" className="text-gray-500 hover:text-assist-blue transition-colors">
+              <a href="#" className="text-gray-700 hover:text-assist-blue transition-colors">
                 <Twitter size={20} />
               </a>
-              <a href="#" className="text-gray-500 hover:text-assist-blue transition-colors">
+              <a href="#" className="text-gray-700 hover:text-assist-blue transition-colors">
                 <Facebook size={20} />
               </a>
-              <a href="#" className="text-gray-500 hover:text-assist-blue transition-colors">
+              <a href="#" className="text-gray-700 hover:text-assist-blue transition-colors">
                 <Linkedin size={20} />
               </a>
             </div>
@@ -35,30 +35,30 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-semibold mb-6">Quick Links</h4>
+            <h4 className="text-lg font-semibold mb-6 text-gray-900">Quick Links</h4>
             <ul className="space-y-3">
               <li>
-                <Link to="/" className="text-gray-600 hover:text-assist-blue transition-colors">
+                <Link to="/" className="text-gray-800 hover:text-assist-blue transition-colors font-medium">
                   Home
                 </Link>
               </li>
               <li>
-                <Link to="#how-it-works" className="text-gray-600 hover:text-assist-blue transition-colors">
+                <Link to="#how-it-works" className="text-gray-800 hover:text-assist-blue transition-colors font-medium">
                   How It Works
                 </Link>
               </li>
               <li>
-                <Link to="#for-students" className="text-gray-600 hover:text-assist-blue transition-colors">
+                <Link to="#for-students" className="text-gray-800 hover:text-assist-blue transition-colors font-medium">
                   For Students
                 </Link>
               </li>
               <li>
-                <Link to="#all-tasks" className="text-gray-600 hover:text-assist-blue transition-colors">
+                <Link to="#all-tasks" className="text-gray-800 hover:text-assist-blue transition-colors font-medium">
                   Browse Tasks
                 </Link>
               </li>
               <li>
-                <Link to="#testimonials" className="text-gray-600 hover:text-assist-blue transition-colors">
+                <Link to="#testimonials" className="text-gray-800 hover:text-assist-blue transition-colors font-medium">
                   Testimonials
                 </Link>
               </li>
@@ -67,35 +67,35 @@ const Footer = () => {
 
           {/* Task Categories */}
           <div>
-            <h4 className="text-lg font-semibold mb-6">Task Categories</h4>
+            <h4 className="text-lg font-semibold mb-6 text-gray-900">Task Categories</h4>
             <ul className="space-y-3">
               <li>
-                <Link to="#cleaning" className="text-gray-600 hover:text-assist-blue transition-colors">
+                <Link to="#cleaning" className="text-gray-800 hover:text-assist-blue transition-colors font-medium">
                   Cleaning
                 </Link>
               </li>
               <li>
-                <Link to="#transportation" className="text-gray-600 hover:text-assist-blue transition-colors">
+                <Link to="#transportation" className="text-gray-800 hover:text-assist-blue transition-colors font-medium">
                   Transportation & Moving
                 </Link>
               </li>
               <li>
-                <Link to="#assembly" className="text-gray-600 hover:text-assist-blue transition-colors">
+                <Link to="#assembly" className="text-gray-800 hover:text-assist-blue transition-colors font-medium">
                   Assembly
                 </Link>
               </li>
               <li>
-                <Link to="#academic" className="text-gray-600 hover:text-assist-blue transition-colors">
+                <Link to="#academic" className="text-gray-800 hover:text-assist-blue transition-colors font-medium">
                   Academic & Professional Help
                 </Link>
               </li>
               <li>
-                <Link to="#digital" className="text-gray-600 hover:text-assist-blue transition-colors">
+                <Link to="#digital" className="text-gray-800 hover:text-assist-blue transition-colors font-medium">
                   Digital Services
                 </Link>
               </li>
               <li>
-                <Link to="#more-tasks" className="text-gray-600 hover:text-assist-blue flex items-center gap-1">
+                <Link to="#more-tasks" className="text-gray-800 hover:text-assist-blue flex items-center gap-1 font-medium">
                   More Categories <ArrowRight size={14} />
                 </Link>
               </li>
@@ -104,8 +104,8 @@ const Footer = () => {
 
           {/* Newsletter */}
           <div>
-            <h4 className="text-lg font-semibold mb-6">Stay Updated</h4>
-            <p className="text-gray-600 mb-4">
+            <h4 className="text-lg font-semibold mb-6 text-gray-900">Stay Updated</h4>
+            <p className="text-gray-800 mb-4 font-medium">
               Subscribe to our newsletter for the latest updates and offers.
             </p>
             <div className="space-y-3">
@@ -121,7 +121,7 @@ const Footer = () => {
                   <Mail size={18} />
                 </Button>
               </div>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-gray-700 font-medium">
                 By subscribing, you agree to our Privacy Policy and Terms of Service.
               </p>
             </div>
@@ -130,17 +130,17 @@ const Footer = () => {
         
         <div className="border-t border-gray-200 mt-16 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-500 text-sm">
+            <p className="text-gray-800 text-sm font-medium">
               © {new Date().getFullYear()} Assist. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <Link to="/privacy" className="text-gray-500 hover:text-assist-blue text-sm transition-colors">
+              <Link to="/privacy" className="text-gray-800 hover:text-assist-blue text-sm transition-colors font-medium">
                 Privacy Policy
               </Link>
-              <Link to="/terms" className="text-gray-500 hover:text-assist-blue text-sm transition-colors">
+              <Link to="/terms" className="text-gray-800 hover:text-assist-blue text-sm transition-colors font-medium">
                 Terms of Service
               </Link>
-              <Link to="/contact" className="text-gray-500 hover:text-assist-blue text-sm transition-colors">
+              <Link to="/contact" className="text-gray-800 hover:text-assist-blue text-sm transition-colors font-medium">
                 Contact Us
               </Link>
             </div>
