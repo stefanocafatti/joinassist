@@ -7,6 +7,7 @@ import Features from "@/components/home/Features";
 import TaskCategories from "@/components/home/TaskCategories";
 import Testimonials from "@/components/home/Testimonials";
 import CTASection from "@/components/home/CTASection";
+import { Sparkles, Circle, Star } from "lucide-react";
 
 // Circle properties and color options
 type Circle = {
@@ -20,8 +21,21 @@ type Circle = {
   opacity: number;
 };
 
+// Pattern element type
+type PatternElement = {
+  id: number;
+  x: number;
+  y: number;
+  type: 'sparkle' | 'circle' | 'star';
+  size: number;
+  color: string;
+  opacity: number;
+  rotation: number;
+};
+
 const Index = () => {
   const [circles, setCircles] = useState<Circle[]>([]);
+  const [patternElements, setPatternElements] = useState<PatternElement[]>([]);
 
   // Generate initial circles
   useEffect(() => {
@@ -104,6 +118,38 @@ const Index = () => {
     };
   }, []);
 
+  // Generate pattern elements
+  useEffect(() => {
+    const colors = [
+      "#F2FCE2", // Soft Green
+      "#FEF7CD", // Soft Yellow
+      "#FEC6A1", // Soft Orange
+      "#E5DEFF", // Soft Purple
+      "#FFDEE2", // Soft Pink
+      "#FDE1D3", // Soft Peach
+      "#D3E4FD", // Soft Blue
+    ];
+
+    const elementTypes: Array<'sparkle' | 'circle' | 'star'> = ['sparkle', 'circle', 'star'];
+    const initialElements: PatternElement[] = [];
+    const elementCount = window.innerWidth < 768 ? 25 : 40;
+
+    for (let i = 0; i < elementCount; i++) {
+      initialElements.push({
+        id: i,
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        type: elementTypes[Math.floor(Math.random() * elementTypes.length)],
+        size: Math.random() * 1.5 + 0.5, // 0.5-2vw
+        color: colors[Math.floor(Math.random() * colors.length)],
+        opacity: Math.random() * 0.2 + 0.05, // Very subtle opacity
+        rotation: Math.random() * 360, // Random rotation
+      });
+    }
+
+    setPatternElements(initialElements);
+  }, []);
+
   // Smooth scroll for anchor links
   useEffect(() => {
     // Smooth scroll for anchor links
@@ -151,6 +197,42 @@ const Index = () => {
               zIndex: -1,
             }}
           />
+        ))}
+
+        {/* Static pattern elements */}
+        {patternElements.map((element) => (
+          <div
+            key={element.id}
+            className="absolute"
+            style={{
+              left: `${element.x}%`,
+              top: `${element.y}%`,
+              opacity: element.opacity,
+              transform: `translate(-50%, -50%) rotate(${element.rotation}deg)`,
+              zIndex: -1,
+            }}
+          >
+            {element.type === 'sparkle' && (
+              <Sparkles 
+                size={`${element.size}vw`} 
+                color={element.color} 
+              />
+            )}
+            {element.type === 'circle' && (
+              <Circle 
+                size={`${element.size}vw`} 
+                color={element.color} 
+                strokeWidth={1}
+              />
+            )}
+            {element.type === 'star' && (
+              <Star 
+                size={`${element.size}vw`} 
+                color={element.color} 
+                strokeWidth={1}
+              />
+            )}
+          </div>
         ))}
       </div>
       
