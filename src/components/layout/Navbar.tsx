@@ -95,101 +95,105 @@ const Navbar = () => {
           </div>
 
           <div ref={dropdownRef} className="hidden md:flex items-center space-x-5 flex-grow justify-center">
-            <button
-              onClick={() => toggleDropdown('browse')}
-              className={`flex items-center px-4 py-2 rounded-xl text-gray-800 transition-colors ${
-                activeDropdown === 'browse' 
-                  ? 'text-gray-900' 
-                  : 'hover:bg-soft-purple/70'
-              }`}
-              style={{
-                background: activeDropdown === 'browse' 
-                  ? 'linear-gradient(90deg, hsla(259, 60%, 90%, 1) 0%, hsla(252, 100%, 95%, 1) 100%)' 
-                  : 'linear-gradient(90deg, rgba(229, 222, 255, 0.5) 0%, rgba(211, 228, 253, 0.3) 100%)'
-              }}
-            >
-              EXPLORE TASKS
-              {activeDropdown === 'browse' ? <ChevronUp className="ml-1.5 h-3.5 w-3.5" /> : <ChevronDown className="ml-1.5 h-3.5 w-3.5" />}
-            </button>
+            <div className="relative">
+              <button
+                onClick={() => toggleDropdown('browse')}
+                className={`flex items-center px-4 py-2 rounded-xl text-gray-800 transition-colors ${
+                  activeDropdown === 'browse' 
+                    ? 'text-gray-900' 
+                    : 'hover:bg-soft-purple/70'
+                }`}
+                style={{
+                  background: activeDropdown === 'browse' 
+                    ? 'linear-gradient(90deg, hsla(259, 60%, 90%, 1) 0%, hsla(252, 100%, 95%, 1) 100%)' 
+                    : 'linear-gradient(90deg, rgba(229, 222, 255, 0.5) 0%, rgba(211, 228, 253, 0.3) 100%)'
+                }}
+              >
+                EXPLORE TASKS
+                {activeDropdown === 'browse' ? <ChevronUp className="ml-1.5 h-3.5 w-3.5" /> : <ChevronDown className="ml-1.5 h-3.5 w-3.5" />}
+              </button>
+              
+              {activeDropdown === 'browse' && (
+                <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-lg overflow-hidden z-50 animate-scale-in">
+                  <div className="bg-gradient-to-r from-soft-purple/80 to-soft-blue/80 p-3 text-gray-800 font-semibold text-base">
+                    Browse Tasks
+                  </div>
+                  
+                  <div className="py-1">
+                    {browseTasksMenu.map((item, index) => (
+                      <Link 
+                        key={index} 
+                        to={item.link}
+                        className="block px-3 py-2 hover:bg-soft-gray transition-colors"
+                      >
+                        <div className="flex items-center space-x-3">
+                          <div className="p-1.5 bg-soft-purple/20 rounded-lg">
+                            {item.icon}
+                          </div>
+                          <div>
+                            <h3 className="text-base font-medium text-gray-800">{item.title}</h3>
+                            <p className="text-xs text-gray-500">{item.subtitle}</p>
+                          </div>
+                        </div>
+                        {index < browseTasksMenu.length - 1 && (
+                          <div className="border-b border-gray-100 mt-2 mx-auto"></div>
+                        )}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
             
-            {activeDropdown === 'browse' && (
-              <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-lg overflow-hidden z-50 animate-scale-in">
-                <div className="bg-gradient-to-r from-soft-purple/80 to-soft-blue/80 p-3 text-gray-800 font-semibold text-base">
-                  Browse Tasks
-                </div>
-                
-                <div className="py-1">
-                  {browseTasksMenu.map((item, index) => (
-                    <Link 
-                      key={index} 
-                      to={item.link}
-                      className="block px-3 py-2 hover:bg-soft-gray transition-colors"
-                    >
-                      <div className="flex items-center space-x-3">
-                        <div className="p-1.5 bg-soft-purple/20 rounded-lg">
-                          {item.icon}
+            <div className="relative">
+              <button
+                onClick={() => toggleDropdown('students')}
+                className={`flex items-center px-4 py-2 rounded-xl text-gray-800 transition-colors ${
+                  activeDropdown === 'students' 
+                    ? 'text-gray-900' 
+                    : 'hover:bg-soft-green/70'
+                }`}
+                style={{
+                  background: activeDropdown === 'students' 
+                    ? 'linear-gradient(90deg, hsla(139, 70%, 75%, 1) 0%, hsla(63, 90%, 76%, 1) 100%)' 
+                    : 'linear-gradient(90deg, rgba(242, 252, 226, 0.5) 0%, rgba(211, 228, 253, 0.3) 100%)'
+                }}
+              >
+                FOR STUDENTS
+                {activeDropdown === 'students' ? <ChevronUp className="ml-1.5 h-3.5 w-3.5" /> : <ChevronDown className="ml-1.5 h-3.5 w-3.5" />}
+              </button>
+              
+              {activeDropdown === 'students' && (
+                <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-lg overflow-hidden z-50 animate-scale-in">
+                  <div className="bg-gradient-to-r from-soft-green/80 to-soft-blue/80 p-3 text-gray-800 font-semibold text-base">
+                    Student Portal
+                  </div>
+                  
+                  <div className="py-1">
+                    {forStudentsMenu.map((item, index) => (
+                      <Link 
+                        key={index} 
+                        to={item.link}
+                        className="block px-3 py-2 hover:bg-soft-gray transition-colors"
+                      >
+                        <div className="flex items-center space-x-3">
+                          <div className="p-1.5 bg-soft-green/20 rounded-lg">
+                            {item.icon}
+                          </div>
+                          <div>
+                            <h3 className="text-base font-medium text-gray-800">{item.title}</h3>
+                            <p className="text-xs text-gray-500">{item.subtitle}</p>
+                          </div>
                         </div>
-                        <div>
-                          <h3 className="text-base font-medium text-gray-800">{item.title}</h3>
-                          <p className="text-xs text-gray-500">{item.subtitle}</p>
-                        </div>
-                      </div>
-                      {index < browseTasksMenu.length - 1 && (
-                        <div className="border-b border-gray-100 mt-2 mx-auto"></div>
-                      )}
-                    </Link>
-                  ))}
+                        {index < forStudentsMenu.length - 1 && (
+                          <div className="border-b border-gray-100 mt-2 mx-auto"></div>
+                        )}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
-            
-            <button
-              onClick={() => toggleDropdown('students')}
-              className={`flex items-center px-4 py-2 rounded-xl text-gray-800 transition-colors ${
-                activeDropdown === 'students' 
-                  ? 'text-gray-900' 
-                  : 'hover:bg-soft-green/70'
-              }`}
-              style={{
-                background: activeDropdown === 'students' 
-                  ? 'linear-gradient(90deg, hsla(139, 70%, 75%, 1) 0%, hsla(63, 90%, 76%, 1) 100%)' 
-                  : 'linear-gradient(90deg, rgba(242, 252, 226, 0.5) 0%, rgba(211, 228, 253, 0.3) 100%)'
-              }}
-            >
-              FOR STUDENTS
-              {activeDropdown === 'students' ? <ChevronUp className="ml-1.5 h-3.5 w-3.5" /> : <ChevronDown className="ml-1.5 h-3.5 w-3.5" />}
-            </button>
-            
-            {activeDropdown === 'students' && (
-              <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-lg overflow-hidden z-50 animate-scale-in">
-                <div className="bg-gradient-to-r from-soft-green/80 to-soft-blue/80 p-3 text-gray-800 font-semibold text-base">
-                  Student Portal
-                </div>
-                
-                <div className="py-1">
-                  {forStudentsMenu.map((item, index) => (
-                    <Link 
-                      key={index} 
-                      to={item.link}
-                      className="block px-3 py-2 hover:bg-soft-gray transition-colors"
-                    >
-                      <div className="flex items-center space-x-3">
-                        <div className="p-1.5 bg-soft-green/20 rounded-lg">
-                          {item.icon}
-                        </div>
-                        <div>
-                          <h3 className="text-base font-medium text-gray-800">{item.title}</h3>
-                          <p className="text-xs text-gray-500">{item.subtitle}</p>
-                        </div>
-                      </div>
-                      {index < forStudentsMenu.length - 1 && (
-                        <div className="border-b border-gray-100 mt-2 mx-auto"></div>
-                      )}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
 
           <div className="hidden md:flex items-center space-x-4">
