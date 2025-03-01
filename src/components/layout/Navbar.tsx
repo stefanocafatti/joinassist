@@ -1,7 +1,6 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, ChevronUp, Briefcase, GraduationCap, Search, CheckCircle, ListChecks } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronUp, Briefcase, GraduationCap, Search, CheckCircle, ListChecks, FileEdit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/ui/Logo";
 
@@ -52,6 +51,12 @@ const Navbar = () => {
       subtitle: "FIND SPECIFIC TASKS", 
       icon: <Search className="w-6 h-6 text-assist-blue" />,
       link: "/tasks/search"
+    },
+    { 
+      title: "Request a Task", 
+      subtitle: "SUBMIT TASK REQUEST", 
+      icon: <FileEdit className="w-6 h-6 text-assist-blue" />,
+      link: "/request-task"
     },
   ];
 
@@ -134,18 +139,6 @@ const Navbar = () => {
                 </div>
               )}
             </div>
-
-            {/* Request Task Button - Direct link, no dropdown */}
-            <Link 
-              to="/request-task" 
-              className={`px-4 py-2 rounded-xl ${
-                isActive('/request-task') 
-                  ? 'bg-assist-blue text-white' 
-                  : 'text-gray-800 hover:bg-soft-yellow/70'
-              } font-medium transition-colors`}
-            >
-              REQUEST A TASK
-            </Link>
 
             {/* For Students Dropdown */}
             <div className="relative">
@@ -247,17 +240,6 @@ const Navbar = () => {
                   ))}
                 </div>
               )}
-            </div>
-            
-            <div className="border-b border-gray-200 py-2">
-              <Link 
-                to="/request-task" 
-                className={`flex items-center justify-between w-full text-left font-medium ${
-                  isActive('/request-task') ? 'text-assist-blue' : ''
-                }`}
-              >
-                <span>REQUEST A TASK</span>
-              </Link>
             </div>
             
             <div className="border-b border-gray-200 py-2">
