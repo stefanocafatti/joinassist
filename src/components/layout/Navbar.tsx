@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown, ChevronUp, Briefcase, GraduationCap, Search, CheckCircle, ListChecks, FileEdit } from "lucide-react";
@@ -103,14 +102,9 @@ const Navbar = () => {
                 onClick={() => toggleDropdown('browse')}
                 className={`flex items-center px-4 py-2 rounded-xl text-gray-800 transition-colors ${
                   activeDropdown === 'browse' 
-                    ? 'text-gray-900' 
-                    : 'hover:bg-soft-purple/70'
+                    ? 'bg-white text-gray-900 shadow-sm' 
+                    : 'bg-white hover:bg-soft-purple/20'
                 }`}
-                style={{
-                  background: activeDropdown === 'browse' 
-                    ? 'linear-gradient(90deg, hsla(259, 60%, 90%, 1) 0%, hsla(252, 100%, 95%, 1) 100%)' 
-                    : 'linear-gradient(90deg, rgba(229, 222, 255, 0.5) 0%, rgba(211, 228, 253, 0.3) 100%)'
-                }}
               >
                 EXPLORE TASKS
                 {activeDropdown === 'browse' ? <ChevronUp className="ml-1.5 h-3.5 w-3.5" /> : <ChevronDown className="ml-1.5 h-3.5 w-3.5" />}
@@ -118,7 +112,7 @@ const Navbar = () => {
               
               {activeDropdown === 'browse' && (
                 <div className="absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-lg overflow-hidden z-50 animate-scale-in">
-                  <div className="bg-gradient-to-r from-soft-purple/80 to-soft-blue/80 p-3 text-gray-800 font-semibold text-base">
+                  <div className="bg-white p-3 text-gray-800 font-semibold text-base border-b">
                     Browse Tasks
                   </div>
                   
@@ -154,14 +148,9 @@ const Navbar = () => {
                 onClick={() => toggleDropdown('students')}
                 className={`flex items-center px-4 py-2 rounded-xl text-gray-800 transition-colors ${
                   activeDropdown === 'students' 
-                    ? 'text-gray-900' 
-                    : 'hover:bg-soft-green/70'
+                    ? 'bg-white text-gray-900 shadow-sm' 
+                    : 'bg-white hover:bg-soft-green/20'
                 }`}
-                style={{
-                  background: activeDropdown === 'students' 
-                    ? 'linear-gradient(90deg, hsla(139, 70%, 75%, 1) 0%, hsla(63, 90%, 76%, 1) 100%)' 
-                    : 'linear-gradient(90deg, rgba(242, 252, 226, 0.5) 0%, rgba(211, 228, 253, 0.3) 100%)'
-                }}
               >
                 FOR STUDENTS
                 {activeDropdown === 'students' ? <ChevronUp className="ml-1.5 h-3.5 w-3.5" /> : <ChevronDown className="ml-1.5 h-3.5 w-3.5" />}
@@ -169,7 +158,7 @@ const Navbar = () => {
               
               {activeDropdown === 'students' && (
                 <div className="absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-lg overflow-hidden z-50 animate-scale-in">
-                  <div className="bg-gradient-to-r from-soft-green/80 to-soft-blue/80 p-3 text-gray-800 font-semibold text-base">
+                  <div className="bg-white p-3 text-gray-800 font-semibold text-base border-b">
                     Student Portal
                   </div>
                   
