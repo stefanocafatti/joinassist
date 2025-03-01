@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/home/Hero";
@@ -46,6 +46,9 @@ type PatternElement = {
   color: string;
   opacity: number;
   rotation: number;
+  speedX: number;
+  speedY: number;
+  rotationSpeed: number;
 };
 
 const Index = () => {
@@ -203,6 +206,9 @@ const Index = () => {
         color: colors[Math.floor(Math.random() * colors.length)],
         opacity: Math.random() * 0.4 + 0.2,
         rotation: Math.random() * 360,
+        speedX: (Math.random() - 0.5) * 0.05,
+        speedY: (Math.random() - 0.5) * 0.05,
+        rotationSpeed: (Math.random() - 0.5) * 0.3,
       });
     }
 
@@ -217,26 +223,42 @@ const Index = () => {
         
         setPatternElements(prevElements => 
           prevElements.map(element => {
-            const speedX = (Math.random() - 0.5) * 0.05;
-            const speedY = (Math.random() - 0.5) * 0.05;
+            let newX = element.x + element.speedX;
+            let newY = element.y + element.speedY;
             
-            let newX = element.x + speedX;
-            let newY = element.y + speedY;
+            let newSpeedX = element.speedX;
+            let newSpeedY = element.speedY;
             
             if (newX <= 0 || newX >= 100) {
-              newX = newX <= 0 ? 0 : 100;
+              newSpeedX = -element.speedX * (0.95 + Math.random() * 0.1);
+              newX = newX <= 0 ? 0.1 : 99.9;
             }
             
             if (newY <= 0 || newY >= 100) {
-              newY = newY <= 0 ? 0 : 100;
+              newSpeedY = -element.speedY * (0.95 + Math.random() * 0.1);
+              newY = newY <= 0 ? 0.1 : 99.9;
             }
             
-            const newRotation = (element.rotation + 0.1) % 360;
+            if (Math.random() < 0.01) {
+              newSpeedX += (Math.random() - 0.5) * 0.01;
+              newSpeedY += (Math.random() - 0.5) * 0.01;
+              
+              const maxSpeed = 0.08;
+              const currentSpeed = Math.sqrt(newSpeedX * newSpeedX + newSpeedY * newSpeedY);
+              if (currentSpeed > maxSpeed) {
+                newSpeedX = (newSpeedX / currentSpeed) * maxSpeed;
+                newSpeedY = (newSpeedY / currentSpeed) * maxSpeed;
+              }
+            }
+            
+            const newRotation = (element.rotation + element.rotationSpeed) % 360;
             
             return {
               ...element,
               x: newX,
               y: newY,
+              speedX: newSpeedX,
+              speedY: newSpeedY,
               rotation: newRotation,
             };
           })
@@ -284,7 +306,7 @@ const Index = () => {
         {patternElements.map((element) => (
           <div
             key={element.id}
-            className="absolute"
+            className="absolute transition-transform duration-500 ease-in-out"
             style={{
               left: `${element.x}%`,
               top: `${element.y}%`,
