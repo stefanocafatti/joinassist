@@ -14,6 +14,16 @@ const Hero = () => {
 
   return (
     <div className="relative overflow-hidden pt-16">
+      {/* Gradient background overlay */}
+      <div 
+        className="absolute inset-0 z-0 opacity-70" 
+        style={{ 
+          background: "linear-gradient(135deg, #D3E4FD 0%, #E5DEFF 50%, #FDE1D3 100%)",
+          backgroundSize: "200% 200%",
+          animation: "gradient-animation 15s ease infinite"
+        }}
+      />
+      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 md:pt-24 pb-12 md:pb-20 relative z-10">
         <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16">
           <div className="w-full md:w-1/2 md:pr-8 space-y-6">
@@ -119,6 +129,15 @@ const Hero = () => {
           </div>
         </div>
       </div>
+      
+      {/* Add the gradient animation keyframes */}
+      <style jsx>{`
+        @keyframes gradient-animation {
+          0% { background-position: 0% 50% }
+          50% { background-position: 100% 50% }
+          100% { background-position: 0% 50% }
+        }
+      `}</style>
     </div>
   );
 };
