@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -7,7 +6,25 @@ import Features from "@/components/home/Features";
 import TaskCategories from "@/components/home/TaskCategories";
 import Testimonials from "@/components/home/Testimonials";
 import CTASection from "@/components/home/CTASection";
-import { Sparkles, Star } from "lucide-react";
+import { 
+  Sparkles, 
+  Star, 
+  Graduation, 
+  BookOpen, 
+  Code, 
+  Hammer, 
+  Briefcase, 
+  ShoppingBag,
+  Car, 
+  Truck, 
+  Package, 
+  Trash2, 
+  Dumbbell, 
+  PartyPopper,
+  FileCheck,
+  Key,
+  Camera 
+} from "lucide-react";
 
 // Star properties and color options
 type Star = {
@@ -27,7 +44,7 @@ type PatternElement = {
   id: number;
   x: number;
   y: number;
-  type: 'sparkle' | 'circle' | 'star';
+  type: string; // Changed to string to allow for different icon types
   size: number;
   color: string;
   opacity: number;
@@ -153,21 +170,45 @@ const Index = () => {
     };
   }, []);
 
-  // Generate pattern elements
+  // Generate pattern elements with task-related icons
   useEffect(() => {
     const colors = [
+      "#0EA5E9", // Ocean Blue
+      "#0066cc", // Assist Blue
+      "#4a9fff", // Light Blue
+      "#D3E4FD", // Soft Blue
+      "#F97316", // Bright Orange
+      "#FEC6A1", // Soft Orange
+      "#8B5CF6", // Vivid Purple
+      "#D946EF", // Magenta Pink
+      "#E5DEFF", // Soft Purple
+      "#9b87f5", // Primary Purple
       "#F2FCE2", // Soft Green
       "#FEF7CD", // Soft Yellow
-      "#FEC6A1", // Soft Orange
-      "#E5DEFF", // Soft Purple
       "#FFDEE2", // Soft Pink
       "#FDE1D3", // Soft Peach
-      "#D3E4FD", // Soft Blue
     ];
 
-    const elementTypes: Array<'sparkle' | 'circle' | 'star'> = ['sparkle', 'circle', 'star'];
+    // Define task-related icon types
+    const elementTypes = [
+      'graduation', // Education/Academic
+      'book',       // Learning/Studying
+      'code',       // Coding/Digital
+      'hammer',     // Handyman/Construction
+      'briefcase',  // Business/Professional
+      'car',        // Transportation
+      'package',    // Delivery/Assembly
+      'trash',      // Cleaning
+      'dumbbell',   // Fitness
+      'party',      // Events
+      'filecheck',  // Tasks/To-dos
+      'key',        // Property management
+      'camera',     // Photography
+      'sparkle'     // Decorative element
+    ];
+
     const initialElements: PatternElement[] = [];
-    const elementCount = window.innerWidth < 768 ? 25 : 40;
+    const elementCount = window.innerWidth < 768 ? 35 : 60; // Increased count for more icons
 
     for (let i = 0; i < elementCount; i++) {
       initialElements.push({
@@ -175,14 +216,65 @@ const Index = () => {
         x: Math.random() * 100,
         y: Math.random() * 100,
         type: elementTypes[Math.floor(Math.random() * elementTypes.length)],
-        size: Math.random() * 1.5 + 0.5, // 0.5-2vw
+        size: Math.random() * 1.5 + 0.8, // Slightly larger: 0.8-2.3vw
         color: colors[Math.floor(Math.random() * colors.length)],
-        opacity: Math.random() * 0.2 + 0.05, // Very subtle opacity
+        opacity: Math.random() * 0.4 + 0.2, // Higher opacity: 0.2-0.6
         rotation: Math.random() * 360, // Random rotation
       });
     }
 
+    // Add animation to elements
     setPatternElements(initialElements);
+
+    // Animation frame for moving elements
+    let animationFrameId: number;
+    let lastTime = 0;
+
+    const animate = (timestamp: number) => {
+      // Throttle to 30fps for performance
+      if (timestamp - lastTime >= 33) {
+        lastTime = timestamp;
+        
+        setPatternElements(prevElements => 
+          prevElements.map(element => {
+            // Calculate random movement with different speeds for each element
+            const speedX = (Math.random() - 0.5) * 0.05;
+            const speedY = (Math.random() - 0.5) * 0.05;
+            
+            // Update position
+            let newX = element.x + speedX;
+            let newY = element.y + speedY;
+            
+            // Bounce off walls
+            if (newX <= 0 || newX >= 100) {
+              newX = newX <= 0 ? 0 : 100;
+            }
+            
+            if (newY <= 0 || newY >= 100) {
+              newY = newY <= 0 ? 0 : 100;
+            }
+            
+            // Slowly rotate as it moves
+            const newRotation = (element.rotation + 0.1) % 360;
+            
+            return {
+              ...element,
+              x: newX,
+              y: newY,
+              rotation: newRotation,
+            };
+          })
+        );
+      }
+      
+      animationFrameId = requestAnimationFrame(animate);
+    };
+    
+    animationFrameId = requestAnimationFrame(animate);
+    
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
   }, []);
 
   // Smooth scroll for anchor links
@@ -238,7 +330,7 @@ const Index = () => {
           </div>
         ))}
 
-        {/* Static pattern elements */}
+        {/* Task-related icons as pattern elements */}
         {patternElements.map((element) => (
           <div
             key={element.id}
@@ -251,24 +343,102 @@ const Index = () => {
               zIndex: -1,
             }}
           >
+            {element.type === 'graduation' && (
+              <Graduation 
+                size={`${element.size}vw`} 
+                color={element.color} 
+                strokeWidth={1.5}
+              />
+            )}
+            {element.type === 'book' && (
+              <BookOpen 
+                size={`${element.size}vw`} 
+                color={element.color} 
+                strokeWidth={1.5}
+              />
+            )}
+            {element.type === 'code' && (
+              <Code 
+                size={`${element.size}vw`} 
+                color={element.color} 
+                strokeWidth={1.5}
+              />
+            )}
+            {element.type === 'hammer' && (
+              <Hammer 
+                size={`${element.size}vw`} 
+                color={element.color} 
+                strokeWidth={1.5}
+              />
+            )}
+            {element.type === 'briefcase' && (
+              <Briefcase 
+                size={`${element.size}vw`} 
+                color={element.color} 
+                strokeWidth={1.5}
+              />
+            )}
+            {element.type === 'car' && (
+              <Car 
+                size={`${element.size}vw`} 
+                color={element.color} 
+                strokeWidth={1.5}
+              />
+            )}
+            {element.type === 'package' && (
+              <Package 
+                size={`${element.size}vw`} 
+                color={element.color} 
+                strokeWidth={1.5}
+              />
+            )}
+            {element.type === 'trash' && (
+              <Trash2 
+                size={`${element.size}vw`} 
+                color={element.color} 
+                strokeWidth={1.5}
+              />
+            )}
+            {element.type === 'dumbbell' && (
+              <Dumbbell 
+                size={`${element.size}vw`} 
+                color={element.color} 
+                strokeWidth={1.5}
+              />
+            )}
+            {element.type === 'party' && (
+              <PartyPopper 
+                size={`${element.size}vw`} 
+                color={element.color} 
+                strokeWidth={1.5}
+              />
+            )}
+            {element.type === 'filecheck' && (
+              <FileCheck 
+                size={`${element.size}vw`} 
+                color={element.color} 
+                strokeWidth={1.5}
+              />
+            )}
+            {element.type === 'key' && (
+              <Key 
+                size={`${element.size}vw`} 
+                color={element.color} 
+                strokeWidth={1.5}
+              />
+            )}
+            {element.type === 'camera' && (
+              <Camera 
+                size={`${element.size}vw`} 
+                color={element.color} 
+                strokeWidth={1.5}
+              />
+            )}
             {element.type === 'sparkle' && (
               <Sparkles 
                 size={`${element.size}vw`} 
                 color={element.color} 
-              />
-            )}
-            {element.type === 'circle' && (
-              <Star 
-                size={`${element.size}vw`} 
-                color={element.color} 
-                strokeWidth={1}
-              />
-            )}
-            {element.type === 'star' && (
-              <Star 
-                size={`${element.size}vw`} 
-                color={element.color} 
-                strokeWidth={1}
+                strokeWidth={1.5}
               />
             )}
           </div>
