@@ -26,11 +26,11 @@ const Logo = ({ variant = "default", showText = true, className = "" }: LogoProp
   return (
     <Link 
       to="/" 
-      className={`flex items-center gap-2 font-bold ${textColor} ${className}`}
+      className={`flex items-center gap-2 ${textColor} ${className}`}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      <span className="font-display text-2xl relative">
+      <span className="font-display text-2xl font-extrabold tracking-tight relative">
         Assist
         {sparkle && (
           <span className="absolute -top-2 -right-4 text-yellow-400 text-xs animate-bounce">✨</span>
