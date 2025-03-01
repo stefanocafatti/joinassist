@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Star, Sparkles } from "lucide-react";
@@ -104,14 +103,14 @@ const Hero = () => {
                 size="lg" 
                 className="rounded-full bg-assist-blue hover:bg-assist-blue/90 text-white h-14 px-8 text-base font-medium shadow-soft hover:shadow-md hover:translate-y-[-2px] transition-all"
               >
-                Book a Task
+                Book Your Task
               </Button>
               <Button 
                 size="lg" 
                 variant="outline" 
                 className="rounded-full border-assist-blue text-assist-blue hover:bg-assist-blue/10 hover:text-assist-blue h-14 px-8 text-base"
               >
-                Become a Student Helper <ChevronRight size={16} />
+                Join Assist as a Student <ChevronRight size={16} />
               </Button>
             </div>
             
