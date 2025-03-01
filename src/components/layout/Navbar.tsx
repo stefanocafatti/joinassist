@@ -1,22 +1,24 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown, ChevronUp, Briefcase, GraduationCap, Search, CheckCircle, ListChecks, FileEdit } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import Logo from "@/components/ui/Logo";
+import Logo from "../ui/Logo";
+import { Button } from "../ui/button";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 10) {
-        setIsScrolled(true);
+        setScrolled(true);
       } else {
-        setIsScrolled(false);
+        setScrolled(false);
       }
     };
 
@@ -80,116 +82,115 @@ const Navbar = () => {
   };
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-white/90 backdrop-blur-md shadow-sm"
-          : "bg-transparent"
+    <header
+      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+        scrolled ? 'bg-white shadow-sm' : 'bg-white'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
+        <div className="flex justify-between items-center py-4 md:justify-start md:space-x-10">
           <div className="flex-shrink-0">
             <Logo />
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6" ref={dropdownRef}>
-            {/* Browse Tasks Dropdown */}
-            <div className="relative">
-              <button 
-                onClick={() => toggleDropdown('browse')}
-                className={`flex items-center px-4 py-2 rounded-xl text-gray-800 transition-colors ${
-                  activeDropdown === 'browse' 
-                    ? 'bg-white text-gray-900 shadow-sm' 
-                    : 'bg-white hover:bg-soft-purple/20'
-                }`}
-              >
-                EXPLORE TASKS
-                {activeDropdown === 'browse' ? <ChevronUp className="ml-1.5 h-3.5 w-3.5" /> : <ChevronDown className="ml-1.5 h-3.5 w-3.5" />}
-              </button>
-              
-              {activeDropdown === 'browse' && (
-                <div className="absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-lg overflow-hidden z-50 animate-scale-in">
-                  <div className="bg-white p-3 text-gray-800 font-semibold text-base border-b">
-                    Browse Tasks
-                  </div>
-                  
-                  <div className="py-1">
-                    {browseTasksMenu.map((item, index) => (
-                      <Link 
-                        key={index} 
-                        to={item.link}
-                        className="block px-3 py-2 hover:bg-soft-gray transition-colors"
-                      >
-                        <div className="flex items-center space-x-3">
-                          <div className="p-1.5 bg-soft-purple/20 rounded-lg">
-                            {item.icon}
-                          </div>
-                          <div>
-                            <h3 className="text-base font-medium text-gray-800">{item.title}</h3>
-                            <p className="text-xs text-gray-500">{item.subtitle}</p>
-                          </div>
-                        </div>
-                        {index < browseTasksMenu.length - 1 && (
-                          <div className="border-b border-gray-100 mt-2 mx-auto"></div>
-                        )}
-                      </Link>
-                    ))}
-                  </div>
+          <div className="hidden md:flex items-center space-x-2">
+            <button
+              onClick={() => toggleDropdown('browse')}
+              className={`flex items-center px-4 py-2 rounded-xl text-gray-800 transition-colors ${
+                activeDropdown === 'browse' 
+                  ? 'text-gray-900' 
+                  : 'hover:bg-soft-purple/70'
+              }`}
+              style={{
+                background: activeDropdown === 'browse' 
+                  ? 'linear-gradient(90deg, hsla(259, 60%, 90%, 1) 0%, hsla(252, 100%, 95%, 1) 100%)' 
+                  : 'linear-gradient(90deg, rgba(229, 222, 255, 0.5) 0%, rgba(211, 228, 253, 0.3) 100%)'
+              }}
+            >
+              EXPLORE TASKS
+              {activeDropdown === 'browse' ? <ChevronUp className="ml-1.5 h-3.5 w-3.5" /> : <ChevronDown className="ml-1.5 h-3.5 w-3.5" />}
+            </button>
+            
+            {activeDropdown === 'browse' && (
+              <div className="absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-lg overflow-hidden z-50 animate-scale-in">
+                <div className="bg-gradient-to-r from-soft-purple/80 to-soft-blue/80 p-3 text-gray-800 font-semibold text-base">
+                  Browse Tasks
                 </div>
-              )}
-            </div>
-
-            {/* For Students Dropdown */}
-            <div className="relative">
-              <button 
-                onClick={() => toggleDropdown('students')}
-                className={`flex items-center px-4 py-2 rounded-xl text-gray-800 transition-colors ${
-                  activeDropdown === 'students' 
-                    ? 'bg-white text-gray-900 shadow-sm' 
-                    : 'bg-white hover:bg-soft-green/20'
-                }`}
-              >
-                FOR STUDENTS
-                {activeDropdown === 'students' ? <ChevronUp className="ml-1.5 h-3.5 w-3.5" /> : <ChevronDown className="ml-1.5 h-3.5 w-3.5" />}
-              </button>
-              
-              {activeDropdown === 'students' && (
-                <div className="absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-lg overflow-hidden z-50 animate-scale-in">
-                  <div className="bg-white p-3 text-gray-800 font-semibold text-base border-b">
-                    Student Portal
-                  </div>
-                  
-                  <div className="py-1">
-                    {forStudentsMenu.map((item, index) => (
-                      <Link 
-                        key={index} 
-                        to={item.link}
-                        className="block px-3 py-2 hover:bg-soft-gray transition-colors"
-                      >
-                        <div className="flex items-center space-x-3">
-                          <div className="p-1.5 bg-soft-green/20 rounded-lg">
-                            {item.icon}
-                          </div>
-                          <div>
-                            <h3 className="text-base font-medium text-gray-800">{item.title}</h3>
-                            <p className="text-xs text-gray-500">{item.subtitle}</p>
-                          </div>
+                
+                <div className="py-1">
+                  {browseTasksMenu.map((item, index) => (
+                    <Link 
+                      key={index} 
+                      to={item.link}
+                      className="block px-3 py-2 hover:bg-soft-gray transition-colors"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className="p-1.5 bg-soft-purple/20 rounded-lg">
+                          {item.icon}
                         </div>
-                        {index < forStudentsMenu.length - 1 && (
-                          <div className="border-b border-gray-100 mt-2 mx-auto"></div>
-                        )}
-                      </Link>
-                    ))}
-                  </div>
+                        <div>
+                          <h3 className="text-base font-medium text-gray-800">{item.title}</h3>
+                          <p className="text-xs text-gray-500">{item.subtitle}</p>
+                        </div>
+                      </div>
+                      {index < browseTasksMenu.length - 1 && (
+                        <div className="border-b border-gray-100 mt-2 mx-auto"></div>
+                      )}
+                    </Link>
+                  ))}
                 </div>
-              )}
-            </div>
+              </div>
+            )}
+            
+            <button
+              onClick={() => toggleDropdown('students')}
+              className={`flex items-center px-4 py-2 rounded-xl text-gray-800 transition-colors ${
+                activeDropdown === 'students' 
+                  ? 'text-gray-900' 
+                  : 'hover:bg-soft-green/70'
+              }`}
+              style={{
+                background: activeDropdown === 'students' 
+                  ? 'linear-gradient(90deg, hsla(139, 70%, 75%, 1) 0%, hsla(63, 90%, 76%, 1) 100%)' 
+                  : 'linear-gradient(90deg, rgba(242, 252, 226, 0.5) 0%, rgba(211, 228, 253, 0.3) 100%)'
+              }}
+            >
+              FOR STUDENTS
+              {activeDropdown === 'students' ? <ChevronUp className="ml-1.5 h-3.5 w-3.5" /> : <ChevronDown className="ml-1.5 h-3.5 w-3.5" />}
+            </button>
+            
+            {activeDropdown === 'students' && (
+              <div className="absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-lg overflow-hidden z-50 animate-scale-in">
+                <div className="bg-gradient-to-r from-soft-green/80 to-soft-blue/80 p-3 text-gray-800 font-semibold text-base">
+                  Student Portal
+                </div>
+                
+                <div className="py-1">
+                  {forStudentsMenu.map((item, index) => (
+                    <Link 
+                      key={index} 
+                      to={item.link}
+                      className="block px-3 py-2 hover:bg-soft-gray transition-colors"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className="p-1.5 bg-soft-green/20 rounded-lg">
+                          {item.icon}
+                        </div>
+                        <div>
+                          <h3 className="text-base font-medium text-gray-800">{item.title}</h3>
+                          <p className="text-xs text-gray-500">{item.subtitle}</p>
+                        </div>
+                      </div>
+                      {index < forStudentsMenu.length - 1 && (
+                        <div className="border-b border-gray-100 mt-2 mx-auto"></div>
+                      )}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
-          {/* CTA Buttons */}
           <div className="hidden md:flex items-center space-x-3">
             <Button 
               variant="outline" 
@@ -202,7 +203,6 @@ const Navbar = () => {
             </Button>
           </div>
 
-          {/* Mobile Menu Toggle */}
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -214,7 +214,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-white shadow-lg animate-slide-in">
           <div className="px-4 pt-2 pb-6 space-y-2">
@@ -290,7 +289,7 @@ const Navbar = () => {
           </div>
         </div>
       )}
-    </nav>
+    </header>
   );
 };
 
