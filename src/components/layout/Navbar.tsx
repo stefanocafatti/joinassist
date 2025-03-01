@@ -44,13 +44,13 @@ const Navbar = () => {
     { 
       title: "All Tasks", 
       subtitle: "BROWSE AVAILABLE TASKS", 
-      icon: <ListChecks className="w-8 h-8 text-assist-blue" />,
+      icon: <ListChecks className="w-6 h-6 text-assist-blue" />,
       link: "/tasks"
     },
     { 
       title: "Search Tasks", 
       subtitle: "FIND SPECIFIC TASKS", 
-      icon: <Search className="w-8 h-8 text-assist-blue" />,
+      icon: <Search className="w-6 h-6 text-assist-blue" />,
       link: "/tasks/search"
     },
   ];
@@ -59,13 +59,13 @@ const Navbar = () => {
     { 
       title: "Apply for Tasks", 
       subtitle: "GET STARTED EARNING", 
-      icon: <Briefcase className="w-8 h-8 text-assist-blue" />,
+      icon: <Briefcase className="w-6 h-6 text-assist-blue" />,
       link: "/students/apply"
     },
     { 
       title: "Get Verified", 
       subtitle: "BECOME A VETTED STUDENT", 
-      icon: <CheckCircle className="w-8 h-8 text-assist-blue" />,
+      icon: <CheckCircle className="w-6 h-6 text-assist-blue" />,
       link: "/students/verify"
     },
   ];
@@ -90,43 +90,43 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-4" ref={dropdownRef}>
+          <div className="hidden md:flex items-center space-x-6" ref={dropdownRef}>
             {/* Browse Tasks Dropdown */}
             <div className="relative">
               <button 
                 onClick={() => toggleDropdown('browse')}
-                className={`flex items-center px-5 py-2 rounded-xl text-gray-800 hover:bg-soft-purple/70 font-semibold transition-colors ${
+                className={`flex items-center px-4 py-2 rounded-xl text-gray-800 hover:bg-soft-purple/70 font-medium transition-colors ${
                   activeDropdown === 'browse' ? 'bg-soft-purple text-gray-900' : ''
                 }`}
               >
                 EXPLORE TASKS
-                {activeDropdown === 'browse' ? <ChevronUp className="ml-2 h-4 w-4" /> : <ChevronDown className="ml-2 h-4 w-4" />}
+                {activeDropdown === 'browse' ? <ChevronUp className="ml-1.5 h-3.5 w-3.5" /> : <ChevronDown className="ml-1.5 h-3.5 w-3.5" />}
               </button>
               
               {activeDropdown === 'browse' && (
-                <div className="absolute left-0 mt-2 w-80 bg-white rounded-xl shadow-elevation overflow-hidden z-50 animate-scale-in">
-                  <div className="bg-gradient-to-r from-soft-purple to-soft-blue p-4 text-gray-900 font-bold text-xl">
+                <div className="absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-lg overflow-hidden z-50 animate-scale-in">
+                  <div className="bg-gradient-to-r from-soft-purple/80 to-soft-blue/80 p-3 text-gray-800 font-semibold text-base">
                     Browse Tasks
                   </div>
                   
-                  <div className="py-2">
+                  <div className="py-1">
                     {browseTasksMenu.map((item, index) => (
                       <Link 
                         key={index} 
                         to={item.link}
-                        className="block px-4 py-3 hover:bg-soft-gray transition-colors"
+                        className="block px-3 py-2 hover:bg-soft-gray transition-colors"
                       >
-                        <div className="flex items-start space-x-4">
-                          <div className="p-2 bg-soft-purple/20 rounded-lg">
+                        <div className="flex items-center space-x-3">
+                          <div className="p-1.5 bg-soft-purple/20 rounded-lg">
                             {item.icon}
                           </div>
                           <div>
-                            <h3 className="text-lg font-semibold text-gray-800">{item.title}</h3>
-                            <p className="text-gray-500 text-sm">{item.subtitle}</p>
+                            <h3 className="text-base font-medium text-gray-800">{item.title}</h3>
+                            <p className="text-xs text-gray-500">{item.subtitle}</p>
                           </div>
                         </div>
                         {index < browseTasksMenu.length - 1 && (
-                          <div className="border-b border-gray-100 mt-3 mx-auto"></div>
+                          <div className="border-b border-gray-100 mt-2 mx-auto"></div>
                         )}
                       </Link>
                     ))}
@@ -138,11 +138,11 @@ const Navbar = () => {
             {/* Request Task Button - Direct link, no dropdown */}
             <Link 
               to="/request-task" 
-              className={`px-5 py-2 rounded-xl ${
+              className={`px-4 py-2 rounded-xl ${
                 isActive('/request-task') 
                   ? 'bg-assist-blue text-white' 
                   : 'text-gray-800 hover:bg-soft-yellow/70'
-              } font-semibold transition-colors`}
+              } font-medium transition-colors`}
             >
               REQUEST A TASK
             </Link>
@@ -151,38 +151,38 @@ const Navbar = () => {
             <div className="relative">
               <button 
                 onClick={() => toggleDropdown('students')}
-                className={`flex items-center px-5 py-2 rounded-xl text-gray-800 hover:bg-soft-green/70 font-semibold transition-colors ${
+                className={`flex items-center px-4 py-2 rounded-xl text-gray-800 hover:bg-soft-green/70 font-medium transition-colors ${
                   activeDropdown === 'students' ? 'bg-soft-green text-gray-900' : ''
                 }`}
               >
                 FOR STUDENTS
-                {activeDropdown === 'students' ? <ChevronUp className="ml-2 h-4 w-4" /> : <ChevronDown className="ml-2 h-4 w-4" />}
+                {activeDropdown === 'students' ? <ChevronUp className="ml-1.5 h-3.5 w-3.5" /> : <ChevronDown className="ml-1.5 h-3.5 w-3.5" />}
               </button>
               
               {activeDropdown === 'students' && (
-                <div className="absolute left-0 mt-2 w-80 bg-white rounded-xl shadow-elevation overflow-hidden z-50 animate-scale-in">
-                  <div className="bg-gradient-to-r from-soft-green to-soft-blue p-4 text-gray-900 font-bold text-xl">
+                <div className="absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-lg overflow-hidden z-50 animate-scale-in">
+                  <div className="bg-gradient-to-r from-soft-green/80 to-soft-blue/80 p-3 text-gray-800 font-semibold text-base">
                     Student Portal
                   </div>
                   
-                  <div className="py-2">
+                  <div className="py-1">
                     {forStudentsMenu.map((item, index) => (
                       <Link 
                         key={index} 
                         to={item.link}
-                        className="block px-4 py-3 hover:bg-soft-gray transition-colors"
+                        className="block px-3 py-2 hover:bg-soft-gray transition-colors"
                       >
-                        <div className="flex items-start space-x-4">
-                          <div className="p-2 bg-soft-green/20 rounded-lg">
+                        <div className="flex items-center space-x-3">
+                          <div className="p-1.5 bg-soft-green/20 rounded-lg">
                             {item.icon}
                           </div>
                           <div>
-                            <h3 className="text-lg font-semibold text-gray-800">{item.title}</h3>
-                            <p className="text-gray-500 text-sm">{item.subtitle}</p>
+                            <h3 className="text-base font-medium text-gray-800">{item.title}</h3>
+                            <p className="text-xs text-gray-500">{item.subtitle}</p>
                           </div>
                         </div>
                         {index < forStudentsMenu.length - 1 && (
-                          <div className="border-b border-gray-100 mt-3 mx-auto"></div>
+                          <div className="border-b border-gray-100 mt-2 mx-auto"></div>
                         )}
                       </Link>
                     ))}
@@ -220,10 +220,10 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-white shadow-lg animate-slide-in">
-          <div className="px-4 pt-2 pb-8 space-y-2">
-            <div className="border-b border-gray-200 py-3">
+          <div className="px-4 pt-2 pb-6 space-y-2">
+            <div className="border-b border-gray-200 py-2">
               <button 
-                className="flex items-center justify-between w-full text-left font-semibold"
+                className="flex items-center justify-between w-full text-left font-medium"
                 onClick={() => toggleDropdown('browse-mobile')}
               >
                 <span>EXPLORE TASKS</span>
@@ -231,16 +231,16 @@ const Navbar = () => {
               </button>
               
               {activeDropdown === 'browse-mobile' && (
-                <div className="mt-2 space-y-2 pl-4 animate-fade-in">
+                <div className="mt-2 space-y-1.5 pl-3 animate-fade-in">
                   {browseTasksMenu.map((item, index) => (
-                    <Link key={index} to={item.link} className="block py-2">
-                      <div className="flex items-center space-x-3">
-                        <div className="p-2 bg-soft-purple/20 rounded-lg">
+                    <Link key={index} to={item.link} className="block py-1.5">
+                      <div className="flex items-center space-x-2">
+                        <div className="p-1.5 bg-soft-purple/20 rounded-lg">
                           {item.icon}
                         </div>
                         <div>
-                          <h3 className="font-medium text-gray-800">{item.title}</h3>
-                          <p className="text-gray-500 text-xs">{item.subtitle}</p>
+                          <h3 className="font-medium text-sm text-gray-800">{item.title}</h3>
+                          <p className="text-xs text-gray-500">{item.subtitle}</p>
                         </div>
                       </div>
                     </Link>
@@ -249,10 +249,10 @@ const Navbar = () => {
               )}
             </div>
             
-            <div className="border-b border-gray-200 py-3">
+            <div className="border-b border-gray-200 py-2">
               <Link 
                 to="/request-task" 
-                className={`flex items-center justify-between w-full text-left font-semibold ${
+                className={`flex items-center justify-between w-full text-left font-medium ${
                   isActive('/request-task') ? 'text-assist-blue' : ''
                 }`}
               >
@@ -260,9 +260,9 @@ const Navbar = () => {
               </Link>
             </div>
             
-            <div className="border-b border-gray-200 py-3">
+            <div className="border-b border-gray-200 py-2">
               <button 
-                className="flex items-center justify-between w-full text-left font-semibold"
+                className="flex items-center justify-between w-full text-left font-medium"
                 onClick={() => toggleDropdown('students-mobile')}
               >
                 <span>FOR STUDENTS</span>
@@ -270,16 +270,16 @@ const Navbar = () => {
               </button>
               
               {activeDropdown === 'students-mobile' && (
-                <div className="mt-2 space-y-2 pl-4 animate-fade-in">
+                <div className="mt-2 space-y-1.5 pl-3 animate-fade-in">
                   {forStudentsMenu.map((item, index) => (
-                    <Link key={index} to={item.link} className="block py-2">
-                      <div className="flex items-center space-x-3">
-                        <div className="p-2 bg-soft-green/20 rounded-lg">
+                    <Link key={index} to={item.link} className="block py-1.5">
+                      <div className="flex items-center space-x-2">
+                        <div className="p-1.5 bg-soft-green/20 rounded-lg">
                           {item.icon}
                         </div>
                         <div>
-                          <h3 className="font-medium text-gray-800">{item.title}</h3>
-                          <p className="text-gray-500 text-xs">{item.subtitle}</p>
+                          <h3 className="font-medium text-sm text-gray-800">{item.title}</h3>
+                          <p className="text-xs text-gray-500">{item.subtitle}</p>
                         </div>
                       </div>
                     </Link>
@@ -288,10 +288,10 @@ const Navbar = () => {
               )}
             </div>
 
-            <div className="pt-4 flex flex-col space-y-3">
+            <div className="pt-3 flex flex-col space-y-2">
               <Button 
                 variant="outline" 
-                className="w-full rounded-xl border-assist-blue text-assist-blue hover:bg-assist-blue/5 hover:text-assist-blue"
+                className="w-full rounded-xl border-assist-blue text-assist-blue hover:bg-assist-blue/10 hover:text-assist-blue"
               >
                 Login
               </Button>
