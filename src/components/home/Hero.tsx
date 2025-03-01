@@ -92,7 +92,7 @@ const Hero = () => {
                 <span className="text-assist-blue relative mt-2 md:mt-3">
                   <span className="after:content-['|'] after:ml-1 after:animate-pulse">{displayText}</span>
                 </span>
-                <span className="mt-2 md:mt-3">More Time.</span>
+                {/* Removed "More Time." text here */}
               </div>
             </h1>
             
