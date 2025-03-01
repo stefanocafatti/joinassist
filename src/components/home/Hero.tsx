@@ -1,10 +1,74 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Star, Sparkles } from "lucide-react";
 
 const Hero = () => {
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [displayText, setDisplayText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [loopNum, setLoopNum] = useState(0);
+  const [typingSpeed, setTypingSpeed] = useState(150);
+  
+  const tasks = [
+    "Wash my Car",
+    "Clean my Garage",
+    "Help with Moving",
+    "Assemble IKEA Furniture",
+    "Write my Essay",
+    "Code a Website",
+    "Personal Training",
+    "DJ for my Event",
+    "Grocery Delivery",
+    "Meal Prep",
+    "Water my Plants",
+    "Install my TV Mount",
+    "Tutor me in Math",
+    "Create Social Media Content",
+    "Design my Logo",
+    "Help Pack for my Trip",
+    "Fix my Bugs",
+    "Event Planning",
+    "Organize my Closet",
+    "Market Research",
+  ];
+  
+  const timeoutRef = useRef<number | null>(null);
+  
+  const handleTyping = () => {
+    const currentIndex = loopNum % tasks.length;
+    const fullText = tasks[currentIndex];
+    
+    setDisplayText(isDeleting 
+      ? fullText.substring(0, displayText.length - 1) 
+      : fullText.substring(0, displayText.length + 1)
+    );
+    
+    // Set typing speed based on current state
+    if (!isDeleting && displayText === fullText) {
+      // Pause at complete word
+      setTypingSpeed(2000);
+      setIsDeleting(true);
+    } else if (isDeleting && displayText === '') {
+      // Move to next word
+      setIsDeleting(false);
+      setLoopNum(loopNum + 1);
+      setTypingSpeed(150);
+    } else {
+      // Regular typing/deleting speed
+      setTypingSpeed(isDeleting ? 50 : 150);
+    }
+  };
+  
+  useEffect(() => {
+    timeoutRef.current = window.setTimeout(handleTyping, typingSpeed);
+    
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [displayText, isDeleting, loopNum, typingSpeed]);
 
   useEffect(() => {
     const img = new Image();
@@ -28,11 +92,13 @@ const Hero = () => {
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 animate-slide-in" style={{ animationDelay: "0.2s" }}>
-              Your Tasks, <br />
-              <span className="text-assist-blue relative">
-                Our Students
-              </span> <br />
-              More Time.
+              <div className="h-24 md:h-32 overflow-hidden">
+                <span>Your Tasks,</span> <br />
+                <span className="text-assist-blue relative inline-flex">
+                  <span className="after:content-['|'] after:ml-1 after:animate-pulse">{displayText}</span>
+                </span> <br />
+                <span>More Time.</span>
+              </div>
             </h1>
             
             <p className="text-lg md:text-xl text-gray-600 animate-slide-in max-w-lg" style={{ animationDelay: "0.3s" }}>
