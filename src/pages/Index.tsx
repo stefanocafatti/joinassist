@@ -1,4 +1,3 @@
-
 import { useEffect, useState, useCallback } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -7,6 +6,7 @@ import Features from "@/components/home/Features";
 import TaskCategories from "@/components/home/TaskCategories";
 import Testimonials from "@/components/home/Testimonials";
 import CTASection from "@/components/home/CTASection";
+import CircleBlocks from "@/components/background/CircleBlocks";
 
 type Star = {
   id: number;
@@ -275,6 +275,8 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden">
+      <CircleBlocks />
+      
       <div className="fixed inset-0 z-1 overflow-hidden pointer-events-none">
         {patternElements.map((element) => (
           <div
