@@ -1,3 +1,4 @@
+
 import { useEffect, useState, useCallback } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -302,7 +303,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden">
-      <div className="fixed inset-0 z-0 overflow-hidden">
+      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
         {patternElements.map((element) => (
           <div
             key={element.id}
@@ -312,7 +313,7 @@ const Index = () => {
               top: `${element.y}%`,
               opacity: element.opacity,
               transform: `translate(-50%, -50%) rotate(${element.rotation}deg)`,
-              zIndex: -1,
+              zIndex: 0,
             }}
           >
             {element.type === 'graduation' && (
@@ -419,7 +420,7 @@ const Index = () => {
       
       <Navbar />
       
-      <main className="flex-grow relative z-10">
+      <main className="flex-grow relative z-10 bg-transparent">
         <Hero />
         <Features />
         <TaskCategories />
