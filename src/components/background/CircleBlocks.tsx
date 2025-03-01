@@ -10,7 +10,7 @@ const CircleBlocks: React.FC<CircleBlockProps> = ({ className = "" }) => {
     { 
       size: "40vw", 
       color: "#F2FCE2", 
-      opacity: 0.4, 
+      opacity: 0.8, 
       top: "15%", 
       left: "-10%",
       animationDelay: "0s" 
@@ -18,7 +18,7 @@ const CircleBlocks: React.FC<CircleBlockProps> = ({ className = "" }) => {
     { 
       size: "35vw", 
       color: "#D3E4FD", 
-      opacity: 0.5, 
+      opacity: 0.9, 
       top: "60%", 
       left: "70%",
       animationDelay: "2s" 
@@ -26,7 +26,7 @@ const CircleBlocks: React.FC<CircleBlockProps> = ({ className = "" }) => {
     { 
       size: "45vw", 
       color: "#E5DEFF", 
-      opacity: 0.4, 
+      opacity: 0.8, 
       top: "75%", 
       left: "-15%",
       animationDelay: "1s" 
@@ -34,7 +34,7 @@ const CircleBlocks: React.FC<CircleBlockProps> = ({ className = "" }) => {
     { 
       size: "30vw", 
       color: "#FDE1D3", 
-      opacity: 0.5, 
+      opacity: 0.9, 
       top: "10%", 
       left: "80%",
       animationDelay: "1.5s" 
@@ -55,7 +55,7 @@ const CircleBlocks: React.FC<CircleBlockProps> = ({ className = "" }) => {
             top: circle.top,
             left: circle.left,
             animationDelay: circle.animationDelay,
-            filter: "blur(80px)",
+            filter: "blur(40px)",
           }}
         />
       ))}
