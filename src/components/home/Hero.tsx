@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Star, Sparkles } from "lucide-react";
@@ -44,18 +43,14 @@ const Hero = () => {
       : fullText.substring(0, displayText.length + 1)
     );
     
-    // Set typing speed based on current state
     if (!isDeleting && displayText === fullText) {
-      // Pause at complete word
       setTypingSpeed(2000);
       setIsDeleting(true);
     } else if (isDeleting && displayText === '') {
-      // Move to next word
       setIsDeleting(false);
       setLoopNum(loopNum + 1);
       setTypingSpeed(150);
     } else {
-      // Regular typing/deleting speed
       setTypingSpeed(isDeleting ? 50 : 150);
     }
   };
@@ -78,7 +73,6 @@ const Hero = () => {
 
   return (
     <div className="relative overflow-hidden pt-16">
-      {/* Ultra-light background with minimal blur to let emojis show through */}
       <div 
         className="absolute inset-0 z-2 bg-white/20 backdrop-blur-[0.5px]"
       />
@@ -93,7 +87,7 @@ const Hero = () => {
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 animate-slide-in" style={{ animationDelay: "0.2s" }}>
               <div className="h-24 md:h-32 overflow-hidden">
-                <span>Your Tasks,</span> <br />
+                <span>What do you need help with today?</span> <br />
                 <span className="text-assist-blue relative inline-flex">
                   <span className="after:content-['|'] after:ml-1 after:animate-pulse">{displayText}</span>
                 </span> <br />
