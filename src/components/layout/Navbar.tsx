@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Logo from "@/components/ui/Logo";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -33,12 +34,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link 
-              to="/" 
-              className="text-2xl font-bold text-assist-blue flex items-center gap-2"
-            >
-              <span className="font-display">Assist</span>
-            </Link>
+            <Logo />
           </div>
 
           {/* Desktop Navigation */}
@@ -102,7 +98,7 @@ const Navbar = () => {
             >
               Login
             </Button>
-            <Button className="rounded-full bg-assist-blue hover:bg-assist-blue/90">
+            <Button className="rounded-full bg-assist-blue hover:bg-assist-blue/90 shadow-soft hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
               Get Started
             </Button>
           </div>
@@ -154,12 +150,12 @@ const Navbar = () => {
             <div className="pt-4 flex flex-col space-y-3">
               <Button 
                 variant="outline" 
-                className="w-full rounded-full border-assist-blue text-assist-blue hover:bg-assist-blue/10 hover:text-assist-blue"
+                className="w-full rounded-full border-assist-blue text-assist-blue hover:bg-assist-blue/5 hover:text-assist-blue"
               >
                 Login
               </Button>
               <Button 
-                className="w-full rounded-full bg-assist-blue hover:bg-assist-blue/90"
+                className="w-full rounded-full bg-assist-blue hover:bg-assist-blue/90 shadow-soft transition-all duration-300"
               >
                 Get Started
               </Button>

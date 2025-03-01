@@ -73,6 +73,17 @@ export default {
 					"accent-foreground": "hsl(var(--sidebar-accent-foreground))",
 					border: "hsl(var(--sidebar-border))",
 					ring: "hsl(var(--sidebar-ring))"
+				},
+				// Additional playful colors
+				soft: {
+					green: "#F2FCE2",
+					yellow: "#FEF7CD",
+					orange: "#FEC6A1",
+					purple: "#E5DEFF",
+					pink: "#FFDEE2",
+					peach: "#FDE1D3",
+					blue: "#D3E4FD",
+					gray: "#F1F0FB",
 				}
 			},
 			borderRadius: {
@@ -116,7 +127,14 @@ export default {
 				pulse: {
 					"0%, 100%": { opacity: "1" },
 					"50%": { opacity: "0.8" }
-				}
+				},
+				ping: {
+					"75%, 100%": { transform: "scale(2)", opacity: "0" }
+				},
+				bounce: {
+					"0%, 100%": { transform: "translateY(-25%)", animationTimingFunction: "cubic-bezier(0.8, 0, 1, 1)" },
+					"50%": { transform: "translateY(0)", animationTimingFunction: "cubic-bezier(0, 0, 0.2, 1)" }
+				},
 			},
 			animation: {
 				"accordion-down": "accordion-down 0.2s ease-out",
@@ -127,7 +145,9 @@ export default {
 				"slide-up": "slide-up 0.5s ease-out forwards",
 				"scale-in": "scale-in 0.5s ease-out forwards",
 				"float": "float 6s ease-in-out infinite",
-				"pulse": "pulse 3s ease-in-out infinite"
+				"pulse": "pulse 3s ease-in-out infinite",
+				"ping": "ping 1s cubic-bezier(0, 0, 0.2, 1) infinite",
+				"bounce": "bounce 1s infinite"
 			},
 			transitionProperty: {
 				"height": "height",
