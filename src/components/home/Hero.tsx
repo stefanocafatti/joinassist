@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Star, Sparkles } from "lucide-react";
@@ -96,7 +97,7 @@ const Hero = () => {
                   </div>
                   <div>
                     <p className="font-medium">Satisfaction Guarantee</p>
-                    <p className="text-sm text-gray-600">Only pay when you're satisfied</p>
+                    <p className="text-sm text-gray-600">Only pay once you're happy</p>
                   </div>
                 </div>
               </div>
@@ -109,7 +110,7 @@ const Hero = () => {
                     </svg>
                   </div>
                   <div>
-                    <p className="font-medium">Trusted & Vetted</p>
+                    <p className="font-medium">Trusted & Vetted College Students</p>
                     <p className="text-sm text-gray-600">Every student is verified</p>
                   </div>
                 </div>
