@@ -31,8 +31,7 @@ const Hero = () => {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 animate-slide-in" style={{ animationDelay: "0.2s" }}>
               Your Tasks, <br />
               <span className="text-assist-blue relative">
-                Our Students, 
-                <span className="absolute -top-1 -right-6 text-yellow-400 text-sm animate-float">✨</span>
+                Our Students
               </span> <br />
               More Time.
             </h1>
