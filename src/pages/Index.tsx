@@ -8,7 +8,6 @@ import Testimonials from "@/components/home/Testimonials";
 import CTASection from "@/components/home/CTASection";
 import { 
   Sparkles, 
-  Star, 
   GraduationCap, 
   BookOpen, 
   Code, 
@@ -282,28 +281,6 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden">
       <div className="fixed inset-0 z-0 overflow-hidden">
-        {stars.map((star) => (
-          <div
-            key={star.id}
-            className="absolute"
-            style={{
-              left: `${star.x}%`,
-              top: `${star.y}%`,
-              transform: `translate(-50%, -50%) rotate(${star.rotation}deg)`,
-              zIndex: -1,
-            }}
-          >
-            <Star
-              size={`${star.size}vw`}
-              color={star.color}
-              fill={star.color}
-              fillOpacity={star.opacity * 0.5}
-              strokeWidth={1}
-              opacity={star.opacity}
-            />
-          </div>
-        ))}
-
         {patternElements.map((element) => (
           <div
             key={element.id}
