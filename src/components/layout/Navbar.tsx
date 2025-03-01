@@ -113,7 +113,7 @@ const Navbar = () => {
             </button>
             
             {activeDropdown === 'browse' && (
-              <div className="absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-lg overflow-hidden z-50 animate-scale-in">
+              <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-lg overflow-hidden z-50 animate-scale-in">
                 <div className="bg-gradient-to-r from-soft-purple/80 to-soft-blue/80 p-3 text-gray-800 font-semibold text-base">
                   Browse Tasks
                 </div>
@@ -161,7 +161,7 @@ const Navbar = () => {
             </button>
             
             {activeDropdown === 'students' && (
-              <div className="absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-lg overflow-hidden z-50 animate-scale-in">
+              <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-lg overflow-hidden z-50 animate-scale-in">
                 <div className="bg-gradient-to-r from-soft-green/80 to-soft-blue/80 p-3 text-gray-800 font-semibold text-base">
                   Student Portal
                 </div>
