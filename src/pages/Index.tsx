@@ -204,7 +204,7 @@ const Index = () => {
         type: elementTypes[Math.floor(Math.random() * elementTypes.length)],
         size: Math.random() * 1.5 + 0.8,
         color: colors[Math.floor(Math.random() * colors.length)],
-        opacity: Math.random() * 0.4 + 0.2,
+        opacity: Math.random() * 0.4 + 0.3,
         rotation: Math.random() * 360,
         speedX: (Math.random() - 0.5) * 0.05,
         speedY: (Math.random() - 0.5) * 0.05,
@@ -319,98 +319,112 @@ const Index = () => {
               <GraduationCap 
                 size={`${element.size}vw`} 
                 color={element.color} 
-                strokeWidth={1.5}
+                strokeWidth={2}
+                className="drop-shadow-sm"
               />
             )}
             {element.type === 'book' && (
               <BookOpen 
                 size={`${element.size}vw`} 
                 color={element.color} 
-                strokeWidth={1.5}
+                strokeWidth={2}
+                className="drop-shadow-sm"
               />
             )}
             {element.type === 'code' && (
               <Code 
                 size={`${element.size}vw`} 
                 color={element.color} 
-                strokeWidth={1.5}
+                strokeWidth={2}
+                className="drop-shadow-sm"
               />
             )}
             {element.type === 'hammer' && (
               <Hammer 
                 size={`${element.size}vw`} 
                 color={element.color} 
-                strokeWidth={1.5}
+                strokeWidth={2}
+                className="drop-shadow-sm"
               />
             )}
             {element.type === 'briefcase' && (
               <Briefcase 
                 size={`${element.size}vw`} 
                 color={element.color} 
-                strokeWidth={1.5}
+                strokeWidth={2}
+                className="drop-shadow-sm"
               />
             )}
             {element.type === 'car' && (
               <Car 
                 size={`${element.size}vw`} 
                 color={element.color} 
-                strokeWidth={1.5}
+                strokeWidth={2}
+                className="drop-shadow-sm"
               />
             )}
             {element.type === 'package' && (
               <Package 
                 size={`${element.size}vw`} 
                 color={element.color} 
-                strokeWidth={1.5}
+                strokeWidth={2}
+                className="drop-shadow-sm"
               />
             )}
             {element.type === 'trash' && (
               <Trash2 
                 size={`${element.size}vw`} 
                 color={element.color} 
-                strokeWidth={1.5}
+                strokeWidth={2}
+                className="drop-shadow-sm"
               />
             )}
             {element.type === 'dumbbell' && (
               <Dumbbell 
                 size={`${element.size}vw`} 
                 color={element.color} 
-                strokeWidth={1.5}
+                strokeWidth={2}
+                className="drop-shadow-sm"
               />
             )}
             {element.type === 'party' && (
               <PartyPopper 
                 size={`${element.size}vw`} 
                 color={element.color} 
-                strokeWidth={1.5}
+                strokeWidth={2}
+                className="drop-shadow-sm"
               />
             )}
             {element.type === 'filecheck' && (
               <FileCheck 
                 size={`${element.size}vw`} 
                 color={element.color} 
-                strokeWidth={1.5}
+                strokeWidth={2}
+                className="drop-shadow-sm"
               />
             )}
             {element.type === 'key' && (
               <Key 
                 size={`${element.size}vw`} 
                 color={element.color} 
-                strokeWidth={1.5}
+                strokeWidth={2}
+                className="drop-shadow-sm"
               />
             )}
             {element.type === 'camera' && (
               <Camera 
                 size={`${element.size}vw`} 
                 color={element.color} 
-                strokeWidth={1.5}
+                strokeWidth={2}
+                className="drop-shadow-sm"
               />
             )}
             {element.type === 'sparkle' && (
               <Sparkles 
                 size={`${element.size}vw`} 
                 color={element.color} 
-                strokeWidth={1.5}
+                strokeWidth={2}
+                className="drop-shadow-sm"
               />
             )}
           </div>
