@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -6,10 +7,10 @@ import Features from "@/components/home/Features";
 import TaskCategories from "@/components/home/TaskCategories";
 import Testimonials from "@/components/home/Testimonials";
 import CTASection from "@/components/home/CTASection";
-import { Sparkles, Circle, Star } from "lucide-react";
+import { Sparkles, Star } from "lucide-react";
 
-// Circle properties and color options
-type Circle = {
+// Star properties and color options
+type Star = {
   id: number;
   x: number;
   y: number;
@@ -18,6 +19,7 @@ type Circle = {
   speedX: number;
   speedY: number;
   opacity: number;
+  rotation: number;
 };
 
 // Pattern element type
@@ -33,10 +35,10 @@ type PatternElement = {
 };
 
 const Index = () => {
-  const [circles, setCircles] = useState<Circle[]>([]);
+  const [stars, setStars] = useState<Star[]>([]);
   const [patternElements, setPatternElements] = useState<PatternElement[]>([]);
 
-  // Generate initial circles
+  // Generate initial stars
   useEffect(() => {
     // Define colors with emphasis on blues (60%), with some oranges (20%) and purples (20%)
     const blueColors = [
@@ -62,10 +64,10 @@ const Index = () => {
       "#7E69AB", // Secondary Purple
     ];
 
-    const initialCircles: Circle[] = [];
-    const circleCount = window.innerWidth < 768 ? 25 : 40; // More circles for better effect
+    const initialStars: Star[] = [];
+    const starCount = window.innerWidth < 768 ? 25 : 40; // More stars for better effect
 
-    for (let i = 0; i < circleCount; i++) {
+    for (let i = 0; i < starCount; i++) {
       // Determine which color category to use based on desired distribution
       // 60% blue, 20% orange, 20% purple
       const colorCategory = Math.random();
@@ -82,21 +84,22 @@ const Index = () => {
         color = purpleColors[Math.floor(Math.random() * purpleColors.length)];
       }
       
-      initialCircles.push({
+      initialStars.push({
         id: i,
         x: Math.random() * 100, // percentage position
         y: Math.random() * 100,
-        size: Math.random() * 5 + 1, // size in vw units (1-6vw)
+        size: Math.random() * 4 + 1, // size in vw units (1-5vw)
         color: color,
-        speedX: (Math.random() - 0.5) * 0.2, // increased velocity
-        speedY: (Math.random() - 0.5) * 0.2, // increased velocity
+        speedX: (Math.random() - 0.5) * 0.2, // velocity
+        speedY: (Math.random() - 0.5) * 0.2, // velocity
         opacity: Math.random() * 0.5 + 0.25, // opacity between 0.25-0.75 for better visibility
+        rotation: Math.random() * 360, // random initial rotation
       });
     }
 
-    setCircles(initialCircles);
+    setStars(initialStars);
 
-    // Animation frame for moving circles
+    // Animation frame for moving stars
     let animationFrameId: number;
     let lastTime = 0;
 
@@ -105,32 +108,36 @@ const Index = () => {
       if (timestamp - lastTime >= 33) {
         lastTime = timestamp;
         
-        setCircles(prevCircles => 
-          prevCircles.map(circle => {
+        setStars(prevStars => 
+          prevStars.map(star => {
             // Update position based on speed
-            let newX = circle.x + circle.speedX;
-            let newY = circle.y + circle.speedY;
+            let newX = star.x + star.speedX;
+            let newY = star.y + star.speedY;
             
             // Bounce off walls with slight random variation for more natural movement
-            let newSpeedX = circle.speedX;
-            let newSpeedY = circle.speedY;
+            let newSpeedX = star.speedX;
+            let newSpeedY = star.speedY;
             
             if (newX <= 0 || newX >= 100) {
-              newSpeedX = -circle.speedX * (0.9 + Math.random() * 0.2); // Add slight randomness to bounce
+              newSpeedX = -star.speedX * (0.9 + Math.random() * 0.2); // Add slight randomness to bounce
               newX = newX <= 0 ? 0 : 100;
             }
             
             if (newY <= 0 || newY >= 100) {
-              newSpeedY = -circle.speedY * (0.9 + Math.random() * 0.2); // Add slight randomness to bounce
+              newSpeedY = -star.speedY * (0.9 + Math.random() * 0.2); // Add slight randomness to bounce
               newY = newY <= 0 ? 0 : 100;
             }
             
+            // Slowly rotate the star as it moves
+            const newRotation = (star.rotation + 0.2) % 360;
+            
             return {
-              ...circle,
+              ...star,
               x: newX,
               y: newY,
               speedX: newSpeedX,
               speedY: newSpeedY,
+              rotation: newRotation,
             };
           })
         );
@@ -207,24 +214,28 @@ const Index = () => {
   
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden">
-      {/* Animated background circles */}
+      {/* Animated background stars */}
       <div className="fixed inset-0 z-0 overflow-hidden">
-        {circles.map((circle) => (
+        {stars.map((star) => (
           <div
-            key={circle.id}
-            className="absolute rounded-full"
+            key={star.id}
+            className="absolute"
             style={{
-              left: `${circle.x}%`,
-              top: `${circle.y}%`,
-              width: `${circle.size}vw`,
-              height: `${circle.size}vw`,
-              backgroundColor: circle.color,
-              opacity: circle.opacity,
-              transform: `translate(-50%, -50%)`,
-              filter: 'blur(12px)',
+              left: `${star.x}%`,
+              top: `${star.y}%`,
+              transform: `translate(-50%, -50%) rotate(${star.rotation}deg)`,
               zIndex: -1,
             }}
-          />
+          >
+            <Star
+              size={`${star.size}vw`}
+              color={star.color}
+              fill={star.color}
+              fillOpacity={star.opacity * 0.5}
+              strokeWidth={1}
+              opacity={star.opacity}
+            />
+          </div>
         ))}
 
         {/* Static pattern elements */}
@@ -247,7 +258,7 @@ const Index = () => {
               />
             )}
             {element.type === 'circle' && (
-              <Circle 
+              <Star 
                 size={`${element.size}vw`} 
                 color={element.color} 
                 strokeWidth={1}
