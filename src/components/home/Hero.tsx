@@ -73,12 +73,12 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className="relative overflow-hidden pt-16">
+    <div className="relative overflow-hidden pt-8">
       <div 
         className="absolute inset-0 z-2 bg-white/20 backdrop-blur-[0.5px]"
       />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 md:pt-24 pb-12 md:pb-20 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 md:pt-16 pb-12 md:pb-20 relative z-10">
         <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16">
           <div className="w-full md:w-1/2 md:pr-8 space-y-6">
             <div className="inline-flex items-center gap-1 py-1 px-4 rounded-full bg-soft-yellow text-assist-blue text-sm font-medium animate-fade-in" style={{ animationDelay: "0.1s" }}>
