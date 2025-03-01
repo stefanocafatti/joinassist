@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Star, Sparkles } from "lucide-react";
@@ -116,17 +117,38 @@ const Hero = () => {
             
             <div className="flex items-center gap-4 pt-6 animate-slide-in" style={{ animationDelay: "0.5s" }}>
               <div className="flex -space-x-3">
-                {[1, 2, 3, 4].map((i) => (
-                  <div 
-                    key={i} 
-                    className="w-10 h-10 rounded-full border-2 border-white overflow-hidden hover:scale-110 transition-transform"
-                    style={{
-                      backgroundImage: `url(https://randomuser.me/api/portraits/${i % 2 === 0 ? 'women' : 'men'}/${i + 20}.jpg)`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center'
-                    }}
-                  />
-                ))}
+                <div 
+                  className="w-10 h-10 rounded-full border-2 border-white overflow-hidden hover:scale-110 transition-transform"
+                  style={{
+                    backgroundImage: `url(/lovable-uploads/f88914ce-4121-4ca9-8552-8daa6177ea37.png)`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center'
+                  }}
+                />
+                <div 
+                  className="w-10 h-10 rounded-full border-2 border-white overflow-hidden hover:scale-110 transition-transform"
+                  style={{
+                    backgroundImage: `url(/lovable-uploads/25a163c8-b11e-473b-86ea-3991afc9baed.png)`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center'
+                  }}
+                />
+                <div 
+                  className="w-10 h-10 rounded-full border-2 border-white overflow-hidden hover:scale-110 transition-transform"
+                  style={{
+                    backgroundImage: `url(/lovable-uploads/a2fb9aab-f178-4ed2-bad3-0d251cd338d3.png)`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center top'
+                  }}
+                />
+                <div 
+                  className="w-10 h-10 rounded-full border-2 border-white overflow-hidden hover:scale-110 transition-transform"
+                  style={{
+                    backgroundImage: `url(/lovable-uploads/8f95234a-2297-45ae-9f1a-d1b81fe89fd1.png)`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center'
+                  }}
+                />
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-soft-blue to-soft-purple text-assist-blue flex items-center justify-center text-xs font-medium border-2 border-white">
                   +2k
                 </div>
