@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Star, Sparkles } from "lucide-react";
@@ -85,7 +86,7 @@ const Hero = () => {
               <span>Trusted by 10,000+ students nationwide</span>
             </div>
             
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-gray-900 animate-slide-in" style={{ animationDelay: "0.2s" }}>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 animate-slide-in" style={{ animationDelay: "0.2s" }}>
               <div className="min-h-28 md:min-h-36 flex flex-col justify-start">
                 <span>I need someone to help me...</span>
                 <span className="text-assist-blue relative mt-2 md:mt-3">
