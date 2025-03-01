@@ -71,10 +71,10 @@ const Hero = () => {
     img.onload = () => setImageLoaded(true);
     
     const profileImages = [
-      "/lovable-uploads/f88914ce-4121-4ca9-8552-8daa6177ea37.png",
-      "/lovable-uploads/25a163c8-b11e-473b-86ea-3991afc9baed.png",
-      "/lovable-uploads/a2fb9aab-f178-4ed2-bad3-0d251cd338d3.png",
-      "/lovable-uploads/8f95234a-2297-45ae-9f1a-d1b81fe89fd1.png"
+      "/lovable-uploads/85907e9e-0f77-4b04-b5b7-132ec55971fa.png",
+      "/lovable-uploads/5857c7f0-9637-4ee9-adba-2c5f1076b9ac.png",
+      "/lovable-uploads/a7543c7b-5d9f-4ac2-b243-49bfc5b8d199.png",
+      "/lovable-uploads/917480cd-1a1e-4b01-b0ea-1fa142676a18.png"
     ];
     
     profileImages.forEach(src => {
@@ -128,60 +128,32 @@ const Hero = () => {
             
             <div className="flex items-center gap-4 pt-6 animate-slide-in" style={{ animationDelay: "0.5s" }}>
               <div className="flex -space-x-3">
-                <div 
-                  className="w-10 h-10 rounded-full border-2 border-white overflow-hidden hover:scale-110 transition-transform bg-gray-200"
-                  style={{
-                    backgroundImage: `url(/lovable-uploads/f88914ce-4121-4ca9-8552-8daa6177ea37.png)`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center'
-                  }}
-                >
+                <div className="w-10 h-10 rounded-full border-2 border-white overflow-hidden hover:scale-110 transition-transform">
                   <img 
-                    src="/lovable-uploads/f88914ce-4121-4ca9-8552-8daa6177ea37.png" 
+                    src="/lovable-uploads/85907e9e-0f77-4b04-b5b7-132ec55971fa.png" 
                     alt="Student 1" 
-                    className="w-full h-full object-cover opacity-0"
+                    className="w-full h-full object-cover"
                   />
                 </div>
-                <div 
-                  className="w-10 h-10 rounded-full border-2 border-white overflow-hidden hover:scale-110 transition-transform bg-gray-200"
-                  style={{
-                    backgroundImage: `url(/lovable-uploads/25a163c8-b11e-473b-86ea-3991afc9baed.png)`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center'
-                  }}
-                >
+                <div className="w-10 h-10 rounded-full border-2 border-white overflow-hidden hover:scale-110 transition-transform">
                   <img 
-                    src="/lovable-uploads/25a163c8-b11e-473b-86ea-3991afc9baed.png" 
+                    src="/lovable-uploads/5857c7f0-9637-4ee9-adba-2c5f1076b9ac.png" 
                     alt="Student 2" 
-                    className="w-full h-full object-cover opacity-0"
+                    className="w-full h-full object-cover"
                   />
                 </div>
-                <div 
-                  className="w-10 h-10 rounded-full border-2 border-white overflow-hidden hover:scale-110 transition-transform bg-gray-200"
-                  style={{
-                    backgroundImage: `url(/lovable-uploads/a2fb9aab-f178-4ed2-bad3-0d251cd338d3.png)`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center top'
-                  }}
-                >
+                <div className="w-10 h-10 rounded-full border-2 border-white overflow-hidden hover:scale-110 transition-transform">
                   <img 
-                    src="/lovable-uploads/a2fb9aab-f178-4ed2-bad3-0d251cd338d3.png" 
+                    src="/lovable-uploads/a7543c7b-5d9f-4ac2-b243-49bfc5b8d199.png" 
                     alt="Student 3" 
-                    className="w-full h-full object-cover opacity-0"
+                    className="w-full h-full object-cover"
                   />
                 </div>
-                <div 
-                  className="w-10 h-10 rounded-full border-2 border-white overflow-hidden hover:scale-110 transition-transform bg-gray-200"
-                  style={{
-                    backgroundImage: `url(/lovable-uploads/8f95234a-2297-45ae-9f1a-d1b81fe89fd1.png)`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center'
-                  }}
-                >
+                <div className="w-10 h-10 rounded-full border-2 border-white overflow-hidden hover:scale-110 transition-transform">
                   <img 
-                    src="/lovable-uploads/8f95234a-2297-45ae-9f1a-d1b81fe89fd1.png" 
+                    src="/lovable-uploads/917480cd-1a1e-4b01-b0ea-1fa142676a18.png" 
                     alt="Student 4" 
-                    className="w-full h-full object-cover opacity-0"
+                    className="w-full h-full object-cover"
                   />
                 </div>
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-soft-blue to-soft-purple text-assist-blue flex items-center justify-center text-xs font-medium border-2 border-white">
