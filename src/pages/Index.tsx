@@ -48,21 +48,25 @@ const Index = () => {
       "#FDE1D3", // Soft Peach
       "#D3E4FD", // Soft Blue
       "#F1F0FB", // Soft Gray
+      "#8B5CF6", // Vivid Purple
+      "#D946EF", // Magenta Pink
+      "#F97316", // Bright Orange
+      "#0EA5E9", // Ocean Blue
     ];
 
     const initialCircles: Circle[] = [];
-    const circleCount = window.innerWidth < 768 ? 12 : 20; // More circles
+    const circleCount = window.innerWidth < 768 ? 20 : 35; // Increased number of circles
 
     for (let i = 0; i < circleCount; i++) {
       initialCircles.push({
         id: i,
         x: Math.random() * 100, // percentage position
         y: Math.random() * 100,
-        size: Math.random() * 5 + 1, // much smaller size in vw units (1-6vw)
+        size: Math.random() * 5 + 1, // keeping size (1-6vw)
         color: colors[Math.floor(Math.random() * colors.length)],
-        speedX: (Math.random() - 0.5) * 0.1, // faster speed as percentage of screen
-        speedY: (Math.random() - 0.5) * 0.1, // faster speed as percentage of screen
-        opacity: Math.random() * 0.4 + 0.1, // opacity between 0.1-0.5
+        speedX: (Math.random() - 0.5) * 0.15, // increased speed
+        speedY: (Math.random() - 0.5) * 0.15, // increased speed
+        opacity: Math.random() * 0.5 + 0.2, // increased opacity between 0.2-0.7
       });
     }
 
@@ -193,7 +197,7 @@ const Index = () => {
               backgroundColor: circle.color,
               opacity: circle.opacity,
               transform: `translate(-50%, -50%)`,
-              filter: 'blur(15px)',
+              filter: 'blur(12px)',
               zIndex: -1,
             }}
           />
