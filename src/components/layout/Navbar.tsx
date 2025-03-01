@@ -1,7 +1,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, ChevronDown, ChevronUp, Briefcase, GraduationCap, Target } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronUp, Briefcase, GraduationCap, Target, Search, CheckCircle, ListChecks } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/ui/Logo";
 
@@ -39,47 +39,42 @@ const Navbar = () => {
     setActiveDropdown(activeDropdown === name ? null : name);
   };
 
-  const studentsMenu = [
+  const browseTasksMenu = [
     { 
-      title: "Explore GIGs", 
-      subtitle: "GET PAID EXPERIENCE", 
-      icon: <Briefcase className="w-8 h-8 text-assist-blue" /> 
+      title: "All Tasks", 
+      subtitle: "BROWSE AVAILABLE TASKS", 
+      icon: <ListChecks className="w-8 h-8 text-assist-blue" /> 
     },
     { 
-      title: "Resume Studio", 
-      subtitle: "BUILD BETTER RESUMES", 
-      icon: <GraduationCap className="w-8 h-8 text-assist-blue" /> 
+      title: "Search Tasks", 
+      subtitle: "FIND SPECIFIC TASKS", 
+      icon: <Search className="w-8 h-8 text-assist-blue" /> 
     },
   ];
 
-  const companiesMenu = [
+  const forStudentsMenu = [
     { 
-      title: "List a GIG", 
-      subtitle: "GET APPLICANTS TODAY", 
+      title: "Apply for Tasks", 
+      subtitle: "GET STARTED EARNING", 
       icon: <Briefcase className="w-8 h-8 text-assist-blue" /> 
     },
     { 
-      title: "Find Participants", 
-      subtitle: "EXPLORE THE COMMUNITY", 
-      icon: <GraduationCap className="w-8 h-8 text-assist-blue" /> 
-    },
-    { 
-      title: "Pricing", 
-      subtitle: "COMPARE PLANS", 
-      icon: <Target className="w-8 h-8 text-assist-blue" /> 
+      title: "Get Verified", 
+      subtitle: "BECOME A VETTED STUDENT", 
+      icon: <CheckCircle className="w-8 h-8 text-assist-blue" /> 
     },
   ];
 
   const resourcesMenu = [
     { 
-      title: "News", 
-      subtitle: "UPDATES FROM ASSIST", 
-      icon: <Briefcase className="w-8 h-8 text-assist-blue" /> 
+      title: "How It Works", 
+      subtitle: "LEARN ABOUT ASSIST", 
+      icon: <Target className="w-8 h-8 text-assist-blue" /> 
     },
     { 
-      title: "Case Studies", 
-      subtitle: "ENABLING BRAND SUCCESS", 
-      icon: <Target className="w-8 h-8 text-assist-blue" /> 
+      title: "Student Success", 
+      subtitle: "CASE STUDIES", 
+      icon: <GraduationCap className="w-8 h-8 text-assist-blue" /> 
     },
   ];
 
@@ -100,7 +95,58 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6" ref={dropdownRef}>
-            {/* Students Dropdown */}
+            {/* Browse Tasks Dropdown */}
+            <div className="relative">
+              <button 
+                onClick={() => toggleDropdown('browse')}
+                className={`flex items-center px-5 py-3 rounded-lg text-gray-800 hover:bg-gray-100 font-semibold ${
+                  activeDropdown === 'browse' ? 'bg-gray-100' : ''
+                }`}
+              >
+                BROWSE TASKS
+                {activeDropdown === 'browse' ? <ChevronUp className="ml-2 h-4 w-4" /> : <ChevronDown className="ml-2 h-4 w-4" />}
+              </button>
+              
+              {activeDropdown === 'browse' && (
+                <div className="absolute left-0 mt-2 w-80 bg-white rounded-b-xl shadow-lg overflow-hidden z-50">
+                  <div className="bg-assist-blue text-white font-bold py-4 px-6 text-2xl">
+                    Tasks
+                  </div>
+                  
+                  <div className="py-3">
+                    {browseTasksMenu.map((item, index) => (
+                      <div 
+                        key={index} 
+                        className="px-6 py-3 hover:bg-gray-50"
+                      >
+                        <div className="flex items-start space-x-4">
+                          <div className="p-3 bg-gray-100 rounded-lg">
+                            {item.icon}
+                          </div>
+                          <div>
+                            <h3 className="text-lg font-semibold text-gray-800">{item.title}</h3>
+                            <p className="text-gray-500 text-sm">{item.subtitle}</p>
+                          </div>
+                        </div>
+                        {index < browseTasksMenu.length - 1 && (
+                          <div className="border-b border-gray-200 mt-3 mx-auto"></div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Request Task Button - Direct link, no dropdown */}
+            <Link 
+              to="/request-task" 
+              className="px-5 py-3 rounded-lg text-gray-800 hover:bg-gray-100 font-semibold transition-colors"
+            >
+              REQUEST A TASK
+            </Link>
+
+            {/* For Students Dropdown */}
             <div className="relative">
               <button 
                 onClick={() => toggleDropdown('students')}
@@ -108,7 +154,7 @@ const Navbar = () => {
                   activeDropdown === 'students' ? 'bg-gray-100' : ''
                 }`}
               >
-                STUDENTS
+                FOR STUDENTS
                 {activeDropdown === 'students' ? <ChevronUp className="ml-2 h-4 w-4" /> : <ChevronDown className="ml-2 h-4 w-4" />}
               </button>
               
@@ -119,7 +165,7 @@ const Navbar = () => {
                   </div>
                   
                   <div className="py-3">
-                    {studentsMenu.map((item, index) => (
+                    {forStudentsMenu.map((item, index) => (
                       <div 
                         key={index} 
                         className="px-6 py-3 hover:bg-gray-50"
@@ -133,63 +179,12 @@ const Navbar = () => {
                             <p className="text-gray-500 text-sm">{item.subtitle}</p>
                           </div>
                         </div>
-                        {index < studentsMenu.length - 1 && (
+                        {index < forStudentsMenu.length - 1 && (
                           <div className="border-b border-gray-200 mt-3 mx-auto"></div>
                         )}
                       </div>
                     ))}
                   </div>
-                  
-                  <button className="bg-assist-blue text-white w-full py-3 font-bold">
-                    LOGIN
-                  </button>
-                </div>
-              )}
-            </div>
-
-            {/* Companies Dropdown */}
-            <div className="relative">
-              <button 
-                onClick={() => toggleDropdown('companies')}
-                className={`flex items-center px-5 py-3 rounded-lg text-gray-800 hover:bg-gray-100 font-semibold ${
-                  activeDropdown === 'companies' ? 'bg-gray-100' : ''
-                }`}
-              >
-                COMPANIES
-                {activeDropdown === 'companies' ? <ChevronUp className="ml-2 h-4 w-4" /> : <ChevronDown className="ml-2 h-4 w-4" />}
-              </button>
-              
-              {activeDropdown === 'companies' && (
-                <div className="absolute left-0 mt-2 w-80 bg-white rounded-b-xl shadow-lg overflow-hidden z-50">
-                  <div className="bg-assist-blue text-white font-bold py-4 px-6 text-2xl">
-                    Companies
-                  </div>
-                  
-                  <div className="py-3">
-                    {companiesMenu.map((item, index) => (
-                      <div 
-                        key={index} 
-                        className="px-6 py-3 hover:bg-gray-50"
-                      >
-                        <div className="flex items-start space-x-4">
-                          <div className="p-3 bg-gray-100 rounded-lg">
-                            {item.icon}
-                          </div>
-                          <div>
-                            <h3 className="text-lg font-semibold text-gray-800">{item.title}</h3>
-                            <p className="text-gray-500 text-sm">{item.subtitle}</p>
-                          </div>
-                        </div>
-                        {index < companiesMenu.length - 1 && (
-                          <div className="border-b border-gray-200 mt-3 mx-auto"></div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                  
-                  <button className="bg-assist-blue text-white w-full py-3 font-bold">
-                    LOGIN
-                  </button>
                 </div>
               )}
             </div>
@@ -213,10 +208,6 @@ const Navbar = () => {
                   </div>
                   
                   <div className="py-3">
-                    <div className="px-6 py-2 text-gray-500 text-lg font-semibold">
-                      BLOG
-                    </div>
-                    
                     {resourcesMenu.map((item, index) => (
                       <div 
                         key={index} 
@@ -274,15 +265,15 @@ const Navbar = () => {
             <div className="border-b border-gray-200 py-3">
               <button 
                 className="flex items-center justify-between w-full text-left font-semibold"
-                onClick={() => toggleDropdown('students-mobile')}
+                onClick={() => toggleDropdown('browse-mobile')}
               >
-                <span>STUDENTS</span>
-                {activeDropdown === 'students-mobile' ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                <span>BROWSE TASKS</span>
+                {activeDropdown === 'browse-mobile' ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
               </button>
               
-              {activeDropdown === 'students-mobile' && (
+              {activeDropdown === 'browse-mobile' && (
                 <div className="mt-2 space-y-2 pl-4">
-                  {studentsMenu.map((item, index) => (
+                  {browseTasksMenu.map((item, index) => (
                     <div key={index} className="py-2">
                       <div className="flex items-center space-x-3">
                         <div className="p-2 bg-gray-100 rounded-lg">
@@ -300,17 +291,26 @@ const Navbar = () => {
             </div>
             
             <div className="border-b border-gray-200 py-3">
+              <Link 
+                to="/request-task" 
+                className="flex items-center justify-between w-full text-left font-semibold"
+              >
+                <span>REQUEST A TASK</span>
+              </Link>
+            </div>
+            
+            <div className="border-b border-gray-200 py-3">
               <button 
                 className="flex items-center justify-between w-full text-left font-semibold"
-                onClick={() => toggleDropdown('companies-mobile')}
+                onClick={() => toggleDropdown('students-mobile')}
               >
-                <span>COMPANIES</span>
-                {activeDropdown === 'companies-mobile' ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                <span>FOR STUDENTS</span>
+                {activeDropdown === 'students-mobile' ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
               </button>
               
-              {activeDropdown === 'companies-mobile' && (
+              {activeDropdown === 'students-mobile' && (
                 <div className="mt-2 space-y-2 pl-4">
-                  {companiesMenu.map((item, index) => (
+                  {forStudentsMenu.map((item, index) => (
                     <div key={index} className="py-2">
                       <div className="flex items-center space-x-3">
                         <div className="p-2 bg-gray-100 rounded-lg">
@@ -338,7 +338,6 @@ const Navbar = () => {
               
               {activeDropdown === 'resources-mobile' && (
                 <div className="mt-2 space-y-2 pl-4">
-                  <div className="text-gray-500 font-medium py-1">BLOG</div>
                   {resourcesMenu.map((item, index) => (
                     <div key={index} className="py-2">
                       <div className="flex items-center space-x-3">
