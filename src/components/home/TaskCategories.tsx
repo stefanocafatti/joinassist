@@ -12,8 +12,23 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CategoryCard from "../ui/CategoryCard";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const TaskCategories = () => {
+  const navigate = useNavigate();
+  
+  const handleCategoryClick = (category: string) => {
+    // For now, just show a toast notification
+    toast.success(`${category} category clicked!`, {
+      description: "This would navigate to the category page in a full implementation."
+    });
+    
+    // In a real implementation, this would navigate to a category page
+    // navigate(`/categories/${category.toLowerCase()}`);
+    console.log(`Category selected: ${category}`);
+  };
+  
   const categories = [
     {
       icon: Trash2,
@@ -157,14 +172,15 @@ const TaskCategories = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {categories.map((category, index) => (
-            <CategoryCard
-              key={index}
-              icon={category.icon}
-              title={category.title}
-              description={category.description}
-              tasks={category.tasks}
-              color={category.color}
-            />
+            <div key={index} onClick={() => handleCategoryClick(category.title)}>
+              <CategoryCard
+                icon={category.icon}
+                title={category.title}
+                description={category.description}
+                tasks={category.tasks}
+                color={category.color}
+              />
+            </div>
           ))}
         </div>
         
@@ -172,6 +188,7 @@ const TaskCategories = () => {
           <Button 
             size="lg" 
             className="rounded-full bg-assist-blue hover:bg-assist-blue/90 text-white h-14 px-8 text-base"
+            onClick={() => handleCategoryClick("All")}
           >
             Browse All Tasks
           </Button>
