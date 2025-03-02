@@ -26,15 +26,13 @@ const Logo = ({ variant = "default", showText = true, className = "" }: LogoProp
   return (
     <Link 
       to="/" 
-      className={`flex items-center gap-2 ${textColor} ${className}`}
+      className={`flex items-center gap-2 ${className}`}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
       <span className="font-display text-3xl font-black tracking-tight relative">
-        {/* Using a lighter gradient that ensures readability */}
-        <span className="text-assist-blue relative">
-          Assist
-          <span className="absolute inset-0 bg-gradient-to-r from-assist-blue via-assist-blue/90 to-assist-blue/85 bg-clip-text text-transparent mix-blend-overlay opacity-50"></span>
+        <span className="relative">
+          <span className="bg-gradient-to-r from-assist-blue via-blue-500 to-blue-400 bg-clip-text text-transparent">Assist</span>
         </span>
         {sparkle && (
           <span className="absolute -top-2 -right-4 text-yellow-400 text-xs animate-bounce">✨</span>
