@@ -110,118 +110,121 @@ const Features = () => {
       </div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-20">
+        <div className="text-center max-w-4xl mx-auto mb-20">
           <div className="inline-flex items-center gap-2 py-1 px-4 rounded-full bg-soft-blue mb-4 text-assist-blue text-sm font-medium animate-fade-in">
             <span className="inline-block w-2 h-2 rounded-full bg-assist-blue animate-pulse"></span>
             <span>Simple & Intuitive</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
             How <span className="bg-gradient-to-r from-assist-blue via-blue-500 to-blue-400 bg-clip-text text-transparent">Assist</span> Works
           </h2>
-          <p className="text-lg text-gray-600">
+          <p className="text-xl text-gray-600">
             Assist connects people with tasks to students who can help, creating value for both sides of the marketplace.
           </p>
         </div>
         
-        {/* New animated steps */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
-          <div className="space-y-8">
-            <div className="relative z-10">
-              <div className="flex items-center justify-start space-x-6 mb-10">
-                {[0, 1, 2].map(step => (
-                  <button 
-                    key={step}
-                    onClick={() => setAnimatedStep(step)}
-                    className={`relative ${animatedStep === step ? '' : 'opacity-40'} transition-all duration-500`}
-                  >
-                    <div className={`
-                      w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold shadow-lg
-                      transition-all duration-500 transform
-                      ${animatedStep === step ? 'bg-assist-blue text-white scale-110' : 'bg-white text-assist-blue'}
-                    `}>
-                      {step + 1}
+        {/* Centered and larger animated steps */}
+        <div className="flex flex-col items-center justify-center mb-24">
+          <div className="flex items-center justify-center space-x-10 mb-12 w-full">
+            {[0, 1, 2].map(step => (
+              <button 
+                key={step}
+                onClick={() => setAnimatedStep(step)}
+                className={`relative ${animatedStep === step ? '' : 'opacity-40'} transition-all duration-500`}
+              >
+                <div className={`
+                  w-24 h-24 rounded-full flex items-center justify-center text-3xl font-bold shadow-lg
+                  transition-all duration-500 transform
+                  ${animatedStep === step ? 'bg-assist-blue text-white scale-110' : 'bg-white text-assist-blue'}
+                `}>
+                  {step + 1}
+                </div>
+                {step < 2 && (
+                  <div className="absolute top-1/2 left-full w-14 h-0.5 bg-gray-200 -translate-y-1/2">
+                    <div className={`absolute top-0 left-0 h-full bg-assist-blue transition-all duration-300`} 
+                         style={{ width: animatedStep > step ? '100%' : '0%' }} />
+                  </div>
+                )}
+              </button>
+            ))}
+          </div>
+        
+          <div className="max-w-3xl mx-auto w-full">
+            <div className="relative min-h-[14rem] mb-10">
+              {[
+                {
+                  title: "Post Your Task",
+                  icon: "📝",
+                  description: "Describe what you need help with, set your budget, and choose when you'd like the task completed."
+                },
+                {
+                  title: "Get Matched",
+                  icon: "🤝",
+                  description: "Our platform connects you with verified students who have the skills and availability to help."
+                },
+                {
+                  title: "Task Completed",
+                  icon: "✅",
+                  description: "Your student helper completes the task, and you only pay when you're completely satisfied."
+                }
+              ].map((step, index) => (
+                <div 
+                  key={index}
+                  className={`
+                    absolute top-0 left-0 w-full transition-all duration-500 transform
+                    ${animatedStep === index ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 pointer-events-none'}
+                  `}
+                >
+                  <div className="flex items-center gap-6 p-8 glassmorphism rounded-2xl shadow-elevation">
+                    <div className="bg-soft-blue w-16 h-16 rounded-xl flex items-center justify-center text-3xl flex-shrink-0">
+                      {step.icon}
                     </div>
-                    {step < 2 && (
-                      <div className={`absolute top-1/2 left-full w-8 h-0.5 ${animatedStep > step ? 'bg-assist-blue' : 'bg-gray-200'} transition-all duration-300`} />
-                    )}
-                  </button>
-                ))}
-              </div>
-            
-              <div className="relative min-h-[14rem]">
-                {[
-                  {
-                    title: "Post Your Task",
-                    icon: "📝",
-                    description: "Describe what you need help with, set your budget, and choose when you'd like the task completed."
-                  },
-                  {
-                    title: "Get Matched",
-                    icon: "🤝",
-                    description: "Our platform connects you with verified students who have the skills and availability to help."
-                  },
-                  {
-                    title: "Task Completed",
-                    icon: "✅",
-                    description: "Your student helper completes the task, and you only pay when you're completely satisfied."
-                  }
-                ].map((step, index) => (
-                  <div 
-                    key={index}
-                    className={`
-                      absolute top-0 left-0 w-full transition-all duration-500 transform
-                      ${animatedStep === index ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 pointer-events-none'}
-                    `}
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className="bg-soft-blue w-12 h-12 rounded-xl flex items-center justify-center text-2xl">
-                        {step.icon}
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
-                        <p className="text-gray-600">{step.description}</p>
-                      </div>
+                    <div>
+                      <h3 className="text-2xl font-semibold mb-2">{step.title}</h3>
+                      <p className="text-lg text-gray-600">{step.description}</p>
                     </div>
                   </div>
-                ))}
-              </div>
-            </div>
-            
-            <div className="glassmorphism p-6 rounded-xl">
-              <h4 className="font-medium text-assist-blue mb-2">Why students love Assist</h4>
-              <ul className="space-y-2">
-                <li className="flex items-center gap-2">
-                  <div className="w-5 h-5 rounded-full bg-soft-green flex items-center justify-center">
-                    <CheckCircle2 size={12} className="text-green-600" />
-                  </div>
-                  <span>Flexible work that fits their schedule</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <div className="w-5 h-5 rounded-full bg-soft-green flex items-center justify-center">
-                    <CheckCircle2 size={12} className="text-green-600" />
-                  </div>
-                  <span>Real-world experience for their resume</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <div className="w-5 h-5 rounded-full bg-soft-green flex items-center justify-center">
-                    <CheckCircle2 size={12} className="text-green-600" />
-                  </div>
-                  <span>Income to help with expenses</span>
-                </li>
-              </ul>
+                </div>
+              ))}
             </div>
           </div>
-          
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-soft-blue to-soft-pink rounded-3xl opacity-30 blur-xl" />
-            <div className="relative h-full flex items-center">
-              <div className="w-full rounded-2xl overflow-hidden shadow-elevation">
-                <ImageSlideshow 
-                  images={stepImages[animatedStep]} 
-                  autoplayInterval={5000}
-                />
+
+          <div className="max-w-4xl w-full mx-auto mt-10">
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-soft-blue to-soft-pink rounded-3xl opacity-30 blur-xl" />
+              <div className="relative h-full flex items-center justify-center">
+                <div className="w-full rounded-2xl overflow-hidden shadow-elevation">
+                  <ImageSlideshow 
+                    images={stepImages[animatedStep]} 
+                    autoplayInterval={5000}
+                  />
+                </div>
               </div>
             </div>
+          </div>
+
+          <div className="max-w-3xl mx-auto mt-12 glassmorphism p-8 rounded-2xl">
+            <h4 className="font-medium text-xl text-assist-blue mb-4">Why students love Assist</h4>
+            <ul className="space-y-4">
+              <li className="flex items-center gap-3">
+                <div className="w-6 h-6 rounded-full bg-soft-green flex items-center justify-center">
+                  <CheckCircle2 size={14} className="text-green-600" />
+                </div>
+                <span className="text-lg">Flexible work that fits their schedule</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <div className="w-6 h-6 rounded-full bg-soft-green flex items-center justify-center">
+                  <CheckCircle2 size={14} className="text-green-600" />
+                </div>
+                <span className="text-lg">Real-world experience for their resume</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <div className="w-6 h-6 rounded-full bg-soft-green flex items-center justify-center">
+                  <CheckCircle2 size={14} className="text-green-600" />
+                </div>
+                <span className="text-lg">Income to help with expenses</span>
+              </li>
+            </ul>
           </div>
         </div>
         
