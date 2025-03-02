@@ -8,6 +8,7 @@ import { User, History, CreditCard, Heart as HeartIcon, Settings, LogOut } from 
 
 interface MainHeaderProps {
   userName: string;
+  profileImage: string | null;
   showFavorites: boolean;
   onToggleFavoriteView: () => void;
   onSetActiveTab: (tab: string) => void;
@@ -15,6 +16,7 @@ interface MainHeaderProps {
 
 const MainHeader: React.FC<MainHeaderProps> = ({ 
   userName, 
+  profileImage,
   showFavorites, 
   onToggleFavoriteView, 
   onSetActiveTab 
@@ -40,7 +42,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-10 w-10 rounded-full p-0">
               <Avatar className="h-9 w-9">
-                <AvatarImage src="" />
+                <AvatarImage src={profileImage || ""} />
                 <AvatarFallback className="bg-assist-blue text-white">
                   {userName.charAt(0)}
                 </AvatarFallback>

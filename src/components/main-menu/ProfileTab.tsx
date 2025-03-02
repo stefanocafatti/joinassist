@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { User, History, CreditCard, Phone, Mail, MapPin } from "lucide-react";
@@ -35,21 +35,28 @@ interface ProfileTabProps {
     }>;
   };
   onUpdateUserName: (firstName: string, lastName: string) => void;
+  onUpdateProfile: (firstName: string, lastName: string, image: string | null) => void;
+  profileImage: string | null;
 }
 
-const ProfileTab: React.FC<ProfileTabProps> = ({ user, onUpdateUserName }) => {
+const ProfileTab: React.FC<ProfileTabProps> = ({ user, onUpdateUserName, onUpdateProfile, profileImage }) => {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [profileForm, setProfileForm] = useState({
     firstName: user.firstName,
     lastName: user.lastName,
-    email: "example@university.edu",
+    email: "example@assistme.com",
     phone: "",
     location: "Westwood, LA",
     avatarUrl: ""
   });
   
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(profileImage);
   
+  // Update preview image when profileImage prop changes
+  useEffect(() => {
+    setPreviewImage(profileImage);
+  }, [profileImage]);
+
   const handleEditProfile = () => {
     setIsEditDialogOpen(true);
   };
@@ -74,8 +81,8 @@ const ProfileTab: React.FC<ProfileTabProps> = ({ user, onUpdateUserName }) => {
   };
   
   const handleSaveProfile = () => {
-    // Update the user name in the parent component
-    onUpdateUserName(profileForm.firstName, profileForm.lastName);
+    // Update the user profile in the parent component
+    onUpdateProfile(profileForm.firstName, profileForm.lastName, previewImage);
     
     // In a real app, this would save to a backend
     toast.success("Profile updated successfully");

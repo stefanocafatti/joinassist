@@ -123,6 +123,7 @@ const MainMenu = () => {
   const [isTaskDetailOpen, setIsTaskDetailOpen] = useState(false);
   const [favoriteTaskIds, setFavoriteTaskIds] = useState<string[]>([]);
   const [showFavorites, setShowFavorites] = useState(false);
+  const [profileImage, setProfileImage] = useState<string | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -139,6 +140,16 @@ const MainMenu = () => {
       lastName
     }));
     setUserName(firstName);
+  };
+
+  const handleUpdateProfile = (firstName: string, lastName: string, image: string | null) => {
+    setUser(prevUser => ({
+      ...prevUser,
+      firstName,
+      lastName
+    }));
+    setUserName(firstName);
+    setProfileImage(image);
   };
 
   const handleFavoriteToggle = (taskTitle: string) => {
@@ -240,7 +251,12 @@ const MainMenu = () => {
 
   const renderContent = () => {
     if (activeTab === "profile") {
-      return <ProfileTab user={user} onUpdateUserName={handleUpdateUserName} />;
+      return <ProfileTab 
+        user={user} 
+        onUpdateUserName={handleUpdateUserName} 
+        onUpdateProfile={handleUpdateProfile}
+        profileImage={profileImage}
+      />;
     } else if (activeTab === "requests") {
       return <RequestsTab requests={mockSubmittedRequests} onNavigateToHome={() => setActiveTab("home")} />;
     } else if (showFavorites) {
@@ -288,6 +304,7 @@ const MainMenu = () => {
         <header className="mb-8">
           <MainHeader 
             userName={userName}
+            profileImage={profileImage}
             showFavorites={showFavorites}
             onToggleFavoriteView={toggleFavoriteView}
             onSetActiveTab={setActiveTab}
