@@ -1,9 +1,11 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CircleBlocks from "@/components/background/CircleBlocks";
 import { PawPrint, Car, Home, Package, Briefcase } from "lucide-react";
 import TaskDetailView from "@/components/ui/TaskDetailView";
 import { format } from "date-fns";
+import { useToast } from "@/hooks/use-toast";
 
 // Import refactored components
 import WelcomeOverlay from "@/components/main-menu/WelcomeOverlay";
@@ -112,6 +114,7 @@ const mockSubmittedRequests = [
 
 const MainMenu = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState("");
   const [userInterests, setUserInterests] = useState<string[]>([]);
   const [userName, setUserName] = useState(mockUser.firstName);
@@ -128,6 +131,7 @@ const MainMenu = () => {
   const [assistPoints, setAssistPoints] = useState(mockUser.assistPoints);
   const [recentlyViewedTasks, setRecentlyViewedTasks] = useState<typeof recommendedTasks>([]);
   const [submittedRequests, setSubmittedRequests] = useState(mockSubmittedRequests);
+  const [notificationsEnabled, setNotificationsEnabled] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -172,6 +176,10 @@ const MainMenu = () => {
       ...prevUser,
       assistPoints: newPoints
     }));
+  };
+
+  const handleToggleNotifications = (enabled: boolean) => {
+    setNotificationsEnabled(enabled);
   };
 
   const handleFavoriteToggle = (taskTitle: string) => {
@@ -410,7 +418,7 @@ const MainMenu = () => {
       price: priceType === "hourly" ? `$${price}/hr` : `$${price}`,
       status: "Pending",
       provider: "",
-      additionalInfo: additionalInfo
+      additionalInfo
     };
     
     // Update the submitted requests list
@@ -421,6 +429,24 @@ const MainMenu = () => {
     
     // Switch to the requests tab to show the new submission
     setActiveTab("requests");
+    
+    // Show toast notification for successful booking
+    toast({
+      title: "Task Request Submitted",
+      description: `Your request for ${taskTitle} has been submitted successfully.`,
+      duration: 3000,
+    });
+    
+    // Show notification toast if enabled
+    if (notificationsEnabled) {
+      setTimeout(() => {
+        toast({
+          title: "Task Status Update",
+          description: "Your request is being reviewed by providers in your area.",
+          duration: 5000,
+        });
+      }, 3000);
+    }
   };
 
   const getFavoriteListings = () => {
@@ -460,7 +486,12 @@ const MainMenu = () => {
         profileImage={profileImage}
       />;
     } else if (activeTab === "requests") {
-      return <RequestsTab requests={submittedRequests} onNavigateToHome={() => setActiveTab("home")} />;
+      return <RequestsTab 
+        requests={submittedRequests} 
+        onNavigateToHome={() => setActiveTab("home")} 
+        notificationsEnabled={notificationsEnabled}
+        onToggleNotifications={handleToggleNotifications}
+      />;
     } else if (activeTab === "rewards") { // Changed from "store" to "rewards"
       return <StoreTab 
         assistPoints={assistPoints} 

@@ -1,8 +1,10 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ClipboardList, Filter } from "lucide-react";
+import { ClipboardList, Filter, Bell, BellOff } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { useToast } from "@/hooks/use-toast";
 
 interface Request {
   id: string;
@@ -12,14 +14,37 @@ interface Request {
   price: string;
   status: string;
   provider: string;
+  additionalInfo?: string;
 }
 
 interface RequestsTabProps {
   requests: Request[];
   onNavigateToHome: () => void;
+  onToggleNotifications: (enabled: boolean) => void;
+  notificationsEnabled: boolean;
 }
 
-const RequestsTab: React.FC<RequestsTabProps> = ({ requests, onNavigateToHome }) => {
+const RequestsTab: React.FC<RequestsTabProps> = ({ 
+  requests, 
+  onNavigateToHome,
+  onToggleNotifications,
+  notificationsEnabled
+}) => {
+  const { toast } = useToast();
+
+  const handleToggleNotifications = () => {
+    const newState = !notificationsEnabled;
+    onToggleNotifications(newState);
+    
+    toast({
+      title: newState ? "Notifications enabled" : "Notifications disabled",
+      description: newState 
+        ? "You'll receive updates about your tasks." 
+        : "You won't receive notification updates.",
+      duration: 3000,
+    });
+  };
+
   return (
     <div className="space-y-8">
       <section className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
@@ -35,6 +60,24 @@ const RequestsTab: React.FC<RequestsTabProps> = ({ requests, onNavigateToHome })
               Sort by Date
             </Button>
           </div>
+        </div>
+        
+        <div className="mb-6 flex items-center justify-between bg-gray-50 p-3 rounded-lg">
+          <div className="flex items-center gap-2">
+            {notificationsEnabled ? (
+              <Bell className="h-5 w-5 text-assist-blue" />
+            ) : (
+              <BellOff className="h-5 w-5 text-gray-400" />
+            )}
+            <span className="text-sm font-medium">
+              {notificationsEnabled ? "Task notifications are enabled" : "Enable task notifications"}
+            </span>
+          </div>
+          <Switch 
+            checked={notificationsEnabled} 
+            onCheckedChange={handleToggleNotifications} 
+            className="data-[state=checked]:bg-assist-blue"
+          />
         </div>
         
         {requests.length > 0 ? (
