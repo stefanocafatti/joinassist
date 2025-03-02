@@ -71,7 +71,7 @@ const RecommendedTasksSection: React.FC<RecommendedTasksSectionProps> = ({
                 style={{ backgroundImage: `url(${task.image})` }}
               />
               <button 
-                className="absolute top-3 right-3 p-1.5 rounded-full bg-white/80 hover:bg-white transition-colors z-10 shadow-sm"
+                className="absolute top-3 right-3 z-10"
                 onClick={(e) => {
                   e.stopPropagation();
                   onFavoriteToggle(task.title);
@@ -98,7 +98,7 @@ const RecommendedTasksSection: React.FC<RecommendedTasksSectionProps> = ({
                 <Button 
                   size="sm" 
                   className="bg-assist-blue hover:bg-assist-blue/90 w-full"
-                  onClick={(e) => handleTaskAction(task.title, e)}
+                  onClick={(e) => onBookNow(task.title)}
                 >
                   <Eye className="h-4 w-4 mr-1" /> View Task
                 </Button>

@@ -154,7 +154,7 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
                   style={{ backgroundImage: `url(${getTaskImage(task)})` }}
                 />
                 <button 
-                  className="absolute top-3 right-3 p-1.5 rounded-full bg-white/80 hover:bg-white transition-colors z-10 shadow-sm"
+                  className="absolute top-3 right-3 z-10"
                   onClick={(e) => {
                     e.stopPropagation();
                     onFavoriteToggle(task.title);

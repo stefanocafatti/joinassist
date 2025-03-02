@@ -72,9 +72,9 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({
                   style={{ backgroundImage: `url(${task.image})` }}
                 />
                 <button 
-                  className="absolute top-3 right-3 p-1 rounded-full bg-white/80 hover:bg-white transition-colors"
+                  className="absolute top-3 right-3 z-10"
                   onClick={(e) => {
-                    e.stopPropagation(); // Prevent card click
+                    e.stopPropagation();
                     onFavoriteToggle(task.title);
                   }}
                 >
@@ -100,7 +100,7 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({
                     size="sm" 
                     className="bg-assist-blue hover:bg-assist-blue/90 w-full"
                     onClick={(e) => {
-                      e.stopPropagation(); // Prevent card click
+                      e.stopPropagation();
                       onBookNow(task.title);
                     }}
                   >
