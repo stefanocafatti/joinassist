@@ -83,7 +83,10 @@ const Features = () => {
             <span>Simple & Intuitive</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            How Assist Works
+            How <span className="relative">
+              <span className="bg-gradient-to-r from-assist-blue via-blue-500 to-blue-400 bg-clip-text text-transparent">Assist</span>
+              <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-assist-blue via-blue-500 to-blue-400 opacity-70"></span>
+            </span> Works
           </h2>
           <p className="text-lg text-gray-600">
             Assist connects people with tasks to students who can help, creating value for both sides of the marketplace.
