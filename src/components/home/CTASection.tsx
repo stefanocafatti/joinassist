@@ -35,28 +35,28 @@ const CTASection = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/15 transition-all hover:transform hover:scale-105 hover:shadow-xl">
             <div className="text-3xl md:text-4xl font-bold mb-2">
-              <span className="bg-gradient-to-r from-[#FEF7CD] to-[#F97316] text-transparent bg-clip-text">10,000+</span>
+              <span className="bg-gradient-to-r from-yellow-300 to-yellow-400 text-transparent bg-clip-text">10,000+</span>
             </div>
             <p className="text-white/80">Verified students</p>
           </div>
           
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/15 transition-all hover:transform hover:scale-105 hover:shadow-xl">
             <div className="text-3xl md:text-4xl font-bold mb-2">
-              <span className="bg-gradient-to-r from-[#FEF7CD] to-[#F97316] text-transparent bg-clip-text">200+</span>
+              <span className="bg-gradient-to-r from-yellow-300 to-yellow-400 text-transparent bg-clip-text">200+</span>
             </div>
             <p className="text-white/80">Universities represented</p>
           </div>
           
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/15 transition-all hover:transform hover:scale-105 hover:shadow-xl">
             <div className="text-3xl md:text-4xl font-bold mb-2">
-              <span className="bg-gradient-to-r from-[#FEF7CD] to-[#F97316] text-transparent bg-clip-text">50,000+</span>
+              <span className="bg-gradient-to-r from-yellow-300 to-yellow-400 text-transparent bg-clip-text">50,000+</span>
             </div>
             <p className="text-white/80">Tasks completed</p>
           </div>
           
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/15 transition-all hover:transform hover:scale-105 hover:shadow-xl">
             <div className="text-3xl md:text-4xl font-bold mb-2">
-              <span className="bg-gradient-to-r from-[#FEF7CD] to-[#F97316] text-transparent bg-clip-text">4.9/5</span>
+              <span className="bg-gradient-to-r from-yellow-300 to-yellow-400 text-transparent bg-clip-text">4.9/5</span>
             </div>
             <p className="text-white/80">Average task rating</p>
           </div>
