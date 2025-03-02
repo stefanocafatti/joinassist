@@ -32,6 +32,7 @@ const TaskDetailView = ({ isOpen, onClose, task }: TaskDetailViewProps) => {
   const [offerAmount, setOfferAmount] = useState("");
   const [location, setLocation] = useState("");
   const [preferredDate, setPreferredDate] = useState("");
+  const [preferredTime, setPreferredTime] = useState("");
   const [additionalInfo, setAdditionalInfo] = useState("");
   const [paymentType, setPaymentType] = useState<"onetime" | "hourly">("onetime");
 
@@ -39,7 +40,7 @@ const TaskDetailView = ({ isOpen, onClose, task }: TaskDetailViewProps) => {
     e.preventDefault();
     
     // Validate form
-    if (!offerAmount || !location || !preferredDate) {
+    if (!offerAmount || !location || !preferredDate || !preferredTime) {
       toast.error("Please fill in all required fields");
       return;
     }
@@ -51,6 +52,7 @@ const TaskDetailView = ({ isOpen, onClose, task }: TaskDetailViewProps) => {
       paymentType,
       location,
       preferredDate,
+      preferredTime,
       additionalInfo
     });
     
@@ -62,6 +64,7 @@ const TaskDetailView = ({ isOpen, onClose, task }: TaskDetailViewProps) => {
     setOfferAmount("");
     setLocation("");
     setPreferredDate("");
+    setPreferredTime("");
     setAdditionalInfo("");
     setPaymentType("onetime");
     onClose();
@@ -97,7 +100,6 @@ const TaskDetailView = ({ isOpen, onClose, task }: TaskDetailViewProps) => {
                 <Label htmlFor="offerAmount" className="text-base font-medium">
                   Your Offer Amount *
                 </Label>
-                <p className="text-sm text-gray-500 mb-2">Recommended price is $30</p>
                 <div className="flex gap-3 mb-2">
                   <Button
                     type="button"
@@ -153,18 +155,31 @@ const TaskDetailView = ({ isOpen, onClose, task }: TaskDetailViewProps) => {
               
               <div>
                 <Label htmlFor="preferredDate" className="text-base font-medium">
-                  Preferred Date *
+                  Preferred Date & Time *
                 </Label>
-                <div className="relative mt-1">
-                  <CalendarIcon className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                  <Input
-                    id="preferredDate"
-                    type="date"
-                    className="pl-10"
-                    value={preferredDate}
-                    onChange={(e) => setPreferredDate(e.target.value)}
-                    required
-                  />
+                <div className="grid grid-cols-2 gap-3 mt-1">
+                  <div className="relative">
+                    <CalendarIcon className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+                    <Input
+                      id="preferredDate"
+                      type="date"
+                      className="pl-10"
+                      value={preferredDate}
+                      onChange={(e) => setPreferredDate(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="relative">
+                    <Clock className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+                    <Input
+                      id="preferredTime"
+                      type="time"
+                      className="pl-10"
+                      value={preferredTime}
+                      onChange={(e) => setPreferredTime(e.target.value)}
+                      required
+                    />
+                  </div>
                 </div>
               </div>
               
