@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
@@ -129,6 +130,23 @@
   .hover-scale {
     @apply transition-transform duration-300 hover:scale-[1.02];
   }
+  
+  /* Slideshow animation classes */
+  .slide-enter {
+    @apply opacity-0 translate-x-full;
+  }
+  
+  .slide-enter-active {
+    @apply opacity-100 translate-x-0 transition-all duration-500;
+  }
+  
+  .slide-exit {
+    @apply opacity-100 translate-x-0;
+  }
+  
+  .slide-exit-active {
+    @apply opacity-0 -translate-x-full transition-all duration-500;
+  }
 }
 
 /* For smooth scrolling */
@@ -144,4 +162,64 @@ html {
 
 .image-loaded {
   filter: blur(0);
+}
+
+/* Add keyframes for the slideshow indicator animation */
+@keyframes slide-indicator {
+  0% {
+    width: 10px;
+  }
+  100% {
+    width: 24px;
+  }
+}
+
+/* Animation for the slideshow controls */
+@keyframes fade-in-controls {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slideshow-control {
+  animation: fade-in-controls 0.3s ease-out forwards;
+}
+
+/* Animation for floating elements */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Staggered animation delay for indicators */
+.indicator-delay-1 {
+  animation-delay: 0.1s;
+}
+.indicator-delay-2 {
+  animation-delay: 0.2s;
+}
+.indicator-delay-3 {
+  animation-delay: 0.3s;
+}
+.indicator-delay-4 {
+  animation-delay: 0.4s;
+}
+.indicator-delay-5 {
+  animation-delay: 0.5s;
 }

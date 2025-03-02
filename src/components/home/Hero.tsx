@@ -1,9 +1,10 @@
+
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Star, Sparkles } from "lucide-react";
+import ImageSlideshow from "@/components/ui/ImageSlideshow";
 
 const Hero = () => {
-  const [imageLoaded, setImageLoaded] = useState(false);
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [loopNum, setLoopNum] = useState(0);
@@ -65,23 +66,29 @@ const Hero = () => {
     };
   }, [displayText, isDeleting, loopNum, typingSpeed]);
 
-  useEffect(() => {
-    const img = new Image();
-    img.src = "/lovable-uploads/b24b515c-09ad-4588-9d54-a96d1805f70f.png";
-    img.onload = () => setImageLoaded(true);
-    
-    const profileImages = [
-      "/lovable-uploads/85907e9e-0f77-4b04-b5b7-132ec55971fa.png",
-      "/lovable-uploads/5857c7f0-9637-4ee9-adba-2c5f1076b9ac.png",
-      "/lovable-uploads/a7543c7b-5d9f-4ac2-b243-49bfc5b8d199.png",
-      "/lovable-uploads/917480cd-1a1e-4b01-b0ea-1fa142676a18.png"
-    ];
-    
-    profileImages.forEach(src => {
-      const img = new Image();
-      img.src = src;
-    });
-  }, []);
+  // Slideshow images
+  const slideshowImages = [
+    {
+      src: "/lovable-uploads/b24b515c-09ad-4588-9d54-a96d1805f70f.png",
+      alt: "Students washing a car"
+    },
+    {
+      src: "/lovable-uploads/913318c0-10d3-4c6d-91f5-accf9169ae81.png",
+      alt: "Student grocery shopping"
+    },
+    {
+      src: "/lovable-uploads/43cf90f5-cec5-4bd6-b7ee-b8af312dcf6c.png",
+      alt: "Students walking a dog"
+    },
+    {
+      src: "/lovable-uploads/855b8281-c2b5-4c3f-a8d9-6074db6760b4.png",
+      alt: "Student driving car"
+    },
+    {
+      src: "/lovable-uploads/d3cfa02f-5bf5-438d-b0bd-97a6beb2ba63.png",
+      alt: "Student doing woodwork"
+    }
+  ];
 
   return (
     <div className="relative overflow-hidden pt-8">
@@ -175,11 +182,11 @@ const Hero = () => {
           <div className="w-full md:w-1/2 mt-8 md:mt-0 animate-scale-in" style={{ animationDelay: "0.6s" }}>
             <div className="relative">
               <div className="absolute inset-0 -m-4 rounded-3xl bg-soft-pink/30 animate-float" style={{ animationDelay: "0.7s" }}></div>
-              <div className="relative rounded-2xl overflow-hidden shadow-elevation">
-                <img 
-                  src="/lovable-uploads/b24b515c-09ad-4588-9d54-a96d1805f70f.png"
-                  alt="Students washing a car" 
-                  className={`w-full h-auto aspect-[4/3] object-cover transition-all duration-700 ${imageLoaded ? 'image-loaded' : 'image-loading'}`}
+              <div className="relative rounded-2xl overflow-hidden shadow-elevation h-[300px] sm:h-[350px] md:h-[400px]">
+                <ImageSlideshow 
+                  images={slideshowImages} 
+                  autoplayInterval={5000} 
+                  className="w-full h-full"
                 />
               </div>
               
