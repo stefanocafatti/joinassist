@@ -11,7 +11,7 @@ interface HomeNavigationProps {
 const HomeNavigation: React.FC<HomeNavigationProps> = ({ activeSection, onSectionChange }) => {
   const sections = [
     { id: "recommended", label: "Recommended", icon: <ThumbsUp className="h-4 w-4 mr-2" /> },
-    { id: "categories", label: "Categories", icon: <Grid className="h-4 w-4 mr-2" /> },
+    { id: "categories", label: "All Tasks", icon: <Grid className="h-4 w-4 mr-2" /> },
     { id: "recent", label: "Recently Viewed", icon: <Clock className="h-4 w-4 mr-2" /> },
     { id: "searches", label: "Search History", icon: <Search className="h-4 w-4 mr-2" /> },
     { id: "pastTasks", label: "Past Tasks", icon: <History className="h-4 w-4 mr-2" /> },
