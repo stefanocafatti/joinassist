@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import InterestsSection from "./InterestsSection";
 import SearchResultsSection from "./SearchResultsSection";
@@ -68,12 +67,11 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
   onRequestTask,
   onSearchClick
 }) => {
-  const [activeSection, setActiveSection] = useState<string>("recommended");
+  const [activeSection, setActiveSection] = useState<string>("categories");
   
-  // Add points to be earned for each task (based on price)
   const tasksWithPoints = recommendedTasks.map(task => ({
     ...task,
-    pointsEarned: Math.round(task.price * 2) // Example: 2 points per dollar
+    pointsEarned: Math.round(task.price * 2)
   }));
   
   const searchResultsWithPoints = searchResults 
@@ -99,6 +97,8 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
     }
     
     switch (activeSection) {
+      case "categories":
+        return <CategoriesSection />;
       case "recommended":
         return (
           <RecommendedTasksSection 
@@ -124,10 +124,7 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
             onViewTask={onBookNow}
           />
         );
-      case "categories":
-        return <CategoriesSection />;
       case "recent":
-        // For simplicity, showing recommended tasks as recent
         return (
           <RecommendedTasksSection 
             tasks={tasksWithPoints.slice().reverse()}
@@ -137,14 +134,7 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
           />
         );
       default:
-        return (
-          <RecommendedTasksSection 
-            tasks={tasksWithPoints}
-            favoriteTaskIds={favoriteTaskIds}
-            onFavoriteToggle={onFavoriteToggle}
-            onBookNow={onBookNow}
-          />
-        );
+        return <CategoriesSection />;
     }
   };
   
