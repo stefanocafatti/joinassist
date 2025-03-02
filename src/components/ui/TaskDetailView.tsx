@@ -29,6 +29,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "sonner";
+import { Badge } from "@/components/ui/badge";
 
 interface Task {
   title: string;
@@ -101,6 +102,36 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
     );
   };
 
+  // Get image based on task title
+  const getTaskImage = (taskTitle: string) => {
+    const taskImageMap: {[key: string]: string} = {
+      "TV Mounting": "/lovable-uploads/36f389d4-c8c6-40a8-9cc4-2ed5306d7dd5.png",
+      "Install TV Mount": "/lovable-uploads/36f389d4-c8c6-40a8-9cc4-2ed5306d7dd5.png",
+    };
+    
+    return taskImageMap[taskTitle] || task.image || "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?q=80&w=1000&auto=format&fit=crop";
+  };
+
+  const getCategoryColor = (category: string) => {
+    const categoryColorMap: {[key: string]: string} = {
+      "Cleaning": "bg-sky-100 text-sky-800",
+      "Transportation": "bg-indigo-100 text-indigo-800",
+      "Transportation and Moving": "bg-indigo-100 text-indigo-800",
+      "Delivery": "bg-teal-100 text-teal-800",
+      "Assembly": "bg-purple-100 text-purple-800",
+      "Academic & Professional Help": "bg-yellow-100 text-yellow-800",
+      "Digital Services": "bg-red-100 text-red-800",
+      "Fitness and Wellness": "bg-emerald-100 text-emerald-800",
+      "Event and Hospitality": "bg-pink-100 text-pink-800",
+      "Special Tasks": "bg-orange-100 text-orange-800",
+      "For Brands": "bg-blue-100 text-blue-800",
+      "Pets": "bg-amber-100 text-amber-800",
+      "Home": "bg-lime-100 text-lime-800",
+    };
+    
+    return categoryColorMap[category] || "bg-gray-100 text-gray-800";
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[550px] max-h-[90vh] overflow-y-auto">
@@ -111,15 +142,15 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
         <div className="mt-4">
           <div 
             className="h-44 mb-6 rounded-lg bg-cover bg-center"
-            style={{ backgroundImage: `url(${task.image || "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?q=80&w=1000&auto=format&fit=crop"})` }}
+            style={{ backgroundImage: `url(${getTaskImage(task.title)})` }}
           />
           
           <div className="mb-6">
-            <h3 className="text-lg font-semibold mb-2">About this task</h3>
-            <p className="text-gray-600">{task.description}</p>
-            <div className="mt-2 inline-block bg-gray-100 px-3 py-1 rounded-full text-sm text-gray-700">
-              {task.category}
+            <div className="flex justify-between items-start mb-2">
+              <h3 className="text-lg font-semibold">About this task</h3>
+              <Badge className={cn(getCategoryColor(task.category))}>{task.category}</Badge>
             </div>
+            <p className="text-gray-600">{task.description}</p>
           </div>
           
           <form onSubmit={handleSubmit}>

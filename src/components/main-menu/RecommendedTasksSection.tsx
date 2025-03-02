@@ -77,7 +77,7 @@ const RecommendedTasksSection: React.FC<RecommendedTasksSectionProps> = ({
             <div className="p-4">
               <div className="flex justify-between items-start mb-2">
                 <h3 className="font-semibold text-gray-900">{task.title}</h3>
-                <Badge className={cn(getCategoryColor(task.category), "hover:bg-opacity-90")}>{task.category}</Badge>
+                <Badge className={cn(getCategoryColor(task.category), "hover:opacity-90")}>{task.category}</Badge>
               </div>
               <p className="text-sm text-gray-600 mb-4">{task.description}</p>
               <div className="flex items-center justify-center">

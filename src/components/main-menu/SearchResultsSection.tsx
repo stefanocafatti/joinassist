@@ -73,8 +73,8 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
       
       "Assemble Bed Frame": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1000&auto=format&fit=crop",
       "Assemble my Furniture": "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?q=80&w=1000&auto=format&fit=crop",
-      "Install TV Mount": "/lovable-uploads/119edf91-7d11-444b-9db6-41d9aa9800fe.png",
-      "TV Mounting": "/lovable-uploads/119edf91-7d11-444b-9db6-41d9aa9800fe.png",
+      "Install TV Mount": "/lovable-uploads/36f389d4-c8c6-40a8-9cc4-2ed5306d7dd5.png",
+      "TV Mounting": "/lovable-uploads/36f389d4-c8c6-40a8-9cc4-2ed5306d7dd5.png",
       "Assemble IKEA Furniture": "/lovable-uploads/83abea36-642f-4147-865a-c43794680e3b.png",
       "Install a Shelf": "https://images.unsplash.com/photo-1617104551722-3b2d52338fe9?q=80&w=1000&auto=format&fit=crop",
       "Assemble Office Desk or Chairs": "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?q=80&w=1000&auto=format&fit=crop",
