@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from "react";
 
 interface SchoolLogo {
@@ -156,7 +157,7 @@ const TrustedCompanies = () => {
               <img 
                 src={logo.src} 
                 alt={logo.alt} 
-                className="h-8 md:h-10 w-auto object-contain opacity-75 hover:opacity-100 transition-opacity filter grayscale-[30%] hover:grayscale-0"
+                className="h-8 md:h-10 w-auto object-contain opacity-75 hover:opacity-100 transition-opacity"
               />
             </div>
           ))}
