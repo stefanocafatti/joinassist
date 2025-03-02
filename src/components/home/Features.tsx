@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { 
   Clock, 
@@ -62,7 +61,6 @@ const Features = () => {
     }
   ];
 
-  // Animation for steps
   useEffect(() => {
     const interval = setInterval(() => {
       setAnimatedStep((prev) => (prev + 1) % 3);
@@ -71,7 +69,6 @@ const Features = () => {
     return () => clearInterval(interval);
   }, []);
   
-  // Autoplay for tabs
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveSection((prev) => (prev === 0 ? 1 : 0));
@@ -103,7 +100,6 @@ const Features = () => {
   
   return (
     <section id="how-it-works" className="py-24 bg-gradient-to-b from-white to-blue-50/30 relative overflow-hidden">
-      {/* Background decoration */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute top-20 left-0 w-72 h-72 bg-soft-blue rounded-full blur-3xl opacity-20 -translate-x-1/2" />
         <div className="absolute bottom-20 right-0 w-80 h-80 bg-soft-pink rounded-full blur-3xl opacity-20 translate-x-1/3" />
@@ -111,11 +107,7 @@ const Features = () => {
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-4xl mx-auto mb-20">
-          <div className="inline-flex items-center gap-2 py-1 px-4 rounded-full bg-soft-blue mb-4 text-assist-blue text-sm font-medium animate-fade-in">
-            <span className="inline-block w-2 h-2 rounded-full bg-assist-blue animate-pulse"></span>
-            <span>Simple & Intuitive</span>
-          </div>
-          <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+          <h2 className="text-6xl md:text-7xl font-bold text-gray-900 mb-6">
             How <span className="bg-gradient-to-r from-assist-blue via-blue-500 to-blue-400 bg-clip-text text-transparent">Assist</span> Works
           </h2>
           <p className="text-xl text-gray-600">
@@ -123,7 +115,6 @@ const Features = () => {
           </p>
         </div>
         
-        {/* Centered and larger animated steps */}
         <div className="flex flex-col items-center justify-center mb-24">
           <div className="flex items-center justify-center space-x-10 mb-12 w-full">
             {[0, 1, 2].map(step => (
