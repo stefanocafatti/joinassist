@@ -15,117 +15,112 @@ const NavigationTabs: React.FC<NavigationTabsProps> = ({
   onTabChange, 
   onToggleFavoriteView 
 }) => {
-  // Helper function to get the color styles for each tab
-  const getTabStyles = (tabName: string) => {
-    const isActive = activeTab === tabName;
-    
-    const tabStyleMap: Record<string, { 
-      active: string, 
-      inactive: string, 
-      icon: string
-    }> = {
-      allTasks: {
-        active: "bg-purple-600 text-white shadow-lg",
-        inactive: "bg-purple-50 text-purple-600 hover:bg-purple-100 hover:shadow-md",
-        icon: isActive ? "text-white" : "text-purple-600"
-      },
-      requests: {
-        active: "bg-emerald-600 text-white shadow-lg",
-        inactive: "bg-emerald-50 text-emerald-600 hover:bg-emerald-100 hover:shadow-md",
-        icon: isActive ? "text-white" : "text-emerald-600"
-      },
-      favorites: {
-        active: "bg-pink-600 text-white shadow-lg",
-        inactive: "bg-pink-50 text-pink-600 hover:bg-pink-100 hover:shadow-md",
-        icon: isActive ? "text-white" : "text-pink-600"
-      },
-      rewards: {
-        active: "bg-amber-600 text-white shadow-lg",
-        inactive: "bg-amber-50 text-amber-600 hover:bg-amber-100 hover:shadow-md",
-        icon: isActive ? "text-white" : "text-amber-600"
-      },
-      profile: {
-        active: "bg-blue-600 text-white shadow-lg",
-        inactive: "bg-blue-50 text-blue-600 hover:bg-blue-100 hover:shadow-md",
-        icon: isActive ? "text-white" : "text-blue-600"
-      }
-    };
-    
-    const baseClasses = "flex flex-col items-center justify-center p-4 rounded-xl transition-all duration-300 transform hover:scale-105 h-full";
-    return `${baseClasses} ${isActive ? tabStyleMap[tabName].active : tabStyleMap[tabName].inactive}`;
-  };
-
   // Define the tabs in the desired order
   const tabs = [
     {
       name: "allTasks",
       label: "Tasks",
       icon: Grid,
-      onClick: () => {
-        onTabChange("allTasks");
-        if (showFavorites) onToggleFavoriteView();
-      }
+      color: "purple"
     },
     {
       name: "requests",
       label: "Requests",
       icon: ClipboardList,
-      onClick: () => {
-        onTabChange("requests");
-        if (showFavorites) onToggleFavoriteView();
-      }
+      color: "emerald"
     },
     {
       name: "favorites",
       label: "Favorites",
       icon: Heart,
-      onClick: () => {
-        onTabChange("favorites");
-        onToggleFavoriteView();
-      }
+      color: "pink"
     },
     {
       name: "rewards",
       label: "Rewards",
       icon: Gift,
-      onClick: () => {
-        onTabChange("rewards");
-        if (showFavorites) onToggleFavoriteView();
-      }
+      color: "amber"
     },
     {
       name: "profile",
       label: "Profile",
       icon: User,
-      onClick: () => {
-        onTabChange("profile");
-        if (showFavorites) onToggleFavoriteView();
-      }
+      color: "blue"
     }
   ];
 
+  // Map color names to tailwind classes
+  const getColorClasses = (tabName: string, isActive: boolean) => {
+    const colorMap: Record<string, { bg: string, text: string, shadow: string, hover: string }> = {
+      purple: {
+        bg: isActive ? "bg-purple-600" : "bg-purple-50",
+        text: isActive ? "text-white" : "text-purple-600",
+        shadow: isActive ? "shadow-md shadow-purple-200" : "",
+        hover: "hover:bg-purple-100"
+      },
+      emerald: {
+        bg: isActive ? "bg-emerald-600" : "bg-emerald-50",
+        text: isActive ? "text-white" : "text-emerald-600",
+        shadow: isActive ? "shadow-md shadow-emerald-200" : "",
+        hover: "hover:bg-emerald-100"
+      },
+      pink: {
+        bg: isActive ? "bg-pink-600" : "bg-pink-50",
+        text: isActive ? "text-white" : "text-pink-600",
+        shadow: isActive ? "shadow-md shadow-pink-200" : "",
+        hover: "hover:bg-pink-100"
+      },
+      amber: {
+        bg: isActive ? "bg-amber-600" : "bg-amber-50",
+        text: isActive ? "text-white" : "text-amber-600",
+        shadow: isActive ? "shadow-md shadow-amber-200" : "",
+        hover: "hover:bg-amber-100"
+      },
+      blue: {
+        bg: isActive ? "bg-blue-600" : "bg-blue-50",
+        text: isActive ? "text-white" : "text-blue-600",
+        shadow: isActive ? "shadow-md shadow-blue-200" : "",
+        hover: "hover:bg-blue-100"
+      }
+    };
+
+    const tabColor = tabs.find(tab => tab.name === tabName)?.color || "purple";
+    return colorMap[tabColor];
+  };
+
   return (
-    <div className="mb-8 p-4 bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm">
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+    <div className="mb-6 p-3 bg-white/90 backdrop-blur-sm rounded-xl shadow-sm">
+      <div className="grid grid-cols-5 gap-2">
         {tabs.map((tab) => {
           const isActive = activeTab === tab.name;
-          const tabStyle = getTabStyles(tab.name);
-          const colorName = tab.name === "allTasks" ? "purple" : 
-                           (tab.name === "requests" ? "emerald" : 
-                           (tab.name === "favorites" ? "pink" : 
-                           (tab.name === "rewards" ? "amber" : "blue")));
+          const colorClasses = getColorClasses(tab.name, isActive);
+          
+          const handleClick = () => {
+            onTabChange(tab.name);
+            if (tab.name === "favorites") {
+              onToggleFavoriteView();
+            } else if (showFavorites) {
+              onToggleFavoriteView();
+            }
+          };
           
           return (
             <button
               key={tab.name}
-              className={tabStyle}
-              onClick={tab.onClick}
+              className={`relative flex items-center justify-center p-2 rounded-lg transition-all duration-200 transform ${isActive ? 'scale-100' : 'scale-95'} ${colorClasses.bg} ${colorClasses.text} ${colorClasses.shadow} ${!isActive ? colorClasses.hover : ''}`}
+              onClick={handleClick}
               aria-current={isActive ? "page" : undefined}
             >
-              {React.createElement(tab.icon, {
-                className: `h-6 w-6 mb-2 ${isActive ? "text-white" : `text-${colorName}-600`}`
-              })}
-              <span className="font-medium text-sm">{tab.label}</span>
+              <div className="flex flex-col items-center justify-center space-y-1">
+                {React.createElement(tab.icon, {
+                  className: `h-5 w-5 ${isActive ? 'animate-pulse' : ''}`
+                })}
+                <span className="text-xs font-medium">{tab.label}</span>
+              </div>
+              
+              {isActive && (
+                <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-white rounded-full -mb-0.5"></span>
+              )}
             </button>
           );
         })}
