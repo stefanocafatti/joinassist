@@ -193,9 +193,6 @@ const TaskCategories = () => {
                 <Search className="h-5 w-5" />
               </button>
             </div>
-            <div className="mt-2 text-xs text-assist-blue/70 italic">
-              Search for any task or service you need help with
-            </div>
           </form>
         </div>
         
