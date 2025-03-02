@@ -45,9 +45,9 @@ const Index = () => {
       
       <main className="flex-grow relative z-10 pt-16">
         <Hero />
-        <TrustedCompanies />
         <Features />
         <Benefits />
+        <TrustedCompanies />
         <TaskCategories />
         <Testimonials />
         <CTASection />

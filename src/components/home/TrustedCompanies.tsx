@@ -146,7 +146,16 @@ const TrustedCompanies = () => {
   }, []);
 
   return (
-    <section className="py-8 bg-gradient-to-r from-soft-green/40 via-white/30 to-soft-green/40 backdrop-blur-sm">
+    <section className="py-12 bg-gradient-to-r from-soft-green/40 via-white/30 to-soft-green/40 backdrop-blur-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+        <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-900 mb-4">
+          Trusted by Universities Nationwide
+        </h2>
+        <p className="text-center text-gray-600 max-w-2xl mx-auto">
+          Join thousands of students from leading universities who are already using Assist
+        </p>
+      </div>
+      
       <div className="relative overflow-hidden w-full">
         <div 
           ref={scrollContainerRef}
