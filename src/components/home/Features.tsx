@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { 
   Clock, 
@@ -180,9 +179,6 @@ const Features = () => {
                         </div>
                       )}
                     </div>
-                    <span className="text-4xl font-bold mb-3">
-                      {step + 1}
-                    </span>
                     <h3 className="text-xl font-semibold mb-2">
                       {step === 0 ? 'Browse or Post Your Task' : 
                        step === 1 ? 'Get Matched Instantly' : 
