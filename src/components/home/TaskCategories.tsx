@@ -1,3 +1,4 @@
+
 import { 
   Trash2, 
   Car, 
@@ -6,7 +7,7 @@ import {
   Code, 
   Dumbbell, 
   PartyPopper, 
-  FileCheck, 
+  Star, 
   Briefcase,
   Search
 } from "lucide-react";
@@ -132,7 +133,7 @@ const TaskCategories = () => {
       color: "bg-pink-50"
     },
     {
-      icon: FileCheck,
+      icon: Star,
       title: "Special Tasks",
       description: "Unique task solutions",
       tasks: [
