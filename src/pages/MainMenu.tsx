@@ -428,20 +428,27 @@ const MainMenu = () => {
   };
 
   const getFavoriteListings = () => {
-    // This is the function that needs to be updated to include all possible task sources
+    console.log("Fetching favorite listings, favoriteTaskIds:", favoriteTaskIds);
     
-    // Get all possible tasks from all sources
+    // Combine all task listings from all sources
     const allTasksLists = [
       recommendedTasks,
       ...(searchResults ? [searchResults] : []),
-      taskListings,
-      additionalTaskListings
     ];
+    
+    // Add task listings from the other arrays if they exist
+    if (taskListings && taskListings.length > 0) {
+      allTasksLists.push(taskListings);
+    }
+    
+    if (additionalTaskListings && additionalTaskListings.length > 0) {
+      allTasksLists.push(additionalTaskListings);
+    }
     
     // Flatten all task arrays into a single array
     const allTasks = allTasksLists.flat();
     
-    // Filter out duplicates based on title (in case the same task appears in multiple lists)
+    // Filter out duplicates based on title
     const uniqueTasks = allTasks.reduce((acc, current) => {
       if (!acc.find(item => item.title === current.title)) {
         acc.push(current);
@@ -449,8 +456,14 @@ const MainMenu = () => {
       return acc;
     }, [] as typeof recommendedTasks);
     
-    // Return only the favorited tasks
-    return uniqueTasks.filter(task => favoriteTaskIds.includes(task.title));
+    // Filter to only include favorited tasks
+    const favoriteTasks = uniqueTasks.filter(task => {
+      const isFavorite = favoriteTaskIds.includes(task.title);
+      return isFavorite;
+    });
+    
+    console.log("Final favorite tasks:", favoriteTasks);
+    return favoriteTasks;
   };
 
   const toggleFavoriteView = () => {

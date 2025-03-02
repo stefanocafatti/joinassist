@@ -1,9 +1,10 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Heart, Eye, Coins } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useToast } from "@/hooks/use-toast";
 
 interface Task {
   title: string;
@@ -29,6 +30,14 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({
   onBookNow, 
   onHideSection 
 }) => {
+  const { toast } = useToast();
+  
+  useEffect(() => {
+    // Log for debugging
+    console.log("Favorites in FavoritesSection:", favorites);
+    console.log("FavoriteTaskIds in FavoritesSection:", favoriteTaskIds);
+  }, [favorites, favoriteTaskIds]);
+
   const getCategoryColor = (category: string) => {
     const categoryColorMap: {[key: string]: string} = {
       "Cleaning": "bg-sky-100 text-sky-800",
@@ -37,9 +46,12 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({
       "Delivery": "bg-teal-100 text-teal-800",
       "Assembly": "bg-purple-100 text-purple-800",
       "Academic & Professional Help": "bg-yellow-100 text-yellow-800",
+      "Academic Help": "bg-yellow-100 text-yellow-800",
       "Digital Services": "bg-red-100 text-red-800",
       "Fitness and Wellness": "bg-emerald-100 text-emerald-800",
+      "Fitness & Wellness": "bg-emerald-100 text-emerald-800",
       "Event and Hospitality": "bg-pink-100 text-pink-800",
+      "Event & Hospitality": "bg-pink-100 text-pink-800",
       "Special Tasks": "bg-orange-100 text-orange-800",
       "For Brands": "bg-blue-100 text-blue-800",
       "Pets": "bg-amber-100 text-amber-800",
@@ -47,6 +59,17 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({
     };
     
     return categoryColorMap[category] || "bg-gray-100 text-gray-800";
+  };
+
+  const handleFavoriteToggle = (taskTitle: string) => {
+    onFavoriteToggle(taskTitle);
+    toast({
+      title: favoriteTaskIds.includes(taskTitle) ? "Removed from favorites" : "Added to favorites",
+      description: favoriteTaskIds.includes(taskTitle) ? 
+        `${taskTitle} has been removed from your favorites.` : 
+        `${taskTitle} has been added to your favorites.`,
+      duration: 2000,
+    });
   };
 
   return (
@@ -58,7 +81,7 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({
         </Button>
       </div>
       
-      {favorites.length > 0 ? (
+      {favorites && favorites.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {favorites.map((task, index) => (
             <div 
@@ -74,7 +97,7 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({
                   className="absolute top-3 right-3 z-10"
                   onClick={(e) => {
                     e.stopPropagation();
-                    onFavoriteToggle(task.title);
+                    handleFavoriteToggle(task.title);
                   }}
                   aria-label="Remove from favorites"
                 >
