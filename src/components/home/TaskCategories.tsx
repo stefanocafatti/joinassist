@@ -7,7 +7,8 @@ import {
   Dumbbell, 
   PartyPopper, 
   Star, 
-  Briefcase
+  Briefcase,
+  Heart
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CategoryCard from "../ui/CategoryCard";
@@ -23,6 +24,7 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [visibleTaskCount, setVisibleTaskCount] = useState<number>(9);
+  const [favoriteTaskIds, setFavoriteTaskIds] = useState<string[]>([]);
 
   const handleCategoryClick = (category: string) => {
     if (showAllTasks) {
@@ -42,6 +44,18 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
     setVisibleTaskCount(prev => prev + 6);
     toast.success("Loading more tasks", {
       description: "Showing additional tasks"
+    });
+  };
+
+  const handleFavoriteToggle = (taskTitle: string) => {
+    setFavoriteTaskIds(prev => {
+      if (prev.includes(taskTitle)) {
+        toast.success(`Removed ${taskTitle} from favorites`);
+        return prev.filter(id => id !== taskTitle);
+      } else {
+        toast.success(`Added ${taskTitle} to favorites`);
+        return [...prev, taskTitle];
+      }
     });
   };
 
@@ -373,13 +387,25 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
   const renderTaskCard = (task: any, index: number) => (
     <div 
       key={index} 
-      className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100"
+      className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 cursor-pointer relative"
+      onClick={() => toast.success(`Viewing details for ${task.title}`)}
     >
       <div className="relative">
         <div 
           className="h-40 bg-cover bg-center" 
           style={{ backgroundImage: `url(${task.image})` }}
         />
+        <button 
+          className="absolute top-3 right-3 p-1.5 rounded-full bg-white/80 hover:bg-white transition-colors z-10"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleFavoriteToggle(task.title);
+          }}
+        >
+          <Heart 
+            className={`h-5 w-5 ${favoriteTaskIds.includes(task.title) ? 'fill-red-500 text-red-500' : 'text-gray-600'}`} 
+          />
+        </button>
       </div>
       <div className="p-4">
         <div className="flex justify-between items-start mb-2">
@@ -393,7 +419,10 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
           <Button 
             size="sm" 
             className="bg-assist-blue hover:bg-assist-blue/90"
-            onClick={() => toast.success(`Viewing details for ${task.title}`)}
+            onClick={(e) => {
+              e.stopPropagation();
+              toast.success(`Viewing details for ${task.title}`);
+            }}
           >
             View Task
           </Button>
@@ -436,6 +465,8 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
                     description={category.description}
                     tasks={category.tasks}
                     color={category.color}
+                    onFavoriteToggle={handleFavoriteToggle}
+                    isFavorite={favoriteTaskIds.includes(category.title)}
                   />
                 </div>
               ))}

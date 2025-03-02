@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -144,7 +145,7 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
           {searchResults.map((task, index) => (
             <div 
               key={index} 
-              className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 cursor-pointer"
+              className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 cursor-pointer relative"
               onClick={() => onBookNow(task.title)}
             >
               <div className="relative">
@@ -153,7 +154,7 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
                   style={{ backgroundImage: `url(${getTaskImage(task)})` }}
                 />
                 <button 
-                  className="absolute top-3 right-3 p-1 rounded-full bg-white/80 hover:bg-white transition-colors"
+                  className="absolute top-3 right-3 p-1.5 rounded-full bg-white/80 hover:bg-white transition-colors z-10 shadow-sm"
                   onClick={(e) => {
                     e.stopPropagation();
                     onFavoriteToggle(task.title);
