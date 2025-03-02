@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Heart, Bell, Coins } from "lucide-react";
+import { Heart, Bell, Coins, Store } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { User, History, CreditCard, Heart as HeartIcon, Settings, LogOut } from "lucide-react";
@@ -29,10 +29,15 @@ const MainHeader: React.FC<MainHeaderProps> = ({
         Hello, {userName}!
       </h1>
       <div className="flex items-center gap-3">
-        <div className="flex items-center bg-assist-blue/10 text-assist-blue px-3 py-1 rounded-full">
+        <Button 
+          variant="ghost"
+          size="sm"
+          className="flex items-center bg-assist-blue/10 text-assist-blue px-3 py-1 rounded-full hover:bg-assist-blue/20"
+          onClick={() => onSetActiveTab("store")}
+        >
           <Coins className="h-4 w-4 mr-1" />
           <span className="text-sm font-medium">{assistPoints} points</span>
-        </div>
+        </Button>
         <Button 
           variant="ghost" 
           size="icon"
@@ -73,6 +78,10 @@ const MainHeader: React.FC<MainHeaderProps> = ({
             <DropdownMenuItem onClick={onToggleFavoriteView}>
               <HeartIcon className="mr-2 h-4 w-4" />
               <span>Saved Tasks</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => onSetActiveTab("store")}>
+              <Store className="mr-2 h-4 w-4" />
+              <span>Redeem Points</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>

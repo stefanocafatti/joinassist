@@ -15,6 +15,7 @@ import ProfileTab from "@/components/main-menu/ProfileTab";
 import RequestsTab from "@/components/main-menu/RequestsTab";
 import FavoritesSection from "@/components/main-menu/FavoritesSection";
 import HomeTabContent from "@/components/main-menu/HomeTabContent";
+import StoreTab from "@/components/main-menu/StoreTab";
 
 const mockUser = {
   firstName: "Alex",
@@ -158,6 +159,14 @@ const MainMenu = () => {
     setProfileImage(image);
   };
 
+  const handlePointsUpdated = (newPoints: number) => {
+    setAssistPoints(newPoints);
+    setUser(prevUser => ({
+      ...prevUser,
+      assistPoints: newPoints
+    }));
+  };
+
   const handleFavoriteToggle = (taskTitle: string) => {
     setFavoriteTaskIds(prev => {
       if (prev.includes(taskTitle)) {
@@ -214,7 +223,12 @@ const MainMenu = () => {
   };
 
   const handleBookTask = (taskTitle: string, date: Date, time: string) => {
-    const pointsToAdd = 50;
+    const task = [...recommendedTasks, ...(searchResults || [])].find(
+      t => t.title === taskTitle
+    );
+    
+    const pointsToAdd = task ? Math.round(task.price * 2) : 50;
+    
     setAssistPoints(prevPoints => prevPoints + pointsToAdd);
     
     toast.success(`You earned ${pointsToAdd} Assist Points!`, {
@@ -281,6 +295,11 @@ const MainMenu = () => {
       />;
     } else if (activeTab === "requests") {
       return <RequestsTab requests={mockSubmittedRequests} onNavigateToHome={() => setActiveTab("home")} />;
+    } else if (activeTab === "store") {
+      return <StoreTab 
+        assistPoints={assistPoints} 
+        onPointsUpdated={handlePointsUpdated} 
+      />;
     } else if (showFavorites) {
       const favorites = getFavoriteListings();
       return (

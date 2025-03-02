@@ -1,11 +1,12 @@
 
-import React from "react";
+import React, { useState } from "react";
 import InterestsSection from "./InterestsSection";
 import SearchResultsSection from "./SearchResultsSection";
 import RecommendedTasksSection from "./RecommendedTasksSection";
 import RecentSearchesSection from "./RecentSearchesSection";
 import PastTasksSection from "./PastTasksSection";
 import CategoriesSection from "./CategoriesSection";
+import HomeNavigation from "./HomeNavigation";
 import { LucideIcon } from "lucide-react";
 
 interface Task {
@@ -16,6 +17,7 @@ interface Task {
   image: string;
   price: number;
   priceType: string;
+  pointsEarned?: number;
 }
 
 interface PastTask {
@@ -66,6 +68,86 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
   onRequestTask,
   onSearchClick
 }) => {
+  const [activeSection, setActiveSection] = useState<string>("recommended");
+  
+  // Add points to be earned for each task (based on price)
+  const tasksWithPoints = recommendedTasks.map(task => ({
+    ...task,
+    pointsEarned: Math.round(task.price * 2) // Example: 2 points per dollar
+  }));
+  
+  const searchResultsWithPoints = searchResults 
+    ? searchResults.map(task => ({
+        ...task, 
+        pointsEarned: Math.round(task.price * 2)
+      }))
+    : null;
+  
+  const renderSectionContent = () => {
+    if (searchPerformed) {
+      return (
+        <SearchResultsSection
+          searchQuery={searchQuery}
+          searchResults={searchResultsWithPoints}
+          favoriteTaskIds={favoriteTaskIds}
+          onClearResults={onClearResults}
+          onFavoriteToggle={onFavoriteToggle}
+          onBookNow={onBookNow}
+          onRequestTask={onRequestTask}
+        />
+      );
+    }
+    
+    switch (activeSection) {
+      case "recommended":
+        return (
+          <RecommendedTasksSection 
+            tasks={tasksWithPoints}
+            favoriteTaskIds={favoriteTaskIds}
+            onFavoriteToggle={onFavoriteToggle}
+            onBookNow={onBookNow}
+          />
+        );
+      case "searches":
+        return (
+          <RecentSearchesSection 
+            recentSearches={recentSearches}
+            onSearchClick={onSearchClick}
+          />
+        );
+      case "pastTasks":
+        return (
+          <PastTasksSection 
+            pastTasks={pastTasks}
+            favoriteTaskIds={favoriteTaskIds}
+            onFavoriteToggle={onFavoriteToggle}
+            onViewTask={onBookNow}
+          />
+        );
+      case "categories":
+        return <CategoriesSection />;
+      case "recent":
+        // For simplicity, showing recommended tasks as recent
+        return (
+          <RecommendedTasksSection 
+            tasks={tasksWithPoints.slice().reverse()}
+            favoriteTaskIds={favoriteTaskIds}
+            onFavoriteToggle={onFavoriteToggle}
+            onBookNow={onBookNow}
+          />
+        );
+      default:
+        return (
+          <RecommendedTasksSection 
+            tasks={tasksWithPoints}
+            favoriteTaskIds={favoriteTaskIds}
+            onFavoriteToggle={onFavoriteToggle}
+            onBookNow={onBookNow}
+          />
+        );
+    }
+  };
+  
   return (
     <>
       <InterestsSection 
@@ -74,42 +156,14 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
         onToggleInterest={onToggleInterest} 
       />
       
-      {searchPerformed && (
-        <SearchResultsSection
-          searchQuery={searchQuery}
-          searchResults={searchResults}
-          favoriteTaskIds={favoriteTaskIds}
-          onClearResults={onClearResults}
-          onFavoriteToggle={onFavoriteToggle}
-          onBookNow={onBookNow}
-          onRequestTask={onRequestTask}
+      {!searchPerformed && (
+        <HomeNavigation 
+          activeSection={activeSection}
+          onSectionChange={setActiveSection}
         />
       )}
       
-      {!searchPerformed && (
-        <>
-          <RecommendedTasksSection 
-            tasks={recommendedTasks}
-            favoriteTaskIds={favoriteTaskIds}
-            onFavoriteToggle={onFavoriteToggle}
-            onBookNow={onBookNow}
-          />
-          
-          <RecentSearchesSection 
-            recentSearches={recentSearches}
-            onSearchClick={onSearchClick}
-          />
-          
-          <PastTasksSection 
-            pastTasks={pastTasks}
-            favoriteTaskIds={favoriteTaskIds}
-            onFavoriteToggle={onFavoriteToggle}
-            onViewTask={onBookNow}
-          />
-          
-          <CategoriesSection />
-        </>
-      )}
+      {renderSectionContent()}
     </>
   );
 };
