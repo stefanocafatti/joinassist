@@ -102,6 +102,26 @@ const TrustedCompanies = () => {
       src: "/lovable-uploads/b168f9c7-63a3-4c44-9158-26a838ebd0d7.png",
       alt: "Stanford University logo - red S with tree"
     },
+    {
+      name: "University of Kentucky",
+      src: "/lovable-uploads/d4347ef6-1725-4fd0-805d-34dcbfe25b7e.png",
+      alt: "University of Kentucky Wildcats logo - blue UK"
+    },
+    {
+      name: "University of Georgia",
+      src: "/lovable-uploads/3f69b76f-921c-4aeb-ae85-e3e61d0ccff1.png",
+      alt: "University of Georgia Bulldogs logo - black oval G with red outline"
+    },
+    {
+      name: "Boston College",
+      src: "/lovable-uploads/78f415b7-07f0-4e26-941c-cbba67ad22df.png",
+      alt: "Boston College Eagles logo - maroon BC with eagle"
+    },
+    {
+      name: "Princeton University",
+      src: "/lovable-uploads/cbe8bf6e-c568-40f6-acf7-47eb4c4aa67c.png",
+      alt: "Princeton University Tigers logo - orange P with black stripes"
+    },
   ];
 
   useEffect(() => {
@@ -165,7 +185,7 @@ const TrustedCompanies = () => {
         }
         
         .animate-scroll {
-          animation: scroll 20s linear infinite;
+          animation: scroll 15s linear infinite; /* Reduced from 20s to 15s to make it faster */
         }
       ` }} />
     </section>
