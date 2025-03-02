@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Star, Sparkles } from "lucide-react";
@@ -99,7 +100,7 @@ const Hero = () => {
   return (
     <div className="relative overflow-hidden pt-8">
       <div 
-        className="absolute inset-0 z-2 bg-white/20 backdrop-blur-[0.5px]"
+        className="absolute inset-0 z-2 bg-white/10 backdrop-blur-[0.5px]"
       />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 md:pt-16 pb-12 md:pb-20 relative z-10">
@@ -196,7 +197,8 @@ const Hero = () => {
                 />
               </div>
               
-              <div className="absolute -bottom-6 -left-6 glassmorphism p-4 rounded-xl shadow-elevation animate-float" style={{ animationDelay: "1s" }}>
+              {/* Information card overlays - position improved for visibility */}
+              <div className="absolute -bottom-6 -left-6 bg-white/95 p-4 rounded-xl shadow-elevation animate-float z-30" style={{ animationDelay: "1s" }}>
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-soft-green rounded-full flex items-center justify-center text-green-600">
                     <Star size={20} className="fill-green-600" />
@@ -208,7 +210,7 @@ const Hero = () => {
                 </div>
               </div>
               
-              <div className="absolute -top-6 -right-6 glassmorphism p-4 rounded-xl shadow-elevation animate-float" style={{ animationDelay: "1.3s" }}>
+              <div className="absolute -top-6 -right-6 bg-white/95 p-4 rounded-xl shadow-elevation animate-float z-30" style={{ animationDelay: "1.3s" }}>
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-soft-orange rounded-full flex items-center justify-center text-orange-600">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -226,7 +228,7 @@ const Hero = () => {
         </div>
       </div>
       
-      <style>{`
+      <style jsx>{`
         @keyframes gradient-animation {
           0% { background-position: 0% 50% }
           50% { background-position: 100% 50% }

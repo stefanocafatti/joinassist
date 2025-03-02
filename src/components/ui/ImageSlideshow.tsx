@@ -136,7 +136,7 @@ const ImageSlideshow = ({
               onLoad={handleImageLoad}
               className={cn(
                 "w-full h-full object-cover transition-all duration-500",
-                imageLoaded && currentIndex === index ? "animate-fadeIn" : "opacity-70"
+                imageLoaded && currentIndex === index ? "fade-in-animation" : "opacity-70"
               )}
             />
           </div>
@@ -159,8 +159,6 @@ const ImageSlideshow = ({
           />
         ))}
       </div>
-      
-      {/* Moved the CSS to a className in the tailwind.config.ts */}
     </div>
   );
 };
