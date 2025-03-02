@@ -12,8 +12,6 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 interface Task {
   title: string;
@@ -45,15 +43,6 @@ const categories = [
   "Health"
 ];
 
-const locations = [
-  "All Locations",
-  "Westwood",
-  "Santa Monica",
-  "UCLA Campus",
-  "Downtown LA",
-  "Culver City"
-];
-
 const urgencyOptions = [
   "Any Time",
   "Today",
@@ -75,7 +64,6 @@ const RecommendedTasksSection: React.FC<RecommendedTasksSectionProps> = ({
 }) => {
   const [filteredTasks, setFilteredTasks] = useState<Task[]>(tasks);
   const [filterCategory, setFilterCategory] = useState<string>("All Categories");
-  const [filterLocation, setFilterLocation] = useState<string>("All Locations");
   const [filterUrgency, setFilterUrgency] = useState<string>("Any Time");
   const [filterType, setFilterType] = useState<string>("All Types");
   const [isFilterDialogOpen, setIsFilterDialogOpen] = useState(false);
@@ -90,13 +78,6 @@ const RecommendedTasksSection: React.FC<RecommendedTasksSectionProps> = ({
         task.category.toLowerCase() === filterCategory.toLowerCase()
       );
       newActiveFilters.push(`Category: ${filterCategory}`);
-    }
-    
-    if (filterLocation !== "All Locations") {
-      newFilteredTasks = newFilteredTasks.filter(task => 
-        task.location.includes(filterLocation)
-      );
-      newActiveFilters.push(`Location: ${filterLocation}`);
     }
     
     if (filterUrgency !== "Any Time") {
@@ -116,7 +97,6 @@ const RecommendedTasksSection: React.FC<RecommendedTasksSectionProps> = ({
   
   const clearFilters = () => {
     setFilterCategory("All Categories");
-    setFilterLocation("All Locations");
     setFilterUrgency("Any Time");
     setFilterType("All Types");
     setFilteredTasks(tasks);
@@ -149,22 +129,6 @@ const RecommendedTasksSection: React.FC<RecommendedTasksSectionProps> = ({
                     {categories.map((category) => (
                       <SelectItem key={category} value={category}>
                         {category}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              
-              <div className="grid gap-2">
-                <Label htmlFor="location">Location</Label>
-                <Select value={filterLocation} onValueChange={setFilterLocation}>
-                  <SelectTrigger id="location">
-                    <SelectValue placeholder="Select location" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {locations.map((location) => (
-                      <SelectItem key={location} value={location}>
-                        {location}
                       </SelectItem>
                     ))}
                   </SelectContent>
