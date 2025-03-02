@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -229,7 +228,15 @@ const MainMenu = () => {
     toast.success(`Preferences updated!`);
   };
 
-  const handleBookTask = (taskTitle: string, date: Date, time: string) => {
+  const handleBookTask = (
+    taskTitle: string, 
+    date: Date, 
+    time: string,
+    priceType?: string,
+    price?: number,
+    location?: string,
+    additionalInfo?: string
+  ) => {
     // Add fixed points instead of calculating from task price
     const pointsToAdd = 50;
     
@@ -243,6 +250,23 @@ const MainMenu = () => {
       ...prevUser,
       assistPoints: prevUser.assistPoints + pointsToAdd
     }));
+
+    // Add the task to submitted requests
+    const newRequest = {
+      id: Math.random().toString(36).substr(2, 9),
+      title: taskTitle,
+      date: format(date, "PPP"),
+      time: time,
+      location: location || "Not specified",
+      price: priceType === "hourly" ? `$${price}/hr` : `$${price}`,
+      status: "Pending",
+      provider: "",
+      additionalInfo: additionalInfo
+    };
+
+    toast.success(`Task request submitted!`, {
+      description: `Your ${taskTitle} has been scheduled for ${format(date, "PPP")} at ${time}`
+    });
     
     setIsTaskDetailOpen(false);
   };
