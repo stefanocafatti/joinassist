@@ -417,7 +417,7 @@ const TaskCategories = ({
         <div className="flex items-center justify-end">
           <Button 
             size="sm" 
-            className="bg-assist-blue hover:bg-assist-blue/90"
+            className="bg-assist-blue hover:bg-assist-blue/90 w-full"
             onClick={(e) => {
               e.stopPropagation();
               handleViewTask(task.title);
@@ -465,6 +465,7 @@ const TaskCategories = ({
                     tasks={category.tasks}
                     color={category.color}
                     onFavoriteToggle={onFavoriteToggle}
+                    onViewTask={onViewTask}
                     isFavorite={favoriteTaskIds.includes(category.title)}
                   />
                 </div>
