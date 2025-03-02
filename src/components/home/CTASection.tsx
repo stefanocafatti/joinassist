@@ -19,7 +19,7 @@ const CTASection = () => {
           </h2>
           <p className="text-white/90 text-lg md:text-xl max-w-2xl mx-auto">
             Whether you're a student looking to earn or someone who needs tasks completed, 
-            Assist connects you with the right people at the right time.
+            Assist connects you with the right people at the right time
           </p>
         </div>
         
@@ -35,28 +35,28 @@ const CTASection = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/15 transition-all hover:transform hover:scale-105 hover:shadow-xl">
             <div className="text-3xl md:text-4xl font-bold mb-2">
-              <span className="bg-gradient-to-r from-yellow-200 to-yellow-300 text-transparent bg-clip-text drop-shadow-sm">10,000+</span>
+              <span className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-transparent bg-clip-text drop-shadow-sm">10,000+</span>
             </div>
             <p className="text-white/80">Verified students</p>
           </div>
           
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/15 transition-all hover:transform hover:scale-105 hover:shadow-xl">
             <div className="text-3xl md:text-4xl font-bold mb-2">
-              <span className="bg-gradient-to-r from-yellow-200 to-yellow-300 text-transparent bg-clip-text drop-shadow-sm">200+</span>
+              <span className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-transparent bg-clip-text drop-shadow-sm">200+</span>
             </div>
             <p className="text-white/80">Universities represented</p>
           </div>
           
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/15 transition-all hover:transform hover:scale-105 hover:shadow-xl">
             <div className="text-3xl md:text-4xl font-bold mb-2">
-              <span className="bg-gradient-to-r from-yellow-200 to-yellow-300 text-transparent bg-clip-text drop-shadow-sm">50,000+</span>
+              <span className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-transparent bg-clip-text drop-shadow-sm">50,000+</span>
             </div>
             <p className="text-white/80">Tasks completed</p>
           </div>
           
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/15 transition-all hover:transform hover:scale-105 hover:shadow-xl">
             <div className="text-3xl md:text-4xl font-bold mb-2">
-              <span className="bg-gradient-to-r from-yellow-200 to-yellow-300 text-transparent bg-clip-text drop-shadow-sm">4.9/5</span>
+              <span className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-transparent bg-clip-text drop-shadow-sm">4.9/5</span>
             </div>
             <p className="text-white/80">Average task rating</p>
           </div>

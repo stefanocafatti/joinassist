@@ -67,7 +67,7 @@ const Testimonials = () => {
                 Success Stories
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Why Our Community Loves Us
+                Why Our Community Loves Us?
               </h2>
               <p className="text-lg text-gray-600 mb-8">
                 See how Assist connects busy individuals with reliable student talent, making everyday tasks easier while providing valuable opportunities for students.
