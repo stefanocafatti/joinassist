@@ -21,19 +21,25 @@ const NavigationTabs: React.FC<NavigationTabsProps> = ({
       name: "allTasks",
       label: "Tasks",
       icon: Grid,
-      color: "blue"
+      color: "blue",
+      hoverBg: "hover:bg-blue-100",
+      hoverText: "hover:text-blue-800"
     },
     {
       name: "requests",
       label: "Requests",
       icon: ClipboardList,
-      color: "blue"
+      color: "green",
+      hoverBg: "hover:bg-green-100",
+      hoverText: "hover:text-green-800"
     },
     {
       name: "favorites",
       label: "Favorites",
       icon: Heart,
-      color: "blue"
+      color: "pink",
+      hoverBg: "hover:bg-pink-100",
+      hoverText: "hover:text-pink-800"
     }
   ];
   
@@ -42,23 +48,35 @@ const NavigationTabs: React.FC<NavigationTabsProps> = ({
       name: "rewards",
       label: "Rewards",
       icon: Gift,
-      color: "blue"
+      color: "amber",
+      hoverBg: "hover:bg-amber-100",
+      hoverText: "hover:text-amber-800"
     },
     {
       name: "profile",
       label: "Profile",
       icon: User,
-      color: "blue"
+      color: "purple",
+      hoverBg: "hover:bg-purple-100",
+      hoverText: "hover:text-purple-800"
     }
   ];
 
-  // Map color names to tailwind classes - simplified to just use blue with white
-  const getColorClasses = (isActive: boolean) => {
+  // Map color names to tailwind classes with unique colors per tab
+  const getColorClasses = (isActive: boolean, tabColor: string) => {
+    // Base colors for active state (blue theme)
+    const activeColors = {
+      bg: "bg-blue-600",
+      text: "text-white",
+      shadow: "shadow-md shadow-blue-200"
+    };
+    
+    // When not active, use white background but custom hover colors per tab
     return {
-      bg: isActive ? "bg-blue-600" : "bg-white",
-      text: isActive ? "text-white" : "text-blue-600",
-      shadow: isActive ? "shadow-md shadow-blue-200" : "",
-      hover: "hover:bg-blue-100 hover:text-blue-800"
+      bg: isActive ? activeColors.bg : "bg-white",
+      text: isActive ? activeColors.text : `text-blue-600`,
+      shadow: isActive ? activeColors.shadow : "",
+      hover: !isActive ? `${tabColor}` : ""
     };
   };
 
@@ -67,7 +85,8 @@ const NavigationTabs: React.FC<NavigationTabsProps> = ({
       <div className="grid grid-cols-3 gap-2">
         {tabs.map((tab) => {
           const isActive = activeTab === tab.name;
-          const colorClasses = getColorClasses(isActive);
+          const hoverClass = `${tab.hoverBg} ${tab.hoverText}`;
+          const colorClasses = getColorClasses(isActive, hoverClass);
           
           const handleClick = () => {
             onTabChange(tab.name);
@@ -109,7 +128,8 @@ const NavigationTabs: React.FC<NavigationTabsProps> = ({
         <div className="grid grid-cols-2 gap-2">
           {bottomTabs.map((tab) => {
             const isActive = activeTab === tab.name;
-            const colorClasses = getColorClasses(isActive);
+            const hoverClass = `${tab.hoverBg} ${tab.hoverText}`;
+            const colorClasses = getColorClasses(isActive, hoverClass);
             
             const handleClick = () => {
               onTabChange(tab.name);
