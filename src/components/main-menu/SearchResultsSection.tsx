@@ -64,7 +64,7 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
       "Clean my Pool": "https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?q=80&w=1000&auto=format&fit=crop",
       "Post Event Clean Up": "https://images.unsplash.com/photo-1596461010414-7da839c5498d?q=80&w=1000&auto=format&fit=crop",
       
-      "Moving Assistance": "https://images.unsplash.com/photo-1600518464441-9306b008de8d?q=80&w=1000&auto=format&fit=crop",
+      "Moving Assistance": "/lovable-uploads/72545c93-f781-402e-ad25-5cd509be453c.png",
       "Help with Loading Items": "https://images.unsplash.com/photo-1530650314597-5209931bcdae?q=80&w=1000&auto=format&fit=crop",
       "Drive me to a Location": "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=1000&auto=format&fit=crop",
       "Pick me up from Location": "https://images.unsplash.com/photo-1613688270362-8b26189c0782?q=80&w=1000&auto=format&fit=crop",
@@ -74,7 +74,7 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
       "Assemble Bed Frame": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1000&auto=format&fit=crop",
       "Assemble my Furniture": "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?q=80&w=1000&auto=format&fit=crop",
       "Install TV Mount": "https://images.unsplash.com/photo-1512204724346-8c4de33f3c1c?q=80&w=1000&auto=format&fit=crop",
-      "Assemble IKEA Furniture": "https://images.unsplash.com/photo-1595428774863-a38feabce63f?q=80&w=1000&auto=format&fit=crop",
+      "Assemble IKEA Furniture": "/lovable-uploads/83abea36-642f-4147-865a-c43794680e3b.png",
       "Install a Shelf": "https://images.unsplash.com/photo-1617104551722-3b2d52338fe9?q=80&w=1000&auto=format&fit=crop",
       "Assemble Office Desk or Chairs": "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?q=80&w=1000&auto=format&fit=crop",
       

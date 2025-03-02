@@ -223,14 +223,14 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
       category: "Transportation",
       description: "Help moving furniture to new apartment",
       location: "UCLA Campus",
-      image: "https://images.unsplash.com/photo-1600518464441-9306b008de8d?q=80&w=1000&auto=format&fit=crop"
+      image: "/lovable-uploads/72545c93-f781-402e-ad25-5cd509be453c.png"
     },
     {
       title: "Assemble IKEA Furniture",
       category: "Assembly",
       description: "Need help putting together a desk and chair",
       location: "Brentwood",
-      image: "https://images.unsplash.com/photo-1595428774863-a38feabce63f?q=80&w=1000&auto=format&fit=crop"
+      image: "/lovable-uploads/83abea36-642f-4147-865a-c43794680e3b.png"
     },
     {
       title: "Teach me Math",
