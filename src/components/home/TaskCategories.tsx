@@ -1,4 +1,3 @@
-
 import { 
   Trash2, 
   Car, 
@@ -21,13 +20,9 @@ const TaskCategories = () => {
   const navigate = useNavigate();
   
   const handleCategoryClick = (category: string) => {
-    // For now, just show a toast notification
     toast.success(`${category} category clicked!`, {
       description: "This would navigate to the category page in a full implementation."
     });
-    
-    // In a real implementation, this would navigate to a category page
-    // navigate(`/categories/${category.toLowerCase()}`);
     console.log(`Category selected: ${category}`);
   };
 
@@ -166,7 +161,6 @@ const TaskCategories = () => {
   
   return (
     <section id="all-tasks" className="py-20 bg-assist-gray/50 relative overflow-hidden">
-      {/* Background decoration */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute -top-24 -right-24 w-96 h-96 bg-assist-blue/5 rounded-full opacity-70" />
         <div className="absolute bottom-0 left-1/4 w-64 h-64 bg-blue-100/30 rounded-full opacity-60" />
@@ -181,10 +175,9 @@ const TaskCategories = () => {
             Explore Task Categories
           </h2>
           <p className="text-lg text-gray-600 mb-8">
-            From cleaning to coding, our vetted students can assist you with any task you need completed.
+            From cleaning to coding, our vetted students can assist you with any task you need completed
           </p>
           
-          {/* Search Bar - Enhanced with blue colors */}
           <form onSubmit={handleSearch} className="max-w-xl mx-auto mb-12">
             <div className="relative flex items-center">
               <Input 
