@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -286,6 +287,7 @@ const MainMenu = () => {
   };
 
   const getFavoriteListings = () => {
+    // Include all possible sources for tasks
     const allTasks = [...recommendedTasks, ...(searchResults || [])];
     return allTasks.filter(task => favoriteTaskIds.includes(task.title));
   };
@@ -293,7 +295,7 @@ const MainMenu = () => {
   const toggleFavoriteView = () => {
     setShowFavorites(!showFavorites);
     if (!showFavorites) {
-      toast.info("Showing your favorited listings");
+      setActiveTab("favorites"); // Set the active tab to favorites when showing favorites
     } else {
       setActiveTab("home");
     }
@@ -325,7 +327,7 @@ const MainMenu = () => {
         assistPoints={assistPoints} 
         onPointsUpdated={handlePointsUpdated} 
       />;
-    } else if (showFavorites) {
+    } else if (activeTab === "favorites" || showFavorites) {
       const favorites = getFavoriteListings();
       return (
         <FavoritesSection 
@@ -333,7 +335,10 @@ const MainMenu = () => {
           favoriteTaskIds={favoriteTaskIds}
           onFavoriteToggle={handleFavoriteToggle}
           onBookNow={handleBookNow}
-          onHideSection={() => setShowFavorites(false)}
+          onHideSection={() => {
+            setShowFavorites(false);
+            setActiveTab("home");
+          }}
         />
       );
     }
