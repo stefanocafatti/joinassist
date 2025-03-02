@@ -18,7 +18,7 @@ const Footer = () => {
               The next-generation platform redefining how people connect with vetted college students for a wide range of tasks.
             </p>
             <div className="flex space-x-5 pt-4">
-              <a href="https://www.instagram.com/joinassist/" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-assist-blue transition-colors">
+              <a href="#" className="text-gray-700 hover:text-assist-blue transition-colors">
                 <Instagram size={20} />
               </a>
               <a href="#" className="text-gray-700 hover:text-assist-blue transition-colors">
@@ -27,7 +27,7 @@ const Footer = () => {
               <a href="#" className="text-gray-700 hover:text-assist-blue transition-colors">
                 <Facebook size={20} />
               </a>
-              <a href="https://www.linkedin.com/company/joinassist" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-assist-blue transition-colors">
+              <a href="#" className="text-gray-700 hover:text-assist-blue transition-colors">
                 <Linkedin size={20} />
               </a>
             </div>
