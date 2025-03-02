@@ -1,10 +1,8 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Heart, Bell, Coins, Store, Mail } from "lucide-react";
+import { Heart, Bell, Coins, Store, Mail, CheckCircle, User, History, CreditCard, Settings, LogOut } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { User, History, CreditCard, Heart as HeartIcon, Settings, LogOut } from "lucide-react";
 import {
   Popover,
   PopoverContent,
@@ -128,11 +126,11 @@ const MainHeader: React.FC<MainHeaderProps> = ({
                           notification.title.includes("Completed") ? "bg-purple-100" : "bg-yellow-100"
                         )}>
                           {notification.title.includes("Task Request") ? (
-                            <CheckCircle2 className="h-4 w-4 text-green-600" />
+                            <CheckCircle className="h-4 w-4 text-green-600" />
                           ) : notification.title.includes("Message") ? (
                             <Mail className="h-4 w-4 text-blue-600" />
                           ) : notification.title.includes("Completed") ? (
-                            <CheckCircle2 className="h-4 w-4 text-purple-600" />
+                            <CheckCircle className="h-4 w-4 text-purple-600" />
                           ) : (
                             <Coins className="h-4 w-4 text-yellow-600" />
                           )}
