@@ -208,12 +208,6 @@ const Features = () => {
               ))}
             </div>
           </div>
-          <Button 
-            size="lg" 
-            className="rounded-full bg-assist-blue hover:bg-assist-blue/90 text-white px-8 py-6 h-14 text-base font-medium shadow-soft hover:translate-y-[-2px] transition-all"
-          >
-            Get Started
-          </Button>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
