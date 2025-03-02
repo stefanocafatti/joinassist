@@ -158,7 +158,7 @@ const TaskCategories = () => {
       </div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-12">
+        <div className="text-center max-w-3xl mx-auto mb-14">
           <div className="inline-flex items-center gap-1 py-1 px-4 rounded-full bg-assist-blue/10 text-assist-blue text-sm font-medium mb-4">
             Many Skills, One Platform
           </div>
@@ -170,7 +170,7 @@ const TaskCategories = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {categories.map((category, index) => (
             <div key={index} onClick={() => handleCategoryClick(category.title)} className="h-full cursor-pointer">
               <CategoryCard
@@ -184,7 +184,7 @@ const TaskCategories = () => {
           ))}
         </div>
         
-        <div className="mt-12 text-center">
+        <div className="mt-14 text-center">
           <Button 
             size="lg" 
             className="rounded-full bg-assist-blue hover:bg-assist-blue/90 text-white h-14 px-8 text-base"
