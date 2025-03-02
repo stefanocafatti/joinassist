@@ -123,14 +123,14 @@ const Features = () => {
   }, []);
   
   return (
-    <section id="how-it-works" className="py-24 pb-24 bg-gradient-to-b from-white to-blue-50/30 relative overflow-hidden">
+    <section id="how-it-works" className="py-20 bg-gradient-to-b from-white to-blue-50/30 relative overflow-hidden">
       <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute top-20 left-0 w-72 h-72 bg-soft-blue rounded-full blur-3xl opacity-20 -translate-x-1/2" />
         <div className="absolute bottom-20 right-0 w-80 h-80 bg-soft-pink rounded-full blur-3xl opacity-20 translate-x-1/3" />
       </div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-4xl mx-auto mb-20">
+        <div className="text-center max-w-4xl mx-auto mb-16">
           <h2 className="text-6xl md:text-7xl font-bold text-gray-900 mb-6">
             How <span className="bg-gradient-to-r from-assist-blue via-blue-500 to-blue-400 bg-clip-text text-transparent">Assist</span> Works
           </h2>
@@ -139,8 +139,8 @@ const Features = () => {
           </p>
         </div>
         
-        <div className="flex flex-col items-center justify-center mb-16">
-          <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 mb-12 w-full">
+        <div className="flex flex-col items-center justify-center mb-10">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 mb-8 w-full">
             {[0, 1, 2].map(step => (
               <div 
                 key={step} 
@@ -194,7 +194,7 @@ const Features = () => {
               </div>
             ))}
           </div>
-          <div className="flex justify-center mb-8">
+          <div className="flex justify-center mb-4">
             <div className="flex space-x-2">
               {[0, 1, 2].map(dot => (
                 <button
@@ -208,38 +208,6 @@ const Features = () => {
               ))}
             </div>
           </div>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8">
-          {featuresData.map((feature, index) => (
-            <div 
-              key={index}
-              className={`glass-card p-6 rounded-2xl shadow-soft transition-all duration-300 hover:scale-102 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-              style={{ transitionDelay: `${0.1 * index}s` }}
-            >
-              <div className="flex items-center gap-4 mb-4">
-                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${feature.color} text-white`}>
-                  <feature.icon size={24} />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900">{feature.title}</h3>
-              </div>
-              <p className="text-gray-600 mb-4">{feature.description}</p>
-              
-              <div className="space-y-3">
-                {feature.sections.map((section, sectionIndex) => (
-                  <div key={sectionIndex} className="p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors duration-200">
-                    <h4 className="text-lg font-medium text-gray-800 mb-2">{section.title}</h4>
-                    <p className="text-gray-500 text-sm mb-2">{section.description}</p>
-                    <ul className="list-disc list-inside text-sm text-gray-600">
-                      {section.tasks.map((task, taskIndex) => (
-                        <li key={taskIndex}>{task}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </section>
