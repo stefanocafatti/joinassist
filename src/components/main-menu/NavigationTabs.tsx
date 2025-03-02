@@ -136,9 +136,10 @@ const NavigationTabs: React.FC<NavigationTabsProps> = ({
             onClick={tabs[0].onClick}
             aria-current={activeTab === tabs[0].name ? "page" : undefined}
           >
-            <tabs[0].icon 
-              className={`h-7 w-7 mb-2 ${activeTab === tabs[0].name ? "text-white" : "text-purple-600"}`} 
-            />
+            {/* Fixed: Using proper JSX syntax for dynamic component */}
+            {React.createElement(tabs[0].icon, {
+              className: `h-7 w-7 mb-2 ${activeTab === tabs[0].name ? "text-white" : "text-purple-600"}`
+            })}
             <span className="font-medium text-base">{tabs[0].label}</span>
           </button>
         </div>
