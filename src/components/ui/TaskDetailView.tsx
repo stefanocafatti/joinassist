@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { format } from "date-fns";
 import { 
@@ -98,7 +97,6 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
     );
   };
 
-  // Get image based on task title
   const getTaskImage = (taskTitle: string) => {
     const taskImageMap: {[key: string]: string} = {
       "TV Mounting": "/lovable-uploads/36f389d4-c8c6-40a8-9cc4-2ed5306d7dd5.png",
@@ -163,11 +161,12 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
                         variant="outline"
                         className="w-full justify-start text-left font-normal"
                         id="date"
+                        type="button"
                       >
                         {date ? format(date, "PPP") : <span>Pick a date</span>}
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0 bg-white" align="start">
+                    <PopoverContent className="w-auto p-0 bg-white z-[100]" align="start">
                       <Calendar
                         mode="single"
                         selected={date}
