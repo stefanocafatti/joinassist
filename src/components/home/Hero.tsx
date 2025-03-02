@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Star, Sparkles } from "lucide-react";
@@ -138,51 +139,6 @@ const Hero = () => {
               >
                 Join Assist as a Student <ChevronRight size={16} />
               </Button>
-            </div>
-            
-            <div className="flex items-center gap-4 pt-6 animate-slide-in" style={{ animationDelay: "0.5s" }}>
-              <div className="flex -space-x-3">
-                <div className="w-10 h-10 rounded-full border-2 border-white overflow-hidden hover:scale-110 transition-transform">
-                  <img 
-                    src="/lovable-uploads/85907e9e-0f77-4b04-b5b7-132ec55971fa.png" 
-                    alt="Student 1" 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="w-10 h-10 rounded-full border-2 border-white overflow-hidden hover:scale-110 transition-transform">
-                  <img 
-                    src="/lovable-uploads/5857c7f0-9637-4ee9-adba-2c5f1076b9ac.png" 
-                    alt="Student 2" 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="w-10 h-10 rounded-full border-2 border-white overflow-hidden hover:scale-110 transition-transform">
-                  <img 
-                    src="/lovable-uploads/a7543c7b-5d9f-4ac2-b243-49bfc5b8d199.png" 
-                    alt="Student 3" 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="w-10 h-10 rounded-full border-2 border-white overflow-hidden hover:scale-110 transition-transform">
-                  <img 
-                    src="/lovable-uploads/917480cd-1a1e-4b01-b0ea-1fa142676a18.png" 
-                    alt="Student 4" 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-soft-blue to-soft-purple text-assist-blue flex items-center justify-center text-xs font-medium border-2 border-white">
-                  +2k
-                </div>
-              </div>
-              <div className="text-gray-700">
-                <p className="font-medium">Trusted by students from 200+ universities</p>
-                <div className="flex items-center gap-1">
-                  {[1, 2, 3, 4, 5].map((i) => (
-                    <Star key={i} size={14} className="fill-yellow-400 text-yellow-400" />
-                  ))}
-                  <span className="text-sm font-medium ml-1">4.9/5 (2,000+ reviews)</span>
-                </div>
-              </div>
             </div>
           </div>
           
