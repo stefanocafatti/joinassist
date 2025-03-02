@@ -10,7 +10,7 @@ interface SchoolLogo {
 const TrustedCompanies = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   
-  // Updated school campus logos with new uploaded images
+  // School campus logos
   const schoolLogos: SchoolLogo[] = [
     {
       name: "University of South Carolina",
@@ -123,15 +123,15 @@ const TrustedCompanies = () => {
       <div className="relative overflow-hidden w-full">
         <div 
           ref={scrollContainerRef}
-          className="flex space-x-12 whitespace-nowrap overflow-x-hidden"
+          className="flex space-x-8 whitespace-nowrap overflow-x-hidden"
           style={{ scrollBehavior: 'smooth' }}
         >
           {schoolLogos.map((logo, index) => (
-            <div key={`logo-${index}`} className="flex-shrink-0 px-4">
+            <div key={`logo-${index}`} className="flex-shrink-0 px-3">
               <img 
                 src={logo.src} 
                 alt={logo.alt} 
-                className="h-24 md:h-28 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity"
+                className="h-16 md:h-20 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity"
               />
             </div>
           ))}
