@@ -343,6 +343,7 @@ const MainMenu = () => {
         onFavoriteToggle={handleFavoriteToggle}
         onBookNow={handleBookNow}
         onRequestTask={handleRequestTask}
+        onSetActiveTab={setActiveTab}
       />
     );
   };

@@ -2,10 +2,12 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Calendar, Eye, Star, HelpCircle } from "lucide-react";
+import { Heart, Calendar, Eye, Star, HelpCircle, MessageSquare } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { toast } from 'sonner';
 
 interface PastTask {
   id: string;
@@ -24,13 +26,15 @@ interface PastTasksSectionProps {
   favoriteTaskIds: string[];
   onFavoriteToggle: (taskTitle: string) => void;
   onViewTask: (taskTitle: string) => void;
+  onViewAll?: () => void;
 }
 
 const PastTasksSection: React.FC<PastTasksSectionProps> = ({ 
   pastTasks, 
   favoriteTaskIds, 
   onFavoriteToggle, 
-  onViewTask 
+  onViewTask,
+  onViewAll 
 }) => {
   const [selectedTask, setSelectedTask] = useState<PastTask | null>(null);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
@@ -42,6 +46,10 @@ const PastTasksSection: React.FC<PastTasksSectionProps> = ({
 
   const handleCloseDetails = () => {
     setIsDetailsOpen(false);
+  };
+
+  const handleContactSupport = () => {
+    toast.success("Support request sent. Our team will contact you shortly.");
   };
 
   const renderStarRating = (rating: number = 0) => {
@@ -62,19 +70,35 @@ const PastTasksSection: React.FC<PastTasksSectionProps> = ({
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-semibold text-gray-900">Your Past Ordered Tasks</h2>
         <div className="flex items-center gap-2">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant="outline" size="icon" className="rounded-full">
-                  <HelpCircle className="h-4 w-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>View your completed tasks and task details</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <Button variant="link" className="text-assist-blue">
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="outline" size="icon" className="rounded-full">
+                <HelpCircle className="h-4 w-4" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-80">
+              <div className="space-y-4">
+                <h4 className="font-medium text-sm">Need Help with Your Tasks?</h4>
+                <p className="text-sm text-gray-500">
+                  If you have any questions about your past tasks or need assistance, our support team is here to help.
+                </p>
+                <div className="pt-2">
+                  <Button 
+                    className="w-full bg-assist-blue hover:bg-assist-blue/90"
+                    onClick={handleContactSupport}
+                  >
+                    <MessageSquare className="h-4 w-4 mr-2" />
+                    Contact Support
+                  </Button>
+                </div>
+              </div>
+            </PopoverContent>
+          </Popover>
+          <Button 
+            variant="link" 
+            className="text-assist-blue"
+            onClick={onViewAll}
+          >
             View all →
           </Button>
         </div>
