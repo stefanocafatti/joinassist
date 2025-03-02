@@ -11,58 +11,68 @@ const TrustedCompanies = () => {
   const primaryRef = useRef<HTMLDivElement>(null);
   const secondaryRef = useRef<HTMLDivElement>(null);
 
-  // School campus logos
+  // School campus logos - new logos uploaded by the user
   const schoolLogos: SchoolLogo[] = [
     {
-      name: "University of Utah",
-      src: "/lovable-uploads/2f908d1f-c87f-4675-9a90-f463d0ccfd82.png",
-      alt: "University of Utah logo - A red U inside a circle with a feather"
-    },
-    {
-      name: "University of Colorado Boulder",
-      src: "/lovable-uploads/28483c8a-0b86-4971-9c73-112476cc44d6.png",
-      alt: "University of Colorado Boulder logo - A black buffalo with gold outline"
-    },
-    {
-      name: "UCLA",
-      src: "/lovable-uploads/73e3849a-bc0a-47a6-b487-66dafd6a3740.png",
-      alt: "UCLA logo - Blue script spelling UCLA"
-    },
-    {
-      name: "University of Tennessee",
-      src: "/lovable-uploads/150c4d6c-9d7f-40b4-b4b7-6c2e9e97125a.png",
-      alt: "University of Tennessee logo - Orange T"
-    },
-    {
-      name: "USC",
-      src: "/lovable-uploads/6abe5f55-5c7f-403c-8021-7a54874142a1.png",
-      alt: "USC logo - USC in maroon letters with gold outlines"
-    },
-    {
-      name: "University of Miami",
-      src: "/lovable-uploads/c05aa831-974b-4269-ab8a-0f404db27da9.png",
-      alt: "University of Miami logo - U with orange and green sides"
-    },
-    {
-      name: "University of North Carolina",
-      src: "/lovable-uploads/e2cb4f00-9428-4de0-9840-e9fa6e59c807.png",
-      alt: "University of North Carolina logo - Light blue interlocking NC"
-    },
-    {
-      name: "Duke University",
-      src: "/lovable-uploads/976f133b-8038-4638-a276-9d490ad641b6.png",
-      alt: "Duke University logo - Dark blue D"
+      name: "University of Michigan",
+      src: "/lovable-uploads/1aaec955-1c38-424c-9045-b84a80a4d1de.png",
+      alt: "University of Michigan logo - Yellow M with blue outline"
     },
     {
       name: "Auburn University",
-      src: "/lovable-uploads/e6618c4e-d67a-4c94-8d11-6b4d4e37f582.png",
-      alt: "Auburn University logo - Blue AU with orange outline"
+      src: "/lovable-uploads/42996569-a765-4051-bed4-0abafd4372e7.png",
+      alt: "Auburn University logo - AU in orange and blue"
     },
     {
-      name: "University of Michigan",
-      src: "/lovable-uploads/2c4c89f8-f6f8-4028-bfc4-0b1e459fbf37.png",
-      alt: "University of Michigan logo - Yellow M with blue outline"
-    }
+      name: "University of Utah",
+      src: "/lovable-uploads/1a174f4a-0894-4058-b86c-7949d3af82e4.png",
+      alt: "University of Utah logo - Red U with feathers"
+    },
+    {
+      name: "Texas Longhorns",
+      src: "/lovable-uploads/ff4b47af-eb32-45c6-ad83-285f8a3cd905.png",
+      alt: "Texas Longhorns logo - Orange Longhorn silhouette"
+    },
+    {
+      name: "University of South Carolina",
+      src: "/lovable-uploads/8d0891f3-e455-4ef9-9c2b-8b077062435d.png",
+      alt: "University of South Carolina logo - Black C with garnet gamecock"
+    },
+    {
+      name: "University of Tennessee",
+      src: "/lovable-uploads/405fd86b-536d-44bb-a4bd-562deaa4a5d4.png",
+      alt: "University of Tennessee logo - Orange T"
+    },
+    {
+      name: "Texas A&M University",
+      src: "/lovable-uploads/79b50b55-1c38-4f6c-8542-561bb97fde56.png",
+      alt: "Texas A&M University logo - Maroon ATM"
+    },
+    {
+      name: "Duke University",
+      src: "/lovable-uploads/8f0819d2-0a35-4d0e-b084-3910376d7efe.png",
+      alt: "Duke University logo - Blue D"
+    },
+    {
+      name: "University of Miami",
+      src: "/lovable-uploads/601c1754-7fb9-4c9b-813d-eed6284fde2e.png",
+      alt: "University of Miami logo - Green and orange U"
+    },
+    {
+      name: "University of Colorado",
+      src: "/lovable-uploads/4bf537ed-5547-45ec-818f-541c833b893d.png",
+      alt: "University of Colorado logo - Gold and black buffalo"
+    },
+    {
+      name: "University of North Carolina",
+      src: "/lovable-uploads/01dfa041-c3a2-4451-baba-e49430a0e6e0.png",
+      alt: "University of North Carolina logo - Carolina blue NC"
+    },
+    {
+      name: "USC Trojans",
+      src: "/lovable-uploads/f063f72e-9bf9-4d8d-b4f9-db94f9ccf2f9.png",
+      alt: "USC Trojans logo - Red and gold USC letters"
+    },
   ];
 
   useEffect(() => {
@@ -74,7 +84,7 @@ const TrustedCompanies = () => {
       primaryRef.current.style.transform = "translateX(0)";
       secondaryRef.current.style.transform = "translateX(100%)";
       
-      const duration = 25; // Duration in seconds for one complete loop
+      const duration = 30; // Duration in seconds for one complete loop (slightly longer for more logos)
       
       // Apply smooth transitions
       primaryRef.current.style.transition = `transform ${duration}s linear infinite`;
@@ -136,11 +146,11 @@ const TrustedCompanies = () => {
             style={{ willChange: "transform" }}
           >
             {schoolLogos.map((logo, index) => (
-              <div key={`logo-1-${index}`} className="px-8 flex-shrink-0">
+              <div key={`logo-1-${index}`} className="px-6 flex-shrink-0">
                 <img 
                   src={logo.src} 
                   alt={logo.alt} 
-                  className="h-12 md:h-14 object-contain opacity-90 hover:opacity-100 transition-opacity"
+                  className="h-16 md:h-20 object-contain opacity-90 hover:opacity-100 transition-opacity"
                 />
               </div>
             ))}
@@ -153,11 +163,11 @@ const TrustedCompanies = () => {
             style={{ willChange: "transform" }}
           >
             {schoolLogos.map((logo, index) => (
-              <div key={`logo-2-${index}`} className="px-8 flex-shrink-0">
+              <div key={`logo-2-${index}`} className="px-6 flex-shrink-0">
                 <img 
                   src={logo.src} 
                   alt={logo.alt} 
-                  className="h-12 md:h-14 object-contain opacity-90 hover:opacity-100 transition-opacity"
+                  className="h-16 md:h-20 object-contain opacity-90 hover:opacity-100 transition-opacity"
                 />
               </div>
             ))}
