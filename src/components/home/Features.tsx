@@ -136,7 +136,7 @@ const Features = () => {
             How <span className="bg-gradient-to-r from-assist-blue via-blue-500 to-blue-400 bg-clip-text text-transparent">Assist</span> Works
           </h2>
           <p className="text-xl text-gray-600">
-            We've streamlined the process to get you the help you need quickly and reliably
+            We've made it effortless to get the help you need—quickly, safely, and on your terms
           </p>
         </div>
         
@@ -184,14 +184,14 @@ const Features = () => {
                       {step + 1}
                     </span>
                     <h3 className="text-xl font-semibold mb-2">
-                      {step === 0 ? 'Share Your Need' : 
-                       step === 1 ? 'Get Matched' : 
-                       'Task Completed'}
+                      {step === 0 ? 'Browse or Post Your Task' : 
+                       step === 1 ? 'Get Matched Instantly' : 
+                       'Task Completed, Stress-Free'}
                     </h3>
                     <p className="text-center px-6 text-gray-600">
-                      {step === 0 ? 'Post your task with details, location and budget' : 
-                       step === 1 ? 'We match you with qualified college students' : 
-                       'Your task is completed to your satisfaction'}
+                      {step === 0 ? 'Describe what you need help with, set your budget, and choose a time that works for you.' : 
+                       step === 1 ? 'We connect you with vetted college students who are ready to assist, ensuring reliable and secure service.' : 
+                       'Your Assist Expert completes the task to your satisfaction, and payment is handled securely through the platform.'}
                     </p>
                   </div>
                 </div>
