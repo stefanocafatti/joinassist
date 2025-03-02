@@ -134,7 +134,7 @@ const PastTasksSection: React.FC<PastTasksSectionProps> = ({
                 </Button>
                 <Button 
                   size="sm" 
-                  className="bg-assist-blue hover:bg-assist-blue/90"
+                  className="bg-assist-blue hover:bg-assist-blue/90 w-full"
                   onClick={(e) => {
                     e.stopPropagation();
                     onViewTask(task.title);
