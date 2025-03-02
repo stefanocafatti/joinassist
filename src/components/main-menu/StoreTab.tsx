@@ -1,7 +1,8 @@
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Gift, Tag, CheckCircle2 } from "lucide-react";
+import { Gift, Tag, CheckCircle2, HelpCircle } from "lucide-react";
 import { toast } from "sonner";
 import {
   Tooltip,
@@ -9,6 +10,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 interface StoreTabProps {
   assistPoints: number;
@@ -173,8 +179,34 @@ const StoreTab: React.FC<StoreTabProps> = ({ assistPoints, onPointsUpdated }) =>
           <div className="bg-assist-blue/10 p-3 rounded-full">
             <Gift className="h-8 w-8 text-assist-blue" />
           </div>
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900">Rewards Store</h2>
+          <div className="flex-1">
+            <div className="flex items-center gap-2">
+              <h2 className="text-2xl font-bold text-gray-900">Rewards Store</h2>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="ghost" size="icon" className="h-6 w-6 p-0" aria-label="Learn about Assist Points">
+                    <HelpCircle className="h-5 w-5 text-gray-400 hover:text-assist-blue transition-colors" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-80 p-4" align="start" side="right">
+                  <div className="space-y-3">
+                    <h3 className="font-semibold text-base">How to Earn Assist Points</h3>
+                    <p className="text-sm text-gray-600">
+                      Earn Assist Points every time you book a task from a student. Points are awarded based on:
+                    </p>
+                    <ul className="text-sm text-gray-600 list-disc pl-5 space-y-1">
+                      <li>50 points for each completed task</li>
+                      <li>Additional points for higher value tasks</li>
+                      <li>Bonus points for 5-star ratings</li>
+                      <li>Earn points for referring friends</li>
+                    </ul>
+                    <p className="text-sm text-gray-600 mt-2">
+                      Redeem your points for exclusive rewards, discounts, and special offers!
+                    </p>
+                  </div>
+                </PopoverContent>
+              </Popover>
+            </div>
             <p className="text-gray-600">Use your Assist Points to redeem rewards</p>
           </div>
         </div>
