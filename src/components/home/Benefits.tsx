@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { CheckCircle2, GraduationCap, DollarSign, Heart, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -61,7 +60,7 @@ const Benefits = () => {
   const currentData = benefitsData[activeView];
 
   return (
-    <section id="benefits" className="pb-12 -mt-96 bg-gradient-to-b from-blue-50/30 to-white relative overflow-hidden">
+    <section id="benefits" className="pb-12 -mt-[400px] bg-gradient-to-b from-blue-50/30 to-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-8">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
@@ -137,18 +136,6 @@ const Benefits = () => {
               </Button>
             </div>
           </div>
-        </div>
-        
-        <div className="text-center mt-12">
-          <p className="text-lg text-gray-600 mb-6">
-            Join thousands of students and task requesters already using Assist
-          </p>
-          <Button 
-            size="lg" 
-            className="rounded-full bg-assist-blue hover:bg-assist-blue/90 text-white px-10 py-6 h-14 text-lg font-medium shadow-sm hover:translate-y-[-2px] transition-all"
-          >
-            Get Started Today
-          </Button>
         </div>
       </div>
     </section>
