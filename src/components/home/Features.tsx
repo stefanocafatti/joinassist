@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { 
   Clock, 
@@ -137,50 +138,45 @@ const Features = () => {
         </div>
         
         <div className="flex flex-col items-center justify-center mb-24">
-          <div className="flex items-center justify-center space-x-10 mb-12 w-full">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 mb-12 w-full">
             {[0, 1, 2].map(step => (
               <div 
                 key={step} 
                 className={`relative flex flex-col items-center ${
-                  step === animatedStep ? 'opacity-100 scale-105' : 'opacity-60 scale-100'
-                } transition-all duration-500`}
+                  step === animatedStep ? 'opacity-100 scale-105' : 'opacity-80 scale-100'
+                } transition-all duration-500 w-full md:w-1/3 max-w-sm`}
               >
                 <div className={`
-                  w-20 h-20 mb-6 rounded-2xl flex items-center justify-center shadow-soft
+                  w-full h-56 mb-6 rounded-2xl flex items-center justify-center shadow-soft relative overflow-hidden
                   ${step === 0 ? 'bg-soft-blue text-assist-blue' : 
                      step === 1 ? 'bg-soft-green text-green-600' : 
                      'bg-soft-purple text-purple-600'}
                   ${step === animatedStep ? 'animate-float' : ''}
                   transform transition-all duration-500 glassmorphism
                 `}>
-                  <div className="relative">
-                    <span className="absolute -top-2 -right-2 flex h-4 w-4">
-                      <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${
-                        step === 0 ? 'bg-assist-blue' : 
-                        step === 1 ? 'bg-green-600' : 
-                        'bg-purple-600'
-                      } opacity-25`}></span>
-                      <span className={`relative inline-flex rounded-full h-4 w-4 ${
-                        step === 0 ? 'bg-assist-blue' : 
-                        step === 1 ? 'bg-green-600' : 
-                        'bg-purple-600'
-                      }`}></span>
-                    </span>
-                    <span className="text-2xl font-bold">
+                  <div className="absolute top-3 right-3 h-3 w-3">
+                    <span className={`relative inline-flex rounded-full h-3 w-3 ${
+                      step === 0 ? 'bg-assist-blue' : 
+                      step === 1 ? 'bg-green-600' : 
+                      'bg-purple-600'
+                    }`}></span>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <span className="text-4xl font-bold mb-3">
                       {step + 1}
                     </span>
+                    <h3 className="text-xl font-semibold mb-2">
+                      {step === 0 ? 'Share Your Need' : 
+                       step === 1 ? 'Get Matched' : 
+                       'Task Completed'}
+                    </h3>
+                    <p className="text-center px-6 text-gray-600">
+                      {step === 0 ? 'Post your task with details, location and budget' : 
+                       step === 1 ? 'We match you with qualified college students' : 
+                       'Your task is completed to your satisfaction'}
+                    </p>
                   </div>
                 </div>
-                <h3 className="text-xl font-semibold mb-2">
-                  {step === 0 ? 'Share Your Need' : 
-                   step === 1 ? 'Get Matched' : 
-                   'Task Completed'}
-                </h3>
-                <p className="text-center text-gray-600 max-w-xs">
-                  {step === 0 ? 'Post your task with details, location and budget' : 
-                   step === 1 ? 'We match you with qualified college students' : 
-                   'Your task is completed to your satisfaction'}
-                </p>
               </div>
             ))}
           </div>
@@ -189,8 +185,8 @@ const Features = () => {
               {[0, 1, 2].map(dot => (
                 <button
                   key={dot}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    dot === animatedStep ? 'w-6 bg-assist-blue' : 'bg-gray-300'
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    dot === animatedStep ? 'w-5 bg-assist-blue' : 'bg-gray-300'
                   }`}
                   onClick={() => setAnimatedStep(dot)}
                   aria-label={`View step ${dot + 1}`}
