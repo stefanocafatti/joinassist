@@ -145,7 +145,7 @@ const Hero = () => {
           <div className="w-full md:w-1/2 mt-8 md:mt-0 animate-scale-in" style={{ animationDelay: "0.6s" }}>
             <div className="relative">
               <div className="absolute inset-0 -m-4 rounded-3xl bg-soft-pink/30 animate-float" style={{ animationDelay: "0.7s" }}></div>
-              <div className="relative rounded-2xl overflow-hidden shadow-elevation h-[320px] sm:h-[370px] md:h-[420px] mt-4">
+              <div className="relative rounded-2xl overflow-hidden shadow-elevation h-[280px] sm:h-[320px] md:h-[360px] mt-4">
                 <ImageSlideshow 
                   images={slideshowImages} 
                   autoplayInterval={5000} 
@@ -153,28 +153,28 @@ const Hero = () => {
                 />
               </div>
               
-              <div className="absolute -bottom-6 -left-6 bg-white/95 p-4 rounded-xl shadow-elevation animate-float z-30" style={{ animationDelay: "1s" }}>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-soft-green rounded-full flex items-center justify-center text-green-600">
-                    <Star size={20} className="fill-green-600" />
+              <div className="absolute -bottom-6 -left-6 bg-white/95 p-3 rounded-xl shadow-elevation animate-float z-30" style={{ animationDelay: "1s" }}>
+                <div className="flex items-center gap-2">
+                  <div className="w-10 h-10 bg-soft-green rounded-full flex items-center justify-center text-green-600">
+                    <Star size={16} className="fill-green-600" />
                   </div>
                   <div>
-                    <p className="font-medium">Satisfaction Guarantee</p>
-                    <p className="text-sm text-gray-600">Only pay once you're happy</p>
+                    <p className="font-medium text-sm">Satisfaction Guarantee</p>
+                    <p className="text-xs text-gray-600">Only pay once you're happy</p>
                   </div>
                 </div>
               </div>
               
-              <div className="absolute -top-6 -right-6 bg-white/95 p-4 rounded-xl shadow-elevation animate-float z-30" style={{ animationDelay: "1.3s" }}>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-soft-orange rounded-full flex items-center justify-center text-orange-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <div className="absolute -top-6 -right-6 bg-white/95 p-3 rounded-xl shadow-elevation animate-float z-30" style={{ animationDelay: "1.3s" }}>
+                <div className="flex items-center gap-2">
+                  <div className="w-10 h-10 bg-soft-orange rounded-full flex items-center justify-center text-orange-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" fill="rgba(237, 137, 54, 0.2)" />
                     </svg>
                   </div>
                   <div>
-                    <p className="font-medium">Trusted & Vetted College Students</p>
-                    <p className="text-sm text-gray-600">Every student is verified</p>
+                    <p className="font-medium text-sm">Trusted & Vetted College Students</p>
+                    <p className="text-xs text-gray-600">Every student is verified</p>
                   </div>
                 </div>
               </div>
