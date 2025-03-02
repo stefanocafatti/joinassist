@@ -1,10 +1,11 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import CircleBlocks from "@/components/background/CircleBlocks";
-import { Search, Heart, Clock, Star, Filter, PawPrint, Car, Home, Package, Briefcase, User, CreditCard, History, Settings, LogOut, Bell } from "lucide-react";
+import { Search, Heart, Clock, Star, Filter, PawPrint, Car, Home, Package, Briefcase, User, CreditCard, History, Settings, LogOut, Bell, MapPin, Calendar, DollarSign, Clock3 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import CategoryCard from "@/components/ui/CategoryCard";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -52,6 +53,39 @@ const recommendedTasks = [
     description: "Get groceries delivered to your door",
     category: "Delivery", 
     image: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1000&auto=format&fit=crop"
+  }
+];
+
+const gigListings = [
+  {
+    id: "1",
+    title: "UGC Content Creator",
+    company: "Dryft Sleep",
+    companyLogo: "https://images.unsplash.com/photo-1517142089942-ba376ce32a2e?q=80&w=1000&auto=format&fit=crop",
+    location: "Remote & more",
+    duration: "2 months",
+    hours: "1-5 hrs/week",
+    featured: true
+  },
+  {
+    id: "2",
+    title: "Influencer Marketing Intern",
+    company: "MacroPlate",
+    companyLogo: "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1000&auto=format&fit=crop",
+    location: "Remote",
+    duration: "2 months",
+    hours: "5-10 hrs/week",
+    featured: false
+  },
+  {
+    id: "3",
+    title: "Brand Ambassador",
+    company: "chargeFUZE",
+    companyLogo: "https://images.unsplash.com/photo-1557053910-d9eadeed1c58?q=80&w=1000&auto=format&fit=crop",
+    location: "Fort Lauderdale",
+    duration: "2 days",
+    hours: "Flexible",
+    featured: true
   }
 ];
 
@@ -121,6 +155,20 @@ const MainMenu = () => {
       description: "You'll be redirected to the booking page"
     });
     console.log(`Booking task: ${taskTitle}`);
+  };
+
+  const handleViewGig = (gigId: string, gigTitle: string) => {
+    toast.success(`Viewing details for ${gigTitle}`, {
+      description: "You'll be redirected to the gig details page"
+    });
+    console.log(`Viewing gig: ${gigId} - ${gigTitle}`);
+  };
+
+  const handleFollowCompany = (companyName: string) => {
+    toast.success(`You are now following ${companyName}`, {
+      description: "You'll receive updates about new tasks from this company"
+    });
+    console.log(`Following company: ${companyName}`);
   };
 
   const renderContent = () => {
@@ -342,7 +390,11 @@ const MainMenu = () => {
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {recommendedTasks.map((task, index) => (
-                  <div key={index} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100">
+                  <div 
+                    key={index} 
+                    className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 cursor-pointer"
+                    onClick={() => handleBookNow(task.title)}
+                  >
                     <div 
                       className="h-40 bg-cover bg-center" 
                       style={{ backgroundImage: `url(${task.image})` }}
@@ -357,7 +409,10 @@ const MainMenu = () => {
                         <Button 
                           size="sm" 
                           className="bg-assist-blue hover:bg-assist-blue/90"
-                          onClick={() => handleBookNow(task.title)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleBookNow(task.title);
+                          }}
                         >
                           Book Now
                         </Button>
@@ -375,6 +430,84 @@ const MainMenu = () => {
             </section>
             
             <section className="mb-10">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl font-semibold text-gray-900">Available Gigs</h2>
+                <Button variant="link" className="text-assist-blue">
+                  View all →
+                </Button>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {gigListings.map((gig) => (
+                  <div
+                    key={gig.id}
+                    className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-gray-200 hover:-translate-y-1 cursor-pointer"
+                    onClick={() => handleViewGig(gig.id, gig.title)}
+                  >
+                    <div className="relative h-48 bg-gray-100">
+                      <img
+                        src={gig.companyLogo}
+                        alt={gig.company}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute top-4 right-4">
+                        <Badge
+                          variant="follow"
+                          className="cursor-pointer"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleFollowCompany(gig.company);
+                          }}
+                        >
+                          FOLLOW
+                        </Badge>
+                      </div>
+                      
+                      <div className="absolute bottom-0 left-0 right-0 flex justify-center">
+                        <div className="bg-white rounded-full p-2 -mb-8 shadow-md w-24 h-24 flex items-center justify-center">
+                          <div className="text-center">
+                            <div className="text-sm font-semibold">{gig.company}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="p-6 pt-10 text-center">
+                      <h3 className="text-xl font-bold text-gray-800 mb-1">{gig.title}</h3>
+                      <p className="text-gray-500 mb-4">{gig.company}</p>
+                      
+                      <div className="grid grid-cols-2 gap-3 mb-6">
+                        <div className="bg-green-100 rounded-md p-2 text-center">
+                          <p className="text-sm text-gray-600">{gig.duration}</p>
+                        </div>
+                        <div className="bg-blue-100 rounded-md p-2 text-center">
+                          <p className="text-sm text-gray-600">{gig.hours}</p>
+                        </div>
+                        <div className="bg-purple-100 rounded-md p-2 text-center flex items-center justify-center">
+                          <MapPin className="h-3 w-3 mr-1" />
+                          <p className="text-sm text-gray-600">{gig.location}</p>
+                        </div>
+                        <div className="bg-yellow-100 rounded-md p-2 text-center">
+                          <p className="text-sm text-gray-600">Flexible</p>
+                        </div>
+                      </div>
+                      
+                      <Button
+                        className="w-full bg-gray-100 text-gray-800 hover:bg-gray-200"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleViewGig(gig.id, gig.title);
+                        }}
+                      >
+                        VIEW GIG
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+            
+            <section className="mb-10">
               <h2 className="text-xl font-semibold text-gray-900 mb-4">Your Recent Searches</h2>
               {mockUser.recentSearches.length > 0 ? (
                 <div className="flex flex-wrap gap-3">
@@ -383,6 +516,10 @@ const MainMenu = () => {
                       key={index} 
                       variant="outline" 
                       className="rounded-full bg-gray-50 hover:bg-gray-100 border-gray-200 text-gray-700"
+                      onClick={() => {
+                        setSearchQuery(search);
+                        handleSearch(new Event('submit') as any);
+                      }}
                     >
                       {search}
                     </Button>
@@ -390,6 +527,56 @@ const MainMenu = () => {
                 </div>
               ) : (
                 <p className="text-gray-500">No recent searches yet</p>
+              )}
+            </section>
+            
+            <section className="mb-10">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl font-semibold text-gray-900">Your Past Ordered Tasks</h2>
+                <Button variant="link" className="text-assist-blue">
+                  View all →
+                </Button>
+              </div>
+              
+              {mockUser.pastTasks.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {mockUser.pastTasks.map((task) => (
+                    <div key={task.id} className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer">
+                      <div className="flex justify-between items-start mb-3">
+                        <h3 className="font-semibold text-gray-900">{task.title}</h3>
+                        <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                          {task.status}
+                        </Badge>
+                      </div>
+                      <div className="flex items-center text-sm text-gray-500 mb-3">
+                        <Calendar className="h-4 w-4 mr-1" /> {task.date}
+                      </div>
+                      <div className="flex justify-between">
+                        <Button variant="outline" size="sm">
+                          View Details
+                        </Button>
+                        <Button 
+                          size="sm" 
+                          className="bg-assist-blue hover:bg-assist-blue/90"
+                        >
+                          Book Again
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="bg-gray-50 rounded-xl p-8 text-center border border-gray-200">
+                  <div className="max-w-md mx-auto">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">No past tasks yet</h3>
+                    <p className="text-gray-600 mb-6">
+                      You haven't ordered any tasks yet. Browse our recommendations to find tasks that match your needs.
+                    </p>
+                    <Button className="bg-assist-blue hover:bg-assist-blue/90">
+                      Browse Tasks
+                    </Button>
+                  </div>
+                </div>
               )}
             </section>
             
