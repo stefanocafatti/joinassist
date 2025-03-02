@@ -38,11 +38,8 @@ const CategoryCard = ({
           {tasks.map((task, i) => (
             <div
               key={i}
-              className="bg-white py-3 px-4 rounded-lg shadow-sm flex items-center text-left gap-3"
+              className="bg-white py-3 px-4 rounded-lg shadow-sm text-left"
             >
-              <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center shadow-sm flex-shrink-0">
-                <Icon size={16} className="text-gray-700" />
-              </div>
               <span className="text-sm text-gray-700 line-clamp-2">{task}</span>
             </div>
           ))}
