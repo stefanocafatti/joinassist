@@ -1,3 +1,4 @@
+
 import { 
   Trash2, 
   Car, 
@@ -165,7 +166,7 @@ const TaskCategories = () => {
             Explore Task Categories
           </h2>
           <p className="text-lg text-gray-600">
-            From cleaning to coding, our verified students can help with almost any task you need completed.
+            From cleaning to coding, our vetted students can assist you with any task you need completed.
           </p>
         </div>
         
