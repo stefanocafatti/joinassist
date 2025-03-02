@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from "react";
 
 interface SchoolLogo {
@@ -147,16 +146,6 @@ const TrustedCompanies = () => {
 
   return (
     <section className="py-8 bg-gradient-to-r from-soft-green/40 via-white/30 to-soft-green/40 backdrop-blur-sm">
-      <div className="max-w-6xl mx-auto px-4 mb-4">
-        <div className="flex justify-center">
-          <div className="rounded-full bg-green-100/70 py-1.5 px-4 backdrop-blur-sm">
-            <h3 className="text-green-600 font-semibold tracking-wide text-center text-sm uppercase">
-              Schools Trust Assist
-            </h3>
-          </div>
-        </div>
-      </div>
-
       <div className="relative overflow-hidden w-full">
         <div 
           ref={scrollContainerRef}
