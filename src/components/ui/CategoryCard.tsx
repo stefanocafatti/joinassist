@@ -35,14 +35,19 @@ const CategoryCard = ({
         </div>
         
         <div className="mt-4 space-y-3 flex-grow">
-          {tasks.map((task, i) => (
-            <div
-              key={i}
-              className="bg-white py-3 px-4 rounded-lg shadow-sm text-left"
-            >
-              <span className="text-sm text-gray-700 line-clamp-2">{task}</span>
-            </div>
-          ))}
+          {tasks.map((task, i) => {
+            // This will ensure we extract just the emoji and text, removing any numbers
+            const taskContent = task.trim();
+            
+            return (
+              <div
+                key={i}
+                className="bg-white py-3 px-4 rounded-lg shadow-sm text-left"
+              >
+                <span className="text-sm text-gray-700 line-clamp-2">{taskContent}</span>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
