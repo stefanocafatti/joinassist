@@ -126,6 +126,7 @@ const MainMenu = () => {
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [assistPoints, setAssistPoints] = useState(mockUser.assistPoints);
   const [recentlyViewedTasks, setRecentlyViewedTasks] = useState<typeof recommendedTasks>([]);
+  const [submittedRequests, setSubmittedRequests] = useState(mockSubmittedRequests);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -235,7 +236,6 @@ const MainMenu = () => {
       id: Math.random().toString(36).substr(2, 9),
       title: taskTitle,
       date: format(date, "PPP"),
-      time: time,
       location: location || "Not specified",
       price: priceType === "hourly" ? `$${price}/hr` : `$${price}`,
       status: "Pending",
@@ -243,7 +243,14 @@ const MainMenu = () => {
       additionalInfo: additionalInfo
     };
     
+    // Update the submitted requests list
+    setSubmittedRequests(prevRequests => [newRequest, ...prevRequests]);
+    
+    // Close the task detail modal
     setIsTaskDetailOpen(false);
+    
+    // Switch to the requests tab to show the new submission
+    setActiveTab("requests");
   };
 
   const handleBookNow = (taskTitle: string) => {
@@ -298,7 +305,7 @@ const MainMenu = () => {
         profileImage={profileImage}
       />;
     } else if (activeTab === "requests") {
-      return <RequestsTab requests={mockSubmittedRequests} onNavigateToHome={() => setActiveTab("home")} />;
+      return <RequestsTab requests={submittedRequests} onNavigateToHome={() => setActiveTab("home")} />;
     } else if (activeTab === "store") {
       return <StoreTab 
         assistPoints={assistPoints} 
