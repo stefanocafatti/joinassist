@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -341,7 +340,7 @@ const CategoriesSection: React.FC = () => {
   return (
     <section>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold text-gray-900">All Tasks</h2>
+        <h2 className="text-xl font-semibold text-gray-900">Categories</h2>
         <Button variant="outline" size="sm" className="text-assist-blue border-assist-blue">
           <Filter className="h-4 w-4 mr-2" />
           Filters
