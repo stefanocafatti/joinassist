@@ -25,8 +25,8 @@ const CategoryCard = ({
     )}>
       <div className="p-6 flex flex-col h-full">
         <div className="flex items-center gap-4 mb-4">
-          <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm">
-            <Icon size={22} className="text-gray-700" />
+          <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-sm">
+            <Icon size={26} className="text-gray-700" />
           </div>
           <div className="flex-1">
             <h3 className="font-semibold text-gray-900 line-clamp-1">{title}</h3>
@@ -38,9 +38,12 @@ const CategoryCard = ({
           {tasks.map((task, i) => (
             <div
               key={i}
-              className="bg-white py-3 px-4 rounded-lg shadow-sm flex items-center text-left"
+              className="bg-white py-3 px-4 rounded-lg shadow-sm flex items-center text-left gap-3"
             >
-              <span className="text-sm text-gray-700 line-clamp-1">{task}</span>
+              <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center shadow-sm flex-shrink-0">
+                <Icon size={16} className="text-gray-700" />
+              </div>
+              <span className="text-sm text-gray-700 line-clamp-2">{task}</span>
             </div>
           ))}
         </div>

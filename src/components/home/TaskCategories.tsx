@@ -35,11 +35,11 @@ const TaskCategories = () => {
       title: "Cleaning",
       description: "Keep your spaces tidy",
       tasks: [
-        "🧹 Wash my Car",
-        "🧽 Clean my Garage",
-        "🧼 Clean my Room",
-        "✨ Deep Clean Apartment",
-        "🗑️ Post Event Clean Up"
+        "Wash my Car",
+        "Clean my Garage",
+        "Clean my Room",
+        "Deep Clean Apartment",
+        "Post Event Clean Up"
       ],
       color: "bg-blue-50"
     },
@@ -48,11 +48,11 @@ const TaskCategories = () => {
       title: "Transportation",
       description: "Moving & delivery solutions",
       tasks: [
-        "🚚 Moving Assistance",
-        "📦 Help with Loading Items",
-        "🚗 Drive me to a Location",
-        "📬 Drop off a package",
-        "📫 Pick up a package"
+        "Moving Assistance",
+        "Help with Loading Items",
+        "Drive me to a Location",
+        "Drop off a package",
+        "Pick up a package"
       ],
       color: "bg-green-50"
     },
@@ -170,7 +170,7 @@ const TaskCategories = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {categories.map((category, index) => (
             <div key={index} onClick={() => handleCategoryClick(category.title)} className="h-full cursor-pointer">
               <CategoryCard
