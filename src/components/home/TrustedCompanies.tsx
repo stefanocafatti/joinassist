@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from "react";
 
 interface SchoolLogo {
@@ -71,6 +70,26 @@ const TrustedCompanies = () => {
       name: "USC Trojans",
       src: "/lovable-uploads/16e9c2ee-6d48-4bcc-8218-e8be6eac201a.png",
       alt: "USC Trojans logo - cardinal USC with gold outline"
+    },
+    {
+      name: "Loyola Marymount University",
+      src: "/lovable-uploads/5007f985-256b-44c7-84a4-771e38f68d46.png",
+      alt: "Loyola Marymount University logo - LMU in red with blue outline"
+    },
+    {
+      name: "University of Maryland",
+      src: "/lovable-uploads/a378830a-1a27-4d2e-92e1-c031259886f2.png",
+      alt: "University of Maryland logo - red M with yellow and black outline"
+    },
+    {
+      name: "Harvard University",
+      src: "/lovable-uploads/bd897653-6f63-4864-8ffa-5b7838340cd4.png",
+      alt: "Harvard University logo - red shield with Veritas books"
+    },
+    {
+      name: "University of Florida",
+      src: "/lovable-uploads/dfa8b3e7-eb5c-4c4f-aead-1cb691832ef9.png",
+      alt: "University of Florida Gators logo - green alligator head with orange background"
     },
   ];
 
