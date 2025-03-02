@@ -51,7 +51,7 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
     
     return categoryColorMap[category] || "bg-gray-100 text-gray-800";
   };
-
+  
   const getTaskImage = (task: Task) => {
     const taskImageMap: {[key: string]: string} = {
       "Wash my Car": "https://images.unsplash.com/photo-1607861716497-e65ab29fc7ac?q=80&w=1000&auto=format&fit=crop",
@@ -85,7 +85,7 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
       "Resume Review": "https://images.unsplash.com/photo-1507209550472-5908c9176456?q=80&w=1000&auto=format&fit=crop",
       
       "Code a Website": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1000&auto=format&fit=crop",
-      "Video Editing": "https://images.unsplash.com/photo-1574717024453-354056afd6fc?q=80&w=1000&auto=format&fit=crop",
+      "Video Editing": "/lovable-uploads/59f9c5bb-dd82-404c-8be9-9aaf7188bded.png",
       "Graphic Design Support": "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=1000&auto=format&fit=crop",
       "Fix my Bugs": "https://images.unsplash.com/photo-1616469829581-73993eb86b02?q=80&w=1000&auto=format&fit=crop",
       "App Development": "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?q=80&w=1000&auto=format&fit=crop",
