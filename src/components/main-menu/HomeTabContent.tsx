@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import InterestsSection from "./InterestsSection";
 import SearchResultsSection from "./SearchResultsSection";
@@ -6,7 +7,6 @@ import RecentSearchesSection from "./RecentSearchesSection";
 import PastTasksSection from "./PastTasksSection";
 import CategoriesSection from "./CategoriesSection";
 import HomeNavigation from "./HomeNavigation";
-import { LucideIcon } from "lucide-react";
 
 interface Task {
   title: string;

@@ -3,114 +3,335 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Heart, Eye, Coins, Filter } from "lucide-react";
-import { PawPrint, Home, Car, ShoppingBag, Briefcase, Utensils, Laptop, Dumbbell, Brush } from "lucide-react";
+import { 
+  Brush, Home, Car, ShoppingBag, Briefcase, 
+  Utensils, Laptop, Dumbbell, PartyPopper, 
+  GraduationCap, Package, Star
+} from "lucide-react";
 
 const CategoriesSection: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   
   const categories = [
-    { icon: PawPrint, name: "Pet Care", color: "bg-blue-50" },
-    { icon: Home, name: "Home Services", color: "bg-green-50" },
-    { icon: Car, name: "Transportation", color: "bg-purple-50" },
-    { icon: ShoppingBag, name: "Shopping", color: "bg-yellow-50" },
-    { icon: Briefcase, name: "Professional", color: "bg-red-50" },
-    { icon: Utensils, name: "Food & Dining", color: "bg-orange-50" },
-    { icon: Laptop, name: "Tech Support", color: "bg-indigo-50" },
-    { icon: Dumbbell, name: "Fitness", color: "bg-teal-50" },
-    { icon: Brush, name: "Creative", color: "bg-pink-50" }
+    { icon: Brush, name: "Cleaning", color: "bg-blue-50" },
+    { icon: Car, name: "Transportation and Moving", color: "bg-green-50" },
+    { icon: Package, name: "Assembly", color: "bg-purple-50" },
+    { icon: GraduationCap, name: "Academic & Professional Help", color: "bg-yellow-50" },
+    { icon: Laptop, name: "Digital Services", color: "bg-red-50" },
+    { icon: Dumbbell, name: "Fitness and Wellness", color: "bg-teal-50" },
+    { icon: PartyPopper, name: "Event and Hospitality", color: "bg-pink-50" },
+    { icon: Star, name: "Special Tasks", color: "bg-orange-50" },
+    { icon: Briefcase, name: "For Brands", color: "bg-indigo-50" }
   ];
   
   const listings = [
+    // Cleaning Tasks
     {
-      title: "Dog Walking",
-      description: "Regular walks for your furry friend",
-      category: "Pet Care",
+      title: "Wash my Car",
+      description: "Get your car clean and shiny",
+      category: "Cleaning",
       location: "Near Westwood",
       image: "https://images.unsplash.com/photo-1541364983171-a8ba01e95cfc?q=80&w=1000&auto=format&fit=crop",
       price: 25,
-      priceType: "hourly",
+      priceType: "fixed",
       pointsEarned: 50
     },
     {
-      title: "House Cleaning",
-      description: "Get your space spotless",
-      category: "Home Services",
-      location: "Campus Area",
+      title: "Clean my Car",
+      description: "Interior and exterior cleaning",
+      category: "Cleaning",
+      location: "UCLA Area",
       image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1000&auto=format&fit=crop",
-      price: 50,
-      priceType: "hourly",
-      pointsEarned: 100
-    },
-    {
-      title: "Grocery Delivery",
-      description: "Get groceries delivered to your door",
-      category: "Shopping",
-      location: "Santa Monica",
-      image: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1000&auto=format&fit=crop",
       price: 30,
       priceType: "fixed",
       pointsEarned: 60
     },
     {
-      title: "Furniture Assembly",
-      description: "Get help putting together your furniture",
-      category: "Home Services",
-      location: "Westwood",
-      image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=1000&auto=format&fit=crop",
+      title: "Clean my Garage",
+      description: "Organize and clean your garage space",
+      category: "Cleaning",
+      location: "Brentwood",
+      image: "https://images.unsplash.com/photo-1445183093023-46f6c0fcc3d3?q=80&w=1000&auto=format&fit=crop",
       price: 45,
       priceType: "hourly",
       pointsEarned: 90
     },
     {
-      title: "Computer Setup",
-      description: "Get your new computer ready to use",
-      category: "Tech Support",
-      location: "UCLA Campus",
-      image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1000&auto=format&fit=crop",
-      price: 40,
+      title: "Clean my Room",
+      description: "Tidying and organizing service",
+      category: "Cleaning",
+      location: "Campus Housing",
+      image: "https://images.unsplash.com/photo-1584071694229-7d162c787930?q=80&w=1000&auto=format&fit=crop",
+      price: 35,
+      priceType: "hourly",
+      pointsEarned: 70
+    },
+    {
+      title: "Deep Clean Apartment",
+      description: "Thorough cleaning of your entire space",
+      category: "Cleaning",
+      location: "Santa Monica",
+      image: "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?q=80&w=1000&auto=format&fit=crop",
+      price: 75,
       priceType: "fixed",
+      pointsEarned: 150
+    },
+    
+    // Transportation and Moving Tasks
+    {
+      title: "Moving Assistance",
+      description: "Help with your move across town",
+      category: "Transportation and Moving",
+      location: "Westwood",
+      image: "https://images.unsplash.com/photo-1600518464441-9306b008de8d?q=80&w=1000&auto=format&fit=crop",
+      price: 40,
+      priceType: "hourly",
       pointsEarned: 80
     },
     {
-      title: "Personal Training",
-      description: "Achieve your fitness goals",
-      category: "Fitness",
+      title: "Help with Loading Items",
+      description: "Extra hands for loading your belongings",
+      category: "Transportation and Moving",
+      location: "UCLA",
+      image: "https://images.unsplash.com/photo-1530650314597-5209931bcdae?q=80&w=1000&auto=format&fit=crop",
+      price: 30,
+      priceType: "hourly",
+      pointsEarned: 60
+    },
+    {
+      title: "Drive me to a Location",
+      description: "Reliable ride to your destination",
+      category: "Transportation and Moving",
+      location: "Los Angeles Area",
+      image: "https://images.unsplash.com/photo-1529369623266-f5264b696110?q=80&w=1000&auto=format&fit=crop",
+      price: 25,
+      priceType: "fixed",
+      pointsEarned: 50
+    },
+    
+    // Assembly Tasks
+    {
+      title: "Assemble Bed Frame",
+      description: "Expert assembly of your new bed",
+      category: "Assembly",
+      location: "Westwood",
+      image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=1000&auto=format&fit=crop",
+      price: 50,
+      priceType: "fixed",
+      pointsEarned: 100
+    },
+    {
+      title: "Assemble IKEA Furniture",
+      description: "Professional IKEA furniture assembly",
+      category: "Assembly",
+      location: "UCLA Campus",
+      image: "https://images.unsplash.com/photo-1595428774863-a38feabce63f?q=80&w=1000&auto=format&fit=crop",
+      price: 55,
+      priceType: "hourly",
+      pointsEarned: 110
+    },
+    {
+      title: "Install TV Mount",
+      description: "Secure mounting of your television",
+      category: "Assembly",
       location: "Brentwood",
+      image: "https://images.unsplash.com/photo-1593305841991-05c297ba4575?q=80&w=1000&auto=format&fit=crop",
+      price: 45,
+      priceType: "fixed",
+      pointsEarned: 90
+    },
+    
+    // Academic & Professional Help
+    {
+      title: "Writing Essays",
+      description: "Professional writing assistance",
+      category: "Academic & Professional Help",
+      location: "Remote",
+      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?q=80&w=1000&auto=format&fit=crop",
+      price: 40,
+      priceType: "hourly",
+      pointsEarned: 80
+    },
+    {
+      title: "Teach me Math",
+      description: "One-on-one math tutoring",
+      category: "Academic & Professional Help",
+      location: "Library Area",
+      image: "https://images.unsplash.com/photo-1518133910546-b6c2fb7d79e3?q=80&w=1000&auto=format&fit=crop",
+      price: 45,
+      priceType: "hourly",
+      pointsEarned: 90
+    },
+    {
+      title: "Resume Review",
+      description: "Professional feedback on your resume",
+      category: "Academic & Professional Help",
+      location: "Remote",
+      image: "https://images.unsplash.com/photo-1507209550472-5908c9176456?q=80&w=1000&auto=format&fit=crop",
+      price: 35,
+      priceType: "fixed",
+      pointsEarned: 70
+    },
+    
+    // Digital Services
+    {
+      title: "Code a Website",
+      description: "Custom website development",
+      category: "Digital Services",
+      location: "Remote",
+      image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1000&auto=format&fit=crop",
+      price: 80,
+      priceType: "hourly",
+      pointsEarned: 160
+    },
+    {
+      title: "Video Editing",
+      description: "Professional video editing services",
+      category: "Digital Services",
+      location: "Remote",
+      image: "https://images.unsplash.com/photo-1574717024453-354056afd6fc?q=80&w=1000&auto=format&fit=crop",
+      price: 60,
+      priceType: "hourly",
+      pointsEarned: 120
+    },
+    {
+      title: "Social Media Content",
+      description: "Engaging content for your social platforms",
+      category: "Digital Services",
+      location: "Remote",
+      image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1000&auto=format&fit=crop",
+      price: 50,
+      priceType: "hourly",
+      pointsEarned: 100
+    },
+    
+    // Fitness and Wellness
+    {
+      title: "Personal Training",
+      description: "Customized workout sessions",
+      category: "Fitness and Wellness",
+      location: "Recreation Center",
       image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=1000&auto=format&fit=crop",
       price: 60,
       priceType: "hourly",
       pointsEarned: 120
     },
     {
-      title: "Photography Help",
-      description: "Learn to take better photos",
-      category: "Creative",
-      location: "Venice Beach",
-      image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=1000&auto=format&fit=crop",
+      title: "Meal Prep",
+      description: "Healthy meal preparation",
+      category: "Fitness and Wellness",
+      location: "Your Kitchen",
+      image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=1000&auto=format&fit=crop",
+      price: 45,
+      priceType: "hourly",
+      pointsEarned: 90
+    },
+    {
+      title: "Yoga Instruction",
+      description: "Private yoga sessions",
+      category: "Fitness and Wellness",
+      location: "Your Location",
+      image: "https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?q=80&w=1000&auto=format&fit=crop",
+      price: 50,
+      priceType: "hourly",
+      pointsEarned: 100
+    },
+    
+    // Event and Hospitality
+    {
+      title: "Event Setup/Decoration",
+      description: "Professional event decorating",
+      category: "Event and Hospitality",
+      location: "Your Venue",
+      image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1000&auto=format&fit=crop",
+      price: 65,
+      priceType: "hourly",
+      pointsEarned: 130
+    },
+    {
+      title: "DJ for Event",
+      description: "Music services for your gathering",
+      category: "Event and Hospitality",
+      location: "Your Event",
+      image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1000&auto=format&fit=crop",
+      price: 100,
+      priceType: "hourly",
+      pointsEarned: 200
+    },
+    {
+      title: "Party Coordinator",
+      description: "Expert party planning assistance",
+      category: "Event and Hospitality",
+      location: "Your Location",
+      image: "https://images.unsplash.com/photo-1496337589254-7e19d01cec44?q=80&w=1000&auto=format&fit=crop",
+      price: 70,
+      priceType: "hourly",
+      pointsEarned: 140
+    },
+    
+    // Special Tasks
+    {
+      title: "Grocery Delivery",
+      description: "Get groceries delivered to your door",
+      category: "Special Tasks",
+      location: "Westwood Area",
+      image: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1000&auto=format&fit=crop",
+      price: 30,
+      priceType: "fixed",
+      pointsEarned: 60
+    },
+    {
+      title: "Water my Plants",
+      description: "Plant care while you're away",
+      category: "Special Tasks",
+      location: "Your Residence",
+      image: "https://images.unsplash.com/photo-1446071103084-c257b5f70672?q=80&w=1000&auto=format&fit=crop",
+      price: 20,
+      priceType: "fixed",
+      pointsEarned: 40
+    },
+    {
+      title: "Do my Laundry",
+      description: "Full-service laundry assistance",
+      category: "Special Tasks",
+      location: "UCLA Area",
+      image: "https://images.unsplash.com/photo-1582735689369-4fe89db7114c?q=80&w=1000&auto=format&fit=crop",
+      price: 35,
+      priceType: "fixed",
+      pointsEarned: 70
+    },
+    
+    // For Brands
+    {
+      title: "Brand Ambassador",
+      description: "Represent your brand on campus",
+      category: "For Brands",
+      location: "UCLA Campus",
+      image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=1000&auto=format&fit=crop",
       price: 55,
       priceType: "hourly",
       pointsEarned: 110
     },
     {
-      title: "Resume Review",
-      description: "Get feedback on your resume",
-      category: "Professional",
+      title: "Content Creation",
+      description: "Custom content for your marketing",
+      category: "For Brands",
       location: "Remote",
-      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?q=80&w=1000&auto=format&fit=crop",
-      price: 35,
-      priceType: "fixed",
-      pointsEarned: 70
+      image: "https://images.unsplash.com/photo-1533750516457-a7f992034fec?q=80&w=1000&auto=format&fit=crop",
+      price: 65,
+      priceType: "hourly",
+      pointsEarned: 130
     },
     {
-      title: "Food Delivery",
-      description: "Get your favorite food delivered",
-      category: "Food & Dining",
-      location: "Beverly Hills",
-      image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000&auto=format&fit=crop",
-      price: 20,
-      priceType: "fixed",
-      pointsEarned: 40
-    }
+      title: "Market Research",
+      description: "In-depth research and insights",
+      category: "For Brands",
+      location: "Campus Area",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop",
+      price: 50,
+      priceType: "hourly",
+      pointsEarned: 100
+    },
   ];
 
   const filteredListings = selectedCategory 
