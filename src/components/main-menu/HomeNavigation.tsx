@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Grid, Star, Eye, List } from "lucide-react";
+import { Grid, Star, Eye, List, ShoppingBag } from "lucide-react";
 
 interface HomeNavigationProps {
   activeSection: string;
@@ -13,6 +13,7 @@ const HomeNavigation: React.FC<HomeNavigationProps> = ({ activeSection, onSectio
     { id: "allTasks", label: "All Tasks", icon: <List className="h-4 w-4 mr-2" /> },
     { id: "recommended", label: "Recommended Tasks", icon: <Star className="h-4 w-4 mr-2" /> },
     { id: "recentlyViewed", label: "Recently Viewed", icon: <Eye className="h-4 w-4 mr-2" /> },
+    { id: "pastOrders", label: "Past Orders", icon: <ShoppingBag className="h-4 w-4 mr-2" /> },
   ];
 
   return (

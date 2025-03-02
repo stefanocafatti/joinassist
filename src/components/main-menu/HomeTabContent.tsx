@@ -94,6 +94,15 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
             onViewTask={onBookNow}
           />
         );
+      case "pastOrders":
+        return (
+          <PastTasksSection 
+            pastTasks={pastTasks.filter(task => task.status === "Completed")}
+            favoriteTaskIds={favoriteTaskIds}
+            onFavoriteToggle={onFavoriteToggle}
+            onViewTask={onBookNow}
+          />
+        );
       default:
         return null;
     }
