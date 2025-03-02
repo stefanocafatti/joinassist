@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Star, Sparkles } from "lucide-react";
@@ -10,26 +11,26 @@ const Hero = () => {
   const [typingSpeed, setTypingSpeed] = useState(150);
   
   const tasks = [
-    "Wash my Car",
-    "Clean my Garage",
-    "Help with Moving",
-    "Assemble IKEA Furniture",
-    "Write my Essay",
-    "Code a Website",
+    "Washing my Car",
+    "Cleaning my Garage",
+    "Helping with Moving",
+    "Assembling IKEA Furniture",
+    "Writing my Essay",
+    "Coding a Website",
     "Personal Training",
-    "DJ for my Event",
+    "DJing for my Event",
     "Grocery Delivery",
-    "Meal Prep",
-    "Water my Plants",
-    "Install my TV Mount",
-    "Tutor me in Math",
-    "Create Social Media Content",
-    "Design my Logo",
-    "Help Pack for my Trip",
-    "Fix my Bugs",
+    "Meal Prepping",
+    "Watering my Plants",
+    "Installing my TV Mount",
+    "Tutoring me in Math",
+    "Creating Social Media Content",
+    "Designing my Logo",
+    "Helping Pack for my Trip",
+    "Fixing my Bugs",
     "Event Planning",
-    "Organize my Closet",
-    "Market Research",
+    "Organizing my Closet",
+    "Market Researching",
   ];
   
   const timeoutRef = useRef<number | null>(null);
@@ -112,7 +113,7 @@ const Hero = () => {
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 animate-slide-in" style={{ animationDelay: "0.2s" }}>
               <div className="min-h-28 md:min-h-36 flex flex-col justify-start">
-                <span>I need someone to help me...</span>
+                <span>I need a student to assist me...</span>
                 <span className="text-assist-blue relative mt-2 md:mt-3">
                   <span className="after:content-['|'] after:ml-1 after:animate-pulse">{displayText}</span>
                 </span>
