@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Heart, Bell, Coins, Store, Mail, CheckCircle, User, History, CreditCard, Settings, LogOut } from "lucide-react";
@@ -195,7 +196,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
               <span>Payment Methods</span>
             </DropdownMenuItem>
             <DropdownMenuItem onClick={onToggleFavoriteView}>
-              <HeartIcon className="mr-2 h-4 w-4" />
+              <Heart className="mr-2 h-4 w-4" />
               <span>Saved Tasks</span>
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => onSetActiveTab("rewards")}>
