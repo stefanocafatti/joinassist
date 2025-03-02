@@ -1,10 +1,10 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ClipboardList, Filter, Bell, BellOff } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
+import TaskStatusView from "@/components/ui/TaskStatusView";
 
 interface Request {
   id: string;
@@ -31,6 +31,8 @@ const RequestsTab: React.FC<RequestsTabProps> = ({
   notificationsEnabled
 }) => {
   const { toast } = useToast();
+  const [selectedTask, setSelectedTask] = useState<Request | null>(null);
+  const [isTaskDetailsOpen, setIsTaskDetailsOpen] = useState(false);
 
   const handleToggleNotifications = () => {
     const newState = !notificationsEnabled;
@@ -43,6 +45,11 @@ const RequestsTab: React.FC<RequestsTabProps> = ({
         : "You won't receive notification updates.",
       duration: 3000,
     });
+  };
+
+  const handleViewTaskDetails = (task: Request) => {
+    setSelectedTask(task);
+    setIsTaskDetailsOpen(true);
   };
 
   return (
@@ -114,7 +121,12 @@ const RequestsTab: React.FC<RequestsTabProps> = ({
                       </Badge>
                     </td>
                     <td className="px-4 py-4">
-                      <Button variant="ghost" size="sm" className="text-assist-blue">
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="text-assist-blue"
+                        onClick={() => handleViewTaskDetails(request)}
+                      >
                         View Details
                       </Button>
                     </td>
@@ -140,6 +152,14 @@ const RequestsTab: React.FC<RequestsTabProps> = ({
           </div>
         )}
       </section>
+      
+      {selectedTask && (
+        <TaskStatusView 
+          isOpen={isTaskDetailsOpen}
+          onClose={() => setIsTaskDetailsOpen(false)}
+          task={selectedTask}
+        />
+      )}
     </div>
   );
 };

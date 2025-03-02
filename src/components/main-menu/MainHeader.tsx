@@ -30,8 +30,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
   assistPoints = 0
 }) => {
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
-
-  const notifications = [
+  const [notifications, setNotifications] = useState([
     {
       id: "1",
       title: "Task Request Accepted",
@@ -60,9 +59,28 @@ const MainHeader: React.FC<MainHeaderProps> = ({
       time: "2 days ago",
       isRead: true,
     },
-  ];
+  ]);
 
   const unreadCount = notifications.filter(n => !n.isRead).length;
+
+  const handleMarkAllAsRead = () => {
+    setNotifications(prev => 
+      prev.map(notification => ({
+        ...notification,
+        isRead: true
+      }))
+    );
+  };
+
+  const handleNotificationClick = (id: string) => {
+    setNotifications(prev => 
+      prev.map(notification => 
+        notification.id === id
+          ? { ...notification, isRead: true }
+          : notification
+      )
+    );
+  };
 
   return (
     <div className="flex justify-between items-center mb-6">
@@ -103,7 +121,12 @@ const MainHeader: React.FC<MainHeaderProps> = ({
             <div className="p-4 border-b border-gray-100">
               <div className="flex justify-between items-center">
                 <h3 className="font-semibold">Notifications</h3>
-                <Button variant="ghost" size="sm" className="text-xs text-assist-blue hover:text-assist-blue/80">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="text-xs text-assist-blue hover:text-assist-blue/80"
+                  onClick={handleMarkAllAsRead}
+                >
                   Mark all as read
                 </Button>
               </div>
@@ -118,6 +141,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
                         "p-4 hover:bg-gray-50 cursor-pointer", 
                         !notification.isRead && "bg-blue-50/50"
                       )}
+                      onClick={() => handleNotificationClick(notification.id)}
                     >
                       <div className="flex items-start gap-3">
                         <div className={cn(
