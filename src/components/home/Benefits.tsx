@@ -61,18 +61,18 @@ const Benefits = () => {
   const currentData = benefitsData[activeView];
 
   return (
-    <section id="benefits" className="pb-16 -mt-24 bg-gradient-to-b from-blue-50/30 to-white relative overflow-hidden">
+    <section id="benefits" className="pb-12 -mt-40 bg-gradient-to-b from-blue-50/30 to-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+        <div className="text-center max-w-3xl mx-auto mb-8">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
             Benefits of <span className="bg-gradient-to-r from-assist-blue to-blue-400 bg-clip-text text-transparent">Assist</span>
           </h2>
-          <p className="text-lg text-gray-600 mb-10">
+          <p className="text-lg text-gray-600 mb-6">
             Our platform creates opportunities for students while solving everyday challenges for busy people
           </p>
           
           {/* Toggle switch */}
-          <div className="inline-flex bg-gray-100 p-1.5 rounded-full shadow-sm mb-10">
+          <div className="inline-flex bg-gray-100 p-1.5 rounded-full shadow-sm mb-6">
             <button
               onClick={() => setActiveView("students")}
               className={cn(
@@ -105,30 +105,30 @@ const Benefits = () => {
         </div>
 
         <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-md overflow-hidden transition-all duration-300">
-          <div className="p-8 md:p-10">
-            <div className="flex items-center gap-4 mb-10">
+          <div className="p-6 md:p-8">
+            <div className="flex items-center gap-4 mb-8">
               <div className={`w-14 h-14 rounded-full flex items-center justify-center ${currentData.color}`}>
                 <currentData.icon size={28} />
               </div>
               <h3 className="text-3xl font-bold text-gray-900">{currentData.title}</h3>
             </div>
             
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-3 gap-6">
               {currentData.benefits.map((benefit, idx) => (
                 <div 
                   key={idx} 
-                  className="bg-white rounded-xl p-6 shadow-sm transition-all duration-300 hover:shadow-md hover:translate-y-[-2px]"
+                  className="bg-white rounded-xl p-5 shadow-sm transition-all duration-300 hover:shadow-md hover:translate-y-[-2px]"
                 >
-                  <div className={`w-12 h-12 rounded-full mb-4 flex items-center justify-center ${currentData.color}`}>
+                  <div className={`w-12 h-12 rounded-full mb-3 flex items-center justify-center ${currentData.color}`}>
                     <benefit.icon size={24} />
                   </div>
-                  <h4 className="text-xl font-semibold text-gray-800 mb-3">{benefit.title}</h4>
+                  <h4 className="text-xl font-semibold text-gray-800 mb-2">{benefit.title}</h4>
                   <p className="text-gray-600">{benefit.description}</p>
                 </div>
               ))}
             </div>
             
-            <div className="mt-10 text-center">
+            <div className="mt-8 text-center">
               <Button 
                 size="lg"
                 className={`rounded-full ${currentData.buttonColor} text-white px-8 py-6 h-14 text-base font-medium shadow-sm hover:translate-y-[-2px] transition-all`}
@@ -139,8 +139,8 @@ const Benefits = () => {
           </div>
         </div>
         
-        <div className="text-center mt-16">
-          <p className="text-lg text-gray-600 mb-8">
+        <div className="text-center mt-12">
+          <p className="text-lg text-gray-600 mb-6">
             Join thousands of students and task requesters already using Assist
           </p>
           <Button 
