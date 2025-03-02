@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { Instagram, Twitter, Facebook, Linkedin, ArrowRight, Mail } from "lucide-react";
+import { Instagram, Linkedin, ArrowRight, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -18,16 +18,10 @@ const Footer = () => {
               The next-generation platform redefining how people connect with vetted college students for a wide range of tasks.
             </p>
             <div className="flex space-x-5 pt-4">
-              <a href="#" className="text-gray-700 hover:text-assist-blue transition-colors">
+              <a href="https://www.instagram.com/joinassist/" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-assist-blue transition-colors">
                 <Instagram size={20} />
               </a>
-              <a href="#" className="text-gray-700 hover:text-assist-blue transition-colors">
-                <Twitter size={20} />
-              </a>
-              <a href="#" className="text-gray-700 hover:text-assist-blue transition-colors">
-                <Facebook size={20} />
-              </a>
-              <a href="#" className="text-gray-700 hover:text-assist-blue transition-colors">
+              <a href="https://www.linkedin.com/company/joinassist" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-assist-blue transition-colors">
                 <Linkedin size={20} />
               </a>
             </div>
@@ -67,7 +61,7 @@ const Footer = () => {
 
           {/* Task Categories */}
           <div>
-            <h4 className="text-lg font-semibold mb-6 text-gray-900">Task Categories</h4>
+            <h4 className="text-lg font-semibold mb-6 text-gray-900">For Task Requesters</h4>
             <ul className="space-y-3">
               <li>
                 <Link to="#cleaning" className="text-gray-800 hover:text-assist-blue transition-colors font-medium">
@@ -82,16 +76,6 @@ const Footer = () => {
               <li>
                 <Link to="#assembly" className="text-gray-800 hover:text-assist-blue transition-colors font-medium">
                   Assembly
-                </Link>
-              </li>
-              <li>
-                <Link to="#academic" className="text-gray-800 hover:text-assist-blue transition-colors font-medium">
-                  Academic & Professional Help
-                </Link>
-              </li>
-              <li>
-                <Link to="#digital" className="text-gray-800 hover:text-assist-blue transition-colors font-medium">
-                  Digital Services
                 </Link>
               </li>
               <li>
@@ -137,11 +121,14 @@ const Footer = () => {
               <Link to="/privacy" className="text-gray-800 hover:text-assist-blue text-sm transition-colors font-medium">
                 Privacy Policy
               </Link>
-              <Link to="/terms" className="text-gray-800 hover:text-assist-blue text-sm transition-colors font-medium">
-                Terms of Service
-              </Link>
               <Link to="/contact" className="text-gray-800 hover:text-assist-blue text-sm transition-colors font-medium">
                 Contact Us
+              </Link>
+              <Link to="/faq" className="text-gray-800 hover:text-assist-blue text-sm transition-colors font-medium">
+                FAQ
+              </Link>
+              <Link to="/terms" className="text-gray-800 hover:text-assist-blue text-sm transition-colors font-medium">
+                Terms of Service
               </Link>
             </div>
           </div>
