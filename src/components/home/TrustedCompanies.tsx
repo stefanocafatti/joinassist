@@ -96,12 +96,12 @@ const TrustedCompanies = () => {
   }, [schoolLogos.length]);
 
   return (
-    <section className="py-12 bg-gradient-to-r from-blue-50 via-white to-blue-50">
+    <section className="py-12 bg-gradient-to-r from-soft-green via-white to-soft-green">
       <div className="max-w-6xl mx-auto px-4 mb-8">
         <div className="flex justify-center">
-          <div className="rounded-full bg-blue-100 py-2 px-6">
-            <h3 className="text-assist-blue font-semibold tracking-wide text-center uppercase">
-              Universities Trust Assist
+          <div className="rounded-full bg-green-100 py-2 px-6">
+            <h3 className="text-green-600 font-semibold tracking-wide text-center uppercase">
+              Schools Trust Assist
             </h3>
           </div>
         </div>
@@ -115,11 +115,11 @@ const TrustedCompanies = () => {
             className="flex items-center justify-around min-w-full"
           >
             {schoolLogos.map((logo, index) => (
-              <div key={`logo-1-${index}`} className="px-10 flex-shrink-0">
+              <div key={`logo-1-${index}`} className="px-8 flex-shrink-0">
                 <img 
                   src={logo.src} 
                   alt={logo.alt} 
-                  className="h-16 md:h-20 object-contain opacity-90 hover:opacity-100 transition-opacity"
+                  className="h-12 md:h-14 object-contain opacity-90 hover:opacity-100 transition-opacity"
                 />
               </div>
             ))}
@@ -131,11 +131,11 @@ const TrustedCompanies = () => {
             className="flex items-center justify-around min-w-full absolute left-full top-0"
           >
             {schoolLogos.map((logo, index) => (
-              <div key={`logo-2-${index}`} className="px-10 flex-shrink-0">
+              <div key={`logo-2-${index}`} className="px-8 flex-shrink-0">
                 <img 
                   src={logo.src} 
                   alt={logo.alt} 
-                  className="h-16 md:h-20 object-contain opacity-90 hover:opacity-100 transition-opacity"
+                  className="h-12 md:h-14 object-contain opacity-90 hover:opacity-100 transition-opacity"
                 />
               </div>
             ))}
