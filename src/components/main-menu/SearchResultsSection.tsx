@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -35,18 +36,19 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
   // Get tag color based on category
   const getCategoryColor = (category: string) => {
     const categoryColorMap: {[key: string]: string} = {
-      "Cleaning": "bg-blue-100 text-blue-800",
-      "Transportation and Moving": "bg-green-100 text-green-800",
+      "Cleaning": "bg-sky-100 text-sky-800",
+      "Transportation": "bg-indigo-100 text-indigo-800",
+      "Transportation and Moving": "bg-indigo-100 text-indigo-800",
+      "Delivery": "bg-teal-100 text-teal-800",
       "Assembly": "bg-purple-100 text-purple-800",
       "Academic & Professional Help": "bg-yellow-100 text-yellow-800",
       "Digital Services": "bg-red-100 text-red-800",
-      "Fitness and Wellness": "bg-teal-100 text-teal-800",
+      "Fitness and Wellness": "bg-emerald-100 text-emerald-800",
       "Event and Hospitality": "bg-pink-100 text-pink-800",
       "Special Tasks": "bg-orange-100 text-orange-800",
-      "For Brands": "bg-indigo-100 text-indigo-800",
+      "For Brands": "bg-blue-100 text-blue-800",
       "Pets": "bg-amber-100 text-amber-800",
-      "Home": "bg-emerald-100 text-emerald-800",
-      "Delivery": "bg-cyan-100 text-cyan-800"
+      "Home": "bg-lime-100 text-lime-800",
     };
     
     return categoryColorMap[category] || "bg-gray-100 text-gray-800";

@@ -260,6 +260,24 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
     }
   ];
   
+  const getCategoryColor = (category: string) => {
+    const categoryColorMap: {[key: string]: string} = {
+      "Cleaning": "bg-sky-100 text-sky-800",
+      "Transportation": "bg-indigo-100 text-indigo-800",
+      "Transportation and Moving": "bg-indigo-100 text-indigo-800",
+      "Delivery": "bg-teal-100 text-teal-800",
+      "Assembly": "bg-purple-100 text-purple-800",
+      "Academic Help": "bg-yellow-100 text-yellow-800",
+      "Digital Services": "bg-red-100 text-red-800",
+      "Fitness & Wellness": "bg-emerald-100 text-emerald-800",
+      "Event & Hospitality": "bg-pink-100 text-pink-800",
+      "Special Tasks": "bg-orange-100 text-orange-800",
+      "For Brands": "bg-blue-100 text-blue-800",
+    };
+    
+    return categoryColorMap[category] || "bg-gray-100 text-gray-800";
+  };
+  
   const renderTaskCard = (task: any, index: number) => (
     <div 
       key={index} 
@@ -274,7 +292,7 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
       <div className="p-4">
         <div className="flex justify-between items-start mb-2">
           <h3 className="font-semibold text-gray-900">{task.title}</h3>
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getCategoryColor(task.category)}`}>
             {task.category}
           </span>
         </div>
