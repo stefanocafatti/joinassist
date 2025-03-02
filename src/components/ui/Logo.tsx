@@ -31,9 +31,10 @@ const Logo = ({ variant = "default", showText = true, className = "" }: LogoProp
       onMouseLeave={() => setHover(false)}
     >
       <span className="font-display text-3xl font-black tracking-tight relative">
-        {/* Using stronger gradient with extended color stops for better readability */}
-        <span className="bg-gradient-to-r from-assist-blue from-10% via-assist-blue via-70% to-assist-blue to-90% bg-clip-text text-transparent font-bold">
+        {/* Using a lighter gradient that ensures readability */}
+        <span className="text-assist-blue relative">
           Assist
+          <span className="absolute inset-0 bg-gradient-to-r from-assist-blue via-assist-blue/90 to-assist-blue/85 bg-clip-text text-transparent mix-blend-overlay opacity-50"></span>
         </span>
         {sparkle && (
           <span className="absolute -top-2 -right-4 text-yellow-400 text-xs animate-bounce">✨</span>
