@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -64,7 +63,6 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({
             <div 
               key={index} 
               className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 cursor-pointer"
-              onClick={() => onBookNow(task.title)}
             >
               <div className="relative">
                 <div 
@@ -79,7 +77,7 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({
                   }}
                 >
                   <Heart 
-                    className={`h-5 w-5 ${favoriteTaskIds.includes(task.title) ? 'fill-red-500 text-red-500' : 'text-gray-600'}`} 
+                    className={`h-5 w-5 ${favoriteTaskIds.includes(task.title) ? 'fill-red-500 text-red-500' : 'text-white'}`} 
                   />
                 </button>
                 <div className="absolute bottom-3 left-3">
