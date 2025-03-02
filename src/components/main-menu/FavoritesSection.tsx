@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -9,8 +10,7 @@ interface Task {
   category: string;
   location: string;
   image: string;
-  price: number;
-  priceType: string;
+  pointsEarned?: number;
 }
 
 interface FavoritesSectionProps {
