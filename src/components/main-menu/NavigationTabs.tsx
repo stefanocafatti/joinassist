@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Home, ClipboardList, Heart, User, Store, Grid } from "lucide-react";
+import { Home, ClipboardList, Heart, User, Gift, Grid } from "lucide-react";
 
 interface NavigationTabsProps {
   activeTab: string;
@@ -49,7 +49,7 @@ const NavigationTabs: React.FC<NavigationTabsProps> = ({
         icon: isActive ? "text-white" : "text-pink-600",
         position: "col-span-3 md:col-span-1 row-span-1"
       },
-      store: {
+      rewards: {
         active: "bg-amber-600 text-white shadow-lg",
         inactive: "bg-amber-50 text-amber-600 hover:bg-amber-100 hover:shadow-md",
         icon: isActive ? "text-white" : "text-amber-600",
@@ -106,11 +106,11 @@ const NavigationTabs: React.FC<NavigationTabsProps> = ({
       }
     },
     {
-      name: "store",
-      label: "Store",
-      icon: Store,
+      name: "rewards",
+      label: "Rewards",
+      icon: Gift,
       onClick: () => {
-        onTabChange("store");
+        onTabChange("rewards");
         if (showFavorites) onToggleFavoriteView();
       }
     },
@@ -149,50 +149,24 @@ const NavigationTabs: React.FC<NavigationTabsProps> = ({
           {tabs.slice(1).map((tab, index) => {
             const isActive = activeTab === tab.name;
             const IconComponent = tab.icon;
+            const colorName = tab.name === "home" ? "indigo" : 
+                             (tab.name === "requests" ? "emerald" : 
+                             (tab.name === "favorites" ? "pink" : 
+                             (tab.name === "rewards" ? "amber" : "blue")));
             
             return (
               <button
                 key={tab.name}
                 className={`flex flex-col items-center justify-center p-3 rounded-xl transition-all duration-300 transform hover:scale-105 ${
                   isActive 
-                    ? `bg-${tab.name === "home" ? "indigo" : (
-                        tab.name === "requests" ? "emerald" : (
-                          tab.name === "favorites" ? "pink" : (
-                            tab.name === "store" ? "amber" : "blue"
-                          )
-                        )
-                      )}-600 text-white shadow-lg` 
-                    : `bg-${tab.name === "home" ? "indigo" : (
-                        tab.name === "requests" ? "emerald" : (
-                          tab.name === "favorites" ? "pink" : (
-                            tab.name === "store" ? "amber" : "blue"
-                          )
-                        )
-                      )}-50 text-${tab.name === "home" ? "indigo" : (
-                        tab.name === "requests" ? "emerald" : (
-                          tab.name === "favorites" ? "pink" : (
-                            tab.name === "store" ? "amber" : "blue"
-                          )
-                        )
-                      )}-600 hover:bg-${tab.name === "home" ? "indigo" : (
-                        tab.name === "requests" ? "emerald" : (
-                          tab.name === "favorites" ? "pink" : (
-                            tab.name === "store" ? "amber" : "blue"
-                          )
-                        )
-                      )}-100 hover:shadow-md`
+                    ? `bg-${colorName}-600 text-white shadow-lg` 
+                    : `bg-${colorName}-50 text-${colorName}-600 hover:bg-${colorName}-100 hover:shadow-md`
                 }`}
                 onClick={tab.onClick}
                 aria-current={isActive ? "page" : undefined}
               >
                 <IconComponent 
-                  className={`h-5 w-5 mb-1 ${isActive ? "text-white" : `text-${tab.name === "home" ? "indigo" : (
-                      tab.name === "requests" ? "emerald" : (
-                        tab.name === "favorites" ? "pink" : (
-                          tab.name === "store" ? "amber" : "blue"
-                        )
-                      )
-                    )}-600`}`} 
+                  className={`h-5 w-5 mb-1 ${isActive ? "text-white" : `text-${colorName}-600`}`} 
                 />
                 <span className="font-medium text-xs">{tab.label}</span>
               </button>

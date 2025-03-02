@@ -461,7 +461,7 @@ const MainMenu = () => {
       />;
     } else if (activeTab === "requests") {
       return <RequestsTab requests={submittedRequests} onNavigateToHome={() => setActiveTab("home")} />;
-    } else if (activeTab === "store") {
+    } else if (activeTab === "rewards") { // Changed from "store" to "rewards"
       return <StoreTab 
         assistPoints={assistPoints} 
         onPointsUpdated={handlePointsUpdated} 

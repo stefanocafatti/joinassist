@@ -1,8 +1,7 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ShoppingBag, Gift, Tag, CheckCircle2 } from "lucide-react";
+import { Gift, Tag, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 import {
   Tooltip,
@@ -29,7 +28,6 @@ interface RewardItem {
 
 const StoreTab: React.FC<StoreTabProps> = ({ assistPoints, onPointsUpdated }) => {
   const rewardItems: RewardItem[] = [
-    // Original rewards
     {
       id: "1",
       title: "Free Dog Walking Session",
@@ -81,7 +79,6 @@ const StoreTab: React.FC<StoreTabProps> = ({ assistPoints, onPointsUpdated }) =>
       category: "services",
       image: "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?q=80&w=1000&auto=format&fit=crop",
     },
-    // New food rewards
     {
       id: "7",
       title: "$15 Off Food Delivery",
@@ -111,7 +108,6 @@ const StoreTab: React.FC<StoreTabProps> = ({ assistPoints, onPointsUpdated }) =>
       discount: "40%",
       partner: "Fresh Meals",
     },
-    // New pet rewards
     {
       id: "10",
       title: "35% Off Premium Dog Food",
@@ -131,7 +127,6 @@ const StoreTab: React.FC<StoreTabProps> = ({ assistPoints, onPointsUpdated }) =>
       image: "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?q=80&w=1000&auto=format&fit=crop",
       partner: "Paws & Claws",
     },
-    // Additional task discounts
     {
       id: "12",
       title: "60% Off Furniture Assembly",
@@ -176,7 +171,7 @@ const StoreTab: React.FC<StoreTabProps> = ({ assistPoints, onPointsUpdated }) =>
       <div className="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 p-6">
         <div className="flex items-center gap-4 mb-4">
           <div className="bg-assist-blue/10 p-3 rounded-full">
-            <ShoppingBag className="h-8 w-8 text-assist-blue" />
+            <Gift className="h-8 w-8 text-assist-blue" />
           </div>
           <div>
             <h2 className="text-2xl font-bold text-gray-900">Rewards Store</h2>
@@ -324,4 +319,3 @@ const StoreTab: React.FC<StoreTabProps> = ({ assistPoints, onPointsUpdated }) =>
 };
 
 export default StoreTab;
-
