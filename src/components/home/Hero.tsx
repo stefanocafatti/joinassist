@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Star, Sparkles } from "lucide-react";
@@ -189,7 +190,7 @@ const Hero = () => {
           <div className="w-full md:w-1/2 mt-8 md:mt-0 animate-scale-in" style={{ animationDelay: "0.6s" }}>
             <div className="relative">
               <div className="absolute inset-0 -m-4 rounded-3xl bg-soft-pink/30 animate-float" style={{ animationDelay: "0.7s" }}></div>
-              <div className="relative rounded-2xl overflow-hidden shadow-elevation h-[300px] sm:h-[350px] md:h-[400px]">
+              <div className="relative rounded-2xl overflow-hidden shadow-elevation h-[320px] sm:h-[370px] md:h-[420px] mt-4">
                 <ImageSlideshow 
                   images={slideshowImages} 
                   autoplayInterval={5000} 

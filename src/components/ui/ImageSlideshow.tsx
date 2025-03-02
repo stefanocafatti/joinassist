@@ -120,8 +120,8 @@ const ImageSlideshow = ({
         <ChevronRight size={20} />
       </button>
       
-      {/* Image container */}
-      <div className="relative w-full h-full">
+      {/* Image container with added padding */}
+      <div className="relative w-full h-full pt-2">
         {/* Previous image (for transition) */}
         {isTransitioning && (
           <div
@@ -130,7 +130,7 @@ const ImageSlideshow = ({
             <img
               src={images[prevIndex].src}
               alt={images[prevIndex].alt}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-center"
             />
           </div>
         )}
@@ -148,7 +148,7 @@ const ImageSlideshow = ({
               src={image.src}
               alt={image.alt}
               onLoad={handleImageLoad}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-center"
             />
           </div>
         ))}
