@@ -30,7 +30,7 @@ const NavigationTabs: React.FC<NavigationTabsProps> = ({
     },
     {
       name: "requests",
-      label: "Requests",
+      label: "Open Task Requests",
       icon: ClipboardList,
       color: "green",
       activeBg: "bg-green-600",
