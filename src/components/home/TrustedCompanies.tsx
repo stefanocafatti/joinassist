@@ -146,10 +146,10 @@ const TrustedCompanies = () => {
   }, []);
 
   return (
-    <section className="py-8 bg-gradient-to-r from-soft-green via-white to-soft-green">
+    <section className="py-8 bg-gradient-to-r from-soft-green/40 via-white/30 to-soft-green/40 backdrop-blur-sm">
       <div className="max-w-6xl mx-auto px-4 mb-4">
         <div className="flex justify-center">
-          <div className="rounded-full bg-green-100 py-1.5 px-4">
+          <div className="rounded-full bg-green-100/70 py-1.5 px-4 backdrop-blur-sm">
             <h3 className="text-green-600 font-semibold tracking-wide text-center text-sm uppercase">
               Schools Trust Assist
             </h3>
@@ -167,7 +167,7 @@ const TrustedCompanies = () => {
               <img 
                 src={logo.src} 
                 alt={logo.alt} 
-                className="h-10 md:h-12 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity"
+                className="h-8 md:h-10 w-auto object-contain opacity-75 hover:opacity-100 transition-opacity filter grayscale-[30%] hover:grayscale-0"
               />
             </div>
           ))}
@@ -185,7 +185,7 @@ const TrustedCompanies = () => {
         }
         
         .animate-scroll {
-          animation: scroll 15s linear infinite;
+          animation: scroll 25s linear infinite;
         }
       ` }} />
     </section>
