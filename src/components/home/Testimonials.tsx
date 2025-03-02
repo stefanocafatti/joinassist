@@ -1,6 +1,6 @@
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { Quote } from "lucide-react";
-import ImageSlideshow from "@/components/ui/ImageSlideshow";
 
 interface Testimonial {
   id: number;
@@ -49,11 +49,14 @@ const Testimonials = () => {
   
   const [activeIndex, setActiveIndex] = useState(0);
   
-  const testimonialSlides = testimonials.map(testimonial => ({
-    src: testimonial.image,
-    alt: `Portrait of ${testimonial.name}`,
-    content: testimonial
-  }));
+  // Add auto rotation effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
+    }, 8000); // 8 seconds rotation
+    
+    return () => clearInterval(interval); // Clean up on unmount
+  }, [testimonials.length]);
   
   return (
     <section id="testimonials" className="py-16 mt-0 bg-white overflow-hidden">
