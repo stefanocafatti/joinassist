@@ -52,37 +52,45 @@ const TrustedCompanies = () => {
       name: "Duke University",
       src: "/lovable-uploads/976f133b-8038-4638-a276-9d490ad641b6.png",
       alt: "Duke University logo - Dark blue D"
+    },
+    {
+      name: "Auburn University",
+      src: "/lovable-uploads/e6618c4e-d67a-4c94-8d11-6b4d4e37f582.png",
+      alt: "Auburn University logo - Blue AU with orange outline"
+    },
+    {
+      name: "University of Michigan",
+      src: "/lovable-uploads/2c4c89f8-f6f8-4028-bfc4-0b1e459fbf37.png",
+      alt: "University of Michigan logo - Yellow M with blue outline"
     }
   ];
 
   useEffect(() => {
     // Animation for continuous scrolling effect
-    const animateScroll = () => {
+    const animateContinuousScroll = () => {
       if (!primaryRef.current || !secondaryRef.current) return;
-
-      primaryRef.current.style.transform = "translateX(-100%)";
-      secondaryRef.current.style.transform = "translateX(0)";
-
-      const transitionDuration = 30 * schoolLogos.length; // Adjust speed based on number of logos
-      primaryRef.current.style.transition = `transform ${transitionDuration}s linear`;
-      secondaryRef.current.style.transition = `transform ${transitionDuration}s linear`;
-
-      // Reset after animation completes for seamless looping
+      
+      // Set initial positions
+      primaryRef.current.style.transform = "translateX(0)";
+      secondaryRef.current.style.transform = "translateX(100%)";
+      
+      const duration = 25; // Duration in seconds for one complete loop
+      
+      // Apply smooth transitions
+      primaryRef.current.style.transition = `transform ${duration}s linear infinite`;
+      secondaryRef.current.style.transition = `transform ${duration}s linear infinite`;
+      
+      // Start animation after a small delay to ensure transitions are applied
       setTimeout(() => {
         if (!primaryRef.current || !secondaryRef.current) return;
-        primaryRef.current.style.transition = "none";
-        secondaryRef.current.style.transition = "none";
-        primaryRef.current.style.transform = "translateX(0)";
-        secondaryRef.current.style.transform = "translateX(100%)";
-
-        // Restart animation after a brief timeout
-        setTimeout(() => {
-          animateScroll();
-        }, 50);
-      }, transitionDuration * 1000);
+        
+        // Move both sets to create continuous loop effect
+        primaryRef.current.style.transform = "translateX(-100%)";
+        secondaryRef.current.style.transform = "translateX(0)";
+      }, 50);
     };
 
-    animateScroll();
+    animateContinuousScroll();
 
     return () => {
       // Cleanup animation on unmount
@@ -93,7 +101,7 @@ const TrustedCompanies = () => {
         secondaryRef.current.style.transition = "none";
       }
     };
-  }, [schoolLogos.length]);
+  }, []);
 
   return (
     <section className="py-12 bg-gradient-to-r from-soft-green via-white to-soft-green">
@@ -113,6 +121,7 @@ const TrustedCompanies = () => {
           <div 
             ref={primaryRef} 
             className="flex items-center justify-around min-w-full"
+            style={{ willChange: "transform" }}
           >
             {schoolLogos.map((logo, index) => (
               <div key={`logo-1-${index}`} className="px-8 flex-shrink-0">
@@ -128,7 +137,8 @@ const TrustedCompanies = () => {
           {/* Secondary set for continuous loop */}
           <div 
             ref={secondaryRef} 
-            className="flex items-center justify-around min-w-full absolute left-full top-0"
+            className="flex items-center justify-around min-w-full absolute left-0 top-0"
+            style={{ willChange: "transform" }}
           >
             {schoolLogos.map((logo, index) => (
               <div key={`logo-2-${index}`} className="px-8 flex-shrink-0">
@@ -142,6 +152,17 @@ const TrustedCompanies = () => {
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        @keyframes scroll {
+          from {
+            transform: translateX(0);
+          }
+          to {
+            transform: translateX(-100%);
+          }
+        }
+      `}</style>
     </section>
   );
 };
