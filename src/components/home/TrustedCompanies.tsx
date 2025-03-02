@@ -146,11 +146,11 @@ const TrustedCompanies = () => {
   }, []);
 
   return (
-    <section className="py-12 bg-gradient-to-r from-soft-green via-white to-soft-green">
-      <div className="max-w-6xl mx-auto px-4 mb-8">
+    <section className="py-8 bg-gradient-to-r from-soft-green via-white to-soft-green">
+      <div className="max-w-6xl mx-auto px-4 mb-4">
         <div className="flex justify-center">
-          <div className="rounded-full bg-green-100 py-2 px-6">
-            <h3 className="text-green-600 font-semibold tracking-wide text-center uppercase">
+          <div className="rounded-full bg-green-100 py-1.5 px-4">
+            <h3 className="text-green-600 font-semibold tracking-wide text-center text-sm uppercase">
               Schools Trust Assist
             </h3>
           </div>
@@ -160,14 +160,14 @@ const TrustedCompanies = () => {
       <div className="relative overflow-hidden w-full">
         <div 
           ref={scrollContainerRef}
-          className="flex space-x-8 whitespace-nowrap"
+          className="flex space-x-6 whitespace-nowrap"
         >
           {schoolLogos.map((logo, index) => (
-            <div key={`logo-${index}`} className="flex-shrink-0 px-3">
+            <div key={`logo-${index}`} className="flex-shrink-0 px-2">
               <img 
                 src={logo.src} 
                 alt={logo.alt} 
-                className="h-16 md:h-20 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity"
+                className="h-10 md:h-12 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity"
               />
             </div>
           ))}
@@ -185,7 +185,7 @@ const TrustedCompanies = () => {
         }
         
         .animate-scroll {
-          animation: scroll 15s linear infinite; /* Reduced from 20s to 15s to make it faster */
+          animation: scroll 15s linear infinite;
         }
       ` }} />
     </section>
