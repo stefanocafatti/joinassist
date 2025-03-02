@@ -1,10 +1,11 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Star, Sparkles } from "lucide-react";
 import ImageSlideshow from "@/components/ui/ImageSlideshow";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [loopNum, setLoopNum] = useState(0);
@@ -57,6 +58,14 @@ const Hero = () => {
     }
   };
   
+  const handleBookTask = () => {
+    navigate("/register");
+  };
+
+  const handleJoinAsStudent = () => {
+    navigate("/register");
+  };
+
   useEffect(() => {
     timeoutRef.current = window.setTimeout(handleTyping, typingSpeed);
     
@@ -129,6 +138,7 @@ const Hero = () => {
               <Button 
                 size="lg" 
                 className="rounded-full bg-assist-blue hover:bg-assist-blue/90 text-white h-14 px-8 text-base font-medium shadow-soft hover:shadow-md hover:translate-y-[-2px] transition-all"
+                onClick={handleBookTask}
               >
                 Book Your Task
               </Button>
@@ -136,6 +146,7 @@ const Hero = () => {
                 size="lg" 
                 variant="outline" 
                 className="rounded-full border-assist-blue text-assist-blue hover:bg-assist-blue/10 hover:text-assist-blue h-14 px-8 text-base"
+                onClick={handleJoinAsStudent}
               >
                 Join Assist as a Student <ChevronRight size={16} />
               </Button>

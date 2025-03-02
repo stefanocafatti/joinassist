@@ -1,6 +1,14 @@
+
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const CTASection = () => {
+  const navigate = useNavigate();
+
+  const handleBookTask = () => {
+    navigate("/register");
+  };
+
   return (
     <section className="py-20 md:py-28 bg-gradient-to-r from-assist-blue/95 to-assist-blue/80 text-white relative overflow-hidden">
       {/* Background decoration */}
@@ -26,6 +34,7 @@ const CTASection = () => {
           <Button 
             size="lg" 
             className="rounded-full bg-white text-assist-blue hover:bg-white/90 h-14 px-8 text-base font-semibold shadow-soft"
+            onClick={handleBookTask}
           >
             Book Your Task
           </Button>

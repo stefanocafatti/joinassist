@@ -4,6 +4,7 @@ import { Heart, Eye, Coins } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
 
 interface Task {
   title: string;
@@ -28,6 +29,8 @@ const RecommendedTasksSection: React.FC<RecommendedTasksSectionProps> = ({
   onBookNow,
   sectionTitle = "Recommended Tasks"
 }) => {
+  const navigate = useNavigate();
+  
   // Get tag color based on category
   const getCategoryColor = (category: string) => {
     const categoryColorMap: {[key: string]: string} = {
@@ -41,6 +44,17 @@ const RecommendedTasksSection: React.FC<RecommendedTasksSectionProps> = ({
     return categoryColorMap[category] || "bg-gray-100 text-gray-800";
   };
 
+  // Modified handler to check for authentication and redirect
+  const handleTaskAction = (taskTitle: string, e?: React.MouseEvent) => {
+    if (e) {
+      e.stopPropagation();
+    }
+    
+    // For now, always redirect to login flow
+    // In a real app, we would check if user is authenticated
+    navigate("/register");
+  };
+
   return (
     <section className="my-8">
       <h2 className="text-xl font-semibold text-gray-900 mb-4">{sectionTitle}</h2>
@@ -49,7 +63,7 @@ const RecommendedTasksSection: React.FC<RecommendedTasksSectionProps> = ({
           <div 
             key={index} 
             className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 cursor-pointer"
-            onClick={() => onBookNow(task.title)}
+            onClick={() => handleTaskAction(task.title)}
           >
             <div className="relative">
               <div 
@@ -84,10 +98,7 @@ const RecommendedTasksSection: React.FC<RecommendedTasksSectionProps> = ({
                 <Button 
                   size="sm" 
                   className="bg-assist-blue hover:bg-assist-blue/90 w-full"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onBookNow(task.title);
-                  }}
+                  onClick={(e) => handleTaskAction(task.title, e)}
                 >
                   <Eye className="h-4 w-4 mr-1" /> View Task
                 </Button>
