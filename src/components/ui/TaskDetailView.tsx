@@ -59,6 +59,28 @@ const times = [
   "6:00 PM", "7:00 PM", "8:00 PM"
 ];
 
+// Company defined prices for different task categories
+const companyDefinedPrices: {[key: string]: number} = {
+  "Cleaning": 30,
+  "Transportation": 25,
+  "Transportation and Moving": 35,
+  "Delivery": 20,
+  "Assembly": 40,
+  "Academic & Professional Help": 45,
+  "Academic Help": 45,
+  "Digital Services": 50,
+  "Fitness and Wellness": 40,
+  "Fitness & Wellness": 40,
+  "Event and Hospitality": 35,
+  "Event & Hospitality": 35,
+  "Special Tasks": 30,
+  "For Brands": 60,
+  "Pets": 25,
+  "Home": 35,
+  // Default price if category not found
+  "default": 25
+};
+
 const TaskDetailView: React.FC<TaskDetailViewProps> = ({ 
   isOpen, 
   onClose, 
@@ -67,10 +89,11 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
 }) => {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [time, setTime] = useState<string>(times[0]);
-  const [priceType, setPriceType] = useState<string>("one-time");
-  const [price, setPrice] = useState<string>("25");
   const [location, setLocation] = useState<string>(task.location || "");
   const [additionalInfo, setAdditionalInfo] = useState<string>("");
+  
+  // Get the company defined price for this task category
+  const taskPrice = companyDefinedPrices[task.category] || companyDefinedPrices["default"];
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -83,16 +106,12 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
       return;
     }
     
-    if (!price || isNaN(parseFloat(price)) || parseFloat(price) <= 0) {
-      return;
-    }
-    
     onTaskBooked(
       task.title,
       date,
       time,
-      priceType,
-      parseFloat(price),
+      "hourly", // Always hourly rate
+      taskPrice,
       location,
       additionalInfo
     );
@@ -198,34 +217,19 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
                 </div>
               </div>
               
-              {/* Price Section - Removed DollarSign icon here */}
+              {/* Price Section - Company defined price */}
               <div className="space-y-3">
                 <Label className="flex items-center gap-2">
                   Price Information
                 </Label>
-                <RadioGroup value={priceType} onValueChange={setPriceType} className="flex gap-4">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="one-time" id="one-time" />
-                    <Label htmlFor="one-time">One-time payment</Label>
+                <div className="p-4 rounded-md bg-gray-50 border border-gray-200">
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-900 font-medium">Company Rate:</span>
+                    <span className="text-lg font-semibold text-assist-blue">${taskPrice}/hr</span>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="hourly" id="hourly" />
-                    <Label htmlFor="hourly">Hourly rate</Label>
-                  </div>
-                </RadioGroup>
-                
-                <div className="flex items-center">
-                  <span className="text-gray-500 mr-2">$</span>
-                  <Input
-                    type="number"
-                    min="1"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                    className="w-24"
-                  />
-                  <span className="text-gray-500 ml-2">
-                    {priceType === "hourly" ? "per hour" : "total"}
-                  </span>
+                  <p className="text-xs text-gray-500 mt-1">
+                    This is our standard rate for {task.category.toLowerCase()} tasks.
+                  </p>
                 </div>
               </div>
               
