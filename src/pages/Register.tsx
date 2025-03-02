@@ -93,6 +93,10 @@ const Register = () => {
     setIsStudentRegistration(true);
   };
 
+  const handleGoBack = () => {
+    setIsStudentRegistration(false);
+  };
+
   return (
     <div className="min-h-screen flex flex-col relative bg-white">
       <CircleBlocks />
@@ -208,7 +212,18 @@ const Register = () => {
                 </Button>
               </div>
 
-              {!isStudentRegistration && (
+              {isStudentRegistration ? (
+                <div>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full border-gray-300 text-gray-700 hover:bg-gray-50"
+                    onClick={handleGoBack}
+                  >
+                    Go back to normal sign up
+                  </Button>
+                </div>
+              ) : (
                 <>
                   <div className="relative">
                     <div className="absolute inset-0 flex items-center">
