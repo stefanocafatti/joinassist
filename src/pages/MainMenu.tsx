@@ -1,16 +1,20 @@
 
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import CircleBlocks from "@/components/background/CircleBlocks";
-import { Search, Heart, Clock, Star, Filter, PawPrint, Car, Home, Package, Briefcase, User, CreditCard, History, Settings, LogOut, Bell, MapPin, Calendar, DollarSign, Clock3, Eye, ClipboardList } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import CategoryCard from "@/components/ui/CategoryCard";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { PawPrint, Car, Home, Package, Briefcase } from "lucide-react";
 import TaskDetailView from "@/components/ui/TaskDetailView";
+
+// Import refactored components
+import WelcomeOverlay from "@/components/main-menu/WelcomeOverlay";
+import MainHeader from "@/components/main-menu/MainHeader";
+import SearchHeader from "@/components/main-menu/SearchHeader";
+import NavigationTabs from "@/components/main-menu/NavigationTabs";
+import ProfileTab from "@/components/main-menu/ProfileTab";
+import RequestsTab from "@/components/main-menu/RequestsTab";
+import FavoritesSection from "@/components/main-menu/FavoritesSection";
+import HomeTabContent from "@/components/main-menu/HomeTabContent";
 
 const mockUser = {
   firstName: "Alex",
@@ -213,594 +217,54 @@ const MainMenu = () => {
     }
   };
 
+  const handleClearSearchResults = () => {
+    setSearchResults(null);
+    setSearchPerformed(false);
+    setSearchQuery("");
+  };
+
+  const handleRecentSearchClick = (search: string) => {
+    setSearchQuery(search);
+    handleSearch(new Event('submit') as any);
+  };
+
   const renderContent = () => {
     if (activeTab === "profile") {
-      return (
-        <div className="space-y-8">
-          <section className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-16 h-16 bg-assist-blue/10 rounded-full flex items-center justify-center">
-                <User className="h-8 w-8 text-assist-blue" />
-              </div>
-              <div>
-                <h2 className="text-xl font-bold">{mockUser.firstName} {mockUser.lastName}</h2>
-                <p className="text-gray-500">Member since 2023</p>
-              </div>
-              <Button className="ml-auto" variant="outline" size="sm">Edit Profile</Button>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-              <div className="bg-blue-50 p-4 rounded-lg text-center">
-                <p className="text-gray-600 text-sm">Total Bookings</p>
-                <p className="text-2xl font-bold text-gray-900">{mockUser.pastTasks.length}</p>
-              </div>
-              <div className="bg-green-50 p-4 rounded-lg text-center">
-                <p className="text-gray-600 text-sm">Completed</p>
-                <p className="text-2xl font-bold text-gray-900">{mockUser.pastTasks.length}</p>
-              </div>
-              <div className="bg-purple-50 p-4 rounded-lg text-center">
-                <p className="text-gray-600 text-sm">Saved Tasks</p>
-                <p className="text-2xl font-bold text-gray-900">2</p>
-              </div>
-            </div>
-          </section>
-          
-          <section className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold text-gray-900 flex items-center">
-                <History className="h-5 w-5 mr-2 text-assist-blue" /> Past Bookings
-              </h2>
-              <Button variant="ghost" size="sm" className="text-assist-blue">View All</Button>
-            </div>
-            
-            {mockUser.pastTasks.length > 0 ? (
-              <div className="divide-y divide-gray-100">
-                {mockUser.pastTasks.map((task) => (
-                  <div key={task.id} className="py-4 flex justify-between items-center">
-                    <div>
-                      <h3 className="font-medium text-gray-900">{task.title}</h3>
-                      <p className="text-sm text-gray-500">{task.date}</p>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
-                        {task.status}
-                      </Badge>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-gray-500 text-center py-6">You don't have any past bookings yet.</p>
-            )}
-          </section>
-          
-          <section className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold text-gray-900 flex items-center">
-                <CreditCard className="h-5 w-5 mr-2 text-assist-blue" /> Payment Methods
-              </h2>
-              <Button variant="outline" size="sm">Add New</Button>
-            </div>
-            
-            {mockUser.paymentMethods.length > 0 ? (
-              <div className="space-y-4">
-                {mockUser.paymentMethods.map((payment) => (
-                  <div key={payment.id} className="flex items-center justify-between border border-gray-100 rounded-lg p-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-gray-100 rounded-md flex items-center justify-center">
-                        <CreditCard className="h-5 w-5 text-gray-700" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-gray-900">{payment.brand} •••• {payment.last4}</p>
-                        <p className="text-sm text-gray-500">{payment.type}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {payment.isDefault && (
-                        <Badge className="bg-blue-100 text-blue-800 border-blue-200">Default</Badge>
-                      )}
-                      <Button variant="ghost" size="sm">Edit</Button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-gray-500 text-center py-6">No payment methods added yet.</p>
-            )}
-          </section>
-        </div>
-      );
+      return <ProfileTab user={mockUser} />;
     } else if (activeTab === "requests") {
-      return (
-        <div className="space-y-8">
-          <section className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-semibold text-gray-900 flex items-center">
-                <ClipboardList className="h-5 w-5 mr-2 text-assist-blue" /> Submitted Task Requests
-              </h2>
-              <div className="flex gap-2">
-                <Button variant="outline" size="sm" className="gap-1">
-                  <Filter className="h-4 w-4" /> Filter
-                </Button>
-                <Button variant="outline" size="sm">
-                  Sort by Date
-                </Button>
-              </div>
-            </div>
-            
-            {mockSubmittedRequests.length > 0 ? (
-              <div className="overflow-x-auto">
-                <table className="w-full border-collapse">
-                  <thead>
-                    <tr className="bg-gray-50 text-left">
-                      <th className="px-4 py-3 text-sm font-medium text-gray-600">Task</th>
-                      <th className="px-4 py-3 text-sm font-medium text-gray-600">Date</th>
-                      <th className="px-4 py-3 text-sm font-medium text-gray-600">Location</th>
-                      <th className="px-4 py-3 text-sm font-medium text-gray-600">Price</th>
-                      <th className="px-4 py-3 text-sm font-medium text-gray-600">Status</th>
-                      <th className="px-4 py-3 text-sm font-medium text-gray-600">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200">
-                    {mockSubmittedRequests.map((request) => (
-                      <tr key={request.id} className="hover:bg-gray-50">
-                        <td className="px-4 py-4">
-                          <span className="font-medium text-gray-900">{request.title}</span>
-                        </td>
-                        <td className="px-4 py-4 text-gray-700">{request.date}</td>
-                        <td className="px-4 py-4 text-gray-700">{request.location}</td>
-                        <td className="px-4 py-4 text-gray-700">{request.price}</td>
-                        <td className="px-4 py-4">
-                          <Badge
-                            className={`
-                              ${request.status === 'Confirmed' ? 'bg-green-100 text-green-800 border-green-200' : ''}
-                              ${request.status === 'Pending' ? 'bg-yellow-100 text-yellow-800 border-yellow-200' : ''}
-                              ${request.status === 'Rejected' ? 'bg-red-100 text-red-800 border-red-200' : ''}
-                            `}
-                          >
-                            {request.status}
-                          </Badge>
-                        </td>
-                        <td className="px-4 py-4">
-                          <Button variant="ghost" size="sm" className="text-assist-blue">
-                            View Details
-                          </Button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            ) : (
-              <div className="bg-gray-50 rounded-xl p-8 text-center border border-gray-200">
-                <div className="max-w-md mx-auto">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">No requests submitted</h3>
-                  <p className="text-gray-600 mb-6">
-                    You haven't submitted any task requests yet. Browse our available tasks or search for specific services.
-                  </p>
-                  <Button 
-                    className="bg-assist-blue hover:bg-assist-blue/90"
-                    onClick={() => setActiveTab("home")}
-                  >
-                    Browse Tasks
-                  </Button>
-                </div>
-              </div>
-            )}
-          </section>
-        </div>
-      );
+      return <RequestsTab requests={mockSubmittedRequests} onNavigateToHome={() => setActiveTab("home")} />;
     } else if (showFavorites) {
       const favorites = getFavoriteListings();
-      
       return (
-        <section className="mb-10">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold text-gray-900">Your Favorited Listings</h2>
-            <Button variant="outline" size="sm" onClick={() => setShowFavorites(false)}>
-              Back to Homepage
-            </Button>
-          </div>
-          
-          {favorites.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {favorites.map((task, index) => (
-                <div 
-                  key={index} 
-                  className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 cursor-pointer"
-                  onClick={() => handleBookNow(task.title)}
-                >
-                  <div className="relative">
-                    <div 
-                      className="h-40 bg-cover bg-center" 
-                      style={{ backgroundImage: `url(${task.image})` }}
-                    />
-                    <button 
-                      className="absolute top-3 right-3"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleFavoriteToggle(task.title);
-                      }}
-                    >
-                      <Heart 
-                        className={`h-5 w-5 ${favoriteTaskIds.includes(task.title) ? 'fill-red-500 text-red-500' : 'text-gray-500'}`} 
-                      />
-                    </button>
-                  </div>
-                  <div className="p-4">
-                    <div className="flex justify-between items-start mb-2">
-                      <h3 className="font-semibold text-gray-900">{task.title}</h3>
-                      <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100">{task.category}</Badge>
-                    </div>
-                    <p className="text-sm text-gray-600 mb-2">{task.description}</p>
-                    <div className="flex items-center mb-3 text-sm font-medium text-assist-blue">
-                      <DollarSign className="h-4 w-4 mr-1" /> 
-                      ${task.price}{task.priceType === "hourly" ? "/hr" : " flat rate"}
-                    </div>
-                    <div className="flex justify-end items-center">
-                      <Button 
-                        size="sm" 
-                        className="bg-assist-blue hover:bg-assist-blue/90"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleBookNow(task.title);
-                        }}
-                      >
-                        <Eye className="h-4 w-4 mr-1" /> View Task
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="bg-gray-50 rounded-xl p-8 text-center border border-gray-200">
-              <div className="max-w-md mx-auto">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">No favorites yet</h3>
-                <p className="text-gray-600 mb-6">
-                  You haven't added any tasks to your favorites yet. Browse our tasks and click the heart icon to add them to your favorites.
-                </p>
-                <Button 
-                  className="bg-assist-blue hover:bg-assist-blue/90"
-                  onClick={() => setShowFavorites(false)}
-                >
-                  Browse Tasks
-                </Button>
-              </div>
-            </div>
-          )}
-        </section>
+        <FavoritesSection 
+          favorites={favorites} 
+          favoriteTaskIds={favoriteTaskIds}
+          onFavoriteToggle={handleFavoriteToggle}
+          onBookNow={handleBookNow}
+          onHideSection={() => setShowFavorites(false)}
+        />
       );
     }
     
     // Default tab (home)
     return (
-      <>
-        <section className="mb-10 bg-blue-50 rounded-xl p-6">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold text-gray-900">Personalize Your Experience</h2>
-            <Button variant="ghost" size="sm" className="text-assist-blue">
-              <Star className="h-4 w-4 mr-1" /> Save Preferences
-            </Button>
-          </div>
-          
-          <p className="text-gray-600 mb-4">
-            Select your interests to get personalized task recommendations
-          </p>
-          
-          <div className="flex flex-wrap gap-3">
-            {interestTags.map(tag => (
-              <Badge
-                key={tag.id}
-                className={`cursor-pointer flex items-center px-3 py-2 text-sm rounded-full ${
-                  userInterests.includes(tag.id) 
-                    ? 'bg-assist-blue text-white hover:bg-assist-blue/90' 
-                    : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-100'
-                }`}
-                onClick={() => toggleInterest(tag.id)}
-              >
-                {tag.icon} {tag.label}
-              </Badge>
-            ))}
-          </div>
-          
-          {userInterests.length > 0 && (
-            <p className="text-sm text-assist-blue mt-3">
-              {userInterests.length} interests selected - we'll customize your experience!
-            </p>
-          )}
-        </section>
-        
-        {searchPerformed && (
-          <section className="mb-10">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-semibold text-gray-900">Search Results for "{searchQuery}"</h2>
-              <Button variant="outline" size="sm" onClick={() => {
-                setSearchResults(null);
-                setSearchPerformed(false);
-                setSearchQuery("");
-              }}>
-                Clear Results
-              </Button>
-            </div>
-            
-            {searchResults && searchResults.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {searchResults.map((task, index) => (
-                  <div 
-                    key={index} 
-                    className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100"
-                    onClick={() => handleBookNow(task.title)}
-                  >
-                    <div className="relative">
-                      <div 
-                        className="h-40 bg-cover bg-center" 
-                        style={{ backgroundImage: `url(${task.image})` }}
-                      />
-                      <button 
-                        className="absolute top-3 right-3"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleFavoriteToggle(task.title);
-                        }}
-                      >
-                        <Heart 
-                          className={`h-5 w-5 ${favoriteTaskIds.includes(task.title) ? 'fill-red-500 text-red-500' : 'text-gray-500'}`} 
-                        />
-                      </button>
-                    </div>
-                    <div className="p-4">
-                      <div className="flex justify-between items-start mb-2">
-                        <h3 className="font-semibold text-gray-900">{task.title}</h3>
-                        <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100">{task.category}</Badge>
-                      </div>
-                      <p className="text-sm text-gray-600 mb-2">{task.description}</p>
-                      <div className="flex items-center mb-3 text-sm font-medium text-assist-blue">
-                        <DollarSign className="h-4 w-4 mr-1" /> 
-                        ${task.price}{task.priceType === "hourly" ? "/hr" : " flat rate"}
-                      </div>
-                      <div className="flex justify-end items-center">
-                        <Button 
-                          size="sm" 
-                          className="bg-assist-blue hover:bg-assist-blue/90"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleBookNow(task.title);
-                          }}
-                        >
-                          <Eye className="h-4 w-4 mr-1" /> View Task
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="bg-gray-50 rounded-xl p-8 text-center border border-gray-200">
-                <div className="max-w-md mx-auto">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">No tasks found</h3>
-                  <p className="text-gray-600 mb-6">
-                    We couldn't find any tasks matching "{searchQuery}". Would you like to request this task?
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                    <Button 
-                      onClick={handleRequestTask}
-                      className="bg-assist-blue hover:bg-assist-blue/90"
-                    >
-                      Request This Task
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      onClick={() => {
-                        setSearchResults(null);
-                        setSearchPerformed(false);
-                        setSearchQuery("");
-                      }}
-                    >
-                      Browse Other Tasks
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </section>
-        )}
-        
-        {!searchPerformed && (
-          <>
-            <section className="mb-10">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-semibold text-gray-900">Recommended For You</h2>
-                <Button variant="outline" size="sm" className="gap-1">
-                  <Filter className="h-4 w-4" /> Filter
-                </Button>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {recommendedTasks.map((task, index) => (
-                  <div 
-                    key={index} 
-                    className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 cursor-pointer"
-                    onClick={() => handleBookNow(task.title)}
-                  >
-                    <div className="relative">
-                      <div 
-                        className="h-40 bg-cover bg-center" 
-                        style={{ backgroundImage: `url(${task.image})` }}
-                      />
-                      <button 
-                        className="absolute top-3 right-3"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleFavoriteToggle(task.title);
-                        }}
-                      >
-                        <Heart 
-                          className={`h-5 w-5 ${favoriteTaskIds.includes(task.title) ? 'fill-red-500 text-red-500' : 'text-gray-500'}`} 
-                        />
-                      </button>
-                    </div>
-                    <div className="p-4">
-                      <div className="flex justify-between items-start mb-2">
-                        <h3 className="font-semibold text-gray-900">{task.title}</h3>
-                        <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100">{task.category}</Badge>
-                      </div>
-                      <p className="text-sm text-gray-600 mb-2">{task.description}</p>
-                      <div className="flex items-center mb-3 text-sm font-medium text-assist-blue">
-                        <DollarSign className="h-4 w-4 mr-1" /> 
-                        ${task.price}{task.priceType === "hourly" ? "/hr" : " flat rate"}
-                      </div>
-                      <div className="flex justify-end items-center">
-                        <Button 
-                          size="sm" 
-                          className="bg-assist-blue hover:bg-assist-blue/90"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleBookNow(task.title);
-                          }}
-                        >
-                          <Eye className="h-4 w-4 mr-1" /> View Task
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              
-              <div className="mt-4 text-center">
-                <Button variant="link" className="text-assist-blue">
-                  View all recommendations →
-                </Button>
-              </div>
-            </section>
-            
-            <section className="mb-10">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Your Recent Searches</h2>
-              {mockUser.recentSearches.length > 0 ? (
-                <div className="flex flex-wrap gap-3">
-                  {mockUser.recentSearches.map((search, index) => (
-                    <Button 
-                      key={index} 
-                      variant="outline" 
-                      className="rounded-full bg-gray-50 hover:bg-gray-100 border-gray-200 text-gray-700"
-                      onClick={() => {
-                        setSearchQuery(search);
-                        handleSearch(new Event('submit') as any);
-                      }}
-                    >
-                      {search}
-                    </Button>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-gray-500">No recent searches yet</p>
-              )}
-            </section>
-            
-            <section className="mb-10">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-semibold text-gray-900">Your Past Ordered Tasks</h2>
-                <Button variant="link" className="text-assist-blue">
-                  View all →
-                </Button>
-              </div>
-              
-              {mockUser.pastTasks.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {mockUser.pastTasks.map((task) => (
-                    <div key={task.id} className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer">
-                      <div className="flex justify-between items-start mb-3">
-                        <h3 className="font-semibold text-gray-900">{task.title}</h3>
-                        <div className="flex items-center gap-2">
-                          <button 
-                            className="p-1"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleFavoriteToggle(task.title);
-                            }}
-                          >
-                            <Heart 
-                              className={`h-4 w-4 ${favoriteTaskIds.includes(task.title) ? 'fill-red-500 text-red-500' : 'text-gray-500'}`} 
-                            />
-                          </button>
-                          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
-                            {task.status}
-                          </Badge>
-                        </div>
-                      </div>
-                      <div className="flex items-center text-sm text-gray-500 mb-3">
-                        <Calendar className="h-4 w-4 mr-1" /> {task.date}
-                      </div>
-                      <div className="flex justify-between">
-                        <Button variant="outline" size="sm">
-                          View Details
-                        </Button>
-                        <Button 
-                          size="sm" 
-                          className="bg-assist-blue hover:bg-assist-blue/90"
-                        >
-                          <Eye className="h-4 w-4 mr-1" /> View Task
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="bg-gray-50 rounded-xl p-8 text-center border border-gray-200">
-                  <div className="max-w-md mx-auto">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">No past tasks yet</h3>
-                    <p className="text-gray-600 mb-6">
-                      You haven't ordered any tasks yet. Browse our recommendations to find tasks that match your needs.
-                    </p>
-                    <Button className="bg-assist-blue hover:bg-assist-blue/90">
-                      Browse Tasks
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </section>
-            
-            <section>
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-semibold text-gray-900">Browse Categories</h2>
-                <Button variant="link" className="text-assist-blue">
-                  See all →
-                </Button>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="cursor-pointer">
-                  <CategoryCard
-                    icon={PawPrint}
-                    title="Pet Care"
-                    description="Services for your furry friends"
-                    tasks={["🐕 Dog Walking", "🐱 Pet Sitting", "🧼 Pet Grooming"]}
-                    color="bg-blue-50"
-                  />
-                </div>
-                <div className="cursor-pointer">
-                  <CategoryCard
-                    icon={Home}
-                    title="Home Services"
-                    description="Keep your home in perfect shape"
-                    tasks={["🧹 House Cleaning", "🛠️ Furniture Assembly", "🧰 Handyman Services"]}
-                    color="bg-green-50"
-                  />
-                </div>
-                <div className="cursor-pointer">
-                  <CategoryCard
-                    icon={Car}
-                    title="Transportation"
-                    description="Get around with ease"
-                    tasks={["🚗 Rides", "🛍️ Grocery Delivery", "📦 Package Pickup"]}
-                    color="bg-purple-50"
-                  />
-                </div>
-              </div>
-            </section>
-          </>
-        )}
-      </>
+      <HomeTabContent
+        searchQuery={searchQuery}
+        searchPerformed={searchPerformed}
+        searchResults={searchResults}
+        recommendedTasks={recommendedTasks}
+        interestTags={interestTags}
+        userInterests={userInterests}
+        favoriteTaskIds={favoriteTaskIds}
+        recentSearches={mockUser.recentSearches}
+        pastTasks={mockUser.pastTasks}
+        onToggleInterest={toggleInterest}
+        onClearResults={handleClearSearchResults}
+        onFavoriteToggle={handleFavoriteToggle}
+        onBookNow={handleBookNow}
+        onRequestTask={handleRequestTask}
+        onSearchClick={handleRecentSearchClick}
+      />
     );
   };
 
@@ -808,147 +272,30 @@ const MainMenu = () => {
     <div className="min-h-screen bg-white">
       <CircleBlocks />
       
-      {showWelcome && (
-        <div className="fixed inset-0 bg-assist-blue/90 flex items-center justify-center z-50 animate-fade-in">
-          <div className="text-white text-center p-8 max-w-md animate-scale-in">
-            <h1 className="text-4xl font-bold mb-4">Welcome, {userName}!</h1>
-            <p className="text-xl">We're setting up your personalized dashboard...</p>
-          </div>
-        </div>
-      )}
+      <WelcomeOverlay userName={userName} showWelcome={showWelcome} />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 relative z-10">
         <header className="mb-8">
-          <div className="flex justify-between items-center mb-6">
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
-              Hello, {userName}!
-            </h1>
-            <div className="flex items-center gap-3">
-              <Button 
-                variant="ghost" 
-                size="icon"
-                onClick={toggleFavoriteView}
-                className={showFavorites ? 'text-red-500' : ''}
-              >
-                <Heart className={`h-5 w-5 ${showFavorites ? 'fill-red-500' : ''}`} />
-              </Button>
-              <Button variant="ghost" size="icon">
-                <Bell className="h-5 w-5" />
-              </Button>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="h-10 w-10 rounded-full p-0">
-                    <Avatar className="h-9 w-9">
-                      <AvatarImage src="" />
-                      <AvatarFallback className="bg-assist-blue text-white">
-                        {userName.charAt(0)}
-                      </AvatarFallback>
-                    </Avatar>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => setActiveTab("profile")}>
-                    <User className="mr-2 h-4 w-4" />
-                    <span>Profile</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <History className="mr-2 h-4 w-4" />
-                    <span>My Bookings</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <CreditCard className="mr-2 h-4 w-4" />
-                    <span>Payment Methods</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={toggleFavoriteView}>
-                    <Heart className="mr-2 h-4 w-4" />
-                    <span>Saved Tasks</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <Settings className="mr-2 h-4 w-4" />
-                    <span>Settings</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <LogOut className="mr-2 h-4 w-4" />
-                    <span>Logout</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-          </div>
+          <MainHeader 
+            userName={userName}
+            showFavorites={showFavorites}
+            onToggleFavoriteView={toggleFavoriteView}
+            onSetActiveTab={setActiveTab}
+          />
           
-          <form onSubmit={handleSearch} className="mb-8">
-            <div className="relative flex items-center">
-              <Input 
-                type="text" 
-                placeholder="What do you need help with today?"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pr-12 h-14 rounded-full border-2 border-assist-blue/30 shadow-sm bg-white focus:border-assist-blue focus:ring-2 focus:ring-assist-blue/20 text-base placeholder:text-assist-blue/60"
-              />
-              <button 
-                type="submit" 
-                className="absolute right-4 text-assist-blue hover:text-assist-blue/80 transition-colors"
-              >
-                <Search className="h-5 w-5" />
-              </button>
-            </div>
-          </form>
+          <SearchHeader 
+            searchQuery={searchQuery}
+            onSearchQueryChange={setSearchQuery}
+            onSearch={handleSearch}
+          />
         </header>
         
-        <div className="flex border-b border-gray-200 mb-8">
-          <button
-            className={`py-3 px-6 font-medium text-sm border-b-2 ${
-              activeTab === "home" && !showFavorites
-                ? "border-assist-blue text-assist-blue" 
-                : "border-transparent text-gray-500 hover:text-gray-700"
-            }`}
-            onClick={() => {
-              setActiveTab("home");
-              setShowFavorites(false);
-            }}
-          >
-            Home
-          </button>
-          <button
-            className={`py-3 px-6 font-medium text-sm border-b-2 ${
-              activeTab === "requests" 
-                ? "border-assist-blue text-assist-blue" 
-                : "border-transparent text-gray-500 hover:text-gray-700"
-            }`}
-            onClick={() => {
-              setActiveTab("requests");
-              setShowFavorites(false);
-            }}
-          >
-            Submitted Requests
-          </button>
-          <button
-            className={`py-3 px-6 font-medium text-sm border-b-2 ${
-              showFavorites 
-                ? "border-assist-blue text-assist-blue" 
-                : "border-transparent text-gray-500 hover:text-gray-700"
-            }`}
-            onClick={toggleFavoriteView}
-          >
-            Favorites
-          </button>
-          <button
-            className={`py-3 px-6 font-medium text-sm border-b-2 ${
-              activeTab === "profile" 
-                ? "border-assist-blue text-assist-blue" 
-                : "border-transparent text-gray-500 hover:text-gray-700"
-            }`}
-            onClick={() => {
-              setActiveTab("profile");
-              setShowFavorites(false);
-            }}
-          >
-            My Profile
-          </button>
-        </div>
+        <NavigationTabs 
+          activeTab={activeTab}
+          showFavorites={showFavorites}
+          onTabChange={setActiveTab}
+          onToggleFavoriteView={toggleFavoriteView}
+        />
         
         {renderContent()}
       </div>
