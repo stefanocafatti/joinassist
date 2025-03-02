@@ -283,10 +283,6 @@ const MainMenu = () => {
       setIsTaskDetailOpen(true);
       // Add to recently viewed when viewing task details
       addToRecentlyViewed(task);
-      
-      toast.success(`Viewing task: ${taskTitle}`, {
-        description: "You can now see the task details"
-      });
     } else {
       console.error(`Task not found: ${taskTitle}`);
       toast.error("Task not found", {
