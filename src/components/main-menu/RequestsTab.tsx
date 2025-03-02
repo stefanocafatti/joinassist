@@ -39,6 +39,8 @@ const RequestsTab: React.FC<RequestsTabProps> = ({
   const [selectedTask, setSelectedTask] = useState<Request | null>(null);
   const [isTaskDetailsOpen, setIsTaskDetailsOpen] = useState(false);
   const [showCompleted, setShowCompleted] = useState(false);
+  const [taskToRate, setTaskToRate] = useState<Request | null>(null);
+  const [ratingValue, setRatingValue] = useState(0);
 
   const handleToggleNotifications = () => {
     const newState = !notificationsEnabled;
@@ -58,7 +60,7 @@ const RequestsTab: React.FC<RequestsTabProps> = ({
     setIsTaskDetailsOpen(true);
   };
 
-  // Mock data for completed tasks with student information
+  // Updated completed tasks with one task that doesn't have a rating
   const completedTasks: Request[] = [
     {
       id: "c1",
@@ -81,7 +83,6 @@ const RequestsTab: React.FC<RequestsTabProps> = ({
       status: "Completed",
       provider: "Michael R.",
       studentImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop",
-      rating: 4,
       completed: true
     },
     {
@@ -101,6 +102,33 @@ const RequestsTab: React.FC<RequestsTabProps> = ({
   // Determine which tasks to display based on toggle state
   const displayedTasks = showCompleted ? completedTasks : requests;
 
+  // Handle setting a rating for a task
+  const handleRate = (task: Request) => {
+    setTaskToRate(task);
+    setRatingValue(0);
+  };
+
+  // Handle submitting a rating
+  const handleSubmitRating = (task: Request, rating: number) => {
+    // Update the task's rating in the completedTasks array
+    const updatedTasks = completedTasks.map(t => 
+      t.id === task.id ? { ...t, rating } : t
+    );
+    
+    // Replace the completedTasks array with the updated one
+    // Note: In a real app, this would be a state update or an API call
+    
+    // Show a success toast
+    toast({
+      title: "Rating Submitted",
+      description: `You rated "${task.title}" ${rating} stars. Thank you for your feedback!`,
+      duration: 3000,
+    });
+    
+    // Close the rating dialog
+    setTaskToRate(null);
+  };
+
   // Helper function to render star ratings
   const renderStarRating = (rating: number) => {
     return Array(5).fill(0).map((_, i) => (
@@ -109,6 +137,22 @@ const RequestsTab: React.FC<RequestsTabProps> = ({
         className={`h-4 w-4 ${i < rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`} 
       />
     ));
+  };
+
+  // Function to render interactive star rating input
+  const renderRatingInput = () => {
+    return (
+      <div className="flex items-center space-x-1">
+        {Array(5).fill(0).map((_, i) => (
+          <Star 
+            key={i} 
+            className={`h-6 w-6 cursor-pointer ${i < ratingValue ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`}
+            onClick={() => setRatingValue(i + 1)}
+            onMouseEnter={() => setRatingValue(i + 1)}
+          />
+        ))}
+      </div>
+    );
   };
 
   return (
@@ -211,9 +255,20 @@ const RequestsTab: React.FC<RequestsTabProps> = ({
                     )}
                     {showCompleted && (
                       <td className="px-4 py-4">
-                        <div className="flex">
-                          {request.rating ? renderStarRating(request.rating) : "Not rated"}
-                        </div>
+                        {request.rating ? (
+                          <div className="flex">
+                            {renderStarRating(request.rating)}
+                          </div>
+                        ) : (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="text-assist-blue border-assist-blue hover:bg-assist-blue/10"
+                            onClick={() => handleRate(request)}
+                          >
+                            Rate Now
+                          </Button>
+                        )}
                       </td>
                     )}
                     <td className="px-4 py-4">
@@ -255,6 +310,38 @@ const RequestsTab: React.FC<RequestsTabProps> = ({
           onClose={() => setIsTaskDetailsOpen(false)}
           task={selectedTask}
         />
+      )}
+
+      {/* Rating Modal */}
+      {taskToRate && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl p-6 max-w-md w-full mx-4">
+            <h3 className="text-xl font-semibold mb-4">Rate your experience</h3>
+            <p className="mb-6 text-gray-600">
+              How would you rate your experience with {taskToRate.provider} for "{taskToRate.title}"?
+            </p>
+            
+            <div className="flex justify-center mb-6">
+              {renderRatingInput()}
+            </div>
+            
+            <div className="flex justify-end space-x-4">
+              <Button
+                variant="outline"
+                onClick={() => setTaskToRate(null)}
+              >
+                Cancel
+              </Button>
+              <Button
+                className="bg-assist-blue hover:bg-assist-blue/90"
+                disabled={ratingValue === 0}
+                onClick={() => handleSubmitRating(taskToRate, ratingValue)}
+              >
+                Submit Rating
+              </Button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
