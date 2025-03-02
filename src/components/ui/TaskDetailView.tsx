@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { format } from "date-fns";
 import { 
@@ -21,7 +22,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Calendar as CalendarIcon, Clock, MapPin, DollarSign, Info } from "lucide-react";
+import { Calendar as CalendarIcon, Clock, MapPin, Info } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -197,10 +198,10 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
                 </div>
               </div>
               
-              {/* Price Section */}
+              {/* Price Section - Removed DollarSign icon here */}
               <div className="space-y-3">
                 <Label className="flex items-center gap-2">
-                  <DollarSign className="h-4 w-4" /> Price Information
+                  Price Information
                 </Label>
                 <RadioGroup value={priceType} onValueChange={setPriceType} className="flex gap-4">
                   <div className="flex items-center space-x-2">
