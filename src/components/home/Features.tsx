@@ -9,7 +9,9 @@ import {
   Calendar, 
   Users, 
   MessageCircle,
-  CheckCircle2
+  CheckCircle2,
+  Sun,
+  Water
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -148,20 +150,35 @@ const Features = () => {
               >
                 <div className={`
                   w-full h-56 mb-6 rounded-2xl flex items-center justify-center shadow-soft relative overflow-hidden
-                  ${step === 0 ? 'bg-soft-blue text-assist-blue' : 
+                  ${step === 0 ? 'bg-soft-orange text-orange-600' : 
                      step === 1 ? 'bg-soft-green text-green-600' : 
-                     'bg-soft-purple text-purple-600'}
+                     'bg-soft-blue text-assist-blue'}
                   ${step === animatedStep ? 'animate-float' : ''}
                   transform transition-all duration-500 glassmorphism
                 `}>
                   <div className="absolute top-3 right-3 h-3 w-3">
                     <span className={`relative inline-flex rounded-full h-3 w-3 ${
-                      step === 0 ? 'bg-assist-blue' : 
+                      step === 0 ? 'bg-orange-500' : 
                       step === 1 ? 'bg-green-600' : 
-                      'bg-purple-600'
+                      'bg-assist-blue'
                     }`}></span>
                   </div>
                   <div className="flex flex-col items-center">
+                    <div className="mb-4 flex items-center justify-center">
+                      {step === 0 ? (
+                        <div className="p-3 rounded-full bg-orange-100">
+                          <Sun size={28} className="text-orange-500" />
+                        </div>
+                      ) : step === 1 ? (
+                        <div className="p-3 rounded-full bg-green-100">
+                          <Star size={28} className="text-green-500" />
+                        </div>
+                      ) : (
+                        <div className="p-3 rounded-full bg-blue-100">
+                          <Water size={28} className="text-assist-blue" />
+                        </div>
+                      )}
+                    </div>
                     <span className="text-4xl font-bold mb-3">
                       {step + 1}
                     </span>
