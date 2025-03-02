@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -94,10 +95,10 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({
                   <Badge className={cn(getCategoryColor(task.category), "hover:opacity-90")}>{task.category}</Badge>
                 </div>
                 <p className="text-sm text-gray-600 mb-4">{task.description}</p>
-                <div className="flex justify-center items-center">
+                <div className="flex items-center justify-center">
                   <Button 
                     size="sm" 
-                    className="bg-assist-blue hover:bg-assist-blue/90"
+                    className="bg-assist-blue hover:bg-assist-blue/90 w-full"
                     onClick={(e) => {
                       e.stopPropagation();
                       onBookNow(task.title);
