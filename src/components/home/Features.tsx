@@ -1,66 +1,85 @@
 import { useState, useEffect } from "react";
 import { 
   Clock, 
-  Briefcase, 
-  UserCheck, 
-  Shield, 
-  CreditCard, 
+  Search, 
+  Star, 
+  Sparkles, 
+  Wrench, 
   Calendar, 
-  CheckCircle2 
+  Users, 
+  MessageCircle,
+  CheckCircle2
 } from "lucide-react";
-import ImageSlideshow from "../ui/ImageSlideshow";
+import { Button } from "@/components/ui/button";
 
 const Features = () => {
-  const [activeSection, setActiveSection] = useState(0);
   const [animatedStep, setAnimatedStep] = useState(0);
+  const [activeSection, setActiveSection] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
   
-  const features = [
+  const featuresData = [
     {
-      id: "students",
-      title: "For Students",
-      description: "Earn, develop real-world skills, and gain hands-on experience — all while maintaining your own schedule.",
-      items: [
+      title: "Expert Assistance",
+      description: "Get matched with skilled students who can handle a wide range of tasks.",
+      icon: Wrench,
+      color: "bg-soft-blue",
+      sections: [
         {
-          icon: <Clock className="text-assist-blue" />,
-          title: "Flexible Income",
-          description: "Earn money on your own schedule without committing to rigid work hours."
+          title: "Home Repairs",
+          description: "From leaky faucets to furniture assembly, find students with the right skills.",
+          tasks: ["Fixing appliances", "Mounting shelves", "Assembling furniture"],
+          image: "/lovable-uploads/09999999-6666-4444-aaaa-222222222222.png",
         },
         {
-          icon: <Briefcase className="text-assist-blue" />,
-          title: "Real-World Experience",
-          description: "Gain hands-on experience in various fields, from logistics to personal assistance."
+          title: "Tech Support",
+          description: "Need help setting up your smart home devices or troubleshooting computer issues?",
+          tasks: ["Setting up devices", "Troubleshooting issues", "Installing software"],
+          image: "/lovable-uploads/11111111-bbbb-4444-cccc-333333333333.png",
         },
-        {
-          icon: <Calendar className="text-assist-blue" />,
-          title: "Work Around Your Schedule",
-          description: "Accept tasks between classes or on weekends without disrupting your academic life."
-        }
-      ]
+      ],
     },
     {
-      id: "everyone",
-      title: "For Everyone",
-      description: "Save time, get things done, and access trusted student talent — all while ensuring a smooth experience.",
-      items: [
+      title: "Time-Saving Solutions",
+      description: "Delegate your to-do list and free up your time for what matters most.",
+      icon: Clock,
+      color: "bg-soft-green",
+      sections: [
         {
-          icon: <UserCheck className="text-assist-blue" />,
-          title: "Reliable, Vetted Talent",
-          description: "Work only with students who are verified and highly-rated for quality assurance."
+          title: "Errands & Shopping",
+          description: "Let students handle your grocery shopping, dry cleaning, and other errands.",
+          tasks: ["Grocery shopping", "Picking up dry cleaning", "Running errands"],
+          image: "/lovable-uploads/22222222-cccc-4444-dddd-444444444444.png",
         },
         {
-          icon: <Shield className="text-assist-blue" />,
-          title: "Safety & Security First",
-          description: "All students are carefully vetted, providing confidence in work quality and safety."
+          title: "Cleaning & Organization",
+          description: "Get your home sparkling clean and organized with the help of reliable students.",
+          tasks: ["House cleaning", "Organizing closets", "Decluttering spaces"],
+          image: "/lovable-uploads/33333333-dddd-4444-eeee-555555555555.png",
+        },
+      ],
+    },
+    {
+      title: "Academic Support",
+      description: "Connect with knowledgeable students for tutoring, essay help, and more.",
+      icon: Search,
+      color: "bg-soft-pink",
+      sections: [
+        {
+          title: "Tutoring & Homework Help",
+          description: "Get personalized tutoring and homework help in a variety of subjects.",
+          tasks: ["Math tutoring", "Science tutoring", "Essay editing"],
+          image: "/lovable-uploads/44444444-eeee-4444-ffff-666666666666.png",
         },
         {
-          icon: <CreditCard className="text-assist-blue" />,
-          title: "Transparent Pricing",
-          description: "Know exactly what you'll pay upfront with no hidden fees or surprises."
-        }
-      ]
-    }
+          title: "Research & Writing",
+          description: "Need help with research papers, essays, or presentations?",
+          tasks: ["Research assistance", "Essay writing", "Presentation design"],
+          image: "/lovable-uploads/55555555-ffff-4444-aaaa-777777777777.png",
+        },
+      ],
+    },
   ];
-
+  
   useEffect(() => {
     const interval = setInterval(() => {
       setAnimatedStep((prev) => (prev + 1) % 3);
@@ -72,31 +91,33 @@ const Features = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveSection((prev) => (prev === 0 ? 1 : 0));
-    }, 5000);
+    }, 7000);
     
     return () => clearInterval(interval);
   }, []);
-
-  const stepImages = [
-    [
-      {
-        src: "https://images.unsplash.com/photo-1616587226157-48e49175ee20?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-        alt: "Person posting a task on a mobile phone"
+  
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    
+    const element = document.getElementById('features-section');
+    if (element) {
+      observer.observe(element);
+    }
+    
+    return () => {
+      if (element) {
+        observer.unobserve(element);
       }
-    ],
-    [
-      {
-        src: "https://images.unsplash.com/photo-1573497620053-ea5300f94f21?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-        alt: "Student matched with a task"
-      }
-    ],
-    [
-      {
-        src: "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-        alt: "Task being completed"
-      }
-    ]
-  ];
+    };
+  }, []);
   
   return (
     <section id="how-it-works" className="py-24 bg-gradient-to-b from-white to-blue-50/30 relative overflow-hidden">
@@ -111,209 +132,110 @@ const Features = () => {
             How <span className="bg-gradient-to-r from-assist-blue via-blue-500 to-blue-400 bg-clip-text text-transparent">Assist</span> Works
           </h2>
           <p className="text-xl text-gray-600">
-            Assist connects people with tasks to students who can help, creating value for both sides of the marketplace.
+            We've streamlined the process to get you the help you need quickly and reliably
           </p>
         </div>
         
         <div className="flex flex-col items-center justify-center mb-24">
           <div className="flex items-center justify-center space-x-10 mb-12 w-full">
             {[0, 1, 2].map(step => (
-              <button 
-                key={step}
-                onClick={() => setAnimatedStep(step)}
-                className={`relative ${animatedStep === step ? '' : 'opacity-40'} transition-all duration-500`}
+              <div 
+                key={step} 
+                className={`relative flex flex-col items-center ${
+                  step === animatedStep ? 'opacity-100 scale-105' : 'opacity-60 scale-100'
+                } transition-all duration-500`}
               >
                 <div className={`
-                  w-24 h-24 rounded-full flex items-center justify-center text-3xl font-bold shadow-lg
-                  transition-all duration-500 transform
-                  ${animatedStep === step ? 'bg-assist-blue text-white scale-110' : 'bg-white text-assist-blue'}
+                  w-20 h-20 mb-6 rounded-2xl flex items-center justify-center shadow-soft
+                  ${step === 0 ? 'bg-soft-blue text-assist-blue' : 
+                     step === 1 ? 'bg-soft-green text-green-600' : 
+                     'bg-soft-purple text-purple-600'}
+                  ${step === animatedStep ? 'animate-float' : ''}
+                  transform transition-all duration-500 glassmorphism
                 `}>
-                  {step + 1}
-                </div>
-                {step < 2 && (
-                  <div className="absolute top-1/2 left-full w-14 h-0.5 bg-gray-200 -translate-y-1/2">
-                    <div className={`absolute top-0 left-0 h-full bg-assist-blue transition-all duration-300`} 
-                         style={{ width: animatedStep > step ? '100%' : '0%' }} />
+                  <div className="relative">
+                    <span className="absolute -top-2 -right-2 flex h-4 w-4">
+                      <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${
+                        step === 0 ? 'bg-assist-blue' : 
+                        step === 1 ? 'bg-green-600' : 
+                        'bg-purple-600'
+                      } opacity-25`}></span>
+                      <span className={`relative inline-flex rounded-full h-4 w-4 ${
+                        step === 0 ? 'bg-assist-blue' : 
+                        step === 1 ? 'bg-green-600' : 
+                        'bg-purple-600'
+                      }`}></span>
+                    </span>
+                    <span className="text-2xl font-bold">
+                      {step + 1}
+                    </span>
                   </div>
-                )}
-              </button>
+                </div>
+                <h3 className="text-xl font-semibold mb-2">
+                  {step === 0 ? 'Share Your Need' : 
+                   step === 1 ? 'Get Matched' : 
+                   'Task Completed'}
+                </h3>
+                <p className="text-center text-gray-600 max-w-xs">
+                  {step === 0 ? 'Post your task with details, location and budget' : 
+                   step === 1 ? 'We match you with qualified college students' : 
+                   'Your task is completed to your satisfaction'}
+                </p>
+              </div>
             ))}
           </div>
-        
-          <div className="max-w-3xl mx-auto w-full">
-            <div className="relative min-h-[14rem] mb-10">
-              {[
-                {
-                  title: "Post Your Task",
-                  icon: "📝",
-                  description: "Describe what you need help with, set your budget, and choose when you'd like the task completed."
-                },
-                {
-                  title: "Get Matched",
-                  icon: "🤝",
-                  description: "Our platform connects you with verified students who have the skills and availability to help."
-                },
-                {
-                  title: "Task Completed",
-                  icon: "✅",
-                  description: "Your student helper completes the task, and you only pay when you're completely satisfied."
-                }
-              ].map((step, index) => (
-                <div 
-                  key={index}
-                  className={`
-                    absolute top-0 left-0 w-full transition-all duration-500 transform
-                    ${animatedStep === index ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 pointer-events-none'}
-                  `}
-                >
-                  <div className="flex items-center gap-6 p-8 glassmorphism rounded-2xl shadow-elevation">
-                    <div className="bg-soft-blue w-16 h-16 rounded-xl flex items-center justify-center text-3xl flex-shrink-0">
-                      {step.icon}
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-semibold mb-2">{step.title}</h3>
-                      <p className="text-lg text-gray-600">{step.description}</p>
-                    </div>
-                  </div>
-                </div>
+          <div className="flex justify-center mb-8">
+            <div className="flex space-x-2">
+              {[0, 1, 2].map(dot => (
+                <button
+                  key={dot}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    dot === animatedStep ? 'w-6 bg-assist-blue' : 'bg-gray-300'
+                  }`}
+                  onClick={() => setAnimatedStep(dot)}
+                  aria-label={`View step ${dot + 1}`}
+                />
               ))}
             </div>
           </div>
-
-          <div className="max-w-4xl w-full mx-auto mt-10">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-soft-blue to-soft-pink rounded-3xl opacity-30 blur-xl" />
-              <div className="relative h-full flex items-center justify-center">
-                <div className="w-full rounded-2xl overflow-hidden shadow-elevation">
-                  <ImageSlideshow 
-                    images={stepImages[animatedStep]} 
-                    autoplayInterval={5000}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="max-w-3xl mx-auto mt-12 glassmorphism p-8 rounded-2xl">
-            <h4 className="font-medium text-xl text-assist-blue mb-4">Why students love Assist</h4>
-            <ul className="space-y-4">
-              <li className="flex items-center gap-3">
-                <div className="w-6 h-6 rounded-full bg-soft-green flex items-center justify-center">
-                  <CheckCircle2 size={14} className="text-green-600" />
-                </div>
-                <span className="text-lg">Flexible work that fits their schedule</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <div className="w-6 h-6 rounded-full bg-soft-green flex items-center justify-center">
-                  <CheckCircle2 size={14} className="text-green-600" />
-                </div>
-                <span className="text-lg">Real-world experience for their resume</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <div className="w-6 h-6 rounded-full bg-soft-green flex items-center justify-center">
-                  <CheckCircle2 size={14} className="text-green-600" />
-                </div>
-                <span className="text-lg">Income to help with expenses</span>
-              </li>
-            </ul>
-          </div>
+          <Button 
+            size="lg" 
+            className="rounded-full bg-assist-blue hover:bg-assist-blue/90 text-white px-8 py-6 h-14 text-base font-medium shadow-soft hover:translate-y-[-2px] transition-all"
+          >
+            Get Started
+          </Button>
         </div>
         
-        <div className="mt-20">
-          <div className="flex flex-col lg:flex-row gap-12 items-center">
-            <div className="w-full lg:w-1/2 space-y-8">
-              <div className="space-y-4">
-                <div className="flex gap-3 mb-4">
-                  {features.map((feature, index) => (
-                    <button
-                      key={feature.id}
-                      onClick={() => setActiveSection(index)}
-                      className={`px-6 py-3 rounded-full text-sm font-medium transition-all ${
-                        activeSection === index 
-                          ? "bg-assist-blue text-white shadow-md" 
-                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                      }`}
-                    >
-                      {feature.title}
-                    </button>
-                  ))}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {featuresData.map((feature, index) => (
+            <div 
+              key={index}
+              className={`glass-card p-6 rounded-2xl shadow-soft transition-all duration-300 hover:scale-102 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+              style={{ transitionDelay: `${0.1 * index}s` }}
+            >
+              <div className="flex items-center gap-4 mb-4">
+                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${feature.color} text-white`}>
+                  <feature.icon size={24} />
                 </div>
-                
-                <h3 className="text-2xl font-bold text-gray-900">
-                  {features[activeSection].title}
-                </h3>
-                <p className="text-gray-600">
-                  {features[activeSection].description}
-                </p>
+                <h3 className="text-xl font-semibold text-gray-900">{feature.title}</h3>
               </div>
+              <p className="text-gray-600 mb-4">{feature.description}</p>
               
-              <div className="space-y-4">
-                {features[activeSection].items.map((item, index) => (
-                  <div 
-                    key={index} 
-                    className="flex items-start gap-4 p-6 rounded-xl transition-all glassmorphism hover-scale"
-                  >
-                    <div className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center" 
-                      style={{ 
-                        background: activeSection === 0 ? 'var(--soft-blue, #D3E4FD)' : 'var(--soft-green, #F2FCE2)'
-                      }}>
-                      {item.icon}
-                    </div>
-                    <div>
-                      <h4 className="text-lg font-semibold text-gray-900">{item.title}</h4>
-                      <p className="text-gray-600">{item.description}</p>
-                    </div>
+              <div className="space-y-3">
+                {feature.sections.map((section, sectionIndex) => (
+                  <div key={sectionIndex} className="p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors duration-200">
+                    <h4 className="text-lg font-medium text-gray-800 mb-2">{section.title}</h4>
+                    <p className="text-gray-500 text-sm mb-2">{section.description}</p>
+                    <ul className="list-disc list-inside text-sm text-gray-600">
+                      {section.tasks.map((task, taskIndex) => (
+                        <li key={taskIndex}>{task}</li>
+                      ))}
+                    </ul>
                   </div>
                 ))}
               </div>
             </div>
-            
-            <div className="w-full lg:w-1/2 relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-soft-blue to-soft-pink rounded-3xl opacity-30 blur-xl" />
-              
-              <div className="relative rounded-3xl overflow-hidden shadow-elevation">
-                <div className={`transition-all duration-700 transform ${activeSection === 0 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 absolute inset-0'}`}>
-                  <img 
-                    src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" 
-                    alt="Students working together" 
-                    className="w-full h-auto rounded-2xl shadow-card"
-                  />
-                  
-                  <div className="absolute bottom-8 right-8 glassmorphism p-4 rounded-xl shadow-elevation max-w-xs animate-float">
-                    <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 bg-green-50 rounded-full flex items-center justify-center text-green-600 flex-shrink-0 mt-1">
-                        <CheckCircle2 size={20} />
-                      </div>
-                      <div>
-                        <p className="font-medium text-sm">Income with Purpose</p>
-                        <p className="text-sm text-gray-600">Earn while building skills that matter for your future career.</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className={`transition-all duration-700 transform ${activeSection === 1 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 absolute inset-0'}`}>
-                  <img 
-                    src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
-                    alt="Professional collaboration" 
-                    className="w-full h-auto rounded-2xl shadow-card"
-                  />
-                  
-                  <div className="absolute top-8 left-8 glassmorphism p-4 rounded-xl shadow-elevation max-w-xs animate-float" style={{ animationDelay: "0.5s" }}>
-                    <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center text-assist-blue flex-shrink-0 mt-1">
-                        <CheckCircle2 size={20} />
-                      </div>
-                      <div>
-                        <p className="font-medium text-sm">Tasks Done Right</p>
-                        <p className="text-sm text-gray-600">Get matched with students who have the right skills for your tasks.</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
