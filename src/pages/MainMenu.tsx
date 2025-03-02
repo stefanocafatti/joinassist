@@ -10,13 +10,11 @@ import CategoryCard from "@/components/ui/CategoryCard";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
-// Mock user data - in a real app this would come from your authentication system
 const mockUser = {
   firstName: "Alex",
   lastName: "Smith",
   recentSearches: ["Dog walker", "House cleaning", "Grocery delivery"],
   preferences: [],
-  // Added mock data for past tasks and payment methods
   pastTasks: [
     { id: "1", title: "Dog Walking", date: "May 15, 2023", status: "Completed" },
     { id: "2", title: "House Cleaning", date: "Apr 28, 2023", status: "Completed" },
@@ -28,7 +26,6 @@ const mockUser = {
   ]
 };
 
-// Interest tags that users can select
 const interestTags = [
   { id: "pets", label: "Pets", icon: <PawPrint className="h-4 w-4 mr-1" /> },
   { id: "transport", label: "Transportation", icon: <Car className="h-4 w-4 mr-1" /> },
@@ -37,7 +34,6 @@ const interestTags = [
   { id: "work", label: "Professional Help", icon: <Briefcase className="h-4 w-4 mr-1" /> },
 ];
 
-// Recommended tasks based on user preferences
 const recommendedTasks = [
   {
     title: "Dog Walking",
@@ -65,11 +61,11 @@ const MainMenu = () => {
   const [userInterests, setUserInterests] = useState<string[]>([]);
   const [userName, setUserName] = useState(mockUser.firstName);
   const [showWelcome, setShowWelcome] = useState(true);
-  const [activeTab, setActiveTab] = useState("home"); // State for tracking active tab
+  const [activeTab, setActiveTab] = useState("home");
+  const [searchResults, setSearchResults] = useState<typeof recommendedTasks | null>(null);
+  const [searchPerformed, setSearchPerformed] = useState(false);
 
   useEffect(() => {
-    // This would fetch the user's actual data from your backend
-    // For now, we'll just use the mock data
     const timer = setTimeout(() => {
       setShowWelcome(false);
     }, 3000);
@@ -80,9 +76,34 @@ const MainMenu = () => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      toast.info(`Searching for "${searchQuery}"`);
-      // Navigate or filter results
+      setSearchPerformed(true);
+      
+      const results = recommendedTasks.filter(task => 
+        task.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        task.description.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        task.category.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      
+      setSearchResults(results);
+      
+      if (results.length > 0) {
+        toast.info(`Found ${results.length} results for "${searchQuery}"`);
+      } else {
+        toast.info(`No results found for "${searchQuery}"`);
+      }
     }
+  };
+
+  const handleRequestTask = () => {
+    toast.success("Task request submitted!", {
+      description: "We'll notify our providers about this task request."
+    });
+    
+    console.log(`Task requested: ${searchQuery}`);
+    
+    setSearchQuery("");
+    setSearchResults(null);
+    setSearchPerformed(false);
   };
 
   const toggleInterest = (id: string) => {
@@ -92,7 +113,6 @@ const MainMenu = () => {
         : [...prev, id]
     );
     
-    // In a real app, you'd save this to the user's profile
     toast.success(`Preferences updated!`);
   };
 
@@ -100,16 +120,13 @@ const MainMenu = () => {
     toast.success(`Booking for ${taskTitle}`, {
       description: "You'll be redirected to the booking page"
     });
-    // In a real app, this would navigate to the booking page
     console.log(`Booking task: ${taskTitle}`);
   };
 
-  // Render the appropriate content based on the active tab
   const renderContent = () => {
     if (activeTab === "profile") {
       return (
         <div className="space-y-8">
-          {/* User Profile Section */}
           <section className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
             <div className="flex items-center gap-4 mb-6">
               <div className="w-16 h-16 bg-assist-blue/10 rounded-full flex items-center justify-center">
@@ -138,7 +155,6 @@ const MainMenu = () => {
             </div>
           </section>
           
-          {/* Past Bookings Section */}
           <section className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-semibold text-gray-900 flex items-center">
@@ -168,7 +184,6 @@ const MainMenu = () => {
             )}
           </section>
           
-          {/* Payment Methods Section */}
           <section className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-semibold text-gray-900 flex items-center">
@@ -207,10 +222,8 @@ const MainMenu = () => {
       );
     }
     
-    // Home tab (default view)
     return (
       <>
-        {/* Personalization Section */}
         <section className="mb-10 bg-blue-50 rounded-xl p-6">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold text-gray-900">Personalize Your Experience</h2>
@@ -246,109 +259,180 @@ const MainMenu = () => {
           )}
         </section>
         
-        {/* Recommended Tasks Section */}
-        <section className="mb-10">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold text-gray-900">Recommended For You</h2>
-            <Button variant="outline" size="sm" className="gap-1">
-              <Filter className="h-4 w-4" /> Filter
-            </Button>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {recommendedTasks.map((task, index) => (
-              <div key={index} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100">
-                <div 
-                  className="h-40 bg-cover bg-center" 
-                  style={{ backgroundImage: `url(${task.image})` }}
-                />
-                <div className="p-4">
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-semibold text-gray-900">{task.title}</h3>
-                    <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100">{task.category}</Badge>
+        {searchPerformed && (
+          <section className="mb-10">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-xl font-semibold text-gray-900">Search Results for "{searchQuery}"</h2>
+              <Button variant="outline" size="sm" onClick={() => {
+                setSearchResults(null);
+                setSearchPerformed(false);
+                setSearchQuery("");
+              }}>
+                Clear Results
+              </Button>
+            </div>
+            
+            {searchResults && searchResults.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {searchResults.map((task, index) => (
+                  <div key={index} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100">
+                    <div 
+                      className="h-40 bg-cover bg-center" 
+                      style={{ backgroundImage: `url(${task.image})` }}
+                    />
+                    <div className="p-4">
+                      <div className="flex justify-between items-start mb-2">
+                        <h3 className="font-semibold text-gray-900">{task.title}</h3>
+                        <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100">{task.category}</Badge>
+                      </div>
+                      <p className="text-sm text-gray-600 mb-3">{task.description}</p>
+                      <div className="flex justify-end items-center">
+                        <Button 
+                          size="sm" 
+                          className="bg-assist-blue hover:bg-assist-blue/90"
+                          onClick={() => handleBookNow(task.title)}
+                        >
+                          Book Now
+                        </Button>
+                      </div>
+                    </div>
                   </div>
-                  <p className="text-sm text-gray-600 mb-3">{task.description}</p>
-                  <div className="flex justify-end items-center">
+                ))}
+              </div>
+            ) : (
+              <div className="bg-gray-50 rounded-xl p-8 text-center border border-gray-200">
+                <div className="max-w-md mx-auto">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">No tasks found</h3>
+                  <p className="text-gray-600 mb-6">
+                    We couldn't find any tasks matching "{searchQuery}". Would you like to request this task?
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center">
                     <Button 
-                      size="sm" 
+                      onClick={handleRequestTask}
                       className="bg-assist-blue hover:bg-assist-blue/90"
-                      onClick={() => handleBookNow(task.title)}
                     >
-                      Book Now
+                      Request This Task
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      onClick={() => {
+                        setSearchResults(null);
+                        setSearchPerformed(false);
+                        setSearchQuery("");
+                      }}
+                    >
+                      Browse Other Tasks
                     </Button>
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
-          
-          <div className="mt-4 text-center">
-            <Button variant="link" className="text-assist-blue">
-              View all recommendations →
-            </Button>
-          </div>
-        </section>
+            )}
+          </section>
+        )}
         
-        {/* Recent Searches Section */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Your Recent Searches</h2>
-          {mockUser.recentSearches.length > 0 ? (
-            <div className="flex flex-wrap gap-3">
-              {mockUser.recentSearches.map((search, index) => (
-                <Button 
-                  key={index} 
-                  variant="outline" 
-                  className="rounded-full bg-gray-50 hover:bg-gray-100 border-gray-200 text-gray-700"
-                >
-                  {search}
+        {!searchPerformed && (
+          <>
+            <section className="mb-10">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl font-semibold text-gray-900">Recommended For You</h2>
+                <Button variant="outline" size="sm" className="gap-1">
+                  <Filter className="h-4 w-4" /> Filter
                 </Button>
-              ))}
-            </div>
-          ) : (
-            <p className="text-gray-500">No recent searches yet</p>
-          )}
-        </section>
-        
-        {/* Categories Section */}
-        <section>
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold text-gray-900">Browse Categories</h2>
-            <Button variant="link" className="text-assist-blue">
-              See all →
-            </Button>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Using the CategoryCard component we already have */}
-            <div className="cursor-pointer">
-              <CategoryCard
-                icon={PawPrint}
-                title="Pet Care"
-                description="Services for your furry friends"
-                tasks={["🐕 Dog Walking", "🐱 Pet Sitting", "🧼 Pet Grooming"]}
-                color="bg-blue-50"
-              />
-            </div>
-            <div className="cursor-pointer">
-              <CategoryCard
-                icon={Home}
-                title="Home Services"
-                description="Keep your home in perfect shape"
-                tasks={["🧹 House Cleaning", "🛠️ Furniture Assembly", "🧰 Handyman Services"]}
-                color="bg-green-50"
-              />
-            </div>
-            <div className="cursor-pointer">
-              <CategoryCard
-                icon={Car}
-                title="Transportation"
-                description="Get around with ease"
-                tasks={["🚗 Rides", "🛍️ Grocery Delivery", "📦 Package Pickup"]}
-                color="bg-purple-50"
-              />
-            </div>
-          </div>
-        </section>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {recommendedTasks.map((task, index) => (
+                  <div key={index} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100">
+                    <div 
+                      className="h-40 bg-cover bg-center" 
+                      style={{ backgroundImage: `url(${task.image})` }}
+                    />
+                    <div className="p-4">
+                      <div className="flex justify-between items-start mb-2">
+                        <h3 className="font-semibold text-gray-900">{task.title}</h3>
+                        <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100">{task.category}</Badge>
+                      </div>
+                      <p className="text-sm text-gray-600 mb-3">{task.description}</p>
+                      <div className="flex justify-end items-center">
+                        <Button 
+                          size="sm" 
+                          className="bg-assist-blue hover:bg-assist-blue/90"
+                          onClick={() => handleBookNow(task.title)}
+                        >
+                          Book Now
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="mt-4 text-center">
+                <Button variant="link" className="text-assist-blue">
+                  View all recommendations →
+                </Button>
+              </div>
+            </section>
+            
+            <section className="mb-10">
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">Your Recent Searches</h2>
+              {mockUser.recentSearches.length > 0 ? (
+                <div className="flex flex-wrap gap-3">
+                  {mockUser.recentSearches.map((search, index) => (
+                    <Button 
+                      key={index} 
+                      variant="outline" 
+                      className="rounded-full bg-gray-50 hover:bg-gray-100 border-gray-200 text-gray-700"
+                    >
+                      {search}
+                    </Button>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-gray-500">No recent searches yet</p>
+              )}
+            </section>
+            
+            <section>
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl font-semibold text-gray-900">Browse Categories</h2>
+                <Button variant="link" className="text-assist-blue">
+                  See all →
+                </Button>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="cursor-pointer">
+                  <CategoryCard
+                    icon={PawPrint}
+                    title="Pet Care"
+                    description="Services for your furry friends"
+                    tasks={["🐕 Dog Walking", "🐱 Pet Sitting", "🧼 Pet Grooming"]}
+                    color="bg-blue-50"
+                  />
+                </div>
+                <div className="cursor-pointer">
+                  <CategoryCard
+                    icon={Home}
+                    title="Home Services"
+                    description="Keep your home in perfect shape"
+                    tasks={["🧹 House Cleaning", "🛠️ Furniture Assembly", "🧰 Handyman Services"]}
+                    color="bg-green-50"
+                  />
+                </div>
+                <div className="cursor-pointer">
+                  <CategoryCard
+                    icon={Car}
+                    title="Transportation"
+                    description="Get around with ease"
+                    tasks={["🚗 Rides", "🛍️ Grocery Delivery", "📦 Package Pickup"]}
+                    color="bg-purple-50"
+                  />
+                </div>
+              </div>
+            </section>
+          </>
+        )}
       </>
     );
   };
@@ -357,7 +441,6 @@ const MainMenu = () => {
     <div className="min-h-screen bg-white">
       <CircleBlocks />
       
-      {/* Welcome overlay */}
       {showWelcome && (
         <div className="fixed inset-0 bg-assist-blue/90 flex items-center justify-center z-50 animate-fade-in">
           <div className="text-white text-center p-8 max-w-md animate-scale-in">
@@ -368,7 +451,6 @@ const MainMenu = () => {
       )}
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 relative z-10">
-        {/* Header Section with Profile Menu in Top Corner */}
         <header className="mb-8">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
@@ -422,7 +504,6 @@ const MainMenu = () => {
             </div>
           </div>
           
-          {/* Search Bar */}
           <form onSubmit={handleSearch} className="mb-8">
             <div className="relative flex items-center">
               <Input 
@@ -442,7 +523,6 @@ const MainMenu = () => {
           </form>
         </header>
         
-        {/* Main Navigation Tabs */}
         <div className="flex border-b border-gray-200 mb-8">
           <button
             className={`py-3 px-6 font-medium text-sm border-b-2 ${
@@ -466,7 +546,6 @@ const MainMenu = () => {
           </button>
         </div>
         
-        {/* Render Content Based on Active Tab */}
         {renderContent()}
       </div>
     </div>
