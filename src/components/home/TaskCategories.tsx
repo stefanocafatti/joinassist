@@ -8,9 +8,11 @@ import {
   Dumbbell, 
   PartyPopper, 
   FileCheck, 
-  Briefcase 
+  Briefcase,
+  Search
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import CategoryCard from "../ui/CategoryCard";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -27,6 +29,19 @@ const TaskCategories = () => {
     // In a real implementation, this would navigate to a category page
     // navigate(`/categories/${category.toLowerCase()}`);
     console.log(`Category selected: ${category}`);
+  };
+
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const searchQuery = formData.get('searchQuery') as string;
+    
+    if (searchQuery.trim()) {
+      toast.info(`Searching for "${searchQuery}"`, {
+        description: "Search functionality would be implemented in a full version."
+      });
+      console.log(`Search query: ${searchQuery}`);
+    }
   };
   
   const categories = [
@@ -165,9 +180,27 @@ const TaskCategories = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             Explore Task Categories
           </h2>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-gray-600 mb-8">
             From cleaning to coding, our vetted students can assist you with any task you need completed.
           </p>
+          
+          {/* Search Bar */}
+          <form onSubmit={handleSearch} className="max-w-xl mx-auto mb-12">
+            <div className="relative flex items-center">
+              <Input 
+                type="text" 
+                name="searchQuery"
+                placeholder="What do you need help with?"
+                className="pr-12 h-14 rounded-full border-gray-300 shadow-sm focus:border-assist-blue focus:ring focus:ring-assist-blue/20 text-base"
+              />
+              <button 
+                type="submit" 
+                className="absolute right-4 text-gray-500 hover:text-assist-blue transition-colors"
+              >
+                <Search className="h-5 w-5" />
+              </button>
+            </div>
+          </form>
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
