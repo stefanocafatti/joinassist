@@ -17,6 +17,7 @@ const Register = () => {
     confirmPassword: "",
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [isStudentRegistration, setIsStudentRegistration] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,6 +26,22 @@ const Register = () => {
       ...formData,
       [name]: value,
     });
+  };
+
+  const validateStudentEmail = (email: string) => {
+    // Common education email domains
+    const educationDomains = [
+      '.edu',
+      '.ac.uk',
+      '.edu.au',
+      '.ac.nz',
+      '.edu.sg',
+      '.school.',
+      '.k12.',
+      '.sch.'
+    ];
+    
+    return educationDomains.some(domain => email.toLowerCase().includes(domain));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -44,14 +61,25 @@ const Register = () => {
       return;
     }
 
+    // Check for student email if student registration
+    if (isStudentRegistration && !validateStudentEmail(formData.email)) {
+      toast.error("Please use a valid educational email address");
+      setIsLoading(false);
+      return;
+    }
+
     try {
       // Here you would typically handle registration with a backend service
-      console.log("Registration data:", formData);
+      console.log("Registration data:", formData, "Student account:", isStudentRegistration);
       
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      toast.success("Account created successfully!");
+      if (isStudentRegistration) {
+        toast.success("Student account created successfully!");
+      } else {
+        toast.success("Account created successfully!");  
+      }
       navigate("/login");
     } catch (error) {
       toast.error("Registration failed. Please try again.");
@@ -59,6 +87,10 @@ const Register = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleStudentRegistration = () => {
+    setIsStudentRegistration(true);
   };
 
   return (
@@ -72,7 +104,7 @@ const Register = () => {
               <Logo />
             </Link>
             <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-              Create your account
+              {isStudentRegistration ? "Join as a Student" : "Create your account"}
             </h2>
             <p className="mt-2 text-sm text-gray-600">
               Already have an account?{" "}
@@ -129,6 +161,11 @@ const Register = () => {
                     value={formData.email}
                     onChange={handleChange}
                   />
+                  {isStudentRegistration && (
+                    <p className="mt-1 text-sm text-gray-500">
+                      Please use your educational email address (.edu, school domains, etc.)
+                    </p>
+                  )}
                 </div>
               </div>
               
@@ -167,35 +204,38 @@ const Register = () => {
                   className="w-full bg-gradient-to-r from-assist-blue to-indigo-600 hover:from-assist-blue/90 hover:to-indigo-600/90"
                   disabled={isLoading}
                 >
-                  {isLoading ? "Creating account..." : "Sign up"}
+                  {isLoading ? "Creating account..." : isStudentRegistration ? "Sign up as a student" : "Sign up"}
                 </Button>
               </div>
 
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-300" />
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white text-gray-500">
-                    Or
-                  </span>
-                </div>
-              </div>
+              {!isStudentRegistration && (
+                <>
+                  <div className="relative">
+                    <div className="absolute inset-0 flex items-center">
+                      <div className="w-full border-t border-gray-300" />
+                    </div>
+                    <div className="relative flex justify-center text-sm">
+                      <span className="px-2 bg-white text-gray-500">
+                        Or
+                      </span>
+                    </div>
+                  </div>
 
-              <div>
-                <Link to="/student-register">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="w-full border-assist-blue text-assist-blue hover:bg-assist-blue/10"
-                  >
-                    Join as a student
-                  </Button>
-                </Link>
-                <p className="text-xs text-center mt-2 text-gray-500">
-                  Access additional student features and benefits
-                </p>
-              </div>
+                  <div>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="w-full border-assist-blue text-assist-blue hover:bg-assist-blue/10"
+                      onClick={handleStudentRegistration}
+                    >
+                      Join as a student
+                    </Button>
+                    <p className="text-xs text-center mt-2 text-gray-500">
+                      Access additional student features and benefits
+                    </p>
+                  </div>
+                </>
+              )}
             </form>
             
             <div className="mt-6">
