@@ -11,67 +11,67 @@ const TrustedCompanies = () => {
   const primaryRef = useRef<HTMLDivElement>(null);
   const secondaryRef = useRef<HTMLDivElement>(null);
 
-  // School campus logos - new logos uploaded by the user
+  // Updated school campus logos with new uploaded images
   const schoolLogos: SchoolLogo[] = [
     {
-      name: "University of Michigan",
-      src: "/lovable-uploads/1aaec955-1c38-424c-9045-b84a80a4d1de.png",
-      alt: "University of Michigan logo - Yellow M with blue outline"
+      name: "University of South Carolina",
+      src: "/lovable-uploads/8878f3f1-a684-49c1-bf61-41bbaeb302bc.png",
+      alt: "University of South Carolina Gamecocks logo"
     },
     {
       name: "Auburn University",
-      src: "/lovable-uploads/42996569-a765-4051-bed4-0abafd4372e7.png",
-      alt: "Auburn University logo - AU in orange and blue"
-    },
-    {
-      name: "University of Utah",
-      src: "/lovable-uploads/1a174f4a-0894-4058-b86c-7949d3af82e4.png",
-      alt: "University of Utah logo - Red U with feathers"
-    },
-    {
-      name: "Texas Longhorns",
-      src: "/lovable-uploads/ff4b47af-eb32-45c6-ad83-285f8a3cd905.png",
-      alt: "Texas Longhorns logo - Orange Longhorn silhouette"
-    },
-    {
-      name: "University of South Carolina",
-      src: "/lovable-uploads/8d0891f3-e455-4ef9-9c2b-8b077062435d.png",
-      alt: "University of South Carolina logo - Black C with garnet gamecock"
-    },
-    {
-      name: "University of Tennessee",
-      src: "/lovable-uploads/405fd86b-536d-44bb-a4bd-562deaa4a5d4.png",
-      alt: "University of Tennessee logo - Orange T"
-    },
-    {
-      name: "Texas A&M University",
-      src: "/lovable-uploads/79b50b55-1c38-4f6c-8542-561bb97fde56.png",
-      alt: "Texas A&M University logo - Maroon ATM"
-    },
-    {
-      name: "Duke University",
-      src: "/lovable-uploads/8f0819d2-0a35-4d0e-b084-3910376d7efe.png",
-      alt: "Duke University logo - Blue D"
-    },
-    {
-      name: "University of Miami",
-      src: "/lovable-uploads/601c1754-7fb9-4c9b-813d-eed6284fde2e.png",
-      alt: "University of Miami logo - Green and orange U"
+      src: "/lovable-uploads/33ac30a4-4b4d-47a9-89a9-63711ff5e3fd.png",
+      alt: "Auburn University logo with blue AU with orange outline"
     },
     {
       name: "University of Colorado",
-      src: "/lovable-uploads/4bf537ed-5547-45ec-818f-541c833b893d.png",
-      alt: "University of Colorado logo - Gold and black buffalo"
+      src: "/lovable-uploads/d3d48dba-0dac-4178-90e7-07985ad38734.png",
+      alt: "University of Colorado Buffaloes logo with gold CU and black buffalo"
+    },
+    {
+      name: "University of Michigan",
+      src: "/lovable-uploads/087c819f-c0d8-4e17-8dec-e596d9076dbc.png",
+      alt: "University of Michigan Wolverines logo - Yellow M with blue outline"
+    },
+    {
+      name: "Duke University",
+      src: "/lovable-uploads/042fe552-2786-4932-8528-c8f6f68c153d.png",
+      alt: "Duke University Blue Devils logo - blue D"
+    },
+    {
+      name: "Texas Longhorns",
+      src: "/lovable-uploads/70679614-dca7-42cf-9596-9222a0ace956.png",
+      alt: "Texas Longhorns logo - Orange Longhorn silhouette"
+    },
+    {
+      name: "Texas A&M University",
+      src: "/lovable-uploads/586d90f7-1a75-4b8a-9a06-a6e4e12680f8.png",
+      alt: "Texas A&M University Aggies logo - maroon ATM"
+    },
+    {
+      name: "University of Tennessee",
+      src: "/lovable-uploads/22395a07-e465-4813-9e62-ce0ab3ef071b.png",
+      alt: "University of Tennessee Volunteers logo - orange T"
+    },
+    {
+      name: "University of Utah",
+      src: "/lovable-uploads/c2ccc794-ffc7-4f4b-bae9-439be4c804f6.png",
+      alt: "University of Utah Utes logo - red U with feathers"
     },
     {
       name: "University of North Carolina",
-      src: "/lovable-uploads/01dfa041-c3a2-4451-baba-e49430a0e6e0.png",
-      alt: "University of North Carolina logo - Carolina blue NC"
+      src: "/lovable-uploads/14a9f2db-1073-4e30-aa50-fb7eb16d4689.png",
+      alt: "University of North Carolina Tar Heels logo - Carolina blue NC"
+    },
+    {
+      name: "University of Miami",
+      src: "/lovable-uploads/6ff9b4c7-eed4-4fe2-a523-2cf251d47ff0.png",
+      alt: "University of Miami Hurricanes logo - orange and green U"
     },
     {
       name: "USC Trojans",
-      src: "/lovable-uploads/f063f72e-9bf9-4d8d-b4f9-db94f9ccf2f9.png",
-      alt: "USC Trojans logo - Red and gold USC letters"
+      src: "/lovable-uploads/16e9c2ee-6d48-4bcc-8218-e8be6eac201a.png",
+      alt: "USC Trojans logo - cardinal USC with gold outline"
     },
   ];
 
@@ -84,7 +84,7 @@ const TrustedCompanies = () => {
       primaryRef.current.style.transform = "translateX(0)";
       secondaryRef.current.style.transform = "translateX(100%)";
       
-      const duration = 30; // Duration in seconds for one complete loop (slightly longer for more logos)
+      const duration = 30; // Duration in seconds for one complete loop
       
       // Apply smooth transitions
       primaryRef.current.style.transition = `transform ${duration}s linear infinite`;
@@ -113,18 +113,6 @@ const TrustedCompanies = () => {
     };
   }, []);
 
-  // Define the keyframes style as a string
-  const scrollKeyframes = `
-    @keyframes scroll {
-      from {
-        transform: translateX(0);
-      }
-      to {
-        transform: translateX(-100%);
-      }
-    }
-  `;
-
   return (
     <section className="py-12 bg-gradient-to-r from-soft-green via-white to-soft-green">
       <div className="max-w-6xl mx-auto px-4 mb-8">
@@ -146,11 +134,11 @@ const TrustedCompanies = () => {
             style={{ willChange: "transform" }}
           >
             {schoolLogos.map((logo, index) => (
-              <div key={`logo-1-${index}`} className="px-6 flex-shrink-0">
+              <div key={`logo-1-${index}`} className="px-8 flex-shrink-0">
                 <img 
                   src={logo.src} 
                   alt={logo.alt} 
-                  className="h-16 md:h-20 object-contain opacity-90 hover:opacity-100 transition-opacity"
+                  className="h-20 md:h-24 object-contain opacity-90 hover:opacity-100 transition-opacity"
                 />
               </div>
             ))}
@@ -163,11 +151,11 @@ const TrustedCompanies = () => {
             style={{ willChange: "transform" }}
           >
             {schoolLogos.map((logo, index) => (
-              <div key={`logo-2-${index}`} className="px-6 flex-shrink-0">
+              <div key={`logo-2-${index}`} className="px-8 flex-shrink-0">
                 <img 
                   src={logo.src} 
                   alt={logo.alt} 
-                  className="h-16 md:h-20 object-contain opacity-90 hover:opacity-100 transition-opacity"
+                  className="h-20 md:h-24 object-contain opacity-90 hover:opacity-100 transition-opacity"
                 />
               </div>
             ))}
@@ -176,7 +164,16 @@ const TrustedCompanies = () => {
       </div>
 
       {/* Add the keyframes as a standard style element */}
-      <style dangerouslySetInnerHTML={{ __html: scrollKeyframes }} />
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes scroll {
+          from {
+            transform: translateX(0);
+          }
+          to {
+            transform: translateX(-100%);
+          }
+        }
+      ` }} />
     </section>
   );
 };
