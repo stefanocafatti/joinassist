@@ -1,5 +1,4 @@
 
-import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const CTASection = () => {
@@ -24,40 +23,41 @@ const CTASection = () => {
           </p>
         </div>
         
-        <div className="flex flex-col sm:flex-row justify-center gap-5 mb-16">
+        <div className="flex justify-center mb-16">
           <Button 
             size="lg" 
             className="rounded-full bg-white text-assist-blue hover:bg-white/90 h-14 px-8 text-base font-semibold shadow-soft"
           >
             Book Your Task
           </Button>
-          <Button 
-            size="lg" 
-            variant="outline" 
-            className="rounded-full border-white text-white hover:bg-white/10 hover:text-white h-14 px-8 text-base font-semibold"
-          >
-            Join Assist as a Student <ArrowRight className="ml-2 w-4 h-4" />
-          </Button>
         </div>
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/15 transition-all hover:transform hover:scale-105 hover:shadow-xl">
-            <div className="text-3xl md:text-4xl font-bold mb-2">10,000+</div>
+            <div className="text-3xl md:text-4xl font-bold mb-2">
+              <span className="bg-gradient-to-r from-[#FFC3A0] to-[#FFAFBD] text-transparent bg-clip-text">10,000+</span>
+            </div>
             <p className="text-white/80">Verified students</p>
           </div>
           
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/15 transition-all hover:transform hover:scale-105 hover:shadow-xl">
-            <div className="text-3xl md:text-4xl font-bold mb-2">200+</div>
+            <div className="text-3xl md:text-4xl font-bold mb-2">
+              <span className="bg-gradient-to-r from-[#ACCBEE] to-[#E7F0FD] text-transparent bg-clip-text">200+</span>
+            </div>
             <p className="text-white/80">Universities represented</p>
           </div>
           
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/15 transition-all hover:transform hover:scale-105 hover:shadow-xl">
-            <div className="text-3xl md:text-4xl font-bold mb-2">50,000+</div>
+            <div className="text-3xl md:text-4xl font-bold mb-2">
+              <span className="bg-gradient-to-r from-[#D299C2] to-[#FEF9D7] text-transparent bg-clip-text">50,000+</span>
+            </div>
             <p className="text-white/80">Tasks completed</p>
           </div>
           
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/15 transition-all hover:transform hover:scale-105 hover:shadow-xl">
-            <div className="text-3xl md:text-4xl font-bold mb-2">4.9/5</div>
+            <div className="text-3xl md:text-4xl font-bold mb-2">
+              <span className="bg-gradient-to-r from-[#F97316] to-[#F59CA8] text-transparent bg-clip-text">4.9/5</span>
+            </div>
             <p className="text-white/80">Average task rating</p>
           </div>
         </div>
