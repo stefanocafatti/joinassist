@@ -18,6 +18,7 @@ const ImageSlideshow = ({
   className 
 }: ImageSlideProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [prevIndex, setPrevIndex] = useState(0);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [touchStart, setTouchStart] = useState(0);
@@ -26,18 +27,20 @@ const ImageSlideshow = ({
   const goToNext = useCallback(() => {
     setIsTransitioning(true);
     setImageLoaded(false);
+    setPrevIndex(currentIndex);
     setTimeout(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
     }, 300);
-  }, [images.length]);
+  }, [images.length, currentIndex]);
 
   const goToPrevious = useCallback(() => {
     setIsTransitioning(true);
     setImageLoaded(false);
+    setPrevIndex(currentIndex);
     setTimeout(() => {
       setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
     }, 300);
-  }, [images.length]);
+  }, [images.length, currentIndex]);
 
   // Handle swipe gestures
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -119,25 +122,33 @@ const ImageSlideshow = ({
       
       {/* Image container */}
       <div className="relative w-full h-full">
+        {/* Previous image (for transition) */}
+        {isTransitioning && (
+          <div
+            className="absolute inset-0 w-full h-full z-5"
+          >
+            <img
+              src={images[prevIndex].src}
+              alt={images[prevIndex].alt}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        )}
+        
+        {/* Current image */}
         {images.map((image, index) => (
           <div
             key={index}
             className={cn(
               "absolute inset-0 w-full h-full transition-opacity duration-300",
-              currentIndex === index 
-                ? "opacity-100 z-10" 
-                : "opacity-0 z-0",
-              isTransitioning && currentIndex === index ? "opacity-0" : ""
+              currentIndex === index ? "opacity-100 z-10" : "opacity-0 z-0"
             )}
           >
             <img
               src={image.src}
               alt={image.alt}
               onLoad={handleImageLoad}
-              className={cn(
-                "w-full h-full object-cover transition-all duration-500",
-                imageLoaded && currentIndex === index ? "fade-in-animation" : ""
-              )}
+              className="w-full h-full object-cover"
             />
           </div>
         ))}
@@ -148,7 +159,11 @@ const ImageSlideshow = ({
         {images.map((_, index) => (
           <button
             key={index}
-            onClick={() => setCurrentIndex(index)}
+            onClick={() => {
+              setPrevIndex(currentIndex);
+              setCurrentIndex(index);
+              setIsTransitioning(true);
+            }}
             className={cn(
               "w-2.5 h-2.5 rounded-full transition-all duration-300",
               currentIndex === index
