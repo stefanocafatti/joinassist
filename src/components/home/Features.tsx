@@ -123,7 +123,7 @@ const Features = () => {
   }, []);
   
   return (
-    <section id="how-it-works" className="py-24 pb-0 bg-gradient-to-b from-white to-blue-50/30 relative overflow-hidden">
+    <section id="how-it-works" className="py-24 pb-24 bg-gradient-to-b from-white to-blue-50/30 relative overflow-hidden">
       <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute top-20 left-0 w-72 h-72 bg-soft-blue rounded-full blur-3xl opacity-20 -translate-x-1/2" />
         <div className="absolute bottom-20 right-0 w-80 h-80 bg-soft-pink rounded-full blur-3xl opacity-20 translate-x-1/3" />
@@ -210,7 +210,7 @@ const Features = () => {
           </div>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8">
           {featuresData.map((feature, index) => (
             <div 
               key={index}
