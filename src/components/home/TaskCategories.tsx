@@ -1,4 +1,3 @@
-
 import { 
   Trash2, 
   Car, 
@@ -14,50 +13,38 @@ import {
 import { Button } from "@/components/ui/button";
 import CategoryCard from "../ui/CategoryCard";
 import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
 import { useState } from "react";
 
 interface TaskCategoriesProps {
   showAllTasks?: boolean;
+  favoriteTaskIds?: string[];
+  onFavoriteToggle?: (taskTitle: string) => void;
 }
 
-const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
+const TaskCategories = ({ 
+  showAllTasks = false, 
+  favoriteTaskIds = [], 
+  onFavoriteToggle
+}: TaskCategoriesProps) => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [visibleTaskCount, setVisibleTaskCount] = useState<number>(9);
-  const [favoriteTaskIds, setFavoriteTaskIds] = useState<string[]>([]);
 
   const handleCategoryClick = (category: string) => {
     if (showAllTasks) {
       setSelectedCategory(category === selectedCategory ? null : category);
-      toast.success(`${category} category selected!`, {
-        description: category === selectedCategory ? "Showing all tasks" : "Showing tasks in this category"
-      });
-    } else {
-      toast.success(`${category} category clicked!`, {
-        description: "This would navigate to the category page in a full implementation."
-      });
     }
     console.log(`Category selected: ${category}`);
   };
 
   const handleLoadMore = () => {
     setVisibleTaskCount(prev => prev + 6);
-    toast.success("Loading more tasks", {
-      description: "Showing additional tasks"
-    });
   };
 
-  const handleFavoriteToggle = (taskTitle: string) => {
-    setFavoriteTaskIds(prev => {
-      if (prev.includes(taskTitle)) {
-        toast.success(`Removed ${taskTitle} from favorites`);
-        return prev.filter(id => id !== taskTitle);
-      } else {
-        toast.success(`Added ${taskTitle} to favorites`);
-        return [...prev, taskTitle];
-      }
-    });
+  const handleLocalFavoriteToggle = (taskTitle: string) => {
+    if (onFavoriteToggle) {
+      onFavoriteToggle(taskTitle);
+    }
   };
 
   const categories = [
@@ -389,7 +376,7 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
     <div 
       key={index} 
       className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 cursor-pointer relative"
-      onClick={() => toast.success(`Viewing details for ${task.title}`)}
+      onClick={() => console.log(`Viewing details for ${task.title}`)}
     >
       <div className="relative">
         <div 
@@ -400,8 +387,9 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
           className="absolute top-3 right-3 z-10"
           onClick={(e) => {
             e.stopPropagation();
-            handleFavoriteToggle(task.title);
+            handleLocalFavoriteToggle(task.title);
           }}
+          aria-label={favoriteTaskIds.includes(task.title) ? "Remove from favorites" : "Add to favorites"}
         >
           <Heart 
             className={`h-5 w-5 ${favoriteTaskIds.includes(task.title) ? 'fill-red-500 text-red-500' : 'text-white'}`} 
@@ -422,7 +410,6 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
             className="bg-assist-blue hover:bg-assist-blue/90"
             onClick={(e) => {
               e.stopPropagation();
-              toast.success(`Viewing details for ${task.title}`);
             }}
           >
             View Task
@@ -466,7 +453,7 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
                     description={category.description}
                     tasks={category.tasks}
                     color={category.color}
-                    onFavoriteToggle={handleFavoriteToggle}
+                    onFavoriteToggle={onFavoriteToggle}
                     isFavorite={favoriteTaskIds.includes(category.title)}
                   />
                 </div>

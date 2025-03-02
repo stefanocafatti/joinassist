@@ -76,9 +76,10 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({
                     e.stopPropagation();
                     onFavoriteToggle(task.title);
                   }}
+                  aria-label="Remove from favorites"
                 >
                   <Heart 
-                    className={`h-5 w-5 ${favoriteTaskIds.includes(task.title) ? 'fill-red-500 text-red-500' : 'text-white'}`} 
+                    className="h-5 w-5 fill-red-500 text-red-500" 
                   />
                 </button>
                 <div className="absolute bottom-3 left-3">

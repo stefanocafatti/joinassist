@@ -34,6 +34,7 @@ const CategoryCard = ({
             e.stopPropagation();
             onFavoriteToggle(title);
           }}
+          aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
         >
           <Heart 
             className={`h-5 w-5 ${isFavorite ? 'fill-red-500 text-red-500' : 'text-white'}`} 

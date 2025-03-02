@@ -70,7 +70,11 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
               onToggleInterest={onToggleInterest}
             />
             
-            <TaskCategories showAllTasks={true} />
+            <TaskCategories 
+              showAllTasks={true} 
+              favoriteTaskIds={favoriteTaskIds}
+              onFavoriteToggle={onFavoriteToggle}
+            />
             
             <PastTasksSection 
               pastTasks={pastTasks} 

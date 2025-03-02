@@ -1,7 +1,5 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
 import CircleBlocks from "@/components/background/CircleBlocks";
 import { PawPrint, Car, Home, Package, Briefcase } from "lucide-react";
 import TaskDetailView from "@/components/ui/TaskDetailView";
@@ -174,7 +172,6 @@ const MainMenu = () => {
     }));
   };
 
-  // Remove toast notification when toggling favorites
   const handleFavoriteToggle = (taskTitle: string) => {
     setFavoriteTaskIds(prev => {
       if (prev.includes(taskTitle)) {
@@ -197,22 +194,10 @@ const MainMenu = () => {
       );
       
       setSearchResults(results);
-      
-      if (results.length > 0) {
-        toast.info(`Found ${results.length} results for "${searchQuery}"`);
-      } else {
-        toast.info(`No results found for "${searchQuery}"`);
-      }
     }
   };
 
   const handleRequestTask = () => {
-    toast.success("Task request submitted!", {
-      description: "We'll notify our providers about this task request."
-    });
-    
-    console.log(`Task requested: ${searchQuery}`);
-    
     setSearchQuery("");
     setSearchResults(null);
     setSearchPerformed(false);
@@ -224,8 +209,6 @@ const MainMenu = () => {
         ? prev.filter(item => item !== id) 
         : [...prev, id]
     );
-    
-    toast.success(`Preferences updated!`);
   };
 
   const handleBookTask = (
@@ -241,10 +224,6 @@ const MainMenu = () => {
     const pointsToAdd = 50;
     
     setAssistPoints(prevPoints => prevPoints + pointsToAdd);
-    
-    toast.success(`You earned ${pointsToAdd} Assist Points!`, {
-      description: "Points can be used for discounts on future tasks"
-    });
     
     setUser(prevUser => ({
       ...prevUser,
@@ -263,10 +242,6 @@ const MainMenu = () => {
       provider: "",
       additionalInfo: additionalInfo
     };
-
-    toast.success(`Task request submitted!`, {
-      description: `Your ${taskTitle} has been scheduled for ${format(date, "PPP")} at ${time}`
-    });
     
     setIsTaskDetailOpen(false);
   };
@@ -289,6 +264,8 @@ const MainMenu = () => {
   const getFavoriteListings = () => {
     // Include all possible sources for tasks
     const allTasks = [...recommendedTasks, ...(searchResults || [])];
+    
+    // Get all tasks that match the favorited IDs
     return allTasks.filter(task => favoriteTaskIds.includes(task.title));
   };
 
