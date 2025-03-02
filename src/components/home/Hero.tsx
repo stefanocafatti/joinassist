@@ -103,7 +103,7 @@ const Hero = () => {
 
   return (
     <div className="relative overflow-hidden pt-8 pb-0">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 md:pt-16 pb-6 md:pb-10 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 md:pt-16 pb-2 md:pb-4 relative z-10">
         <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16">
           <div className="w-full md:w-1/2 md:pr-8 space-y-6">
             <div className="inline-flex items-center gap-1 py-1 px-4 rounded-full bg-amber-100 text-amber-600 text-sm font-medium animate-fade-in" style={{ animationDelay: "0.1s" }}>
