@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import InterestsSection from "./InterestsSection";
 import SearchResultsSection from "./SearchResultsSection";
@@ -14,8 +13,6 @@ interface Task {
   category: string;
   location: string;
   image: string;
-  price: number;
-  priceType: string;
   pointsEarned?: number;
 }
 
@@ -71,13 +68,13 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
   
   const tasksWithPoints = recommendedTasks.map(task => ({
     ...task,
-    pointsEarned: Math.round(task.price * 2)
+    pointsEarned: 50 // Fixed points earned value instead of price-based calculation
   }));
   
   const searchResultsWithPoints = searchResults 
     ? searchResults.map(task => ({
         ...task, 
-        pointsEarned: Math.round(task.price * 2)
+        pointsEarned: 50 // Fixed points earned value instead of price-based calculation
       }))
     : null;
   

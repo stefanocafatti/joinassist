@@ -52,27 +52,21 @@ const recommendedTasks = [
     description: "Regular walks for your furry friend",
     category: "Pets", 
     location: "Near Westwood",
-    image: "https://images.unsplash.com/photo-1541364983171-a8ba01e95cfc?q=80&w=1000&auto=format&fit=crop",
-    price: 25,
-    priceType: "hourly"
+    image: "https://images.unsplash.com/photo-1541364983171-a8ba01e95cfc?q=80&w=1000&auto=format&fit=crop"
   },
   {
     title: "House Cleaning",
     description: "Get your space spotless",
     category: "Home", 
     location: "Campus Area",
-    image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1000&auto=format&fit=crop",
-    price: 50,
-    priceType: "hourly"
+    image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1000&auto=format&fit=crop"
   },
   {
     title: "Grocery Delivery",
     description: "Get groceries delivered to your door",
     category: "Delivery", 
     location: "Santa Monica",
-    image: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1000&auto=format&fit=crop",
-    price: 30,
-    priceType: "fixed"
+    image: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1000&auto=format&fit=crop"
   }
 ];
 
@@ -223,11 +217,8 @@ const MainMenu = () => {
   };
 
   const handleBookTask = (taskTitle: string, date: Date, time: string) => {
-    const task = [...recommendedTasks, ...(searchResults || [])].find(
-      t => t.title === taskTitle
-    );
-    
-    const pointsToAdd = task ? Math.round(task.price * 2) : 50;
+    // Add fixed points instead of calculating from task price
+    const pointsToAdd = 50;
     
     setAssistPoints(prevPoints => prevPoints + pointsToAdd);
     
