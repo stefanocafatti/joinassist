@@ -1,6 +1,7 @@
 
 import React from "react";
-import { ClipboardList, Heart, User, Gift, Grid } from "lucide-react";
+import { ClipboardList, Heart, User, Gift, Grid, MessageSquare } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface NavigationTabsProps {
   activeTab: string;
@@ -15,7 +16,9 @@ const NavigationTabs: React.FC<NavigationTabsProps> = ({
   onTabChange, 
   onToggleFavoriteView 
 }) => {
-  // Define the tabs in the desired order (3 above, 2 below)
+  const navigate = useNavigate();
+
+  // Define the tabs in the desired order (4 above, 2 below)
   const topTabs = [
     {
       name: "allTasks",
@@ -49,6 +52,17 @@ const NavigationTabs: React.FC<NavigationTabsProps> = ({
       activeShadow: "shadow-pink-200",
       hoverBg: "hover:bg-pink-100",
       hoverText: "hover:text-pink-800"
+    },
+    {
+      name: "messages",
+      label: "Messages",
+      icon: MessageSquare,
+      color: "violet",
+      activeBg: "bg-violet-600",
+      activeText: "text-white",
+      activeShadow: "shadow-violet-200",
+      hoverBg: "hover:bg-violet-100",
+      hoverText: "hover:text-violet-800"
     }
   ];
   
@@ -89,12 +103,17 @@ const NavigationTabs: React.FC<NavigationTabsProps> = ({
 
   const renderTabRow = (tabs: typeof topTabs) => {
     return (
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-4 gap-2">
         {tabs.map((tab) => {
           const isActive = activeTab === tab.name;
           const colorClasses = getColorClasses(isActive, tab);
           
           const handleClick = () => {
+            if (tab.name === "messages") {
+              navigate("/messages");
+              return;
+            }
+            
             onTabChange(tab.name);
             if (tab.name === "favorites") {
               onToggleFavoriteView();
