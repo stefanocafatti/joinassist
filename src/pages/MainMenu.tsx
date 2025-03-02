@@ -428,9 +428,29 @@ const MainMenu = () => {
   };
 
   const getFavoriteListings = () => {
-    const allTasks = [...recommendedTasks, ...(searchResults || [])];
+    // This is the function that needs to be updated to include all possible task sources
     
-    return allTasks.filter(task => favoriteTaskIds.includes(task.title));
+    // Get all possible tasks from all sources
+    const allTasksLists = [
+      recommendedTasks,
+      ...(searchResults ? [searchResults] : []),
+      taskListings,
+      additionalTaskListings
+    ];
+    
+    // Flatten all task arrays into a single array
+    const allTasks = allTasksLists.flat();
+    
+    // Filter out duplicates based on title (in case the same task appears in multiple lists)
+    const uniqueTasks = allTasks.reduce((acc, current) => {
+      if (!acc.find(item => item.title === current.title)) {
+        acc.push(current);
+      }
+      return acc;
+    }, [] as typeof recommendedTasks);
+    
+    // Return only the favorited tasks
+    return uniqueTasks.filter(task => favoriteTaskIds.includes(task.title));
   };
 
   const toggleFavoriteView = () => {
@@ -520,6 +540,116 @@ const MainMenu = () => {
       />
     );
   };
+
+  const taskListings = [
+    {
+      title: "Clean my Windows",
+      category: "Cleaning",
+      description: "Help with cleaning exterior windows",
+      location: "Westwood",
+      image: "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?q=80&w=1000&auto=format&fit=crop"
+    },
+    {
+      title: "Grocery Delivery",
+      category: "Delivery",
+      description: "Deliver groceries from Trader Joe's",
+      location: "Santa Monica",
+      image: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1000&auto=format&fit=crop"
+    },
+    {
+      title: "Moving Assistance",
+      category: "Transportation",
+      description: "Help moving furniture to new apartment",
+      location: "UCLA Campus",
+      image: "/lovable-uploads/72545c93-f781-402e-ad25-5cd509be453c.png"
+    },
+    {
+      title: "Assemble IKEA Furniture",
+      category: "Assembly",
+      description: "Need help putting together a desk and chair",
+      location: "Brentwood",
+      image: "/lovable-uploads/83abea36-642f-4147-865a-c43794680e3b.png"
+    },
+    {
+      title: "Teach me Math",
+      category: "Academic Help",
+      description: "Need tutoring for Calculus",
+      location: "UCLA Library",
+      image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=1000&auto=format&fit=crop"
+    },
+    {
+      title: "Video Editing",
+      category: "Digital Services",
+      description: "Edit a 5-minute YouTube video",
+      location: "Remote",
+      image: "/lovable-uploads/59f9c5bb-dd82-404c-8be9-9aaf7188bded.png"
+    },
+    {
+      title: "Meal Prep",
+      category: "Fitness & Wellness",
+      description: "Prepare healthy meals for the week",
+      location: "Your Kitchen",
+      image: "https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?q=80&w=1000&auto=format&fit=crop"
+    },
+    {
+      title: "Event Setup",
+      category: "Event & Hospitality",
+      description: "Help setting up for a birthday party",
+      location: "Venice Beach",
+      image: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?q=80&w=1000&auto=format&fit=crop"
+    },
+    {
+      title: "Water my Plants",
+      category: "Special Tasks",
+      description: "Take care of houseplants while I'm away",
+      location: "Marina Del Rey",
+      image: "/lovable-uploads/55ae04cd-8676-4a1c-b2b3-36c7005144af.png"
+    },
+    {
+      title: "Dog Walking Service",
+      category: "Pets",
+      description: "Regular walks for friendly dogs",
+      location: "Culver City",
+      image: "https://images.unsplash.com/photo-1541364983171-a8ba01e95cfc?q=80&w=1000&auto=format&fit=crop"
+    },
+    {
+      title: "Kitchen Deep Clean",
+      category: "Cleaning",
+      description: "Professional kitchen cleaning",
+      location: "Brentwood",
+      image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1000&auto=format&fit=crop"
+    },
+    {
+      title: "Food Delivery",
+      category: "Delivery",
+      description: "Restaurant food delivery service",
+      location: "Century City",
+      image: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1000&auto=format&fit=crop"
+    },
+    {
+      title: "TV Mounting",
+      category: "Assembly",
+      description: "Mount your TV on any wall type",
+      location: "West Hollywood",
+      image: "https://images.unsplash.com/photo-1593784991095-a205069533cd?q=80&w=1000&auto=format&fit=crop"
+    },
+    {
+      title: "Essay Proofreading",
+      category: "Academic Help",
+      description: "Professional proofreading service",
+      location: "UCLA Campus",
+      image: "https://images.unsplash.com/photo-1456324504439-367cee3b3c32?q=80&w=1000&auto=format&fit=crop"
+    },
+    {
+      title: "Website Development",
+      category: "Digital Services",
+      description: "Custom website creation",
+      location: "Remote",
+      image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1000&auto=format&fit=crop"
+    },
+  ];
+
+  const additionalTaskListings = [];
 
   return (
     <div className="min-h-screen bg-white">
