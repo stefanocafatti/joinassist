@@ -56,17 +56,12 @@ const Footer = () => {
                   Testimonials
                 </Link>
               </li>
-              <li>
-                <Link to="#faq" className="text-gray-800 hover:text-assist-blue transition-colors font-medium">
-                  FAQ
-                </Link>
-              </li>
             </ul>
           </div>
 
-          {/* Task Categories */}
+          {/* Task Requesters */}
           <div>
-            <h4 className="text-lg font-semibold mb-6 text-gray-900">Quick Links</h4>
+            <h4 className="text-lg font-semibold mb-6 text-gray-900">For Task Requesters</h4>
             <ul className="space-y-3">
               <li>
                 <Link to="#cleaning" className="text-gray-800 hover:text-assist-blue transition-colors font-medium">
@@ -154,4 +149,3 @@ const Footer = () => {
 };
 
 export default Footer;
-
