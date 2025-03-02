@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { 
   Clock, 
@@ -114,20 +115,7 @@ const Features = () => {
               </div>
             ))}
           </div>
-          <div className="flex justify-center mb-2">
-            <div className="flex space-x-2">
-              {[0, 1, 2].map(dot => (
-                <button
-                  key={dot}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    dot === animatedStep ? 'w-5 bg-assist-blue' : 'bg-gray-300'
-                  }`}
-                  onClick={() => setAnimatedStep(dot)}
-                  aria-label={`View step ${dot + 1}`}
-                />
-              ))}
-            </div>
-          </div>
+          {/* Removed the pagination dots that were here */}
         </div>
       </div>
     </section>
