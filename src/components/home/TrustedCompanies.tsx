@@ -8,9 +8,8 @@ interface SchoolLogo {
 }
 
 const TrustedCompanies = () => {
-  const primaryRef = useRef<HTMLDivElement>(null);
-  const secondaryRef = useRef<HTMLDivElement>(null);
-
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  
   // Updated school campus logos with new uploaded images
   const schoolLogos: SchoolLogo[] = [
     {
@@ -76,40 +75,36 @@ const TrustedCompanies = () => {
   ];
 
   useEffect(() => {
-    // Animation for continuous scrolling effect
-    const animateContinuousScroll = () => {
-      if (!primaryRef.current || !secondaryRef.current) return;
+    const scrollContainer = scrollContainerRef.current;
+    if (!scrollContainer) return;
+
+    // Clone the logos to ensure a seamless loop
+    const content = Array.from(scrollContainer.children);
+    content.forEach(item => {
+      const clone = item.cloneNode(true);
+      scrollContainer.appendChild(clone);
+    });
+
+    // Set up animation
+    const animateScroll = () => {
+      if (!scrollContainer) return;
       
-      // Set initial positions
-      primaryRef.current.style.transform = "translateX(0)";
-      secondaryRef.current.style.transform = "translateX(100%)";
+      // If we've scrolled to half the content, reset to start for seamless loop
+      if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth / 2) {
+        scrollContainer.scrollLeft = 0;
+      } else {
+        scrollContainer.scrollLeft += 1;
+      }
       
-      const duration = 30; // Duration in seconds for one complete loop
-      
-      // Apply smooth transitions
-      primaryRef.current.style.transition = `transform ${duration}s linear infinite`;
-      secondaryRef.current.style.transition = `transform ${duration}s linear infinite`;
-      
-      // Start animation after a small delay to ensure transitions are applied
-      setTimeout(() => {
-        if (!primaryRef.current || !secondaryRef.current) return;
-        
-        // Move both sets to create continuous loop effect
-        primaryRef.current.style.transform = "translateX(-100%)";
-        secondaryRef.current.style.transform = "translateX(0)";
-      }, 50);
+      requestAnimationFrame(animateScroll);
     };
 
-    animateContinuousScroll();
+    // Start the animation
+    const animationId = requestAnimationFrame(animateScroll);
 
+    // Clean up animation on unmount
     return () => {
-      // Cleanup animation on unmount
-      if (primaryRef.current) {
-        primaryRef.current.style.transition = "none";
-      }
-      if (secondaryRef.current) {
-        secondaryRef.current.style.transition = "none";
-      }
+      cancelAnimationFrame(animationId);
     };
   }, []);
 
@@ -126,50 +121,29 @@ const TrustedCompanies = () => {
       </div>
 
       <div className="relative overflow-hidden w-full">
-        <div className="flex whitespace-nowrap">
-          {/* Primary set of logos */}
-          <div 
-            ref={primaryRef} 
-            className="flex items-center justify-around min-w-full"
-            style={{ willChange: "transform" }}
-          >
-            {schoolLogos.map((logo, index) => (
-              <div key={`logo-1-${index}`} className="px-8 flex-shrink-0">
-                <img 
-                  src={logo.src} 
-                  alt={logo.alt} 
-                  className="h-20 md:h-24 object-contain opacity-90 hover:opacity-100 transition-opacity"
-                />
-              </div>
-            ))}
-          </div>
-
-          {/* Secondary set for continuous loop */}
-          <div 
-            ref={secondaryRef} 
-            className="flex items-center justify-around min-w-full absolute left-0 top-0"
-            style={{ willChange: "transform" }}
-          >
-            {schoolLogos.map((logo, index) => (
-              <div key={`logo-2-${index}`} className="px-8 flex-shrink-0">
-                <img 
-                  src={logo.src} 
-                  alt={logo.alt} 
-                  className="h-20 md:h-24 object-contain opacity-90 hover:opacity-100 transition-opacity"
-                />
-              </div>
-            ))}
-          </div>
+        <div 
+          ref={scrollContainerRef}
+          className="flex space-x-12 whitespace-nowrap overflow-x-hidden"
+          style={{ scrollBehavior: 'smooth' }}
+        >
+          {schoolLogos.map((logo, index) => (
+            <div key={`logo-${index}`} className="flex-shrink-0 px-4">
+              <img 
+                src={logo.src} 
+                alt={logo.alt} 
+                className="h-24 md:h-28 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity"
+              />
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Add the keyframes as a standard style element */}
       <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes scroll {
-          from {
+        @keyframes marquee {
+          0% {
             transform: translateX(0);
           }
-          to {
+          100% {
             transform: translateX(-100%);
           }
         }
