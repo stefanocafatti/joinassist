@@ -24,10 +24,10 @@ const Testimonials = () => {
     },
     {
       id: 2,
-      name: "Michael Chen",
-      role: "UCLA Student",
-      image: "https://randomuser.me/api/portraits/men/32.jpg",
-      quote: "Working through Assist has allowed me to earn extra income while keeping up with my classes. The flexible schedule means I can pick up tasks when it works for me, and I've gained real-world experience that looks great on my resume.",
+      name: "Olivia Eison",
+      role: "UM Student",
+      image: "/lovable-uploads/85083bf3-b19c-4cd8-85c4-89170eef809a.png",
+      quote: "Assist has been a great way to earn extra income while balancing my studies. The flexible schedule lets me take on tasks when I have time, and the experience has helped me build valuable skills for my resume.",
       isStudent: true
     },
     {
