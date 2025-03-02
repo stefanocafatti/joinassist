@@ -51,8 +51,8 @@ const TaskCategories = () => {
         "🚚 Moving Assistance",
         "📦 Help with Loading Items",
         "🚗 Drive me to a Location",
-        "📬 Drop off a package",
-        "📫 Pick up a package"
+        "📬 Drop or Pick up a Package",
+        "🚲 Bike/Scooter Delivery"
       ],
       color: "bg-green-50"
     },
