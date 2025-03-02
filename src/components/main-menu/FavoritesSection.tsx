@@ -49,6 +49,12 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({
     return categoryColorMap[category] || "bg-gray-100 text-gray-800";
   };
 
+  // Handler to manage task selection with proper event propagation
+  const handleTaskClick = (e: React.MouseEvent, taskTitle: string) => {
+    e.preventDefault();
+    onBookNow(taskTitle);
+  };
+
   return (
     <section className="mb-10">
       <div className="flex justify-between items-center mb-6">
@@ -64,7 +70,7 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({
             <div 
               key={index} 
               className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 cursor-pointer"
-              onClick={() => onBookNow(task.title)}
+              onClick={(e) => handleTaskClick(e, task.title)}
             >
               <div className="relative">
                 <div 
