@@ -1,7 +1,8 @@
+
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { User, History, CreditCard, Phone, Mail, MapPin, Plus } from "lucide-react";
+import { User, History, CreditCard, Phone, Mail, MapPin, Plus, Award, Coins } from "lucide-react";
 import { 
   Dialog,
   DialogContent,
@@ -31,6 +32,13 @@ interface ProfileTabProps {
       last4: string;
       brand: string;
       isDefault: boolean;
+    }>;
+    assistPoints?: number;
+    badges?: Array<{
+      id: string;
+      name: string;
+      description: string;
+      icon: string;
     }>;
   };
   onUpdateUserName: (firstName: string, lastName: string) => void;
@@ -122,9 +130,12 @@ const ProfileTab: React.FC<ProfileTabProps> = ({ user, onUpdateUserName, onUpdat
             <p className="text-gray-600 text-sm">Completed</p>
             <p className="text-2xl font-bold text-gray-900">{user.pastTasks.length}</p>
           </div>
-          <div className="bg-purple-50 p-4 rounded-lg text-center">
-            <p className="text-gray-600 text-sm">Saved Tasks</p>
-            <p className="text-2xl font-bold text-gray-900">2</p>
+          <div className="bg-purple-50 p-4 rounded-lg text-center flex flex-col items-center justify-center">
+            <div className="flex items-center text-purple-700 mb-1">
+              <Coins className="h-4 w-4 mr-1" />
+              <p className="text-sm">Assist Points</p>
+            </div>
+            <p className="text-2xl font-bold text-purple-900">{user.assistPoints || 0}</p>
           </div>
         </div>
         
@@ -152,6 +163,31 @@ const ProfileTab: React.FC<ProfileTabProps> = ({ user, onUpdateUserName, onUpdat
           </div>
         ) : null}
       </section>
+      
+      {user.badges && user.badges.length > 0 && (
+        <section className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-semibold text-gray-900 flex items-center">
+              <Award className="h-5 w-5 mr-2 text-assist-blue" /> Your Badges
+            </h2>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {user.badges.map((badge) => (
+              <div key={badge.id} className="border border-gray-100 rounded-lg p-4 text-center hover:bg-gray-50 transition-colors">
+                <div className="text-2xl mb-2">{badge.icon}</div>
+                <h3 className="font-medium text-gray-900">{badge.name}</h3>
+                <p className="text-sm text-gray-500">{badge.description}</p>
+              </div>
+            ))}
+            <div className="border border-dashed border-gray-200 rounded-lg p-4 text-center flex flex-col items-center justify-center opacity-60">
+              <div className="text-2xl mb-2">🔒</div>
+              <h3 className="font-medium text-gray-500">More to discover</h3>
+              <p className="text-sm text-gray-400">Keep using AssistMe</p>
+            </div>
+          </div>
+        </section>
+      )}
       
       <section className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
         <div className="flex justify-between items-center mb-4">

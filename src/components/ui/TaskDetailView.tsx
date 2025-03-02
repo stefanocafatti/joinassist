@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Dialog, DialogContent, DialogTitle, DialogHeader, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Calendar, Clock, MapPin } from "lucide-react";
+import { Calendar, Clock, MapPin, Coins } from "lucide-react";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
@@ -231,9 +231,13 @@ const TaskDetailView = ({ isOpen, onClose, onTaskBooked, task }: TaskDetailViewP
               <h3 className="text-xl font-semibold text-green-800 mb-2">
                 Task Booked Successfully!
               </h3>
-              <p className="text-green-700 mb-6">
+              <p className="text-green-700 mb-2">
                 Your request has been submitted. We'll notify you once a student accepts.
               </p>
+              <div className="flex items-center justify-center gap-2 bg-green-100 p-3 rounded-lg mb-6">
+                <Coins className="h-5 w-5 text-green-700" />
+                <p className="font-medium text-green-800">You earned 50 Assist Points!</p>
+              </div>
               <Button
                 onClick={onClose}
                 className="bg-green-600 hover:bg-green-700 text-white"

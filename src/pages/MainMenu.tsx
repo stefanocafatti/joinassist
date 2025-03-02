@@ -29,6 +29,11 @@ const mockUser = {
   paymentMethods: [
     { id: "1", type: "Credit Card", last4: "4242", brand: "Visa", isDefault: true },
     { id: "2", type: "Credit Card", last4: "1234", brand: "Mastercard", isDefault: false }
+  ],
+  assistPoints: 150,
+  badges: [
+    { id: "1", name: "Early Adopter", description: "Joined during our launch period", icon: "🏆" },
+    { id: "2", name: "Task Master", description: "Completed 3 tasks", icon: "⭐" }
   ]
 };
 
@@ -124,6 +129,7 @@ const MainMenu = () => {
   const [favoriteTaskIds, setFavoriteTaskIds] = useState<string[]>([]);
   const [showFavorites, setShowFavorites] = useState(false);
   const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [assistPoints, setAssistPoints] = useState(mockUser.assistPoints);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -207,6 +213,22 @@ const MainMenu = () => {
     toast.success(`Preferences updated!`);
   };
 
+  const handleBookTask = (taskTitle: string, date: Date, time: string) => {
+    const pointsToAdd = 50;
+    setAssistPoints(prevPoints => prevPoints + pointsToAdd);
+    
+    toast.success(`You earned ${pointsToAdd} Assist Points!`, {
+      description: "Points can be used for discounts on future tasks"
+    });
+    
+    setUser(prevUser => ({
+      ...prevUser,
+      assistPoints: prevUser.assistPoints + pointsToAdd
+    }));
+    
+    setIsTaskDetailOpen(false);
+  };
+
   const handleBookNow = (taskTitle: string) => {
     toast.success(`Viewing task: ${taskTitle}`, {
       description: "You'll be redirected to the task details page"
@@ -272,7 +294,6 @@ const MainMenu = () => {
       );
     }
     
-    // Default tab (home)
     return (
       <HomeTabContent
         searchQuery={searchQuery}
@@ -308,6 +329,7 @@ const MainMenu = () => {
             showFavorites={showFavorites}
             onToggleFavoriteView={toggleFavoriteView}
             onSetActiveTab={setActiveTab}
+            assistPoints={assistPoints}
           />
           
           <SearchHeader 
@@ -331,6 +353,7 @@ const MainMenu = () => {
         <TaskDetailView 
           isOpen={isTaskDetailOpen}
           onClose={() => setIsTaskDetailOpen(false)}
+          onTaskBooked={handleBookTask}
           task={selectedTask}
         />
       )}

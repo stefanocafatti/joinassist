@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Heart, Bell } from "lucide-react";
+import { Heart, Bell, Coins } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { User, History, CreditCard, Heart as HeartIcon, Settings, LogOut } from "lucide-react";
@@ -12,6 +12,7 @@ interface MainHeaderProps {
   showFavorites: boolean;
   onToggleFavoriteView: () => void;
   onSetActiveTab: (tab: string) => void;
+  assistPoints?: number;
 }
 
 const MainHeader: React.FC<MainHeaderProps> = ({ 
@@ -19,7 +20,8 @@ const MainHeader: React.FC<MainHeaderProps> = ({
   profileImage,
   showFavorites, 
   onToggleFavoriteView, 
-  onSetActiveTab 
+  onSetActiveTab,
+  assistPoints = 0
 }) => {
   return (
     <div className="flex justify-between items-center mb-6">
@@ -27,6 +29,10 @@ const MainHeader: React.FC<MainHeaderProps> = ({
         Hello, {userName}!
       </h1>
       <div className="flex items-center gap-3">
+        <div className="flex items-center bg-assist-blue/10 text-assist-blue px-3 py-1 rounded-full">
+          <Coins className="h-4 w-4 mr-1" />
+          <span className="text-sm font-medium">{assistPoints} points</span>
+        </div>
         <Button 
           variant="ghost" 
           size="icon"
