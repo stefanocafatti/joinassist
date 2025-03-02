@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Star, Sparkles } from "lucide-react";
@@ -103,10 +102,6 @@ const Hero = () => {
 
   return (
     <div className="relative overflow-hidden pt-8">
-      <div 
-        className="absolute inset-0 z-2 bg-white/10 backdrop-blur-[0.5px]"
-      />
-      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 md:pt-16 pb-12 md:pb-20 relative z-10">
         <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16">
           <div className="w-full md:w-1/2 md:pr-8 space-y-6">
@@ -201,7 +196,6 @@ const Hero = () => {
                 />
               </div>
               
-              {/* Information card overlays - position improved for visibility */}
               <div className="absolute -bottom-6 -left-6 bg-white/95 p-4 rounded-xl shadow-elevation animate-float z-30" style={{ animationDelay: "1s" }}>
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-soft-green rounded-full flex items-center justify-center text-green-600">
@@ -232,7 +226,6 @@ const Hero = () => {
         </div>
       </div>
       
-      {/* Removing the jsx attribute from the style tag */}
       <style>
         {`
         @keyframes gradient-animation {

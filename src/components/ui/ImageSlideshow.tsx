@@ -136,7 +136,7 @@ const ImageSlideshow = ({
               onLoad={handleImageLoad}
               className={cn(
                 "w-full h-full object-cover transition-all duration-500",
-                imageLoaded && currentIndex === index ? "fade-in-animation" : "opacity-70"
+                imageLoaded && currentIndex === index ? "fade-in-animation" : ""
               )}
             />
           </div>
