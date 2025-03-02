@@ -32,10 +32,10 @@ const Testimonials = () => {
     },
     {
       id: 3,
-      name: "David Rodriguez",
-      role: "Small Business Owner",
-      image: "https://randomuser.me/api/portraits/men/54.jpg",
-      quote: "As a small business owner, I need reliable help for various tasks without hiring full-time staff. Assist connects me with talented students who help with everything from social media to event setup. Highly recommend!",
+      name: "Dalen Michaels",
+      role: "Owner of Outheback",
+      image: "/lovable-uploads/d1b15791-b459-4052-8e28-1eda7754fd1b.png",
+      quote: "As a business owner, finding reliable help without hiring full-time staff can be challenging. This app has been a lifesaver, connecting me with skilled students for everything from social media support to event setup. Highly recommend!",
       isStudent: false
     },
     {
