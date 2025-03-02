@@ -3,6 +3,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Heart, Eye, Coins } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface Task {
   title: string;
@@ -34,10 +35,96 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
   onBookNow,
   onRequestTask
 }) => {
+  // Get tag color based on category
+  const getCategoryColor = (category: string): string => {
+    const categoryColorMap: {[key: string]: string} = {
+      "Cleaning": "bg-blue-100 text-blue-800",
+      "Transportation and Moving": "bg-green-100 text-green-800",
+      "Assembly": "bg-purple-100 text-purple-800",
+      "Academic & Professional Help": "bg-yellow-100 text-yellow-800",
+      "Digital Services": "bg-red-100 text-red-800",
+      "Fitness and Wellness": "bg-teal-100 text-teal-800",
+      "Event and Hospitality": "bg-pink-100 text-pink-800",
+      "Special Tasks": "bg-orange-100 text-orange-800",
+      "For Brands": "bg-indigo-100 text-indigo-800"
+    };
+    
+    return categoryColorMap[category] || "bg-gray-100 text-gray-800";
+  };
+
   // Default image if task doesn't have one
   const getTaskImage = (task: Task) => {
     if (!task.image || task.image.trim() === '') {
-      // Assign default image based on category
+      // Assign high-quality, more specific images based on task title and category
+      const taskImageMap: {[key: string]: string} = {
+        // Cleaning tasks
+        "Wash my Car": "https://images.unsplash.com/photo-1607861716497-e65ab29fc7ac?q=80&w=1000&auto=format&fit=crop",
+        "Clean my Car": "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1000&auto=format&fit=crop",
+        "Clean my Garage": "https://images.unsplash.com/photo-1616401784845-180882ba9ba8?q=80&w=1000&auto=format&fit=crop",
+        "Clean my Room": "https://images.unsplash.com/photo-1551909493-077a3334da90?q=80&w=1000&auto=format&fit=crop",
+        "Clean my Kitchen": "https://images.unsplash.com/photo-1615874959474-d609969a20ed?q=80&w=1000&auto=format&fit=crop",
+        "Clean my Windows": "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?q=80&w=1000&auto=format&fit=crop",
+        "Deep Clean Apartment": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=1000&auto=format&fit=crop",
+        "Clean my Pool": "https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?q=80&w=1000&auto=format&fit=crop",
+        "Post Event Clean Up": "https://images.unsplash.com/photo-1596461010414-7da839c5498d?q=80&w=1000&auto=format&fit=crop",
+        
+        // Transportation tasks
+        "Moving Assistance": "https://images.unsplash.com/photo-1600518464441-9306b008de8d?q=80&w=1000&auto=format&fit=crop",
+        "Help with Loading Items": "https://images.unsplash.com/photo-1530650314597-5209931bcdae?q=80&w=1000&auto=format&fit=crop",
+        "Drive me to a Location": "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=1000&auto=format&fit=crop",
+        "Pick me up from Location": "https://images.unsplash.com/photo-1613688270362-8b26189c0782?q=80&w=1000&auto=format&fit=crop",
+        "Drop of a package": "https://images.unsplash.com/photo-1586487641637-851aa89be13e?q=80&w=1000&auto=format&fit=crop",
+        "Pick up a package": "https://images.unsplash.com/photo-1586769852836-bc069f19e1be?q=80&w=1000&auto=format&fit=crop",
+        
+        // Assembly tasks
+        "Assemble Bed Frame": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1000&auto=format&fit=crop",
+        "Assemble my Furniture": "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?q=80&w=1000&auto=format&fit=crop",
+        "Install TV Mount": "https://images.unsplash.com/photo-1512204724346-8c4de33f3c1c?q=80&w=1000&auto=format&fit=crop",
+        "Assemble IKEA Furniture": "https://images.unsplash.com/photo-1595428774863-a38feabce63f?q=80&w=1000&auto=format&fit=crop",
+        "Install a Shelf": "https://images.unsplash.com/photo-1617104551722-3b2d52338fe9?q=80&w=1000&auto=format&fit=crop",
+        "Assemble Office Desk or Chairs": "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?q=80&w=1000&auto=format&fit=crop",
+        
+        // Academic tasks
+        "Writing Essays": "https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1000&auto=format&fit=crop",
+        "Teach me Math": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=1000&auto=format&fit=crop",
+        "College Counseling": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1000&auto=format&fit=crop",
+        "SAT/ACT Prep": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1000&auto=format&fit=crop",
+        "Resume Review": "https://images.unsplash.com/photo-1507209550472-5908c9176456?q=80&w=1000&auto=format&fit=crop",
+        
+        // Digital services
+        "Code a Website": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1000&auto=format&fit=crop",
+        "Video Editing": "https://images.unsplash.com/photo-1574717024453-354056afd6fc?q=80&w=1000&auto=format&fit=crop",
+        "Graphic Design Support": "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=1000&auto=format&fit=crop",
+        "Fix my Bugs": "https://images.unsplash.com/photo-1616469829581-73993eb86b02?q=80&w=1000&auto=format&fit=crop",
+        "App Development": "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?q=80&w=1000&auto=format&fit=crop",
+        
+        // Fitness tasks
+        "Personal Training": "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?q=80&w=1000&auto=format&fit=crop",
+        "Meal Prep": "https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?q=80&w=1000&auto=format&fit=crop",
+        "Yoga Instruction": "https://images.unsplash.com/photo-1599447421416-3414500d18a5?q=80&w=1000&auto=format&fit=crop",
+        
+        // Event tasks
+        "Event Setup/Decoration": "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?q=80&w=1000&auto=format&fit=crop",
+        "DJ for Event": "https://images.unsplash.com/photo-1594387310561-7ce9fd3312a9?q=80&w=1000&auto=format&fit=crop",
+        "Party Coordinator": "https://images.unsplash.com/photo-1528495612343-9ca9f4a4de28?q=80&w=1000&auto=format&fit=crop",
+        
+        // Special tasks
+        "Grocery Delivery": "https://images.unsplash.com/photo-1543168256-418811576931?q=80&w=1000&auto=format&fit=crop",
+        "Water my Plants": "https://images.unsplash.com/photo-1623411235843-9ee9f41856c4?q=80&w=1000&auto=format&fit=crop", 
+        "Do my Laundry": "https://images.unsplash.com/photo-1545173168-9f1c6e67b31b?q=80&w=1000&auto=format&fit=crop",
+        
+        // For brands
+        "Brand Ambassador": "https://images.unsplash.com/photo-1559136555-9303baea8ebd?q=80&w=1000&auto=format&fit=crop",
+        "Content Creation": "https://images.unsplash.com/photo-1533750516457-a7f992034fec?q=80&w=1000&auto=format&fit=crop",
+        "Market Research": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1000&auto=format&fit=crop"
+      };
+      
+      // Try to find image by exact task title
+      if (taskImageMap[task.title]) {
+        return taskImageMap[task.title];
+      }
+      
+      // If not found by title, use category
       const categoryImageMap: {[key: string]: string} = {
         "Cleaning": "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1000&auto=format&fit=crop",
         "Transportation and Moving": "https://images.unsplash.com/photo-1617861944037-28f1c378a23b?q=80&w=1000&auto=format&fit=crop",
@@ -100,7 +187,7 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
               <div className="p-4">
                 <div className="flex justify-between items-start mb-2">
                   <h3 className="font-semibold text-gray-900">{task.title}</h3>
-                  <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100">{task.category}</Badge>
+                  <Badge className={cn(getCategoryColor(task.category), "hover:opacity-90")}>{task.category}</Badge>
                 </div>
                 <p className="text-sm text-gray-600 mb-4">{task.description}</p>
                 <div className="flex justify-end items-center">
