@@ -184,21 +184,24 @@ const TaskCategories = () => {
             From cleaning to coding, our vetted students can assist you with any task you need completed.
           </p>
           
-          {/* Search Bar */}
+          {/* Search Bar - Enhanced with blue colors */}
           <form onSubmit={handleSearch} className="max-w-xl mx-auto mb-12">
             <div className="relative flex items-center">
               <Input 
                 type="text" 
                 name="searchQuery"
                 placeholder="What do you need help with?"
-                className="pr-12 h-14 rounded-full border-gray-300 shadow-sm focus:border-assist-blue focus:ring focus:ring-assist-blue/20 text-base"
+                className="pr-12 h-14 rounded-full border-2 border-assist-blue/30 shadow-md bg-white focus:border-assist-blue focus:ring-2 focus:ring-assist-blue/20 text-base placeholder:text-assist-blue/60"
               />
               <button 
                 type="submit" 
-                className="absolute right-4 text-gray-500 hover:text-assist-blue transition-colors"
+                className="absolute right-4 text-assist-blue hover:text-assist-blue/80 transition-colors"
               >
                 <Search className="h-5 w-5" />
               </button>
+            </div>
+            <div className="mt-2 text-xs text-assist-blue/70 italic">
+              Search for any task or service you need help with
             </div>
           </form>
         </div>
