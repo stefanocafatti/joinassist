@@ -1,4 +1,3 @@
-
 import { 
   Trash2, 
   Car, 
@@ -149,7 +148,6 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
     }
   ];
 
-  // Additional categories to show when "Load More" is clicked
   const additionalCategories = [
     {
       icon: Trash2,
@@ -192,12 +190,10 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
     }
   ];
   
-  // Combine all categories when showAllTasks is true
   const displayCategories = showAllTasks 
     ? [...categories, ...additionalCategories]
     : categories;
     
-  // Additional task listings to show in "All Tasks" view
   const taskListings = [
     {
       title: "Clean my Windows",
