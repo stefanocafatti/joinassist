@@ -94,6 +94,10 @@ const Hero = () => {
     {
       src: "/lovable-uploads/d4510528-0536-44c5-9297-f0665996da4f.png",
       alt: "Student DJ at a festival"
+    },
+    {
+      src: "/lovable-uploads/66e6ac8c-166a-4ee9-9f42-f5e72a4bf0dc.png",
+      alt: "Student personal training"
     }
   ];
 
