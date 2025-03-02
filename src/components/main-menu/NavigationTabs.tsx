@@ -79,15 +79,6 @@ const NavigationTabs: React.FC<NavigationTabsProps> = ({
       }
     },
     {
-      name: "home",
-      label: "Home",
-      icon: Home,
-      onClick: () => {
-        onTabChange("home");
-        if (showFavorites) onToggleFavoriteView();
-      }
-    },
-    {
       name: "requests",
       label: "Requests",
       icon: ClipboardList,
@@ -149,10 +140,9 @@ const NavigationTabs: React.FC<NavigationTabsProps> = ({
           {tabs.slice(1).map((tab, index) => {
             const isActive = activeTab === tab.name;
             const IconComponent = tab.icon;
-            const colorName = tab.name === "home" ? "indigo" : 
-                             (tab.name === "requests" ? "emerald" : 
+            const colorName = tab.name === "requests" ? "emerald" : 
                              (tab.name === "favorites" ? "pink" : 
-                             (tab.name === "rewards" ? "amber" : "blue")));
+                             (tab.name === "rewards" ? "amber" : "blue"));
             
             return (
               <button
