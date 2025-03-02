@@ -28,6 +28,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { toast } from "sonner";
 
 interface Task {
   title: string;
@@ -75,6 +76,17 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
     e.preventDefault();
     
     if (!date) {
+      toast.error("Please select a date");
+      return;
+    }
+    
+    if (!time) {
+      toast.error("Please select a time");
+      return;
+    }
+    
+    if (!price || isNaN(parseFloat(price)) || parseFloat(price) <= 0) {
+      toast.error("Please enter a valid price");
       return;
     }
     
