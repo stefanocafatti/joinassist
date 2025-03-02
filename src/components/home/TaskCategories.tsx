@@ -306,14 +306,13 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
           </span>
         </div>
         <p className="text-sm text-gray-600 mb-2">{task.description}</p>
-        <div className="flex items-center justify-between">
-          <span className="text-sm text-gray-500">{task.location}</span>
+        <div className="flex items-center justify-end">
           <Button 
             size="sm" 
             className="bg-assist-blue hover:bg-assist-blue/90"
             onClick={() => toast.success(`Viewing details for ${task.title}`)}
           >
-            View Details
+            View Task
           </Button>
         </div>
       </div>
