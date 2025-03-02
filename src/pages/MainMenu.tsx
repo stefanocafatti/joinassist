@@ -213,6 +213,175 @@ const MainMenu = () => {
     );
   };
 
+  const handleBookNow = (taskTitle: string) => {
+    // Find the task in all possible sources
+    const allTasks = [
+      ...recommendedTasks,
+      ...(searchResults || [])
+    ];
+
+    // Look through TaskCategories component's task listings if not found in main tasks
+    let task = allTasks.find(t => t.title === taskTitle);
+    
+    // If not found in the main arrays, check in the task listings from TaskCategories
+    if (!task) {
+      // Import task listings from the TaskCategories component
+      const taskListings = [
+        {
+          title: "Clean my Windows",
+          category: "Cleaning",
+          description: "Help with cleaning exterior windows",
+          location: "Westwood",
+          image: "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?q=80&w=1000&auto=format&fit=crop"
+        },
+        {
+          title: "Grocery Delivery",
+          category: "Delivery",
+          description: "Deliver groceries from Trader Joe's",
+          location: "Santa Monica",
+          image: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1000&auto=format&fit=crop"
+        },
+        {
+          title: "Moving Assistance",
+          category: "Transportation",
+          description: "Help moving furniture to new apartment",
+          location: "UCLA Campus",
+          image: "/lovable-uploads/72545c93-f781-402e-ad25-5cd509be453c.png"
+        },
+        {
+          title: "Assemble IKEA Furniture",
+          category: "Assembly",
+          description: "Need help putting together a desk and chair",
+          location: "Brentwood",
+          image: "/lovable-uploads/83abea36-642f-4147-865a-c43794680e3b.png"
+        },
+        {
+          title: "Teach me Math",
+          category: "Academic Help",
+          description: "Need tutoring for Calculus",
+          location: "UCLA Library",
+          image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=1000&auto=format&fit=crop"
+        },
+        {
+          title: "Video Editing",
+          category: "Digital Services",
+          description: "Edit a 5-minute YouTube video",
+          location: "Remote",
+          image: "/lovable-uploads/59f9c5bb-dd82-404c-8be9-9aaf7188bded.png"
+        },
+        {
+          title: "Meal Prep",
+          category: "Fitness & Wellness",
+          description: "Prepare healthy meals for the week",
+          location: "Your Kitchen",
+          image: "https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?q=80&w=1000&auto=format&fit=crop"
+        },
+        {
+          title: "Event Setup",
+          category: "Event & Hospitality",
+          description: "Help setting up for a birthday party",
+          location: "Venice Beach",
+          image: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?q=80&w=1000&auto=format&fit=crop"
+        },
+        {
+          title: "Water my Plants",
+          category: "Special Tasks",
+          description: "Take care of houseplants while I'm away",
+          location: "Marina Del Rey",
+          image: "/lovable-uploads/55ae04cd-8676-4a1c-b2b3-36c7005144af.png"
+        },
+        // Include additional task listings
+        {
+          title: "Dog Walking Service",
+          category: "Pets",
+          description: "Regular walks for friendly dogs",
+          location: "Culver City",
+          image: "https://images.unsplash.com/photo-1541364983171-a8ba01e95cfc?q=80&w=1000&auto=format&fit=crop"
+        },
+        {
+          title: "Kitchen Deep Clean",
+          category: "Cleaning",
+          description: "Professional kitchen cleaning",
+          location: "Brentwood",
+          image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1000&auto=format&fit=crop"
+        },
+        {
+          title: "Food Delivery",
+          category: "Delivery",
+          description: "Restaurant food delivery service",
+          location: "Century City",
+          image: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1000&auto=format&fit=crop"
+        },
+        {
+          title: "TV Mounting",
+          category: "Assembly",
+          description: "Mount your TV on any wall type",
+          location: "West Hollywood",
+          image: "https://images.unsplash.com/photo-1593784991095-a205069533cd?q=80&w=1000&auto=format&fit=crop"
+        },
+        {
+          title: "Essay Proofreading",
+          category: "Academic Help",
+          description: "Professional proofreading service",
+          location: "UCLA Campus",
+          image: "https://images.unsplash.com/photo-1456324504439-367cee3b3c32?q=80&w=1000&auto=format&fit=crop"
+        },
+        {
+          title: "Website Development",
+          category: "Digital Services",
+          description: "Custom website creation",
+          location: "Remote",
+          image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1000&auto=format&fit=crop"
+        },
+      ];
+      
+      task = taskListings.find(t => t.title === taskTitle);
+      
+      // Also check the tasks from category view
+      if (!task) {
+        // Extract task titles from categories
+        const categoryTasks = [
+          "Wash my Car", "Clean my Garage", "Clean my Room", "Deep Clean Apartment", "Post Event Clean Up",
+          "Moving Assistance", "Help with Loading Items", "Drive me to a Location", "Drop or Pick up a Package", "Bike/Scooter Delivery",
+          "Assemble my Bed Frame", "Assemble IKEA Furniture", "Install my TV Mount", "Install a Shelf", "Assemble Office Desk",
+          "Writing Essays", "Teach me Math", "SAT/ACT Prep", "Proofread my Paper", "Study Buddy/Tutor",
+          "Code a Website", "Video Editing", "Graphic Design Support", "Fix my Bugs", "Social Media Content",
+          "Meal Prep", "Personal Training", "Yoga Instruction", "Home Workout Plans", "Nutrition Counseling",
+          "Catering Assistance", "Event Setup/Decoration", "DJ for Event", "Photographers for Events", "Party Coordinator",
+          "Do my Laundry", "Water my plants", "Grocery Store Delivery", "Help me Pack for a Trip", "Organize my Closet",
+          "Content Creation for Ads", "Brand Ambassador", "Social Media Management", "Market Research", "Product Testing",
+          "Fix a Leaky Faucet", "Install Light Fixtures", "Hang Pictures/Shelves", "Gutter Cleaning", "Gardening and Lawn Care",
+          "Drive Car to Service", "Interior Car Detailing", "Car Wash & Waxing", "Help with Tire Change", "Jump Start Battery",
+          "Package Drop-off", "Shopping Assistant", "Prescription Pickup", "Mail Collection", "Bank Deposit Run"
+        ];
+        
+        // If this is a task title without description, create a default task
+        if (categoryTasks.includes(taskTitle) || categoryTasks.includes(taskTitle.replace(/^[\p{Emoji}\s]+/u, '').trim())) {
+          // Clean up the task title (remove emojis)
+          const cleanTitle = taskTitle.replace(/^[\p{Emoji}\s]+/u, '').trim();
+          
+          // Create a default task object
+          task = {
+            title: cleanTitle,
+            description: `Help needed with ${cleanTitle}`,
+            category: "Special Tasks", // Default category
+            location: "Los Angeles", // Default location
+            image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?q=80&w=1000&auto=format&fit=crop" // Default image
+          };
+        }
+      }
+    }
+    
+    if (task) {
+      setSelectedTask(task);
+      setIsTaskDetailOpen(true);
+      // Add to recently viewed when viewing task details
+      addToRecentlyViewed(task);
+    } else {
+      console.error(`Task not found: ${taskTitle}`);
+    }
+  };
+
   const handleBookTask = (
     taskTitle: string, 
     date: Date, 
@@ -252,21 +421,6 @@ const MainMenu = () => {
     
     // Switch to the requests tab to show the new submission
     setActiveTab("requests");
-  };
-
-  const handleBookNow = (taskTitle: string) => {
-    // Find the task in all possible sources
-    const allTasks = [...recommendedTasks, ...(searchResults || [])];
-    const task = allTasks.find(t => t.title === taskTitle);
-    
-    if (task) {
-      setSelectedTask(task);
-      setIsTaskDetailOpen(true);
-      // Add to recently viewed when viewing task details
-      addToRecentlyViewed(task);
-    } else {
-      console.error(`Task not found: ${taskTitle}`);
-    }
   };
 
   const getFavoriteListings = () => {
