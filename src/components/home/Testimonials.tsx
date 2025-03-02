@@ -16,10 +16,10 @@ const Testimonials = () => {
   const testimonials: Testimonial[] = [
     {
       id: 1,
-      name: "Sarah Johnson",
-      role: "Busy Professional",
-      image: "https://randomuser.me/api/portraits/women/15.jpg",
-      quote: "Assist has been a game-changer for my busy schedule. The students are reliable, professional, and complete tasks exactly as needed. I've saved countless hours on cleaning and organization tasks.",
+      name: "Candice Mac-Niven",
+      role: "Busy Mother",
+      image: "/lovable-uploads/24e7536d-2902-47be-a1d2-a4127842e7e3.png",
+      quote: "Assist has been a lifesaver for my hectic schedule. The students are dependable, professional, and always get the job done right. I've saved so much time on errands and household tasks—highly recommend!",
       isStudent: false
     },
     {
