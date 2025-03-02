@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import InterestsSection from "./InterestsSection";
 import SearchResultsSection from "./SearchResultsSection";
@@ -81,10 +80,6 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
       }))
     : null;
   
-  const handleLoadMoreTasks = () => {
-    setShowAllTasks(true);
-  };
-  
   const renderSectionContent = () => {
     if (searchPerformed) {
       return (
@@ -103,35 +98,10 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
     switch (activeSection) {
       case "categories":
         return (
-          <>
-            <CategoriesSection showAllTasks={showAllTasks} />
-            
-            {!showAllTasks && (
-              <div className="mt-8 text-center">
-                <Button 
-                  onClick={handleLoadMoreTasks}
-                  className="bg-assist-blue hover:bg-assist-blue/90 text-white rounded-full px-8 py-2"
-                >
-                  Load More Tasks
-                </Button>
-              </div>
-            )}
-            
-            <div className="mt-10 bg-gray-50 rounded-xl p-8 text-center border border-gray-200">
-              <div className="max-w-md mx-auto">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Didn't find what you were looking for?</h3>
-                <p className="text-gray-600 mb-6">
-                  We can help you with custom tasks that aren't listed above.
-                </p>
-                <Button 
-                  onClick={onRequestTask}
-                  className="bg-assist-blue hover:bg-assist-blue/90"
-                >
-                  Request a Task
-                </Button>
-              </div>
-            </div>
-          </>
+          <CategoriesSection 
+            showAllTasks={showAllTasks} 
+            onRequestTask={onRequestTask}
+          />
         );
       case "recommended":
         return (
@@ -236,7 +206,7 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
           </>
         );
       default:
-        return <CategoriesSection showAllTasks={false} />;
+        return <CategoriesSection showAllTasks={false} onRequestTask={onRequestTask} />;
     }
   };
   
