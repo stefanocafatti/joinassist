@@ -117,7 +117,7 @@ const MainMenu = () => {
   const [userName, setUserName] = useState(mockUser.firstName);
   const [user, setUser] = useState(mockUser);
   const [showWelcome, setShowWelcome] = useState(false); // Set to false by default
-  const [activeTab, setActiveTab] = useState("home");
+  const [activeTab, setActiveTab] = useState("allTasks"); // Changed to allTasks as default
   const [searchResults, setSearchResults] = useState<typeof recommendedTasks | null>(null);
   const [searchPerformed, setSearchPerformed] = useState(false);
   const [selectedTask, setSelectedTask] = useState<(typeof recommendedTasks)[0] | null>(null);
