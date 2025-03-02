@@ -80,7 +80,7 @@ const Register = () => {
       } else {
         toast.success("Account created successfully!");  
       }
-      navigate("/login");
+      navigate("/main-menu");
     } catch (error) {
       toast.error("Registration failed. Please try again.");
       console.error("Registration error:", error);
