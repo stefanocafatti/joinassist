@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { 
   Clock, 
@@ -187,7 +188,7 @@ const Features = () => {
                     <p className="text-center px-6 text-gray-600">
                       {step === 0 ? 'Describe what you need help with, set your budget, and choose a time that works for you.' : 
                        step === 1 ? 'We connect you with vetted college students who are ready to assist, ensuring reliable and secure service.' : 
-                       'Your Assist Expert completes the task to your satisfaction, and payment is handled securely through the platform.'}
+                       'Your Assist Student Expert completes the task to your satisfaction, and payment is handled securely through the platform.'}
                     </p>
                   </div>
                 </div>
