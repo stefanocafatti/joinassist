@@ -16,18 +16,18 @@ const Benefits = () => {
       benefits: [
         {
           icon: Clock,
-          title: "Flexible Schedule",
-          description: "Take on tasks when it fits your schedule, perfect for balancing with classes."
+          title: "Work on Your Schedule",
+          description: "Choose tasks that fit your availability, making it easy to balance work and studies."
         },
         {
           icon: DollarSign,
-          title: "Earn Extra Income",
-          description: "Put your skills to work and earn money to help cover expenses while studying."
+          title: "Earn While You Learn",
+          description: "Use your skills to complete tasks and earn extra income while in college."
         },
         {
           icon: Heart,
-          title: "Build Valuable Experience",
-          description: "Gain real-world experience and build your resume while still in school."
+          title: "Gain Real-World Experience",
+          description: "Build your resume and develop valuable skills by assisting with a variety of tasks."
         }
       ],
       cta: "Sign Up as a Student"
@@ -40,18 +40,18 @@ const Benefits = () => {
       benefits: [
         {
           icon: Clock,
-          title: "Save Valuable Time",
-          description: "Delegate tasks and focus on what matters most to you."
+          title: "Save Time & Get Things Done",
+          description: "Delegate tasks and free up your schedule to focus on what matters."
         },
         {
           icon: CheckCircle2,
-          title: "Get Expert Help",
-          description: "Access a diverse pool of student talent with varied skills and knowledge."
+          title: "Access Vetted Student Talent",
+          description: "Get matched with reliable, skilled students who can assist with various tasks."
         },
         {
           icon: Heart,
-          title: "Reduce Stress",
-          description: "Eliminate the hassle of juggling too many responsibilities."
+          title: "Stress-Free Assistance",
+          description: "Let Assist handle the matching process so you can get help quickly and reliably."
         }
       ],
       cta: "Post Your First Task"
