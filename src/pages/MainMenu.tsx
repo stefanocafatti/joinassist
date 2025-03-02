@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import CircleBlocks from "@/components/background/CircleBlocks";
-import { Search, Heart, Clock, Star, Filter, PawPrint, Car, Home, Package, Briefcase, User, CreditCard, History, Settings, LogOut, Bell, MapPin, Calendar, DollarSign, Clock3 } from "lucide-react";
+import { Search, Heart, Clock, Star, Filter, PawPrint, Car, Home, Package, Briefcase, User, CreditCard, History, Settings, LogOut, Bell, MapPin, Calendar, DollarSign, Clock3, Eye } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import CategoryCard from "@/components/ui/CategoryCard";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -120,10 +120,10 @@ const MainMenu = () => {
   };
 
   const handleBookNow = (taskTitle: string) => {
-    toast.success(`Booking for ${taskTitle}`, {
-      description: "You'll be redirected to the booking page"
+    toast.success(`Viewing task: ${taskTitle}`, {
+      description: "You'll be redirected to the task details page"
     });
-    console.log(`Booking task: ${taskTitle}`);
+    console.log(`Viewing task: ${taskTitle}`);
   };
 
   const renderContent = () => {
@@ -289,19 +289,13 @@ const MainMenu = () => {
                         <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100">{task.category}</Badge>
                       </div>
                       <p className="text-sm text-gray-600 mb-3">{task.description}</p>
-                      <div className="flex items-center justify-between mb-3">
-                        <div className="flex items-center text-gray-500 text-sm">
-                          <MapPin className="h-3.5 w-3.5 mr-1" />
-                          {task.location || "Not specified"}
-                        </div>
-                      </div>
                       <div className="flex justify-end items-center">
                         <Button 
                           size="sm" 
                           className="bg-assist-blue hover:bg-assist-blue/90"
                           onClick={() => handleBookNow(task.title)}
                         >
-                          Book Now
+                          <Eye className="h-4 w-4 mr-1" /> View Task
                         </Button>
                       </div>
                     </div>
@@ -366,12 +360,6 @@ const MainMenu = () => {
                         <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100">{task.category}</Badge>
                       </div>
                       <p className="text-sm text-gray-600 mb-3">{task.description}</p>
-                      <div className="flex items-center justify-between mb-3">
-                        <div className="flex items-center text-gray-500 text-sm">
-                          <MapPin className="h-3.5 w-3.5 mr-1" />
-                          {task.location}
-                        </div>
-                      </div>
                       <div className="flex justify-end items-center">
                         <Button 
                           size="sm" 
@@ -381,7 +369,7 @@ const MainMenu = () => {
                             handleBookNow(task.title);
                           }}
                         >
-                          Book Now
+                          <Eye className="h-4 w-4 mr-1" /> View Task
                         </Button>
                       </div>
                     </div>
@@ -448,7 +436,7 @@ const MainMenu = () => {
                           size="sm" 
                           className="bg-assist-blue hover:bg-assist-blue/90"
                         >
-                          Book Again
+                          <Eye className="h-4 w-4 mr-1" /> View Task
                         </Button>
                       </div>
                     </div>
