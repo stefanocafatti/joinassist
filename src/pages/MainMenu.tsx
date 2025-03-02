@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import CircleBlocks from "@/components/background/CircleBlocks";
-import { Search, Heart, Clock, Star, Filter, PawPrint, Car, Home, Package, Briefcase } from "lucide-react";
+import { Search, Heart, Clock, Star, Filter, PawPrint, Car, Home, Package, Briefcase, User, CreditCard, History } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import CategoryCard from "@/components/ui/CategoryCard";
 
@@ -14,7 +14,17 @@ const mockUser = {
   firstName: "Alex",
   lastName: "Smith",
   recentSearches: ["Dog walker", "House cleaning", "Grocery delivery"],
-  preferences: []
+  preferences: [],
+  // Added mock data for past tasks and payment methods
+  pastTasks: [
+    { id: "1", title: "Dog Walking", date: "May 15, 2023", status: "Completed", price: "$25" },
+    { id: "2", title: "House Cleaning", date: "Apr 28, 2023", status: "Completed", price: "$75" },
+    { id: "3", title: "Grocery Delivery", date: "Mar 10, 2023", status: "Completed", price: "$18" }
+  ],
+  paymentMethods: [
+    { id: "1", type: "Credit Card", last4: "4242", brand: "Visa", isDefault: true },
+    { id: "2", type: "Credit Card", last4: "1234", brand: "Mastercard", isDefault: false }
+  ]
 };
 
 // Interest tags that users can select
@@ -57,6 +67,7 @@ const MainMenu = () => {
   const [userInterests, setUserInterests] = useState<string[]>([]);
   const [userName, setUserName] = useState(mockUser.firstName);
   const [showWelcome, setShowWelcome] = useState(true);
+  const [activeTab, setActiveTab] = useState("home"); // New state for tracking active tab
 
   useEffect(() => {
     // This would fetch the user's actual data from your backend
@@ -87,57 +98,113 @@ const MainMenu = () => {
     toast.success(`Preferences updated!`);
   };
 
-  return (
-    <div className="min-h-screen bg-white">
-      <CircleBlocks />
-      
-      {/* Welcome overlay */}
-      {showWelcome && (
-        <div className="fixed inset-0 bg-assist-blue/90 flex items-center justify-center z-50 animate-fade-in">
-          <div className="text-white text-center p-8 max-w-md animate-scale-in">
-            <h1 className="text-4xl font-bold mb-4">Welcome, {userName}!</h1>
-            <p className="text-xl">We're setting up your personalized dashboard...</p>
-          </div>
-        </div>
-      )}
-      
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 relative z-10">
-        {/* Header Section */}
-        <header className="mb-8">
-          <div className="flex justify-between items-center mb-6">
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
-              Hello, {userName}!
-            </h1>
-            <div className="flex gap-3">
-              <Button variant="ghost" size="icon">
-                <Heart className="h-5 w-5" />
-              </Button>
-              <Button variant="ghost" size="icon">
-                <Clock className="h-5 w-5" />
-              </Button>
+  // Render the appropriate content based on the active tab
+  const renderContent = () => {
+    if (activeTab === "profile") {
+      return (
+        <div className="space-y-8">
+          {/* User Profile Section */}
+          <section className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-16 h-16 bg-assist-blue/10 rounded-full flex items-center justify-center">
+                <User className="h-8 w-8 text-assist-blue" />
+              </div>
+              <div>
+                <h2 className="text-xl font-bold">{mockUser.firstName} {mockUser.lastName}</h2>
+                <p className="text-gray-500">Member since 2023</p>
+              </div>
+              <Button className="ml-auto" variant="outline" size="sm">Edit Profile</Button>
             </div>
-          </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+              <div className="bg-blue-50 p-4 rounded-lg text-center">
+                <p className="text-gray-600 text-sm">Total Tasks</p>
+                <p className="text-2xl font-bold text-gray-900">{mockUser.pastTasks.length}</p>
+              </div>
+              <div className="bg-green-50 p-4 rounded-lg text-center">
+                <p className="text-gray-600 text-sm">Completed</p>
+                <p className="text-2xl font-bold text-gray-900">{mockUser.pastTasks.length}</p>
+              </div>
+              <div className="bg-purple-50 p-4 rounded-lg text-center">
+                <p className="text-gray-600 text-sm">Saved Tasks</p>
+                <p className="text-2xl font-bold text-gray-900">2</p>
+              </div>
+            </div>
+          </section>
           
-          {/* Search Bar */}
-          <form onSubmit={handleSearch} className="mb-8">
-            <div className="relative flex items-center">
-              <Input 
-                type="text" 
-                placeholder="What do you need help with today?"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pr-12 h-14 rounded-full border-2 border-assist-blue/30 shadow-sm bg-white focus:border-assist-blue focus:ring-2 focus:ring-assist-blue/20 text-base placeholder:text-assist-blue/60"
-              />
-              <button 
-                type="submit" 
-                className="absolute right-4 text-assist-blue hover:text-assist-blue/80 transition-colors"
-              >
-                <Search className="h-5 w-5" />
-              </button>
+          {/* Past Tasks Section */}
+          <section className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold text-gray-900 flex items-center">
+                <History className="h-5 w-5 mr-2 text-assist-blue" /> Past Tasks
+              </h2>
+              <Button variant="ghost" size="sm" className="text-assist-blue">View All</Button>
             </div>
-          </form>
-        </header>
-        
+            
+            {mockUser.pastTasks.length > 0 ? (
+              <div className="divide-y divide-gray-100">
+                {mockUser.pastTasks.map((task) => (
+                  <div key={task.id} className="py-4 flex justify-between items-center">
+                    <div>
+                      <h3 className="font-medium text-gray-900">{task.title}</h3>
+                      <p className="text-sm text-gray-500">{task.date}</p>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                        {task.status}
+                      </Badge>
+                      <span className="font-medium">{task.price}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-500 text-center py-6">You don't have any past tasks yet.</p>
+            )}
+          </section>
+          
+          {/* Payment Methods Section */}
+          <section className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold text-gray-900 flex items-center">
+                <CreditCard className="h-5 w-5 mr-2 text-assist-blue" /> Payment Methods
+              </h2>
+              <Button variant="outline" size="sm">Add New</Button>
+            </div>
+            
+            {mockUser.paymentMethods.length > 0 ? (
+              <div className="space-y-4">
+                {mockUser.paymentMethods.map((payment) => (
+                  <div key={payment.id} className="flex items-center justify-between border border-gray-100 rounded-lg p-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-gray-100 rounded-md flex items-center justify-center">
+                        <CreditCard className="h-5 w-5 text-gray-700" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">{payment.brand} •••• {payment.last4}</p>
+                        <p className="text-sm text-gray-500">{payment.type}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {payment.isDefault && (
+                        <Badge className="bg-blue-100 text-blue-800 border-blue-200">Default</Badge>
+                      )}
+                      <Button variant="ghost" size="sm">Edit</Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-500 text-center py-6">No payment methods added yet.</p>
+            )}
+          </section>
+        </div>
+      );
+    }
+    
+    // Home tab (default view)
+    return (
+      <>
         {/* Personalization Section */}
         <section className="mb-10 bg-blue-50 rounded-xl p-6">
           <div className="flex justify-between items-center mb-4">
@@ -272,6 +339,87 @@ const MainMenu = () => {
             </div>
           </div>
         </section>
+      </>
+    );
+  };
+
+  return (
+    <div className="min-h-screen bg-white">
+      <CircleBlocks />
+      
+      {/* Welcome overlay */}
+      {showWelcome && (
+        <div className="fixed inset-0 bg-assist-blue/90 flex items-center justify-center z-50 animate-fade-in">
+          <div className="text-white text-center p-8 max-w-md animate-scale-in">
+            <h1 className="text-4xl font-bold mb-4">Welcome, {userName}!</h1>
+            <p className="text-xl">We're setting up your personalized dashboard...</p>
+          </div>
+        </div>
+      )}
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 relative z-10">
+        {/* Header Section */}
+        <header className="mb-8">
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+              Hello, {userName}!
+            </h1>
+            <div className="flex gap-3">
+              <Button variant="ghost" size="icon">
+                <Heart className="h-5 w-5" />
+              </Button>
+              <Button variant="ghost" size="icon">
+                <Clock className="h-5 w-5" />
+              </Button>
+            </div>
+          </div>
+          
+          {/* Search Bar */}
+          <form onSubmit={handleSearch} className="mb-8">
+            <div className="relative flex items-center">
+              <Input 
+                type="text" 
+                placeholder="What do you need help with today?"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pr-12 h-14 rounded-full border-2 border-assist-blue/30 shadow-sm bg-white focus:border-assist-blue focus:ring-2 focus:ring-assist-blue/20 text-base placeholder:text-assist-blue/60"
+              />
+              <button 
+                type="submit" 
+                className="absolute right-4 text-assist-blue hover:text-assist-blue/80 transition-colors"
+              >
+                <Search className="h-5 w-5" />
+              </button>
+            </div>
+          </form>
+        </header>
+        
+        {/* Main Navigation Tabs */}
+        <div className="flex border-b border-gray-200 mb-8">
+          <button
+            className={`py-3 px-6 font-medium text-sm border-b-2 ${
+              activeTab === "home" 
+                ? "border-assist-blue text-assist-blue" 
+                : "border-transparent text-gray-500 hover:text-gray-700"
+            }`}
+            onClick={() => setActiveTab("home")}
+          >
+            Home
+          </button>
+          <button
+            className={`py-3 px-6 font-medium text-sm border-b-2 ${
+              activeTab === "profile" 
+                ? "border-assist-blue text-assist-blue" 
+                : "border-transparent text-gray-500 hover:text-gray-700"
+            }`}
+            onClick={() => setActiveTab("profile")}
+          >
+            My Profile
+          </button>
+        </div>
+        
+        {/* Render Content Based on Active Tab */}
+        {renderContent()}
       </div>
     </div>
   );
