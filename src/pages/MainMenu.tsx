@@ -272,7 +272,7 @@ const MainMenu = () => {
   };
 
   const handleBookNow = (taskTitle: string) => {
-    console.log(`Viewing task: ${taskTitle}`);
+    console.log(`Opening task details for: ${taskTitle}`);
     
     // Find the task in all possible sources
     const allTasks = [...recommendedTasks, ...(searchResults || [])];
