@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Heart, Bell, Coins, Store, Mail, CheckCircle, User, History, CreditCard, Settings, LogOut } from "lucide-react";
+import { Heart, Bell, Coins, Store, Mail, CheckCircle, User, History, CreditCard, Settings, LogOut, MessageSquare, MessageCircle, MessagesSquare, EllipsisHorizontal } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import {
@@ -30,6 +30,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
   assistPoints = 0
 }) => {
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const [isMessagesOpen, setIsMessagesOpen] = useState(false);
   const [notifications, setNotifications] = useState([
     {
       id: "1",
@@ -61,12 +62,52 @@ const MainHeader: React.FC<MainHeaderProps> = ({
     },
   ]);
 
+  const [messages, setMessages] = useState([
+    {
+      id: "1",
+      sender: "Jessica T.",
+      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop",
+      message: "Hello! I'll be arriving in about 15 minutes for the dog walking task.",
+      time: "2 hours ago",
+      isRead: false,
+      taskTitle: "Dog Walking"
+    },
+    {
+      id: "2",
+      sender: "Michael R.",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop",
+      message: "I've completed the furniture assembly. Could you verify everything is as expected?",
+      time: "Yesterday",
+      isRead: true,
+      taskTitle: "Furniture Assembly"
+    },
+    {
+      id: "3",
+      sender: "Lisa W.",
+      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop",
+      message: "I have a question about the cleaning requirements for the apartment.",
+      time: "3 days ago",
+      isRead: true,
+      taskTitle: "Apartment Cleaning"
+    }
+  ]);
+
   const unreadCount = notifications.filter(n => !n.isRead).length;
+  const unreadMessagesCount = messages.filter(m => !m.isRead).length;
 
   const handleMarkAllAsRead = () => {
     setNotifications(prev => 
       prev.map(notification => ({
         ...notification,
+        isRead: true
+      }))
+    );
+  };
+
+  const handleMarkAllMessagesAsRead = () => {
+    setMessages(prev => 
+      prev.map(message => ({
+        ...message,
         isRead: true
       }))
     );
@@ -78,6 +119,16 @@ const MainHeader: React.FC<MainHeaderProps> = ({
         notification.id === id
           ? { ...notification, isRead: true }
           : notification
+      )
+    );
+  };
+
+  const handleMessageClick = (id: string) => {
+    setMessages(prev => 
+      prev.map(message => 
+        message.id === id
+          ? { ...message, isRead: true }
+          : message
       )
     );
   };
@@ -107,6 +158,86 @@ const MainHeader: React.FC<MainHeaderProps> = ({
         >
           <Heart className={`h-5 w-5 ${showFavorites ? 'fill-red-500' : ''}`} />
         </Button>
+        
+        {/* New Messages Icon */}
+        <Popover open={isMessagesOpen} onOpenChange={setIsMessagesOpen}>
+          <PopoverTrigger asChild>
+            <Button variant="ghost" size="icon" className="relative">
+              <MessageSquare className="h-5 w-5" />
+              {unreadMessagesCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-green-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
+                  {unreadMessagesCount}
+                </span>
+              )}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-80 p-0" align="end">
+            <div className="p-4 border-b border-gray-100">
+              <div className="flex justify-between items-center">
+                <h3 className="font-semibold">Messages</h3>
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="text-xs text-assist-blue hover:text-assist-blue/80"
+                  onClick={handleMarkAllMessagesAsRead}
+                >
+                  Mark all as read
+                </Button>
+              </div>
+            </div>
+            <div className="max-h-80 overflow-y-auto">
+              {messages.length > 0 ? (
+                <div className="divide-y divide-gray-100">
+                  {messages.map((message) => (
+                    <div 
+                      key={message.id} 
+                      className={cn(
+                        "p-4 hover:bg-gray-50 cursor-pointer", 
+                        !message.isRead && "bg-blue-50/50"
+                      )}
+                      onClick={() => handleMessageClick(message.id)}
+                    >
+                      <div className="flex items-start gap-3">
+                        <Avatar className="h-9 w-9">
+                          <AvatarImage src={message.avatar} />
+                          <AvatarFallback>{message.sender.charAt(0)}</AvatarFallback>
+                        </Avatar>
+                        <div className="flex-1">
+                          <div className="flex justify-between items-start">
+                            <h4 className="font-medium text-sm">{message.sender}</h4>
+                            {!message.isRead && (
+                              <Badge variant="outline" className="bg-blue-100 text-blue-800 border-blue-200 text-xs">New</Badge>
+                            )}
+                          </div>
+                          <p className="text-xs text-gray-500 mt-0.5">{message.taskTitle}</p>
+                          <p className="text-gray-600 text-sm mt-1 line-clamp-2">{message.message}</p>
+                          <p className="text-gray-400 text-xs mt-1">{message.time}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="p-8 text-center">
+                  <p className="text-gray-500">No messages yet</p>
+                </div>
+              )}
+            </div>
+            <div className="p-3 border-t border-gray-100">
+              <div className="text-center text-xs text-gray-600 mb-3 px-4">
+                <p>Remember: Sharing contact information is prohibited and may result in immediate termination.</p>
+              </div>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="text-assist-blue w-full hover:text-assist-blue/80"
+                onClick={() => onSetActiveTab("messages")}
+              >
+                View All Messages
+              </Button>
+            </div>
+          </PopoverContent>
+        </Popover>
         
         <Popover open={isNotificationsOpen} onOpenChange={setIsNotificationsOpen}>
           <PopoverTrigger asChild>
@@ -229,10 +360,18 @@ const MainHeader: React.FC<MainHeaderProps> = ({
               <Store className="mr-2 h-4 w-4" />
               <span>Redeem Points</span>
             </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => onSetActiveTab("messages")}>
+              <MessageSquare className="mr-2 h-4 w-4" />
+              <span>Messages</span>
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <Settings className="mr-2 h-4 w-4" />
               <span>Settings</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <EllipsisHorizontal className="mr-2 h-4 w-4" />
+              <span>More Options</span>
             </DropdownMenuItem>
             <DropdownMenuItem>
               <LogOut className="mr-2 h-4 w-4" />
