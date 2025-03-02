@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Instagram, Linkedin, ArrowRight, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -76,11 +75,6 @@ const Footer = () => {
               <li>
                 <Link to="#assembly" className="text-gray-800 hover:text-assist-blue transition-colors font-medium">
                   Assembly
-                </Link>
-              </li>
-              <li>
-                <Link to="#academic" className="text-gray-800 hover:text-assist-blue transition-colors font-medium">
-                  Academic & Professional Help
                 </Link>
               </li>
               <li>
