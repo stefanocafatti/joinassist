@@ -29,14 +29,14 @@ const CategoryCard = ({
     )}>
       {onFavoriteToggle && (
         <button 
-          className="absolute top-3 right-3 p-1 rounded-full bg-white/80 hover:bg-white transition-colors z-10"
+          className="absolute top-3 right-3 z-10"
           onClick={(e) => {
             e.stopPropagation();
             onFavoriteToggle(title);
           }}
         >
           <Heart 
-            className={`h-5 w-5 ${isFavorite ? 'fill-red-500 text-red-500' : 'text-gray-600'}`} 
+            className={`h-5 w-5 ${isFavorite ? 'fill-red-500 text-red-500' : 'text-white'}`} 
           />
         </button>
       )}

@@ -1,3 +1,4 @@
+
 import { 
   Trash2, 
   Car, 
@@ -396,14 +397,14 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
           style={{ backgroundImage: `url(${task.image})` }}
         />
         <button 
-          className="absolute top-3 right-3 p-1.5 rounded-full bg-white/80 hover:bg-white transition-colors z-10"
+          className="absolute top-3 right-3 z-10"
           onClick={(e) => {
             e.stopPropagation();
             handleFavoriteToggle(task.title);
           }}
         >
           <Heart 
-            className={`h-5 w-5 ${favoriteTaskIds.includes(task.title) ? 'fill-red-500 text-red-500' : 'text-gray-600'}`} 
+            className={`h-5 w-5 ${favoriteTaskIds.includes(task.title) ? 'fill-red-500 text-red-500' : 'text-white'}`} 
           />
         </button>
       </div>
