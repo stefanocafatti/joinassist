@@ -1,4 +1,3 @@
-
 import { 
   Trash2, 
   Car, 
@@ -57,6 +56,7 @@ const TaskCategories = ({
     }
   };
 
+  // Updated category colors to match tag colors from SearchResultsSection
   const categories = [
     {
       icon: Trash2,
@@ -69,7 +69,7 @@ const TaskCategories = ({
         "✨ Deep Clean Apartment",
         "🗑️ Post Event Clean Up"
       ],
-      color: "bg-blue-50"
+      color: "bg-sky-50"  // Matches tag color
     },
     {
       icon: Car,
@@ -82,7 +82,7 @@ const TaskCategories = ({
         "📬 Drop or Pick up a Package",
         "🚲 Bike/Scooter Delivery"
       ],
-      color: "bg-green-50"
+      color: "bg-indigo-50"  // Matches tag color
     },
     {
       icon: Package,
@@ -95,7 +95,7 @@ const TaskCategories = ({
         "🔧 Install a Shelf",
         "🖥️ Assemble Office Desk"
       ],
-      color: "bg-yellow-50"
+      color: "bg-purple-50"  // Matches tag color
     },
     {
       icon: BookOpen,
@@ -108,7 +108,7 @@ const TaskCategories = ({
         "📖 Proofread my Paper",
         "👨‍🏫 Study Buddy/Tutor"
       ],
-      color: "bg-purple-50"
+      color: "bg-yellow-50"  // Matches tag color
     },
     {
       icon: Code,
@@ -121,7 +121,7 @@ const TaskCategories = ({
         "🐞 Fix my Bugs",
         "📱 Social Media Content"
       ],
-      color: "bg-red-50"
+      color: "bg-red-50"  // Matches tag color
     },
     {
       icon: Dumbbell,
@@ -134,7 +134,7 @@ const TaskCategories = ({
         "🏋️ Home Workout Plans",
         "🍎 Nutrition Counseling"
       ],
-      color: "bg-teal-50"
+      color: "bg-emerald-50"  // Matches tag color
     },
     {
       icon: PartyPopper,
@@ -147,7 +147,7 @@ const TaskCategories = ({
         "📸 Photographers for Events",
         "🎉 Party Coordinator"
       ],
-      color: "bg-pink-50"
+      color: "bg-pink-50"  // Matches tag color
     },
     {
       icon: Star,
@@ -160,7 +160,7 @@ const TaskCategories = ({
         "🧳 Help me Pack for a Trip",
         "👔 Organize my Closet"
       ],
-      color: "bg-orange-50"
+      color: "bg-orange-50"  // Matches tag color
     },
     {
       icon: Briefcase,
@@ -173,7 +173,7 @@ const TaskCategories = ({
         "📈 Market Research",
         "🧪 Product Testing"
       ],
-      color: "bg-indigo-50"
+      color: "bg-blue-50"  // Matches tag color
     }
   ];
 

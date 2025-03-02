@@ -25,6 +25,13 @@ const CategoryCard = ({
   onViewTask,
   isFavorite = false,
 }: CategoryCardProps) => {
+  // Function to get corresponding text color based on background color
+  const getTextColor = (bgColor: string) => {
+    // Extract the color type (e.g., "blue" from "bg-blue-50")
+    const colorType = bgColor.split('-')[1];
+    return `text-${colorType}-800`;
+  };
+
   return (
     <div className={cn(
       "rounded-xl overflow-hidden h-full transition-all duration-300 hover:shadow-md hover:-translate-y-1 relative",
@@ -47,7 +54,7 @@ const CategoryCard = ({
       <div className="p-6 flex flex-col h-full">
         <div className="flex items-center gap-4 mb-4">
           <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-sm">
-            <Icon size={26} className="text-gray-700" />
+            <Icon size={26} className={cn("text-gray-700", getTextColor(color))} />
           </div>
           <div className="flex-1">
             <h3 className="font-semibold text-gray-900 line-clamp-1">{title}</h3>
@@ -79,7 +86,7 @@ const CategoryCard = ({
                     <Button 
                       size="sm" 
                       variant="ghost" 
-                      className="mr-2 text-assist-blue hover:bg-assist-blue/10"
+                      className={cn("mr-2 hover:bg-opacity-10", getTextColor(color))}
                       onClick={(e) => {
                         e.stopPropagation();
                         if (onViewTask) {

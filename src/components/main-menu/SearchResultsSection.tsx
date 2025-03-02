@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -32,6 +33,7 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
   onBookNow,
   onRequestTask
 }) => {
+  // This function is already matching the required color scheme
   const getCategoryColor = (category: string) => {
     const categoryColorMap: {[key: string]: string} = {
       "Cleaning": "bg-sky-100 text-sky-800",
@@ -40,9 +42,12 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
       "Delivery": "bg-teal-100 text-teal-800",
       "Assembly": "bg-purple-100 text-purple-800",
       "Academic & Professional Help": "bg-yellow-100 text-yellow-800",
+      "Academic Help": "bg-yellow-100 text-yellow-800",
       "Digital Services": "bg-red-100 text-red-800",
       "Fitness and Wellness": "bg-emerald-100 text-emerald-800",
+      "Fitness & Wellness": "bg-emerald-100 text-emerald-800",
       "Event and Hospitality": "bg-pink-100 text-pink-800",
+      "Event & Hospitality": "bg-pink-100 text-pink-800",
       "Special Tasks": "bg-orange-100 text-orange-800",
       "For Brands": "bg-blue-100 text-blue-800",
       "Pets": "bg-amber-100 text-amber-800",
