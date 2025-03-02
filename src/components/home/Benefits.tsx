@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { CheckCircle2, GraduationCap, DollarSign, Heart, Clock } from "lucide-react";
+import { CheckCircle2, GraduationCap, DollarSign, Heart, Clock, UserCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -44,7 +44,7 @@ const Benefits = () => {
           description: "Delegate tasks and free up your schedule to focus on what matters."
         },
         {
-          icon: CheckCircle2,
+          icon: UserCheck,
           title: "Access Vetted Student Talent",
           description: "Get matched with reliable, skilled students who can assist with various tasks."
         },
