@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Star, Sparkles } from "lucide-react";
@@ -112,17 +113,17 @@ const Hero = () => {
   ];
 
   return (
-    <div className="relative overflow-hidden pt-8 pb-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 md:pt-16 pb-16 relative z-10">
+    <div className="relative overflow-hidden pt-6 pb-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-9 md:pt-14 pb-8 relative z-10">
         <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16">
-          <div className="w-full md:w-1/2 md:pr-8 space-y-8">
+          <div className="w-full md:w-1/2 md:pr-8 space-y-7">
             <div className="inline-flex items-center gap-1 py-1 px-4 rounded-full bg-amber-100 text-amber-600 text-sm font-medium animate-fade-in" style={{ animationDelay: "0.1s" }}>
               <Sparkles size={14} className="text-amber-500" />
               <span>Trusted by 10,000+ students nationwide</span>
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 animate-slide-in" style={{ animationDelay: "0.2s" }}>
-              <div className="min-h-32 md:min-h-40 flex flex-col justify-start">
+              <div className="min-h-30 md:min-h-38 flex flex-col justify-start">
                 <span>I need a student to assist me...</span>
                 <span className="text-assist-blue relative mt-2 md:mt-3">
                   <span className="after:content-['|'] after:ml-1 after:animate-pulse">{displayText}</span>
@@ -134,7 +135,7 @@ const Hero = () => {
               Connect with vetted college students for a wide range of tasks. From moving and cleaning to running errands, Assist makes getting things done simple.
             </p>
             
-            <div className="flex flex-wrap gap-4 pt-6 pb-8 animate-slide-in" style={{ animationDelay: "0.4s" }}>
+            <div className="flex flex-wrap gap-4 pt-5 pb-4 animate-slide-in" style={{ animationDelay: "0.4s" }}>
               <Button 
                 size="lg" 
                 className="rounded-full bg-assist-blue hover:bg-assist-blue/90 text-white h-14 px-8 text-base font-medium shadow-soft hover:shadow-md hover:translate-y-[-2px] transition-all"
@@ -156,7 +157,7 @@ const Hero = () => {
           <div className="w-full md:w-1/2 mt-8 md:mt-0 animate-scale-in" style={{ animationDelay: "0.6s" }}>
             <div className="relative">
               <div className="absolute inset-0 -m-4 rounded-3xl bg-soft-pink/30 animate-float" style={{ animationDelay: "0.7s" }}></div>
-              <div className="relative rounded-2xl overflow-hidden shadow-elevation h-[300px] sm:h-[340px] md:h-[380px] mt-4">
+              <div className="relative rounded-2xl overflow-hidden shadow-elevation h-[290px] sm:h-[330px] md:h-[370px] mt-4">
                 <ImageSlideshow 
                   images={slideshowImages} 
                   autoplayInterval={5000} 
