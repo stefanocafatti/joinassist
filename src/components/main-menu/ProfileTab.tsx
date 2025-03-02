@@ -1,8 +1,7 @@
-
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { User, History, CreditCard, Phone, Mail, MapPin } from "lucide-react";
+import { User, History, CreditCard, Phone, Mail, MapPin, Plus } from "lucide-react";
 import { 
   Dialog,
   DialogContent,
@@ -52,7 +51,6 @@ const ProfileTab: React.FC<ProfileTabProps> = ({ user, onUpdateUserName, onUpdat
   
   const [previewImage, setPreviewImage] = useState<string | null>(profileImage);
   
-  // Update preview image when profileImage prop changes
   useEffect(() => {
     setPreviewImage(profileImage);
   }, [profileImage]);
@@ -81,15 +79,11 @@ const ProfileTab: React.FC<ProfileTabProps> = ({ user, onUpdateUserName, onUpdat
   };
   
   const handleSaveProfile = () => {
-    // Update the user profile in the parent component
     onUpdateProfile(profileForm.firstName, profileForm.lastName, previewImage);
-    
-    // In a real app, this would save to a backend
     toast.success("Profile updated successfully");
     setIsEditDialogOpen(false);
   };
   
-  // Get initials for avatar fallback
   const getInitials = () => {
     return `${profileForm.firstName.charAt(0)}${profileForm.lastName.charAt(0)}`;
   };
@@ -223,7 +217,6 @@ const ProfileTab: React.FC<ProfileTabProps> = ({ user, onUpdateUserName, onUpdat
         )}
       </section>
       
-      {/* Edit Profile Dialog */}
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -249,7 +242,7 @@ const ProfileTab: React.FC<ProfileTabProps> = ({ user, onUpdateUserName, onUpdat
                   htmlFor="profile-image" 
                   className="absolute bottom-0 right-0 p-1 bg-assist-blue text-white rounded-full cursor-pointer"
                 >
-                  <User className="h-4 w-4" />
+                  <Plus className="h-4 w-4" />
                 </Label>
                 <Input 
                   id="profile-image" 
