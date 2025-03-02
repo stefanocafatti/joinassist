@@ -244,7 +244,7 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
       category: "Digital Services",
       description: "Edit a 5-minute YouTube video",
       location: "Remote",
-      image: "https://images.unsplash.com/photo-1574717024453-354056afd6fc?q=80&w=1000&auto=format&fit=crop"
+      image: "/lovable-uploads/59f9c5bb-dd82-404c-8be9-9aaf7188bded.png"
     },
     {
       title: "Meal Prep",
