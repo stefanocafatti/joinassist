@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Heart, Eye } from "lucide-react";
+import { Heart, Eye, Coins } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -67,6 +67,12 @@ const RecommendedTasksSection: React.FC<RecommendedTasksSectionProps> = ({
                   className={`h-5 w-5 ${favoriteTaskIds.includes(task.title) ? 'fill-red-500 text-red-500' : 'text-gray-600'}`} 
                 />
               </button>
+              <div className="absolute bottom-3 left-3">
+                <Badge className="bg-amber-100 text-amber-800 flex items-center gap-1">
+                  <Coins className="h-3 w-3" />
+                  <span>Earn points</span>
+                </Badge>
+              </div>
             </div>
             <div className="p-4">
               <div className="flex justify-between items-start mb-2">
