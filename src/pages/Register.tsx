@@ -15,24 +15,17 @@ const Register = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    accountType: "student" as "student" | "client",
+    accountType: "student",
   });
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type } = e.target;
-    if (type === "radio") {
-      setFormData({
-        ...formData,
-        accountType: value as "student" | "client",
-      });
-    } else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
-    }
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -59,7 +52,7 @@ const Register = () => {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      toast.success(`Account created successfully as a ${formData.accountType}!`);
+      toast.success("Student account created successfully!");
       navigate("/login");
     } catch (error) {
       toast.error("Registration failed. Please try again.");
@@ -80,7 +73,7 @@ const Register = () => {
               <Logo />
             </Link>
             <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-              Create your account
+              Join Assist as a Student
             </h2>
             <p className="mt-2 text-sm text-gray-600">
               Already have an account?{" "}
@@ -170,67 +163,12 @@ const Register = () => {
               </div>
               
               <div>
-                <Label>I am a:</Label>
-                <div className="mt-2 grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
-                      <input
-                        type="radio"
-                        name="accountType"
-                        value="student"
-                        checked={formData.accountType === "student"}
-                        onChange={handleChange}
-                        className="sr-only"
-                      />
-                      <div
-                        className={`w-5 h-5 rounded-full border flex items-center justify-center ${
-                          formData.accountType === "student"
-                            ? "border-assist-blue bg-assist-blue/10"
-                            : "border-gray-300"
-                        }`}
-                      >
-                        {formData.accountType === "student" && (
-                          <div className="w-3 h-3 rounded-full bg-assist-blue" />
-                        )}
-                      </div>
-                      <span className="ml-2 font-medium text-gray-900">Student</span>
-                    </label>
-                  </div>
-                  
-                  <div>
-                    <label className="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
-                      <input
-                        type="radio"
-                        name="accountType"
-                        value="client"
-                        checked={formData.accountType === "client"}
-                        onChange={handleChange}
-                        className="sr-only"
-                      />
-                      <div
-                        className={`w-5 h-5 rounded-full border flex items-center justify-center ${
-                          formData.accountType === "client"
-                            ? "border-assist-blue bg-assist-blue/10"
-                            : "border-gray-300"
-                        }`}
-                      >
-                        {formData.accountType === "client" && (
-                          <div className="w-3 h-3 rounded-full bg-assist-blue" />
-                        )}
-                      </div>
-                      <span className="ml-2 font-medium text-gray-900">Client</span>
-                    </label>
-                  </div>
-                </div>
-              </div>
-              
-              <div>
                 <Button
                   type="submit"
                   className="w-full bg-gradient-to-r from-assist-blue to-indigo-600 hover:from-assist-blue/90 hover:to-indigo-600/90"
                   disabled={isLoading}
                 >
-                  {isLoading ? "Creating account..." : "Create account"}
+                  {isLoading ? "Creating account..." : "Join as a student"}
                 </Button>
               </div>
             </form>
