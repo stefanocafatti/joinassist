@@ -5,6 +5,7 @@ import RecommendedTasksSection from "./RecommendedTasksSection";
 import InterestsSection from "./InterestsSection";
 import PastTasksSection from "./PastTasksSection";
 import HomeNavigation from "./HomeNavigation";
+import TaskCategories from "../home/TaskCategories";
 
 interface Task {
   title: string;
@@ -65,12 +66,7 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
               onToggleInterest={onToggleInterest}
             />
             
-            <RecommendedTasksSection
-              tasks={recommendedTasks}
-              favoriteTaskIds={favoriteTaskIds}
-              onFavoriteToggle={onFavoriteToggle}
-              onBookNow={onBookNow}
-            />
+            <TaskCategories showAllTasks={true} />
             
             <PastTasksSection 
               pastTasks={pastTasks} 
