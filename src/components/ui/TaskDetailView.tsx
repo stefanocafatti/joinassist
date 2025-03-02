@@ -50,7 +50,8 @@ interface TaskDetailViewProps {
     location?: string,
     additionalInfo?: string
   ) => void;
-  task: Task;
+  task?: Task;
+  isCustomTask?: boolean;
 }
 
 const times = [
@@ -81,19 +82,50 @@ const companyDefinedPrices: {[key: string]: number} = {
   "default": 25
 };
 
+// Categories available for custom tasks
+const availableCategories = [
+  "Cleaning", 
+  "Transportation", 
+  "Delivery", 
+  "Assembly", 
+  "Academic Help", 
+  "Digital Services", 
+  "Fitness & Wellness", 
+  "Event & Hospitality", 
+  "Special Tasks", 
+  "Pets", 
+  "Home"
+];
+
+// Set of placeholder images for custom tasks
+const customTaskPlaceholderImages = [
+  "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7",
+  "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
+  "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
+  "https://images.unsplash.com/photo-1721322800607-8c38375eef04"
+];
+
 const TaskDetailView: React.FC<TaskDetailViewProps> = ({ 
   isOpen, 
   onClose, 
   onTaskBooked,
-  task 
+  task,
+  isCustomTask = false
 }) => {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [time, setTime] = useState<string>(times[0]);
-  const [location, setLocation] = useState<string>(task.location || "");
+  const [location, setLocation] = useState<string>(task?.location || "");
   const [additionalInfo, setAdditionalInfo] = useState<string>("");
   
+  // Custom task fields
+  const [customTitle, setCustomTitle] = useState<string>("");
+  const [customDescription, setCustomDescription] = useState<string>("");
+  const [customCategory, setCustomCategory] = useState<string>("Special Tasks");
+  
   // Get the company defined price for this task category
-  const taskPrice = companyDefinedPrices[task.category] || companyDefinedPrices["default"];
+  const taskPrice = isCustomTask 
+    ? companyDefinedPrices[customCategory] || companyDefinedPrices["default"] 
+    : task ? companyDefinedPrices[task.category] || companyDefinedPrices["default"] : companyDefinedPrices["default"];
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -106,24 +138,39 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
       return;
     }
     
+    // For custom tasks, use the custom title/description/category
+    const finalTitle = isCustomTask ? customTitle : (task ? task.title : "");
+    const finalLocation = location || "Not specified";
+    
+    if (isCustomTask && !customTitle.trim()) {
+      // Validate custom task title
+      return;
+    }
+    
     onTaskBooked(
-      task.title,
+      finalTitle,
       date,
       time,
       "hourly", // Always hourly rate
       taskPrice,
-      location,
+      finalLocation,
       additionalInfo
     );
   };
 
   const getTaskImage = (taskTitle: string) => {
+    if (isCustomTask) {
+      // For custom tasks, pick a random placeholder image
+      const randomIndex = Math.floor(Math.random() * customTaskPlaceholderImages.length);
+      return customTaskPlaceholderImages[randomIndex];
+    }
+    
     const taskImageMap: {[key: string]: string} = {
       "TV Mounting": "/lovable-uploads/36f389d4-c8c6-40a8-9cc4-2ed5306d7dd5.png",
       "Install TV Mount": "/lovable-uploads/36f389d4-c8c6-40a8-9cc4-2ed5306d7dd5.png",
     };
     
-    return taskImageMap[taskTitle] || task.image || "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?q=80&w=1000&auto=format&fit=crop";
+    return taskImageMap[taskTitle] || (task && task.image) || "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?q=80&w=1000&auto=format&fit=crop";
   };
 
   const getCategoryColor = (category: string) => {
@@ -150,22 +197,71 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[550px] max-h-[90vh] overflow-y-auto bg-white">
         <DialogHeader>
-          <DialogTitle className="text-xl">{task.title}</DialogTitle>
+          <DialogTitle className="text-xl">
+            {isCustomTask ? "Request Custom Task" : task?.title}
+          </DialogTitle>
         </DialogHeader>
         
         <div className="mt-4">
-          <div 
-            className="h-44 mb-6 rounded-lg bg-cover bg-center"
-            style={{ backgroundImage: `url(${getTaskImage(task.title)})` }}
-          />
-          
-          <div className="mb-6">
-            <div className="flex justify-between items-start mb-2">
-              <h3 className="text-lg font-semibold">About this task</h3>
-              <Badge className={cn(getCategoryColor(task.category))}>{task.category}</Badge>
+          {!isCustomTask ? (
+            // Standard task view with image
+            <div 
+              className="h-44 mb-6 rounded-lg bg-cover bg-center"
+              style={{ backgroundImage: `url(${getTaskImage(task?.title || "")})` }}
+            />
+          ) : (
+            // Custom task view with form for title and description
+            <div className="space-y-4 mb-6">
+              <div className="space-y-2">
+                <Label htmlFor="custom-title">Task Title</Label>
+                <Input 
+                  id="custom-title"
+                  placeholder="Enter task title"
+                  value={customTitle}
+                  onChange={(e) => setCustomTitle(e.target.value)}
+                  required
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="custom-category">Task Category</Label>
+                <Select value={customCategory} onValueChange={setCustomCategory}>
+                  <SelectTrigger id="custom-category">
+                    <SelectValue placeholder="Select Category" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white">
+                    {availableCategories.map((category) => (
+                      <SelectItem key={category} value={category}>
+                        {category}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="custom-description">Task Description</Label>
+                <Textarea 
+                  id="custom-description"
+                  placeholder="Describe what you need help with..."
+                  value={customDescription}
+                  onChange={(e) => setCustomDescription(e.target.value)}
+                  rows={3}
+                  required
+                />
+              </div>
             </div>
-            <p className="text-gray-600">{task.description}</p>
-          </div>
+          )}
+          
+          {!isCustomTask && task && (
+            <div className="mb-6">
+              <div className="flex justify-between items-start mb-2">
+                <h3 className="text-lg font-semibold">About this task</h3>
+                <Badge className={cn(getCategoryColor(task.category))}>{task.category}</Badge>
+              </div>
+              <p className="text-gray-600">{task.description}</p>
+            </div>
+          )}
           
           <form onSubmit={handleSubmit}>
             <div className="space-y-6">
@@ -228,7 +324,7 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
                     <span className="text-lg font-semibold text-assist-blue">${taskPrice}/hr</span>
                   </div>
                   <p className="text-xs text-gray-500 mt-1">
-                    This is our standard rate for {task.category.toLowerCase()} tasks.
+                    This is our standard rate for {isCustomTask ? customCategory.toLowerCase() : (task ? task.category.toLowerCase() : "special")} tasks.
                   </p>
                 </div>
               </div>
@@ -266,7 +362,7 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
                 Cancel
               </Button>
               <Button type="submit" className="bg-assist-blue hover:bg-assist-blue/90">
-                Book Now
+                {isCustomTask ? "Submit Request" : "Book Now"}
               </Button>
             </DialogFooter>
           </form>
