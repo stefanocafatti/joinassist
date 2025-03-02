@@ -1,7 +1,8 @@
 
 import React from "react";
-import { LucideIcon, Heart } from "lucide-react";
+import { LucideIcon, Heart, Eye } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 interface CategoryCardProps {
   icon: LucideIcon;
@@ -10,6 +11,7 @@ interface CategoryCardProps {
   tasks: string[];
   color?: string;
   onFavoriteToggle?: (taskTitle: string) => void;
+  onViewTask?: (taskTitle: string) => void;
   isFavorite?: boolean;
 }
 
@@ -20,6 +22,7 @@ const CategoryCard = ({
   tasks,
   color = "bg-blue-50",
   onFavoriteToggle,
+  onViewTask,
   isFavorite = false,
 }: CategoryCardProps) => {
   return (
@@ -60,9 +63,36 @@ const CategoryCard = ({
             return (
               <div
                 key={i}
-                className="bg-white py-3 px-4 rounded-lg shadow-sm text-left"
+                className="bg-white py-3 px-4 rounded-lg shadow-sm text-left relative group"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (onViewTask) {
+                    // Get task name without emoji
+                    const taskName = taskContent.replace(/^[\p{Emoji}\s]+/u, '').trim();
+                    onViewTask(taskName);
+                  }
+                }}
               >
                 <span className="text-sm text-gray-700 line-clamp-2">{taskContent}</span>
+                {onViewTask && (
+                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-5 flex items-center justify-end transition-opacity duration-200 opacity-0 group-hover:opacity-100 rounded-lg">
+                    <Button 
+                      size="sm" 
+                      variant="ghost" 
+                      className="mr-2 text-assist-blue hover:bg-assist-blue/10"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (onViewTask) {
+                          // Get task name without emoji
+                          const taskName = taskContent.replace(/^[\p{Emoji}\s]+/u, '').trim();
+                          onViewTask(taskName);
+                        }
+                      }}
+                    >
+                      <Eye className="h-3 w-3 mr-1" /> View
+                    </Button>
+                  </div>
+                )}
               </div>
             );
           })}

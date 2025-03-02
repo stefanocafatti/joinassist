@@ -74,13 +74,14 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
               showAllTasks={true} 
               favoriteTaskIds={favoriteTaskIds}
               onFavoriteToggle={onFavoriteToggle}
+              onViewTask={onBookNow}
             />
             
             <PastTasksSection 
               pastTasks={pastTasks} 
               favoriteTaskIds={favoriteTaskIds}
               onFavoriteToggle={onFavoriteToggle}
-              onViewTask={onBookNow} // Using onBookNow for the onViewTask functionality
+              onViewTask={onBookNow} 
             />
           </>
         );

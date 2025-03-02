@@ -1,3 +1,4 @@
+
 import { 
   Trash2, 
   Car, 
@@ -8,7 +9,8 @@ import {
   PartyPopper, 
   Star, 
   Briefcase,
-  Heart
+  Heart,
+  Eye
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CategoryCard from "../ui/CategoryCard";
@@ -19,12 +21,14 @@ interface TaskCategoriesProps {
   showAllTasks?: boolean;
   favoriteTaskIds?: string[];
   onFavoriteToggle?: (taskTitle: string) => void;
+  onViewTask?: (taskTitle: string) => void;
 }
 
 const TaskCategories = ({ 
   showAllTasks = false, 
   favoriteTaskIds = [], 
-  onFavoriteToggle
+  onFavoriteToggle,
+  onViewTask
 }: TaskCategoriesProps) => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -44,6 +48,12 @@ const TaskCategories = ({
   const handleLocalFavoriteToggle = (taskTitle: string) => {
     if (onFavoriteToggle) {
       onFavoriteToggle(taskTitle);
+    }
+  };
+
+  const handleViewTask = (taskTitle: string) => {
+    if (onViewTask) {
+      onViewTask(taskTitle);
     }
   };
 
@@ -376,7 +386,7 @@ const TaskCategories = ({
     <div 
       key={index} 
       className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 cursor-pointer relative"
-      onClick={() => console.log(`Viewing details for ${task.title}`)}
+      onClick={() => handleViewTask(task.title)}
     >
       <div className="relative">
         <div 
@@ -410,9 +420,10 @@ const TaskCategories = ({
             className="bg-assist-blue hover:bg-assist-blue/90"
             onClick={(e) => {
               e.stopPropagation();
+              handleViewTask(task.title);
             }}
           >
-            View Task
+            <Eye className="h-4 w-4 mr-1" /> View Task
           </Button>
         </div>
       </div>
