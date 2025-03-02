@@ -40,10 +40,10 @@ const Testimonials = () => {
     },
     {
       id: 4,
-      name: "Emma Wilson",
-      role: "NYU Student",
-      image: "https://randomuser.me/api/portraits/women/23.jpg",
-      quote: "The platform is incredibly user-friendly, and I love having full control over my schedule. I've been able to pay my rent and build valuable skills through the various tasks I complete. It's the perfect side gig for students.",
+      name: "Ian Noble",
+      role: "Columbia Student Athlete",
+      image: "/lovable-uploads/3b73310a-09b9-402c-a1c5-a7a4d0551cb8.png",
+      quote: "Assist has been incredibly helpful, and I love having full control over my schedule. I've been able to pay my rent and build valuable skills through the various tasks I complete. It's the perfect side gig for students.",
       isStudent: true
     }
   ];
