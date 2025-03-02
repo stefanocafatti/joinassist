@@ -228,7 +228,7 @@ const TaskDetailView = ({ isOpen, onClose, onTaskBooked, task }: TaskDetailViewP
                 Task Booked Successfully!
               </h3>
               <p className="text-green-700 mb-6">
-                Your request has been submitted. We'll notify you once a provider accepts.
+                Your request has been submitted. We'll notify you once a student accepts.
               </p>
               <Button
                 onClick={onClose}
