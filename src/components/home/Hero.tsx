@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Star, Sparkles } from "lucide-react";
@@ -19,7 +18,7 @@ const Hero = () => {
     "Coding a Website",
     "Personal Training",
     "DJing for my Event",
-    "Grocery Delivery",
+    "Delivering my Groceries",
     "Meal Prepping",
     "Watering my Plants",
     "Installing my TV Mount",
