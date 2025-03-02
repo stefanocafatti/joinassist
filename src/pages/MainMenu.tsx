@@ -173,13 +173,12 @@ const MainMenu = () => {
     }));
   };
 
+  // Remove toast notification when toggling favorites
   const handleFavoriteToggle = (taskTitle: string) => {
     setFavoriteTaskIds(prev => {
       if (prev.includes(taskTitle)) {
-        toast.success(`Removed ${taskTitle} from favorites`);
         return prev.filter(id => id !== taskTitle);
       } else {
-        toast.success(`Added ${taskTitle} to favorites`);
         return [...prev, taskTitle];
       }
     });
@@ -272,8 +271,6 @@ const MainMenu = () => {
   };
 
   const handleBookNow = (taskTitle: string) => {
-    console.log(`Opening task details for: ${taskTitle}`);
-    
     // Find the task in all possible sources
     const allTasks = [...recommendedTasks, ...(searchResults || [])];
     const task = allTasks.find(t => t.title === taskTitle);
@@ -285,9 +282,6 @@ const MainMenu = () => {
       addToRecentlyViewed(task);
     } else {
       console.error(`Task not found: ${taskTitle}`);
-      toast.error("Task not found", {
-        description: "We couldn't find the task you were looking for"
-      });
     }
   };
 
