@@ -1,10 +1,9 @@
 
 import { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, ChevronDown, ChevronUp, Briefcase, GraduationCap, Search, CheckCircle, ListChecks, FileEdit } from "lucide-react";
 import Logo from "../ui/Logo";
 import { Button } from "../ui/button";
-import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -197,12 +196,14 @@ const Navbar = () => {
           </div>
 
           <div className="hidden md:flex items-center space-x-4">
-            <Button 
-              variant="outline" 
-              className="rounded-xl border-assist-blue text-assist-blue hover:bg-assist-blue/10 hover:text-assist-blue"
-            >
-              Login
-            </Button>
+            <Link to="/login">
+              <Button 
+                variant="outline" 
+                className="rounded-xl border-assist-blue text-assist-blue hover:bg-assist-blue/10 hover:text-assist-blue"
+              >
+                Login
+              </Button>
+            </Link>
             <Button className="rounded-xl bg-assist-blue hover:bg-assist-blue/90 shadow-soft hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
               Get Started
             </Button>
@@ -279,12 +280,14 @@ const Navbar = () => {
             </div>
 
             <div className="pt-3 flex flex-col space-y-2">
-              <Button 
-                variant="outline" 
-                className="w-full rounded-xl border-assist-blue text-assist-blue hover:bg-assist-blue/10 hover:text-assist-blue"
-              >
-                Login
-              </Button>
+              <Link to="/login">
+                <Button 
+                  variant="outline" 
+                  className="w-full rounded-xl border-assist-blue text-assist-blue hover:bg-assist-blue/10 hover:text-assist-blue"
+                >
+                  Login
+                </Button>
+              </Link>
               <Button 
                 className="w-full rounded-xl bg-assist-blue hover:bg-assist-blue/90 shadow-soft transition-all duration-300"
               >
