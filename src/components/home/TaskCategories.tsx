@@ -22,7 +22,8 @@ interface TaskCategoriesProps {
 const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  
+  const [visibleTaskCount, setVisibleTaskCount] = useState<number>(9);
+
   const handleCategoryClick = (category: string) => {
     if (showAllTasks) {
       setSelectedCategory(category === selectedCategory ? null : category);
@@ -36,7 +37,14 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
     }
     console.log(`Category selected: ${category}`);
   };
-  
+
+  const handleLoadMore = () => {
+    setVisibleTaskCount(prev => prev + 6);
+    toast.success("Loading more tasks", {
+      description: "Showing additional tasks"
+    });
+  };
+
   const categories = [
     {
       icon: Trash2,
@@ -198,11 +206,11 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
       color: "bg-amber-50"
     }
   ];
-  
+
   const displayCategories = showAllTasks 
     ? [...categories, ...additionalCategories]
     : categories;
-    
+
   const taskListings = [
     {
       title: "Clean my Windows",
@@ -268,7 +276,82 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
       image: "/lovable-uploads/55ae04cd-8676-4a1c-b2b3-36c7005144af.png"
     }
   ];
-  
+
+  const additionalTaskListings = [
+    {
+      title: "Dog Walking Service",
+      category: "Pets",
+      description: "Regular walks for friendly dogs",
+      location: "Culver City",
+      image: "https://images.unsplash.com/photo-1541364983171-a8ba01e95cfc?q=80&w=1000&auto=format&fit=crop"
+    },
+    {
+      title: "Kitchen Deep Clean",
+      category: "Cleaning",
+      description: "Professional kitchen cleaning",
+      location: "Brentwood",
+      image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1000&auto=format&fit=crop"
+    },
+    {
+      title: "Food Delivery",
+      category: "Delivery",
+      description: "Restaurant food delivery service",
+      location: "Century City",
+      image: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1000&auto=format&fit=crop"
+    },
+    {
+      title: "TV Mounting",
+      category: "Assembly",
+      description: "Mount your TV on any wall type",
+      location: "West Hollywood",
+      image: "https://images.unsplash.com/photo-1593784991095-a205069533cd?q=80&w=1000&auto=format&fit=crop"
+    },
+    {
+      title: "Essay Proofreading",
+      category: "Academic Help",
+      description: "Professional proofreading service",
+      location: "UCLA Campus",
+      image: "https://images.unsplash.com/photo-1456324504439-367cee3b3c32?q=80&w=1000&auto=format&fit=crop"
+    },
+    {
+      title: "Website Development",
+      category: "Digital Services",
+      description: "Custom website creation",
+      location: "Remote",
+      image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1000&auto=format&fit=crop"
+    },
+    {
+      title: "Personal Training Session",
+      category: "Fitness & Wellness",
+      description: "One-on-one fitness training",
+      location: "Santa Monica Beach",
+      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=1000&auto=format&fit=crop"
+    },
+    {
+      title: "Birthday Party Planning",
+      category: "Event & Hospitality",
+      description: "Complete party planning service",
+      location: "Malibu",
+      image: "https://images.unsplash.com/photo-1496843916299-590492c751f4?q=80&w=1000&auto=format&fit=crop"
+    },
+    {
+      title: "Home Organization",
+      category: "Special Tasks",
+      description: "Decluttering and organization",
+      location: "Pacific Palisades",
+      image: "https://images.unsplash.com/photo-1484329081568-bed9ba42a5f5?q=80&w=1000&auto=format&fit=crop"
+    },
+    {
+      title: "Social Media Management",
+      category: "For Brands",
+      description: "Comprehensive social media services",
+      location: "Remote",
+      image: "https://images.unsplash.com/photo-1611162616475-46b635cb6868?q=80&w=1000&auto=format&fit=crop"
+    }
+  ];
+
+  const allTaskListings = [...taskListings, ...additionalTaskListings];
+
   const getCategoryColor = (category: string) => {
     const categoryColorMap: {[key: string]: string} = {
       "Cleaning": "bg-sky-100 text-sky-800",
@@ -286,7 +369,7 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
     
     return categoryColorMap[category] || "bg-gray-100 text-gray-800";
   };
-  
+
   const renderTaskCard = (task: any, index: number) => (
     <div 
       key={index} 
@@ -318,12 +401,16 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
       </div>
     </div>
   );
-  
+
   const filteredTaskListings = selectedCategory 
-    ? taskListings.filter(task => task.category === selectedCategory || 
+    ? allTaskListings.filter(task => task.category === selectedCategory || 
         (selectedCategory === "Transportation and Moving" && task.category === "Transportation"))
-    : taskListings;
-  
+    : allTaskListings;
+
+  const visibleTaskListings = filteredTaskListings.slice(0, visibleTaskCount);
+
+  const hasMoreTasks = visibleTaskCount < filteredTaskListings.length;
+
   return (
     <section id="all-tasks" className="py-6 bg-assist-gray/50 relative overflow-hidden">
       <div className="absolute inset-0 z-0 overflow-hidden">
@@ -379,9 +466,9 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
               </div>
             </div>
             
-            {filteredTaskListings.length > 0 ? (
+            {visibleTaskListings.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                {filteredTaskListings.map(renderTaskCard)}
+                {visibleTaskListings.map(renderTaskCard)}
               </div>
             ) : (
               <div className="text-center py-12 bg-white rounded-lg shadow-sm">
@@ -399,17 +486,14 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
           </>
         )}
         
-        {showAllTasks && (
+        {showAllTasks && hasMoreTasks && (
           <div className="mt-14 text-center">
             <Button 
               size="lg" 
               className="rounded-full bg-assist-blue hover:bg-assist-blue/90 text-white h-14 px-8 text-base"
-              onClick={() => {
-                setSelectedCategory(null);
-                handleCategoryClick("All");
-              }}
+              onClick={handleLoadMore}
             >
-              Browse All Tasks
+              Load More Tasks
             </Button>
           </div>
         )}
