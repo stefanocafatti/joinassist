@@ -192,13 +192,13 @@ const StoreTab: React.FC<StoreTabProps> = ({ assistPoints, onPointsUpdated }) =>
                   <div className="space-y-3">
                     <h3 className="font-semibold text-base">How to Earn Assist Points</h3>
                     <p className="text-sm text-gray-600">
-                      Earn Assist Points every time you book a task from a student. Points are awarded based on:
+                      Earn Assist Points every time you book a task from a student. Points are awarded as follows:
                     </p>
                     <ul className="text-sm text-gray-600 list-disc pl-5 space-y-1">
-                      <li>50 points for each completed task</li>
-                      <li>Additional points for higher value tasks</li>
-                      <li>Bonus points for 5-star ratings</li>
-                      <li>Earn points for referring friends</li>
+                      <li>10 points for each task booked</li>
+                      <li>Additional points based on the cost of the task</li>
+                      <li>Bonus points for referring friends to the app</li>
+                      <li>Special promotion points during campus events</li>
                     </ul>
                     <p className="text-sm text-gray-600 mt-2">
                       Redeem your points for exclusive rewards, discounts, and special offers!
