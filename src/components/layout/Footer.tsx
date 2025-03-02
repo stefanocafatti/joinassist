@@ -1,6 +1,5 @@
-
 import { Link } from "react-router-dom";
-import { Instagram, Twitter, Facebook, Linkedin, ArrowRight, Mail } from "lucide-react";
+import { Instagram, Linkedin, ArrowRight, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -20,12 +19,6 @@ const Footer = () => {
             <div className="flex space-x-5 pt-4">
               <a href="https://www.instagram.com/joinassist/" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-assist-blue transition-colors">
                 <Instagram size={20} />
-              </a>
-              <a href="#" className="text-gray-700 hover:text-assist-blue transition-colors">
-                <Twitter size={20} />
-              </a>
-              <a href="#" className="text-gray-700 hover:text-assist-blue transition-colors">
-                <Facebook size={20} />
               </a>
               <a href="https://www.linkedin.com/company/joinassist" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-assist-blue transition-colors">
                 <Linkedin size={20} />
@@ -60,6 +53,11 @@ const Footer = () => {
               <li>
                 <Link to="#testimonials" className="text-gray-800 hover:text-assist-blue transition-colors font-medium">
                   Testimonials
+                </Link>
+              </li>
+              <li>
+                <Link to="#faq" className="text-gray-800 hover:text-assist-blue transition-colors font-medium">
+                  FAQ
                 </Link>
               </li>
             </ul>
