@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CircleBlocks from "@/components/background/CircleBlocks";
@@ -47,31 +48,28 @@ const interestTags = [
   { id: "work", label: "Professional Help", icon: <Briefcase className="h-4 w-4 mr-1" /> },
 ];
 
-// Updated tasks with orderedCount
+// Updated tasks without price and priceType
 const recommendedTasks = [
   {
     title: "Dog Walking",
     description: "Regular walks for your furry friend",
     category: "Pets", 
     location: "Near Westwood",
-    image: "https://images.unsplash.com/photo-1541364983171-a8ba01e95cfc?q=80&w=1000&auto=format&fit=crop",
-    orderedCount: 27
+    image: "https://images.unsplash.com/photo-1541364983171-a8ba01e95cfc?q=80&w=1000&auto=format&fit=crop"
   },
   {
     title: "House Cleaning",
     description: "Get your space spotless",
     category: "Home", 
     location: "Campus Area",
-    image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1000&auto=format&fit=crop",
-    orderedCount: 43
+    image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1000&auto=format&fit=crop"
   },
   {
     title: "Grocery Delivery",
     description: "Get groceries delivered to your door",
     category: "Delivery", 
     location: "Santa Monica",
-    image: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1000&auto=format&fit=crop",
-    orderedCount: 18
+    image: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1000&auto=format&fit=crop"
   }
 ];
 
@@ -121,8 +119,8 @@ const MainMenu = () => {
   const [userInterests, setUserInterests] = useState<string[]>([]);
   const [userName, setUserName] = useState(mockUser.firstName);
   const [user, setUser] = useState(mockUser);
-  const [showWelcome, setShowWelcome] = useState(false);
-  const [activeTab, setActiveTab] = useState("allTasks");
+  const [showWelcome, setShowWelcome] = useState(false); // Set to false by default
+  const [activeTab, setActiveTab] = useState("allTasks"); // Changed to allTasks as default
   const [searchResults, setSearchResults] = useState<typeof recommendedTasks | null>(null);
   const [searchPerformed, setSearchPerformed] = useState(false);
   const [selectedTask, setSelectedTask] = useState<(typeof recommendedTasks)[0] | null>(null);
@@ -143,10 +141,13 @@ const MainMenu = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  // Function to add a task to recently viewed
   const addToRecentlyViewed = (task: (typeof recommendedTasks)[0]) => {
     setRecentlyViewedTasks(prev => {
+      // Remove the task if it already exists (to avoid duplicates)
       const filteredTasks = prev.filter(t => t.title !== task.title);
-      return [task, ...filteredTasks].slice(0, 5);
+      // Add the task to the beginning of the array (most recent first)
+      return [task, ...filteredTasks].slice(0, 5); // Keep only the 5 most recent tasks
     });
   };
 
@@ -221,14 +222,18 @@ const MainMenu = () => {
   };
 
   const handleBookNow = (taskTitle: string) => {
+    // Find the task in all possible sources
     const allTasks = [
       ...recommendedTasks,
       ...(searchResults || [])
     ];
 
+    // Look through TaskCategories component's task listings if not found in main tasks
     let task = allTasks.find(t => t.title === taskTitle);
     
+    // If not found in the main arrays, check in the task listings from TaskCategories
     if (!task) {
+      // Import task listings from the TaskCategories component
       const taskListings = [
         {
           title: "Clean my Windows",
@@ -293,6 +298,7 @@ const MainMenu = () => {
           location: "Marina Del Rey",
           image: "/lovable-uploads/55ae04cd-8676-4a1c-b2b3-36c7005144af.png"
         },
+        // Include additional task listings
         {
           title: "Dog Walking Service",
           category: "Pets",
@@ -339,7 +345,9 @@ const MainMenu = () => {
       
       task = taskListings.find(t => t.title === taskTitle);
       
+      // Also check the tasks from category view
       if (!task) {
+        // Extract task titles from categories
         const categoryTasks = [
           "Wash my Car", "Clean my Garage", "Clean my Room", "Deep Clean Apartment", "Post Event Clean Up",
           "Moving Assistance", "Help with Loading Items", "Drive me to a Location", "Drop or Pick up a Package", "Bike/Scooter Delivery",
@@ -355,15 +363,18 @@ const MainMenu = () => {
           "Package Drop-off", "Shopping Assistant", "Prescription Pickup", "Mail Collection", "Bank Deposit Run"
         ];
         
+        // If this is a task title without description, create a default task
         if (categoryTasks.includes(taskTitle) || categoryTasks.includes(taskTitle.replace(/^[\p{Emoji}\s]+/u, '').trim())) {
+          // Clean up the task title (remove emojis)
           const cleanTitle = taskTitle.replace(/^[\p{Emoji}\s]+/u, '').trim();
           
+          // Create a default task object
           task = {
             title: cleanTitle,
             description: `Help needed with ${cleanTitle}`,
-            category: "Special Tasks",
-            location: "Los Angeles",
-            image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?q=80&w=1000&auto=format&fit=crop"
+            category: "Special Tasks", // Default category
+            location: "Los Angeles", // Default location
+            image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?q=80&w=1000&auto=format&fit=crop" // Default image
           };
         }
       }
@@ -372,6 +383,7 @@ const MainMenu = () => {
     if (task) {
       setSelectedTask(task);
       setIsTaskDetailOpen(true);
+      // Add to recently viewed when viewing task details
       addToRecentlyViewed(task);
     } else {
       console.error(`Task not found: ${taskTitle}`);
@@ -387,6 +399,7 @@ const MainMenu = () => {
     location?: string,
     additionalInfo?: string
   ) => {
+    // Add fixed points instead of calculating from task price
     const pointsToAdd = 50;
     
     setAssistPoints(prevPoints => prevPoints + pointsToAdd);
@@ -396,6 +409,7 @@ const MainMenu = () => {
       assistPoints: prevUser.assistPoints + pointsToAdd
     }));
 
+    // Add the task to submitted requests
     const newRequest = {
       id: Math.random().toString(36).substr(2, 9),
       title: taskTitle,
@@ -407,18 +421,23 @@ const MainMenu = () => {
       additionalInfo
     };
     
+    // Update the submitted requests list
     setSubmittedRequests(prevRequests => [newRequest, ...prevRequests]);
     
+    // Close the task detail modal
     setIsTaskDetailOpen(false);
     
+    // Switch to the requests tab to show the new submission
     setActiveTab("requests");
     
+    // Show toast notification for successful booking
     toast({
       title: "Task Request Submitted",
       description: `Your request for ${taskTitle} has been submitted successfully.`,
       duration: 3000,
     });
     
+    // Show notification toast if enabled
     if (notificationsEnabled) {
       setTimeout(() => {
         toast({
@@ -431,15 +450,17 @@ const MainMenu = () => {
   };
 
   const getFavoriteListings = () => {
+    // Include all possible sources for tasks
     const allTasks = [...recommendedTasks, ...(searchResults || [])];
     
+    // Get all tasks that match the favorited IDs
     return allTasks.filter(task => favoriteTaskIds.includes(task.title));
   };
 
   const toggleFavoriteView = () => {
     setShowFavorites(!showFavorites);
     if (!showFavorites) {
-      setActiveTab("favorites");
+      setActiveTab("favorites"); // Set the active tab to favorites when showing favorites
     } else {
       setActiveTab("home");
     }
@@ -471,7 +492,7 @@ const MainMenu = () => {
         notificationsEnabled={notificationsEnabled}
         onToggleNotifications={handleToggleNotifications}
       />;
-    } else if (activeTab === "rewards") {
+    } else if (activeTab === "rewards") { // Changed from "store" to "rewards"
       return <StoreTab 
         assistPoints={assistPoints} 
         onPointsUpdated={handlePointsUpdated} 

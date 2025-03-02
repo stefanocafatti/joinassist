@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Heart, Eye, Coins, Users } from "lucide-react";
+import { Heart, Eye, Coins } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -12,7 +12,6 @@ interface Task {
   category: string;
   location: string;
   image: string;
-  orderedCount?: number;
 }
 
 interface RecommendedTasksSectionProps {
@@ -70,17 +69,11 @@ const RecommendedTasksSection: React.FC<RecommendedTasksSectionProps> = ({
                   className={`h-5 w-5 ${favoriteTaskIds.includes(task.title) ? 'fill-red-500 text-red-500' : 'text-white'}`} 
                 />
               </button>
-              <div className="absolute bottom-3 left-3 flex flex-col gap-2">
+              <div className="absolute bottom-3 left-3">
                 <Badge className="bg-amber-100 text-amber-800 flex items-center gap-1">
                   <Coins className="h-3 w-3" />
                   <span>Earn points</span>
                 </Badge>
-                {task.orderedCount !== undefined && task.orderedCount > 0 && (
-                  <Badge className="bg-blue-100 text-blue-800 flex items-center gap-1">
-                    <Users className="h-3 w-3" />
-                    <span>Ordered {task.orderedCount} times</span>
-                  </Badge>
-                )}
               </div>
             </div>
             <div className="p-4">
