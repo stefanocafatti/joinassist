@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Star, Sparkles } from "lucide-react";
@@ -87,6 +86,14 @@ const Hero = () => {
     {
       src: "/lovable-uploads/d3cfa02f-5bf5-438d-b0bd-97a6beb2ba63.png",
       alt: "Student doing woodwork"
+    },
+    {
+      src: "/lovable-uploads/e67a50a7-d7a9-4d4a-bdc8-b311dd1abaf4.png",
+      alt: "Student doing laundry"
+    },
+    {
+      src: "/lovable-uploads/d4510528-0536-44c5-9297-f0665996da4f.png",
+      alt: "Student DJ at a festival"
     }
   ];
 

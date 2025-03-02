@@ -1,6 +1,7 @@
 
 import { useState } from "react";
-import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
+import { Quote } from "lucide-react";
+import ImageSlideshow from "@/components/ui/ImageSlideshow";
 
 interface Testimonial {
   id: number;
@@ -48,17 +49,13 @@ const Testimonials = () => {
   ];
   
   const [activeIndex, setActiveIndex] = useState(0);
-  const [direction, setDirection] = useState<'left' | 'right' | null>(null);
   
-  const nextTestimonial = () => {
-    setDirection('right');
-    setActiveIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
-  };
-  
-  const prevTestimonial = () => {
-    setDirection('left');
-    setActiveIndex((prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length);
-  };
+  // Convert testimonials to slideshow format
+  const testimonialSlides = testimonials.map(testimonial => ({
+    src: testimonial.image,
+    alt: `Portrait of ${testimonial.name}`,
+    content: testimonial
+  }));
   
   return (
     <section id="testimonials" className="py-20 bg-white overflow-hidden">
@@ -76,22 +73,7 @@ const Testimonials = () => {
                 From busy professionals to hardworking students, discover how Assist is creating value for everyone involved.
               </p>
               
-              <div className="flex items-center space-x-4">
-                <button 
-                  onClick={prevTestimonial}
-                  className="w-12 h-12 bg-gray-100 hover:bg-assist-blue/10 rounded-full flex items-center justify-center transition-colors"
-                  aria-label="Previous testimonial"
-                >
-                  <ChevronLeft className="text-gray-700" />
-                </button>
-                <button 
-                  onClick={nextTestimonial}
-                  className="w-12 h-12 bg-gray-100 hover:bg-assist-blue/10 rounded-full flex items-center justify-center transition-colors"
-                  aria-label="Next testimonial"
-                >
-                  <ChevronRight className="text-gray-700" />
-                </button>
-              </div>
+              {/* Removed navigation buttons as they're now in the slideshow component */}
             </div>
           </div>
           
@@ -103,13 +85,7 @@ const Testimonials = () => {
                   className={`absolute top-0 left-0 w-full transition-all duration-500 ${
                     index === activeIndex 
                       ? "opacity-100 translate-x-0 scale-100 z-20" 
-                      : "opacity-0 scale-95 z-10 " + 
-                        (direction === 'right' 
-                          ? "-translate-x-full" 
-                          : direction === 'left' 
-                            ? "translate-x-full" 
-                            : ""
-                        )
+                      : "opacity-0 scale-95 z-10"
                   }`}
                 >
                   <div className={`rounded-2xl shadow-elevation p-8 relative overflow-hidden ${

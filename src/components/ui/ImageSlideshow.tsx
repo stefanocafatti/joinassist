@@ -20,6 +20,8 @@ const ImageSlideshow = ({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
 
   const goToNext = useCallback(() => {
     setIsTransitioning(true);
@@ -36,6 +38,27 @@ const ImageSlideshow = ({
       setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
     }, 300);
   }, [images.length]);
+
+  // Handle swipe gestures
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+  
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+  
+  const handleTouchEnd = () => {
+    if (touchStart - touchEnd > 50) {
+      // Swipe left, go to next slide
+      goToNext();
+    }
+    
+    if (touchEnd - touchStart > 50) {
+      // Swipe right, go to previous slide
+      goToPrevious();
+    }
+  };
 
   // Preload all images
   useEffect(() => {
@@ -65,7 +88,12 @@ const ImageSlideshow = ({
   };
 
   return (
-    <div className={cn("relative w-full h-full overflow-hidden rounded-2xl", className)}>
+    <div 
+      className={cn("relative w-full h-full overflow-hidden rounded-2xl", className)}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
       {/* Navigation buttons */}
       <button 
         onClick={(e) => {
@@ -131,6 +159,21 @@ const ImageSlideshow = ({
           />
         ))}
       </div>
+      
+      <style jsx global>{`
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        
+        .image-loaded {
+          animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        .image-loading {
+          opacity: 0.7;
+        }
+      `}</style>
     </div>
   );
 };
