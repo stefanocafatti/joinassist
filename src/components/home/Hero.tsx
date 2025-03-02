@@ -63,7 +63,7 @@ const Hero = () => {
   };
 
   const handleJoinAsStudent = () => {
-    navigate("/register");
+    navigate("/register", { state: { isStudent: true } });
   };
 
   useEffect(() => {

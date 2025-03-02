@@ -2,9 +2,19 @@ import { useState } from "react";
 import { CheckCircle2, GraduationCap, DollarSign, Heart, Clock, UserCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
 
 const Benefits = () => {
   const [activeView, setActiveView] = useState<"students" | "requesters">("students");
+  const navigate = useNavigate();
+
+  const handleRegularSignup = () => {
+    navigate("/register");
+  };
+
+  const handleStudentSignup = () => {
+    navigate("/register", { state: { isStudent: true } });
+  };
 
   const benefitsData = {
     students: {
@@ -75,7 +85,6 @@ const Benefits = () => {
             Our platform creates opportunities for students while solving everyday challenges for busy people
           </p>
           
-          {/* Toggle switch */}
           <div className="inline-flex bg-gray-100 p-1.5 rounded-full shadow-sm mb-6">
             <button
               onClick={() => setActiveView("students")}
@@ -136,6 +145,7 @@ const Benefits = () => {
               <Button 
                 size="lg"
                 className={`rounded-full ${currentData.buttonColor} text-white px-8 py-6 h-14 text-base font-medium shadow-sm hover:translate-y-[-2px] transition-all`}
+                onClick={activeView === "students" ? handleStudentSignup : handleRegularSignup}
               >
                 {currentData.cta}
               </Button>

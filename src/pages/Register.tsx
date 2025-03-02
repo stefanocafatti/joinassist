@@ -1,6 +1,6 @@
 
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,6 +19,14 @@ const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isStudentRegistration, setIsStudentRegistration] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Check for isStudent in location state when component mounts
+  useEffect(() => {
+    if (location.state?.isStudent) {
+      setIsStudentRegistration(true);
+    }
+  }, [location.state]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
