@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -166,24 +165,22 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
                   style={{ backgroundImage: `url(${getTaskImage(task)})` }}
                 />
                 <button 
-                  className="absolute top-3 right-3"
+                  className="absolute top-3 right-3 p-1 rounded-full bg-white/80 hover:bg-white transition-colors"
                   onClick={(e) => {
                     e.stopPropagation();
                     onFavoriteToggle(task.title);
                   }}
                 >
                   <Heart 
-                    className={`h-5 w-5 ${favoriteTaskIds.includes(task.title) ? 'fill-red-500 text-red-500' : 'text-gray-500'}`} 
+                    className={`h-5 w-5 ${favoriteTaskIds.includes(task.title) ? 'fill-red-500 text-red-500' : 'text-gray-600'}`} 
                   />
                 </button>
-                {task.pointsEarned && (
-                  <div className="absolute bottom-3 left-3">
-                    <Badge className="bg-assist-blue/80 text-white flex items-center">
-                      <Coins className="h-3 w-3 mr-1" />
-                      Earn {task.pointsEarned} points
-                    </Badge>
-                  </div>
-                )}
+                <div className="absolute bottom-3 left-3">
+                  <Badge className="bg-amber-100 text-amber-800 flex items-center gap-1">
+                    <Coins className="h-3 w-3" />
+                    <span>Earn points</span>
+                  </Badge>
+                </div>
               </div>
               <div className="p-4">
                 <div className="flex justify-between items-start mb-2">
