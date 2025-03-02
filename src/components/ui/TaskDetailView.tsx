@@ -134,7 +134,7 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[550px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[550px] max-h-[90vh] overflow-y-auto bg-white">
         <DialogHeader>
           <DialogTitle className="text-xl">{task.title}</DialogTitle>
         </DialogHeader>
@@ -171,7 +171,7 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
                         {date ? format(date, "PPP") : <span>Pick a date</span>}
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
+                    <PopoverContent className="w-auto p-0 bg-white" align="start">
                       <Calendar
                         mode="single"
                         selected={date}
@@ -191,7 +191,7 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
                     <SelectTrigger id="time">
                       <SelectValue placeholder="Select Time" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-white">
                       {times.map((t) => (
                         <SelectItem key={t} value={t}>
                           {t}
@@ -249,7 +249,7 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
               {/* Additional Information */}
               <div className="space-y-2">
                 <Label htmlFor="additionalInfo" className="flex items-center gap-2">
-                  <Info className="h-4 w-4" /> Additional Information
+                  <Info className="h-4 w-4" /> Additional Notes
                 </Label>
                 <Textarea
                   id="additionalInfo"
