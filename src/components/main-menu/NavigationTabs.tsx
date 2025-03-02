@@ -18,7 +18,7 @@ const NavigationTabs: React.FC<NavigationTabsProps> = ({
 }) => {
   const navigate = useNavigate();
 
-  // Define the tabs in the desired order (4 above, 2 below)
+  // Define the tabs in the new order (3 above, 3 below)
   const topTabs = [
     {
       name: "allTasks",
@@ -52,7 +52,10 @@ const NavigationTabs: React.FC<NavigationTabsProps> = ({
       activeShadow: "shadow-pink-200",
       hoverBg: "hover:bg-pink-100",
       hoverText: "hover:text-pink-800"
-    },
+    }
+  ];
+  
+  const bottomTabs = [
     {
       name: "messages",
       label: "Messages",
@@ -63,10 +66,7 @@ const NavigationTabs: React.FC<NavigationTabsProps> = ({
       activeShadow: "shadow-violet-200",
       hoverBg: "hover:bg-violet-100",
       hoverText: "hover:text-violet-800"
-    }
-  ];
-  
-  const bottomTabs = [
+    },
     {
       name: "rewards",
       label: "Rewards",
@@ -103,7 +103,7 @@ const NavigationTabs: React.FC<NavigationTabsProps> = ({
 
   const renderTabRow = (tabs: typeof topTabs) => {
     return (
-      <div className="grid grid-cols-4 gap-2">
+      <div className="grid grid-cols-3 gap-2">
         {tabs.map((tab) => {
           const isActive = activeTab === tab.name;
           const colorClasses = getColorClasses(isActive, tab);
@@ -150,36 +150,7 @@ const NavigationTabs: React.FC<NavigationTabsProps> = ({
     <div className="mb-6 p-3 bg-white/80 backdrop-blur-sm rounded-xl shadow-sm">
       <div className="flex flex-col space-y-2">
         {renderTabRow(topTabs)}
-        <div className="grid grid-cols-2 gap-2">
-          {bottomTabs.map((tab) => {
-            const isActive = activeTab === tab.name;
-            const colorClasses = getColorClasses(isActive, tab);
-            
-            const handleClick = () => {
-              onTabChange(tab.name);
-            };
-            
-            return (
-              <button
-                key={tab.name}
-                className={`relative flex items-center justify-center p-2 rounded-lg transition-all duration-200 transform ${isActive ? 'scale-105' : 'scale-100'} ${colorClasses.bg} ${colorClasses.text} ${colorClasses.shadow} ${!isActive ? colorClasses.hover : ''} border border-${tab.color}-100`}
-                onClick={handleClick}
-                aria-current={isActive ? "page" : undefined}
-              >
-                <div className="flex flex-col items-center justify-center space-y-1">
-                  {React.createElement(tab.icon, {
-                    className: `h-5 w-5 ${isActive ? 'animate-pulse' : ''}`
-                  })}
-                  <span className="text-xs font-medium">{tab.label}</span>
-                </div>
-                
-                {isActive && (
-                  <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-white rounded-full -mb-0.5"></span>
-                )}
-              </button>
-            );
-          })}
-        </div>
+        {renderTabRow(bottomTabs)}
       </div>
     </div>
   );
