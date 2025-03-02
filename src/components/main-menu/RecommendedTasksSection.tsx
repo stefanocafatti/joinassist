@@ -10,8 +10,6 @@ interface Task {
   category: string;
   location: string;
   image: string;
-  price: number;
-  priceType: string;
   pointsEarned?: number;
 }
 

@@ -1,3 +1,4 @@
+
 import { 
   Trash2, 
   Car, 
@@ -16,7 +17,11 @@ import CategoryCard from "../ui/CategoryCard";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
-const TaskCategories = () => {
+interface TaskCategoriesProps {
+  showAllTasks?: boolean;
+}
+
+const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
   const navigate = useNavigate();
   
   const handleCategoryClick = (category: string) => {
@@ -158,46 +163,96 @@ const TaskCategories = () => {
       color: "bg-indigo-50"
     }
   ];
+
+  // Additional categories to show when "Load More" is clicked
+  const additionalCategories = [
+    {
+      icon: Trash2,
+      title: "Home Maintenance",
+      description: "Keep your home in shape",
+      tasks: [
+        "🔧 Fix a Leaky Faucet",
+        "🔌 Install Light Fixtures",
+        "🧰 Hang Pictures/Shelves",
+        "🧹 Gutter Cleaning",
+        "🪴 Gardening and Lawn Care"
+      ],
+      color: "bg-cyan-50"
+    },
+    {
+      icon: Car,
+      title: "Vehicle Care",
+      description: "Keep your car running smoothly",
+      tasks: [
+        "🚗 Drive Car to Service",
+        "🧽 Interior Car Detailing",
+        "💦 Car Wash & Waxing",
+        "🔧 Help with Tire Change",
+        "🔋 Jump Start Battery"
+      ],
+      color: "bg-lime-50"
+    },
+    {
+      icon: Package,
+      title: "Delivery & Errands",
+      description: "Save time on daily tasks",
+      tasks: [
+        "📦 Package Drop-off",
+        "🛒 Shopping Assistant",
+        "💊 Prescription Pickup",
+        "📨 Mail Collection",
+        "🏦 Bank Deposit Run"
+      ],
+      color: "bg-amber-50"
+    }
+  ];
+  
+  // Combine all categories when showAllTasks is true
+  const displayCategories = showAllTasks 
+    ? [...categories, ...additionalCategories]
+    : categories;
   
   return (
-    <section id="all-tasks" className="py-16 bg-assist-gray/50 relative overflow-hidden">
+    <section id="all-tasks" className="py-6 bg-assist-gray/50 relative overflow-hidden">
       <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute -top-24 -right-24 w-96 h-96 bg-assist-blue/5 rounded-full opacity-70" />
         <div className="absolute bottom-0 left-1/4 w-64 h-64 bg-blue-100/30 rounded-full opacity-60" />
       </div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-1 py-1 px-4 rounded-full bg-assist-blue/10 text-assist-blue text-sm font-medium mb-4">
-            Many Skills, One Platform
-          </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Explore Task Categories
-          </h2>
-          <p className="text-lg text-gray-600 mb-8">
-            From cleaning to coding, our vetted students can assist you with any task you need completed
-          </p>
-          
-          <form onSubmit={handleSearch} className="max-w-xl mx-auto mb-12">
-            <div className="relative flex items-center">
-              <Input 
-                type="text" 
-                name="searchQuery"
-                placeholder="What do you need help with?"
-                className="pr-12 h-14 rounded-full border-2 border-assist-blue/30 shadow-md bg-white focus:border-assist-blue focus:ring-2 focus:ring-assist-blue/20 text-base placeholder:text-assist-blue/60"
-              />
-              <button 
-                type="submit" 
-                className="absolute right-4 text-assist-blue hover:text-assist-blue/80 transition-colors"
-              >
-                <Search className="h-5 w-5" />
-              </button>
+        {!showAllTasks && (
+          <div className="text-center max-w-3xl mx-auto mb-8">
+            <div className="inline-flex items-center gap-1 py-1 px-4 rounded-full bg-assist-blue/10 text-assist-blue text-sm font-medium mb-4">
+              Many Skills, One Platform
             </div>
-          </form>
-        </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Explore Task Categories
+            </h2>
+            <p className="text-lg text-gray-600 mb-8">
+              From cleaning to coding, our vetted students can assist you with any task you need completed
+            </p>
+            
+            <form onSubmit={handleSearch} className="max-w-xl mx-auto mb-8">
+              <div className="relative flex items-center">
+                <Input 
+                  type="text" 
+                  name="searchQuery"
+                  placeholder="What do you need help with?"
+                  className="pr-12 h-14 rounded-full border-2 border-assist-blue/30 shadow-md bg-white focus:border-assist-blue focus:ring-2 focus:ring-assist-blue/20 text-base placeholder:text-assist-blue/60"
+                />
+                <button 
+                  type="submit" 
+                  className="absolute right-4 text-assist-blue hover:text-assist-blue/80 transition-colors"
+                >
+                  <Search className="h-5 w-5" />
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {categories.map((category, index) => (
+          {displayCategories.map((category, index) => (
             <div key={index} onClick={() => handleCategoryClick(category.title)} className="h-full cursor-pointer">
               <CategoryCard
                 icon={category.icon}
@@ -210,15 +265,17 @@ const TaskCategories = () => {
           ))}
         </div>
         
-        <div className="mt-14 text-center">
-          <Button 
-            size="lg" 
-            className="rounded-full bg-assist-blue hover:bg-assist-blue/90 text-white h-14 px-8 text-base"
-            onClick={() => handleCategoryClick("All")}
-          >
-            Browse All Tasks
-          </Button>
-        </div>
+        {showAllTasks && (
+          <div className="mt-14 text-center">
+            <Button 
+              size="lg" 
+              className="rounded-full bg-assist-blue hover:bg-assist-blue/90 text-white h-14 px-8 text-base"
+              onClick={() => handleCategoryClick("All")}
+            >
+              Browse All Tasks
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );

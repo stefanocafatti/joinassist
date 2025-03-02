@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -46,6 +47,7 @@ const interestTags = [
   { id: "work", label: "Professional Help", icon: <Briefcase className="h-4 w-4 mr-1" /> },
 ];
 
+// Updated tasks without price and priceType to fix type errors
 const recommendedTasks = [
   {
     title: "Dog Walking",

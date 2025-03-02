@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import InterestsSection from "./InterestsSection";
 import SearchResultsSection from "./SearchResultsSection";
@@ -6,6 +7,7 @@ import RecentSearchesSection from "./RecentSearchesSection";
 import PastTasksSection from "./PastTasksSection";
 import CategoriesSection from "./CategoriesSection";
 import HomeNavigation from "./HomeNavigation";
+import { Button } from "@/components/ui/button";
 
 interface Task {
   title: string;
@@ -65,6 +67,7 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
   onSearchClick
 }) => {
   const [activeSection, setActiveSection] = useState<string>("categories");
+  const [showAllTasks, setShowAllTasks] = useState(false);
   
   const tasksWithPoints = recommendedTasks.map(task => ({
     ...task,
@@ -77,6 +80,10 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
         pointsEarned: 50 // Fixed points earned value instead of price-based calculation
       }))
     : null;
+  
+  const handleLoadMoreTasks = () => {
+    setShowAllTasks(true);
+  };
   
   const renderSectionContent = () => {
     if (searchPerformed) {
@@ -95,43 +102,141 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
     
     switch (activeSection) {
       case "categories":
-        return <CategoriesSection />;
+        return (
+          <>
+            <CategoriesSection showAllTasks={showAllTasks} />
+            
+            {!showAllTasks && (
+              <div className="mt-8 text-center">
+                <Button 
+                  onClick={handleLoadMoreTasks}
+                  className="bg-assist-blue hover:bg-assist-blue/90 text-white rounded-full px-8 py-2"
+                >
+                  Load More Tasks
+                </Button>
+              </div>
+            )}
+            
+            <div className="mt-10 bg-gray-50 rounded-xl p-8 text-center border border-gray-200">
+              <div className="max-w-md mx-auto">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Didn't find what you were looking for?</h3>
+                <p className="text-gray-600 mb-6">
+                  We can help you with custom tasks that aren't listed above.
+                </p>
+                <Button 
+                  onClick={onRequestTask}
+                  className="bg-assist-blue hover:bg-assist-blue/90"
+                >
+                  Request a Task
+                </Button>
+              </div>
+            </div>
+          </>
+        );
       case "recommended":
         return (
-          <RecommendedTasksSection 
-            tasks={tasksWithPoints}
-            favoriteTaskIds={favoriteTaskIds}
-            onFavoriteToggle={onFavoriteToggle}
-            onBookNow={onBookNow}
-          />
+          <>
+            <RecommendedTasksSection 
+              tasks={tasksWithPoints}
+              favoriteTaskIds={favoriteTaskIds}
+              onFavoriteToggle={onFavoriteToggle}
+              onBookNow={onBookNow}
+            />
+            
+            <div className="mt-10 bg-gray-50 rounded-xl p-8 text-center border border-gray-200">
+              <div className="max-w-md mx-auto">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Didn't find what you were looking for?</h3>
+                <p className="text-gray-600 mb-6">
+                  We can help you with custom tasks that aren't listed above.
+                </p>
+                <Button 
+                  onClick={onRequestTask}
+                  className="bg-assist-blue hover:bg-assist-blue/90"
+                >
+                  Request a Task
+                </Button>
+              </div>
+            </div>
+          </>
         );
       case "searches":
         return (
-          <RecentSearchesSection 
-            recentSearches={recentSearches}
-            onSearchClick={onSearchClick}
-          />
+          <>
+            <RecentSearchesSection 
+              recentSearches={recentSearches}
+              onSearchClick={onSearchClick}
+            />
+            
+            <div className="mt-10 bg-gray-50 rounded-xl p-8 text-center border border-gray-200">
+              <div className="max-w-md mx-auto">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Didn't find what you were looking for?</h3>
+                <p className="text-gray-600 mb-6">
+                  We can help you with custom tasks that aren't listed above.
+                </p>
+                <Button 
+                  onClick={onRequestTask}
+                  className="bg-assist-blue hover:bg-assist-blue/90"
+                >
+                  Request a Task
+                </Button>
+              </div>
+            </div>
+          </>
         );
       case "pastTasks":
         return (
-          <PastTasksSection 
-            pastTasks={pastTasks}
-            favoriteTaskIds={favoriteTaskIds}
-            onFavoriteToggle={onFavoriteToggle}
-            onViewTask={onBookNow}
-          />
+          <>
+            <PastTasksSection 
+              pastTasks={pastTasks}
+              favoriteTaskIds={favoriteTaskIds}
+              onFavoriteToggle={onFavoriteToggle}
+              onViewTask={onBookNow}
+            />
+            
+            <div className="mt-10 bg-gray-50 rounded-xl p-8 text-center border border-gray-200">
+              <div className="max-w-md mx-auto">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Didn't find what you were looking for?</h3>
+                <p className="text-gray-600 mb-6">
+                  We can help you with custom tasks that aren't listed above.
+                </p>
+                <Button 
+                  onClick={onRequestTask}
+                  className="bg-assist-blue hover:bg-assist-blue/90"
+                >
+                  Request a Task
+                </Button>
+              </div>
+            </div>
+          </>
         );
       case "recent":
         return (
-          <RecommendedTasksSection 
-            tasks={tasksWithPoints.slice().reverse()}
-            favoriteTaskIds={favoriteTaskIds}
-            onFavoriteToggle={onFavoriteToggle}
-            onBookNow={onBookNow}
-          />
+          <>
+            <RecommendedTasksSection 
+              tasks={tasksWithPoints.slice().reverse()}
+              favoriteTaskIds={favoriteTaskIds}
+              onFavoriteToggle={onFavoriteToggle}
+              onBookNow={onBookNow}
+            />
+            
+            <div className="mt-10 bg-gray-50 rounded-xl p-8 text-center border border-gray-200">
+              <div className="max-w-md mx-auto">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Didn't find what you were looking for?</h3>
+                <p className="text-gray-600 mb-6">
+                  We can help you with custom tasks that aren't listed above.
+                </p>
+                <Button 
+                  onClick={onRequestTask}
+                  className="bg-assist-blue hover:bg-assist-blue/90"
+                >
+                  Request a Task
+                </Button>
+              </div>
+            </div>
+          </>
         );
       default:
-        return <CategoriesSection />;
+        return <CategoriesSection showAllTasks={false} />;
     }
   };
   
