@@ -84,11 +84,6 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="#digital" className="text-gray-800 hover:text-assist-blue transition-colors font-medium">
-                  Digital Services
-                </Link>
-              </li>
-              <li>
                 <Link to="#more-tasks" className="text-gray-800 hover:text-assist-blue flex items-center gap-1 font-medium">
                   More Categories <ArrowRight size={14} />
                 </Link>
