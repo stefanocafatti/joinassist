@@ -4,7 +4,6 @@ import SearchResultsSection from "./SearchResultsSection";
 import RecommendedTasksSection from "./RecommendedTasksSection";
 import InterestsSection from "./InterestsSection";
 import PastTasksSection from "./PastTasksSection";
-import CategoriesSection from "./CategoriesSection";
 
 interface Task {
   title: string;
@@ -73,8 +72,6 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
             userInterests={userInterests}
             onToggleInterest={onToggleInterest}
           />
-          
-          <CategoriesSection />
           
           <RecommendedTasksSection
             tasks={recommendedTasks}
