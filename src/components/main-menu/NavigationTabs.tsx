@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Home, ClipboardList, Heart, User, Store } from "lucide-react";
+import { Home, ClipboardList, Heart, User, Store, Grid } from "lucide-react";
 
 interface NavigationTabsProps {
   activeTab: string;
@@ -40,6 +40,10 @@ const NavigationTabs: React.FC<NavigationTabsProps> = ({
       profile: {
         active: "border-blue-600 text-blue-600 bg-blue-50",
         inactive: "border-transparent text-gray-500 hover:text-blue-600 hover:bg-blue-50/50"
+      },
+      allTasks: {
+        active: "border-purple-600 text-purple-600 bg-purple-50",
+        inactive: "border-transparent text-gray-500 hover:text-purple-600 hover:bg-purple-50/50"
       }
     };
     
@@ -47,7 +51,7 @@ const NavigationTabs: React.FC<NavigationTabsProps> = ({
   };
 
   return (
-    <div className="flex flex-wrap border-b border-gray-200 mb-8 bg-white rounded-xl shadow-sm">
+    <div className="flex flex-wrap border-b border-gray-200 mb-8 bg-white rounded-xl shadow-sm overflow-auto">
       <button
         className={getTabStyles("home")}
         onClick={() => {
@@ -77,6 +81,16 @@ const NavigationTabs: React.FC<NavigationTabsProps> = ({
       >
         <Heart className={`h-5 w-5 ${activeTab === "favorites" ? "text-pink-600" : "text-gray-500"}`} />
         <span className="hidden sm:inline">Favorites</span>
+      </button>
+      <button
+        className={getTabStyles("allTasks")}
+        onClick={() => {
+          onTabChange("allTasks");
+          if (showFavorites) onToggleFavoriteView();
+        }}
+      >
+        <Grid className={`h-5 w-5 ${activeTab === "allTasks" ? "text-purple-600" : "text-gray-500"}`} />
+        <span className="hidden sm:inline">All Tasks</span>
       </button>
       <button
         className={getTabStyles("store")}

@@ -15,6 +15,7 @@ import RequestsTab from "@/components/main-menu/RequestsTab";
 import FavoritesSection from "@/components/main-menu/FavoritesSection";
 import HomeTabContent from "@/components/main-menu/HomeTabContent";
 import StoreTab from "@/components/main-menu/StoreTab";
+import TaskCategories from "@/components/main-menu/TaskCategories";
 
 const mockUser = {
   firstName: "Alex",
@@ -325,6 +326,15 @@ const MainMenu = () => {
           }}
         />
       );
+    } else if (activeTab === "allTasks") {
+      return (
+        <TaskCategories 
+          showAllTasks={true}
+          favoriteTaskIds={favoriteTaskIds}
+          onFavoriteToggle={handleFavoriteToggle}
+          onViewTask={handleBookNow}
+        />
+      );
     }
     
     return (
@@ -344,6 +354,8 @@ const MainMenu = () => {
         onBookNow={handleBookNow}
         onRequestTask={handleRequestTask}
         onSetActiveTab={setActiveTab}
+        recentSearches={user.recentSearches}
+        onSearchClick={handleRecentSearchClick}
       />
     );
   };

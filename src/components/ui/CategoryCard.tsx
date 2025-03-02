@@ -40,7 +40,7 @@ const CategoryCard = ({
           aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
         >
           <Heart 
-            className={`h-5 w-5 ${isFavorite ? 'fill-red-500 text-red-500' : 'text-white'}`} 
+            className={`h-5 w-5 ${isFavorite ? 'fill-red-500 text-red-500' : 'text-gray-700'}`} 
           />
         </button>
       )}
@@ -63,7 +63,7 @@ const CategoryCard = ({
             return (
               <div
                 key={i}
-                className="bg-white py-3 px-4 rounded-lg shadow-sm text-left relative group"
+                className="bg-white py-3 px-4 rounded-lg shadow-sm text-left relative group hover:bg-gray-50 cursor-pointer"
                 onClick={(e) => {
                   e.stopPropagation();
                   if (onViewTask) {
