@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
@@ -55,6 +54,17 @@
     
     --assist-blue: 210 100% 40%;
     --assist-gray: 220 13% 91%;
+
+    --tab-home-bg: 226 100% 97%;
+    --tab-home-text: 226 100% 50%;
+    --tab-requests-bg: 142 76% 97%;
+    --tab-requests-text: 142 76% 42%;
+    --tab-favorites-bg: 330 100% 97%;
+    --tab-favorites-text: 330 80% 50%;
+    --tab-store-bg: 45 100% 97%;
+    --tab-store-text: 38 92% 50%;
+    --tab-profile-bg: 210 100% 97%;
+    --tab-profile-text: 210 100% 50%;
   }
 
   .dark {
@@ -264,4 +274,49 @@ html {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* Navigation tab styles */
+.nav-tab {
+  @apply relative flex items-center justify-center px-6 py-3 transition-all duration-300;
+}
+  
+.nav-tab-home {
+  @apply hover:bg-indigo-50/50 hover:text-indigo-600;
+}
+  
+.nav-tab-home.active {
+  @apply bg-indigo-50 text-indigo-600 font-medium;
+}
+  
+.nav-tab-requests {
+  @apply hover:bg-emerald-50/50 hover:text-emerald-600;
+}
+  
+.nav-tab-requests.active {
+  @apply bg-emerald-50 text-emerald-600 font-medium;
+}
+  
+.nav-tab-favorites {
+  @apply hover:bg-pink-50/50 hover:text-pink-600;
+}
+  
+.nav-tab-favorites.active {
+  @apply bg-pink-50 text-pink-600 font-medium;
+}
+  
+.nav-tab-store {
+  @apply hover:bg-amber-50/50 hover:text-amber-600;
+}
+  
+.nav-tab-store.active {
+  @apply bg-amber-50 text-amber-600 font-medium;
+}
+  
+.nav-tab-profile {
+  @apply hover:bg-blue-50/50 hover:text-blue-600;
+}
+  
+.nav-tab-profile.active {
+  @apply bg-blue-50 text-blue-600 font-medium;
 }
