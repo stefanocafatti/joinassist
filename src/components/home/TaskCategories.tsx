@@ -265,7 +265,7 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
       category: "Special Tasks",
       description: "Take care of houseplants while I'm away",
       location: "Marina Del Rey",
-      image: "https://images.unsplash.com/photo-1623411235843-9ee9f41856c4?q=80&w=1000&auto=format&fit=crop"
+      image: "/lovable-uploads/55ae04cd-8676-4a1c-b2b3-36c7005144af.png"
     }
   ];
   
