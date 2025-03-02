@@ -1,8 +1,15 @@
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ShoppingBag, Gift, Tag, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface StoreTabProps {
   assistPoints: number;
@@ -14,13 +21,15 @@ interface RewardItem {
   title: string;
   description: string;
   pointsCost: number;
-  category: "tasks" | "beauty" | "services";
+  category: "tasks" | "beauty" | "services" | "food" | "pets";
   image?: string;
   discount?: string;
+  partner?: string;
 }
 
 const StoreTab: React.FC<StoreTabProps> = ({ assistPoints, onPointsUpdated }) => {
   const rewardItems: RewardItem[] = [
+    // Original rewards
     {
       id: "1",
       title: "Free Dog Walking Session",
@@ -54,6 +63,7 @@ const StoreTab: React.FC<StoreTabProps> = ({ assistPoints, onPointsUpdated }) =>
       category: "beauty",
       image: "https://images.unsplash.com/photo-1573575155376-60d554085811?q=80&w=1000&auto=format&fit=crop",
       discount: "30%",
+      partner: "Sephora",
     },
     {
       id: "5",
@@ -70,10 +80,78 @@ const StoreTab: React.FC<StoreTabProps> = ({ assistPoints, onPointsUpdated }) =>
       pointsCost: 100,
       category: "services",
       image: "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?q=80&w=1000&auto=format&fit=crop",
-    }
+    },
+    // New food rewards
+    {
+      id: "7",
+      title: "$15 Off Food Delivery",
+      description: "Get $15 off your next food delivery order with our partner service",
+      pointsCost: 120,
+      category: "food",
+      image: "https://images.unsplash.com/photo-1576866209830-589e1bfbaa4d?q=80&w=1000&auto=format&fit=crop",
+      discount: "$15",
+      partner: "DoorDash",
+    },
+    {
+      id: "8",
+      title: "Free Coffee & Pastry",
+      description: "Enjoy a free coffee and pastry at any partner café location",
+      pointsCost: 80,
+      category: "food",
+      image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1000&auto=format&fit=crop",
+      partner: "Local Cafe",
+    },
+    {
+      id: "9",
+      title: "40% Off Meal Prep Service",
+      description: "Save on a week of healthy pre-made meals delivered to your door",
+      pointsCost: 300,
+      category: "food",
+      image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=1000&auto=format&fit=crop",
+      discount: "40%",
+      partner: "Fresh Meals",
+    },
+    // New pet rewards
+    {
+      id: "10",
+      title: "35% Off Premium Dog Food",
+      description: "Save on a bag of premium dog food at our partner pet stores",
+      pointsCost: 180,
+      category: "pets",
+      image: "https://images.unsplash.com/photo-1601758228041-f3b2795255f1?q=80&w=1000&auto=format&fit=crop",
+      discount: "35%",
+      partner: "PetSmart",
+    },
+    {
+      id: "11",
+      title: "Free Pet Grooming Session",
+      description: "One complimentary grooming session for your furry friend",
+      pointsCost: 280,
+      category: "pets",
+      image: "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?q=80&w=1000&auto=format&fit=crop",
+      partner: "Paws & Claws",
+    },
+    // Additional task discounts
+    {
+      id: "12",
+      title: "60% Off Furniture Assembly",
+      description: "Get a major discount on your next furniture assembly booking",
+      pointsCost: 280,
+      category: "tasks",
+      image: "https://images.unsplash.com/photo-1581643991892-5fdb8e8ff7b7?q=80&w=1000&auto=format&fit=crop",
+      discount: "60%",
+    },
+    {
+      id: "13",
+      title: "Free Airport Pickup",
+      description: "Redeem for one complimentary airport pickup or dropoff service",
+      pointsCost: 320,
+      category: "tasks",
+      image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1000&auto=format&fit=crop",
+    },
   ];
   
-  const [activeCategory, setActiveCategory] = useState<"all" | "tasks" | "beauty" | "services">("all");
+  const [activeCategory, setActiveCategory] = useState<"all" | "tasks" | "beauty" | "services" | "food" | "pets">("all");
   
   const filteredRewards = activeCategory === "all" 
     ? rewardItems 
@@ -121,7 +199,7 @@ const StoreTab: React.FC<StoreTabProps> = ({ assistPoints, onPointsUpdated }) =>
       <div className="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 p-6">
         <div className="flex justify-between items-center mb-6">
           <h3 className="text-lg font-semibold text-gray-900">Available Rewards</h3>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <Button 
               variant={activeCategory === "all" ? "default" : "outline"}
               size="sm"
@@ -147,6 +225,22 @@ const StoreTab: React.FC<StoreTabProps> = ({ assistPoints, onPointsUpdated }) =>
               Beauty
             </Button>
             <Button 
+              variant={activeCategory === "food" ? "default" : "outline"}
+              size="sm"
+              onClick={() => setActiveCategory("food")}
+              className={activeCategory === "food" ? "bg-assist-blue" : ""}
+            >
+              Food
+            </Button>
+            <Button 
+              variant={activeCategory === "pets" ? "default" : "outline"}
+              size="sm"
+              onClick={() => setActiveCategory("pets")}
+              className={activeCategory === "pets" ? "bg-assist-blue" : ""}
+            >
+              Pets
+            </Button>
+            <Button 
               variant={activeCategory === "services" ? "default" : "outline"}
               size="sm"
               onClick={() => setActiveCategory("services")}
@@ -169,6 +263,13 @@ const StoreTab: React.FC<StoreTabProps> = ({ assistPoints, onPointsUpdated }) =>
                     <Badge className="bg-green-500">{item.discount} Off</Badge>
                   </div>
                 )}
+                {item.partner && (
+                  <div className="absolute bottom-2 left-2">
+                    <Badge variant="outline" className="bg-white/90 border-0 text-gray-800 font-medium">
+                      {item.partner}
+                    </Badge>
+                  </div>
+                )}
               </div>
               <div className="p-4">
                 <div className="flex justify-between items-start mb-2">
@@ -176,10 +277,19 @@ const StoreTab: React.FC<StoreTabProps> = ({ assistPoints, onPointsUpdated }) =>
                 </div>
                 <p className="text-sm text-gray-600 mb-4 line-clamp-2">{item.description}</p>
                 <div className="flex justify-between items-center">
-                  <div className="flex items-center">
-                    <Tag className="h-4 w-4 text-assist-blue mr-1" />
-                    <span className="text-sm font-semibold">{item.pointsCost} points</span>
-                  </div>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="flex items-center cursor-help">
+                          <Tag className="h-4 w-4 text-assist-blue mr-1" />
+                          <span className="text-sm font-semibold">{item.pointsCost} points</span>
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Points required to redeem this reward</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                   <Button 
                     size="sm" 
                     className={assistPoints >= item.pointsCost 
@@ -195,9 +305,23 @@ const StoreTab: React.FC<StoreTabProps> = ({ assistPoints, onPointsUpdated }) =>
             </div>
           ))}
         </div>
+        
+        {filteredRewards.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-gray-500 mb-2">No rewards available in this category</p>
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => setActiveCategory("all")}
+            >
+              View All Rewards
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
 export default StoreTab;
+
