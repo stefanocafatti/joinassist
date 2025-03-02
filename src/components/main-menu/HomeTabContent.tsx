@@ -1,12 +1,10 @@
-import React, { useState } from "react";
-import InterestsSection from "./InterestsSection";
+
+import React from "react";
 import SearchResultsSection from "./SearchResultsSection";
 import RecommendedTasksSection from "./RecommendedTasksSection";
-import RecentSearchesSection from "./RecentSearchesSection";
+import InterestsSection from "./InterestsSection";
 import PastTasksSection from "./PastTasksSection";
 import CategoriesSection from "./CategoriesSection";
-import HomeNavigation from "./HomeNavigation";
-import { Button } from "@/components/ui/button";
 
 interface Task {
   title: string;
@@ -14,7 +12,6 @@ interface Task {
   category: string;
   location: string;
   image: string;
-  pointsEarned?: number;
 }
 
 interface PastTask {
@@ -24,28 +21,20 @@ interface PastTask {
   status: string;
 }
 
-interface InterestTag {
-  id: string;
-  label: string;
-  icon: React.ReactNode;
-}
-
 interface HomeTabContentProps {
   searchQuery: string;
   searchPerformed: boolean;
   searchResults: Task[] | null;
   recommendedTasks: Task[];
-  interestTags: InterestTag[];
+  interestTags: { id: string; label: string; icon: React.ReactNode }[];
   userInterests: string[];
   favoriteTaskIds: string[];
-  recentSearches: string[];
   pastTasks: PastTask[];
   onToggleInterest: (id: string) => void;
   onClearResults: () => void;
   onFavoriteToggle: (taskTitle: string) => void;
   onBookNow: (taskTitle: string) => void;
   onRequestTask: () => void;
-  onSearchClick: (search: string) => void;
 }
 
 const HomeTabContent: React.FC<HomeTabContentProps> = ({
@@ -56,177 +45,48 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
   interestTags,
   userInterests,
   favoriteTaskIds,
-  recentSearches,
   pastTasks,
   onToggleInterest,
   onClearResults,
   onFavoriteToggle,
   onBookNow,
   onRequestTask,
-  onSearchClick
 }) => {
-  const [activeSection, setActiveSection] = useState<string>("categories");
-  const [showAllTasks, setShowAllTasks] = useState(false);
-  
-  const tasksWithPoints = recommendedTasks.map(task => ({
-    ...task,
-    pointsEarned: 50 // Fixed points earned value instead of price-based calculation
-  }));
-  
-  const searchResultsWithPoints = searchResults 
-    ? searchResults.map(task => ({
-        ...task, 
-        pointsEarned: 50 // Fixed points earned value instead of price-based calculation
-      }))
-    : null;
-  
-  const renderSectionContent = () => {
-    if (searchPerformed) {
-      return (
+  return (
+    <div>
+      {searchPerformed && (
         <SearchResultsSection
           searchQuery={searchQuery}
-          searchResults={searchResultsWithPoints}
+          searchResults={searchResults}
           favoriteTaskIds={favoriteTaskIds}
           onClearResults={onClearResults}
           onFavoriteToggle={onFavoriteToggle}
           onBookNow={onBookNow}
           onRequestTask={onRequestTask}
         />
-      );
-    }
-    
-    switch (activeSection) {
-      case "categories":
-        return (
-          <CategoriesSection 
-            showAllTasks={showAllTasks} 
-            onRequestTask={onRequestTask}
-          />
-        );
-      case "recommended":
-        return (
-          <>
-            <RecommendedTasksSection 
-              tasks={tasksWithPoints}
-              favoriteTaskIds={favoriteTaskIds}
-              onFavoriteToggle={onFavoriteToggle}
-              onBookNow={onBookNow}
-            />
-            
-            <div className="mt-10 bg-gray-50 rounded-xl p-8 text-center border border-gray-200">
-              <div className="max-w-md mx-auto">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Didn't find what you were looking for?</h3>
-                <p className="text-gray-600 mb-6">
-                  We can help you with custom tasks that aren't listed above.
-                </p>
-                <Button 
-                  onClick={onRequestTask}
-                  className="bg-assist-blue hover:bg-assist-blue/90"
-                >
-                  Request a Task
-                </Button>
-              </div>
-            </div>
-          </>
-        );
-      case "searches":
-        return (
-          <>
-            <RecentSearchesSection 
-              recentSearches={recentSearches}
-              onSearchClick={onSearchClick}
-            />
-            
-            <div className="mt-10 bg-gray-50 rounded-xl p-8 text-center border border-gray-200">
-              <div className="max-w-md mx-auto">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Didn't find what you were looking for?</h3>
-                <p className="text-gray-600 mb-6">
-                  We can help you with custom tasks that aren't listed above.
-                </p>
-                <Button 
-                  onClick={onRequestTask}
-                  className="bg-assist-blue hover:bg-assist-blue/90"
-                >
-                  Request a Task
-                </Button>
-              </div>
-            </div>
-          </>
-        );
-      case "pastTasks":
-        return (
-          <>
-            <PastTasksSection 
-              pastTasks={pastTasks}
-              favoriteTaskIds={favoriteTaskIds}
-              onFavoriteToggle={onFavoriteToggle}
-              onViewTask={onBookNow}
-            />
-            
-            <div className="mt-10 bg-gray-50 rounded-xl p-8 text-center border border-gray-200">
-              <div className="max-w-md mx-auto">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Didn't find what you were looking for?</h3>
-                <p className="text-gray-600 mb-6">
-                  We can help you with custom tasks that aren't listed above.
-                </p>
-                <Button 
-                  onClick={onRequestTask}
-                  className="bg-assist-blue hover:bg-assist-blue/90"
-                >
-                  Request a Task
-                </Button>
-              </div>
-            </div>
-          </>
-        );
-      case "recent":
-        return (
-          <>
-            <RecommendedTasksSection 
-              tasks={tasksWithPoints.slice().reverse()}
-              favoriteTaskIds={favoriteTaskIds}
-              onFavoriteToggle={onFavoriteToggle}
-              onBookNow={onBookNow}
-            />
-            
-            <div className="mt-10 bg-gray-50 rounded-xl p-8 text-center border border-gray-200">
-              <div className="max-w-md mx-auto">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Didn't find what you were looking for?</h3>
-                <p className="text-gray-600 mb-6">
-                  We can help you with custom tasks that aren't listed above.
-                </p>
-                <Button 
-                  onClick={onRequestTask}
-                  className="bg-assist-blue hover:bg-assist-blue/90"
-                >
-                  Request a Task
-                </Button>
-              </div>
-            </div>
-          </>
-        );
-      default:
-        return <CategoriesSection showAllTasks={false} onRequestTask={onRequestTask} />;
-    }
-  };
-  
-  return (
-    <>
-      <InterestsSection 
-        interestTags={interestTags} 
-        userInterests={userInterests} 
-        onToggleInterest={onToggleInterest} 
-      />
-      
-      {!searchPerformed && (
-        <HomeNavigation 
-          activeSection={activeSection}
-          onSectionChange={setActiveSection}
-        />
       )}
-      
-      {renderSectionContent()}
-    </>
+
+      {!searchPerformed && (
+        <>
+          <InterestsSection
+            interestTags={interestTags}
+            userInterests={userInterests}
+            onToggleInterest={onToggleInterest}
+          />
+          
+          <CategoriesSection />
+          
+          <RecommendedTasksSection
+            tasks={recommendedTasks}
+            favoriteTaskIds={favoriteTaskIds}
+            onFavoriteToggle={onFavoriteToggle}
+            onBookNow={onBookNow}
+          />
+          
+          <PastTasksSection pastTasks={pastTasks} />
+        </>
+      )}
+    </div>
   );
 };
 

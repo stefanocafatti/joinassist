@@ -314,14 +314,12 @@ const MainMenu = () => {
         interestTags={interestTags}
         userInterests={userInterests}
         favoriteTaskIds={favoriteTaskIds}
-        recentSearches={user.recentSearches}
         pastTasks={user.pastTasks}
         onToggleInterest={toggleInterest}
         onClearResults={handleClearSearchResults}
         onFavoriteToggle={handleFavoriteToggle}
         onBookNow={handleBookNow}
         onRequestTask={handleRequestTask}
-        onSearchClick={handleRecentSearchClick}
       />
     );
   };
@@ -345,8 +343,10 @@ const MainMenu = () => {
           
           <SearchHeader 
             searchQuery={searchQuery}
+            recentSearches={user.recentSearches}
             onSearchQueryChange={setSearchQuery}
             onSearch={handleSearch}
+            onSearchClick={handleRecentSearchClick}
           />
         </header>
         
