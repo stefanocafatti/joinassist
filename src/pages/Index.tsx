@@ -8,6 +8,7 @@ import TaskCategories from "@/components/home/TaskCategories";
 import Testimonials from "@/components/home/Testimonials";
 import CTASection from "@/components/home/CTASection";
 import CircleBlocks from "@/components/background/CircleBlocks";
+import TrustedCompanies from "@/components/home/TrustedCompanies";
 
 const Index = () => {
   useEffect(() => {
@@ -43,6 +44,7 @@ const Index = () => {
       
       <main className="flex-grow relative z-10 pt-20">
         <Hero />
+        <TrustedCompanies />
         <Features />
         <TaskCategories />
         <Testimonials />
