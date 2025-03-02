@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -118,7 +117,7 @@ const ProfileTab: React.FC<ProfileTabProps> = ({ user, onUpdateUserName, onUpdat
             <h2 className="text-xl font-bold">{profileForm.firstName} {profileForm.lastName}</h2>
             <p className="text-gray-500">Member since 2023</p>
           </div>
-          <Button className="ml-auto" variant="outline" size="sm" onClick={handleEditProfile}>Edit Profile</Button>
+          <Button className="ml-auto" variant="default" size="sm" onClick={handleEditProfile}>Edit Profile</Button>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
