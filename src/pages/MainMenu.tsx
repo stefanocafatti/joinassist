@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -115,6 +114,7 @@ const MainMenu = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [userInterests, setUserInterests] = useState<string[]>([]);
   const [userName, setUserName] = useState(mockUser.firstName);
+  const [user, setUser] = useState(mockUser);
   const [showWelcome, setShowWelcome] = useState(true);
   const [activeTab, setActiveTab] = useState("home");
   const [searchResults, setSearchResults] = useState<typeof recommendedTasks | null>(null);
@@ -131,6 +131,15 @@ const MainMenu = () => {
 
     return () => clearTimeout(timer);
   }, []);
+
+  const handleUpdateUserName = (firstName: string, lastName: string) => {
+    setUser(prevUser => ({
+      ...prevUser,
+      firstName,
+      lastName
+    }));
+    setUserName(firstName);
+  };
 
   const handleFavoriteToggle = (taskTitle: string) => {
     setFavoriteTaskIds(prev => {
@@ -231,7 +240,7 @@ const MainMenu = () => {
 
   const renderContent = () => {
     if (activeTab === "profile") {
-      return <ProfileTab user={mockUser} />;
+      return <ProfileTab user={user} onUpdateUserName={handleUpdateUserName} />;
     } else if (activeTab === "requests") {
       return <RequestsTab requests={mockSubmittedRequests} onNavigateToHome={() => setActiveTab("home")} />;
     } else if (showFavorites) {
@@ -257,8 +266,8 @@ const MainMenu = () => {
         interestTags={interestTags}
         userInterests={userInterests}
         favoriteTaskIds={favoriteTaskIds}
-        recentSearches={mockUser.recentSearches}
-        pastTasks={mockUser.pastTasks}
+        recentSearches={user.recentSearches}
+        pastTasks={user.pastTasks}
         onToggleInterest={toggleInterest}
         onClearResults={handleClearSearchResults}
         onFavoriteToggle={handleFavoriteToggle}

@@ -34,9 +34,10 @@ interface ProfileTabProps {
       isDefault: boolean;
     }>;
   };
+  onUpdateUserName: (firstName: string, lastName: string) => void;
 }
 
-const ProfileTab: React.FC<ProfileTabProps> = ({ user }) => {
+const ProfileTab: React.FC<ProfileTabProps> = ({ user, onUpdateUserName }) => {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [profileForm, setProfileForm] = useState({
     firstName: user.firstName,
@@ -73,6 +74,9 @@ const ProfileTab: React.FC<ProfileTabProps> = ({ user }) => {
   };
   
   const handleSaveProfile = () => {
+    // Update the user name in the parent component
+    onUpdateUserName(profileForm.firstName, profileForm.lastName);
+    
     // In a real app, this would save to a backend
     toast.success("Profile updated successfully");
     setIsEditDialogOpen(false);
