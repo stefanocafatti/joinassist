@@ -110,6 +110,7 @@ const MainMenu = () => {
   const [selectedTask, setSelectedTask] = useState<(typeof recommendedTasks)[0] | null>(null);
   const [isTaskDetailOpen, setIsTaskDetailOpen] = useState(false);
   const [favoriteTaskIds, setFavoriteTaskIds] = useState<string[]>([]);
+  const [showFavorites, setShowFavorites] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -188,6 +189,20 @@ const MainMenu = () => {
     if (task) {
       setSelectedTask(task);
       setIsTaskDetailOpen(true);
+    }
+  };
+
+  const getFavoriteListings = () => {
+    const allTasks = [...recommendedTasks, ...(searchResults || [])];
+    return allTasks.filter(task => favoriteTaskIds.includes(task.title));
+  };
+
+  const toggleFavoriteView = () => {
+    setShowFavorites(!showFavorites);
+    if (!showFavorites) {
+      toast.info("Showing your favorited listings");
+    } else {
+      setActiveTab("home");
     }
   };
 
@@ -368,6 +383,83 @@ const MainMenu = () => {
           </section>
         </div>
       );
+    } else if (showFavorites) {
+      const favorites = getFavoriteListings();
+      
+      return (
+        <section className="mb-10">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-xl font-semibold text-gray-900">Your Favorited Listings</h2>
+            <Button variant="outline" size="sm" onClick={() => setShowFavorites(false)}>
+              Back to Homepage
+            </Button>
+          </div>
+          
+          {favorites.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {favorites.map((task, index) => (
+                <div 
+                  key={index} 
+                  className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 cursor-pointer"
+                  onClick={() => handleBookNow(task.title)}
+                >
+                  <div className="relative">
+                    <div 
+                      className="h-40 bg-cover bg-center" 
+                      style={{ backgroundImage: `url(${task.image})` }}
+                    />
+                    <button 
+                      className="absolute top-3 right-3 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleFavoriteToggle(task.title);
+                      }}
+                    >
+                      <Heart 
+                        className="h-5 w-5 fill-red-500 text-red-500" 
+                      />
+                    </button>
+                  </div>
+                  <div className="p-4">
+                    <div className="flex justify-between items-start mb-2">
+                      <h3 className="font-semibold text-gray-900">{task.title}</h3>
+                      <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100">{task.category}</Badge>
+                    </div>
+                    <p className="text-sm text-gray-600 mb-3">{task.description}</p>
+                    <div className="flex justify-end items-center">
+                      <Button 
+                        size="sm" 
+                        className="bg-assist-blue hover:bg-assist-blue/90"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleBookNow(task.title);
+                        }}
+                      >
+                        <Eye className="h-4 w-4 mr-1" /> View Task
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="bg-gray-50 rounded-xl p-8 text-center border border-gray-200">
+              <div className="max-w-md mx-auto">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">No favorites yet</h3>
+                <p className="text-gray-600 mb-6">
+                  You haven't added any tasks to your favorites yet. Browse our tasks and click the heart icon to add them to your favorites.
+                </p>
+                <Button 
+                  className="bg-assist-blue hover:bg-assist-blue/90"
+                  onClick={() => setShowFavorites(false)}
+                >
+                  Browse Tasks
+                </Button>
+              </div>
+            </div>
+          )}
+        </section>
+      );
     }
     
     return (
@@ -451,7 +543,10 @@ const MainMenu = () => {
                         <Button 
                           size="sm" 
                           className="bg-assist-blue hover:bg-assist-blue/90"
-                          onClick={() => handleBookNow(task.title)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleBookNow(task.title);
+                          }}
                         >
                           <Eye className="h-4 w-4 mr-1" /> View Task
                         </Button>
@@ -705,6 +800,19 @@ const MainMenu = () => {
               Hello, {userName}!
             </h1>
             <div className="flex items-center gap-3">
+              <Button 
+                variant="ghost" 
+                size="icon"
+                onClick={toggleFavoriteView}
+                className={`relative ${showFavorites ? 'text-red-500' : ''}`}
+              >
+                <Heart className={`h-5 w-5 ${showFavorites ? 'fill-red-500' : ''}`} />
+                {favoriteTaskIds.length > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                    {favoriteTaskIds.length}
+                  </span>
+                )}
+              </Button>
               <Button variant="ghost" size="icon">
                 <Bell className="h-5 w-5" />
               </Button>
@@ -734,7 +842,7 @@ const MainMenu = () => {
                     <CreditCard className="mr-2 h-4 w-4" />
                     <span>Payment Methods</span>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem onClick={toggleFavoriteView}>
                     <Heart className="mr-2 h-4 w-4" />
                     <span>Saved Tasks</span>
                   </DropdownMenuItem>
@@ -774,11 +882,14 @@ const MainMenu = () => {
         <div className="flex border-b border-gray-200 mb-8">
           <button
             className={`py-3 px-6 font-medium text-sm border-b-2 ${
-              activeTab === "home" 
+              activeTab === "home" && !showFavorites
                 ? "border-assist-blue text-assist-blue" 
                 : "border-transparent text-gray-500 hover:text-gray-700"
             }`}
-            onClick={() => setActiveTab("home")}
+            onClick={() => {
+              setActiveTab("home");
+              setShowFavorites(false);
+            }}
           >
             Home
           </button>
@@ -788,9 +899,22 @@ const MainMenu = () => {
                 ? "border-assist-blue text-assist-blue" 
                 : "border-transparent text-gray-500 hover:text-gray-700"
             }`}
-            onClick={() => setActiveTab("requests")}
+            onClick={() => {
+              setActiveTab("requests");
+              setShowFavorites(false);
+            }}
           >
             Submitted Requests
+          </button>
+          <button
+            className={`py-3 px-6 font-medium text-sm border-b-2 ${
+              showFavorites 
+                ? "border-assist-blue text-assist-blue" 
+                : "border-transparent text-gray-500 hover:text-gray-700"
+            }`}
+            onClick={toggleFavoriteView}
+          >
+            Favorites
           </button>
           <button
             className={`py-3 px-6 font-medium text-sm border-b-2 ${
@@ -798,7 +922,10 @@ const MainMenu = () => {
                 ? "border-assist-blue text-assist-blue" 
                 : "border-transparent text-gray-500 hover:text-gray-700"
             }`}
-            onClick={() => setActiveTab("profile")}
+            onClick={() => {
+              setActiveTab("profile");
+              setShowFavorites(false);
+            }}
           >
             My Profile
           </button>
