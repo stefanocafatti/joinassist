@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import CategoryCard from "../ui/CategoryCard";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { useState } from "react";
 
 interface TaskCategoriesProps {
   showAllTasks?: boolean;
@@ -20,11 +21,19 @@ interface TaskCategoriesProps {
 
 const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
   const navigate = useNavigate();
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   
   const handleCategoryClick = (category: string) => {
-    toast.success(`${category} category clicked!`, {
-      description: "This would navigate to the category page in a full implementation."
-    });
+    if (showAllTasks) {
+      setSelectedCategory(category === selectedCategory ? null : category);
+      toast.success(`${category} category selected!`, {
+        description: category === selectedCategory ? "Showing all tasks" : "Showing tasks in this category"
+      });
+    } else {
+      toast.success(`${category} category clicked!`, {
+        description: "This would navigate to the category page in a full implementation."
+      });
+    }
     console.log(`Category selected: ${category}`);
   };
   
@@ -311,6 +320,11 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
     </div>
   );
   
+  const filteredTaskListings = selectedCategory 
+    ? taskListings.filter(task => task.category === selectedCategory || 
+        (selectedCategory === "Transportation and Moving" && task.category === "Transportation"))
+    : taskListings;
+  
   return (
     <section id="all-tasks" className="py-6 bg-assist-gray/50 relative overflow-hidden">
       <div className="absolute inset-0 z-0 overflow-hidden">
@@ -343,7 +357,9 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
           </>
         ) : (
           <>
-            <h2 className="text-3xl font-bold text-gray-900 mb-8">All Tasks</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-8">
+              {selectedCategory ? `${selectedCategory} Tasks` : "All Tasks"}
+            </h2>
             
             <div className="mb-8 overflow-x-auto">
               <div className="flex space-x-2 pb-4">
@@ -351,18 +367,36 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
                   <div 
                     key={index}
                     onClick={() => handleCategoryClick(category.title)}
-                    className="cursor-pointer flex-shrink-0 px-4 py-2 rounded-full bg-white border border-gray-200 shadow-sm hover:shadow-md transition-all flex items-center space-x-2"
+                    className={`cursor-pointer flex-shrink-0 px-4 py-2 rounded-full border transition-all flex items-center space-x-2 ${
+                      selectedCategory === category.title 
+                        ? "bg-assist-blue text-white border-assist-blue shadow-md" 
+                        : "bg-white border-gray-200 shadow-sm hover:shadow-md text-gray-700"
+                    }`}
                   >
-                    <category.icon className="h-5 w-5 text-gray-700" />
+                    <category.icon className={`h-5 w-5 ${selectedCategory === category.title ? "text-white" : "text-gray-700"}`} />
                     <span className="font-medium text-sm">{category.title}</span>
                   </div>
                 ))}
               </div>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-              {taskListings.map(renderTaskCard)}
-            </div>
+            {filteredTaskListings.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                {filteredTaskListings.map(renderTaskCard)}
+              </div>
+            ) : (
+              <div className="text-center py-12 bg-white rounded-lg shadow-sm">
+                <h3 className="text-lg font-medium text-gray-900 mb-2">No tasks found in this category</h3>
+                <p className="text-gray-600 mb-4">Try selecting a different category</p>
+                <Button 
+                  onClick={() => setSelectedCategory(null)} 
+                  variant="outline"
+                  className="border-assist-blue text-assist-blue hover:bg-assist-blue/10"
+                >
+                  View All Tasks
+                </Button>
+              </div>
+            )}
           </>
         )}
         
@@ -371,7 +405,10 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
             <Button 
               size="lg" 
               className="rounded-full bg-assist-blue hover:bg-assist-blue/90 text-white h-14 px-8 text-base"
-              onClick={() => handleCategoryClick("All")}
+              onClick={() => {
+                setSelectedCategory(null);
+                handleCategoryClick("All");
+              }}
             >
               Browse All Tasks
             </Button>
