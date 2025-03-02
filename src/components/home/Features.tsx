@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { 
   Clock, 
@@ -11,7 +10,7 @@ import {
   MessageCircle,
   CheckCircle2,
   Sun,
-  Water
+  Droplet
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -175,7 +174,7 @@ const Features = () => {
                         </div>
                       ) : (
                         <div className="p-3 rounded-full bg-blue-100">
-                          <Water size={28} className="text-assist-blue" />
+                          <Droplet size={28} className="text-assist-blue" />
                         </div>
                       )}
                     </div>
