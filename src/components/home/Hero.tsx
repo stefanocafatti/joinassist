@@ -65,7 +65,6 @@ const Hero = () => {
     };
   }, [displayText, isDeleting, loopNum, typingSpeed]);
 
-  // Slideshow images
   const slideshowImages = [
     {
       src: "/lovable-uploads/b24b515c-09ad-4588-9d54-a96d1805f70f.png",
