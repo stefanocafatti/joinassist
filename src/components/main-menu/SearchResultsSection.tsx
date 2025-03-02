@@ -34,6 +34,27 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
   onBookNow,
   onRequestTask
 }) => {
+  // Default image if task doesn't have one
+  const getTaskImage = (task: Task) => {
+    if (!task.image || task.image.trim() === '') {
+      // Assign default image based on category
+      const categoryImageMap: {[key: string]: string} = {
+        "Cleaning": "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1000&auto=format&fit=crop",
+        "Transportation and Moving": "https://images.unsplash.com/photo-1617861944037-28f1c378a23b?q=80&w=1000&auto=format&fit=crop",
+        "Assembly": "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=1000&auto=format&fit=crop",
+        "Academic & Professional Help": "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?q=80&w=1000&auto=format&fit=crop",
+        "Digital Services": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1000&auto=format&fit=crop",
+        "Fitness and Wellness": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=1000&auto=format&fit=crop",
+        "Event and Hospitality": "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1000&auto=format&fit=crop",
+        "Special Tasks": "https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1000&auto=format&fit=crop",
+        "For Brands": "https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=1000&auto=format&fit=crop"
+      };
+      
+      return categoryImageMap[task.category] || "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?q=80&w=1000&auto=format&fit=crop";
+    }
+    return task.image;
+  };
+
   return (
     <section className="mb-10">
       <div className="flex justify-between items-center mb-6">
@@ -54,7 +75,7 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
               <div className="relative">
                 <div 
                   className="h-40 bg-cover bg-center" 
-                  style={{ backgroundImage: `url(${task.image})` }}
+                  style={{ backgroundImage: `url(${getTaskImage(task)})` }}
                 />
                 <button 
                   className="absolute top-3 right-3"
