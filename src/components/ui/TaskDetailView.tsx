@@ -14,6 +14,7 @@ import { toast } from "sonner";
 interface TaskDetailViewProps {
   isOpen: boolean;
   onClose: () => void;
+  onTaskBooked?: (taskTitle: string, date: Date, time: string) => void;
   task: {
     title: string;
     description: string;
@@ -23,8 +24,8 @@ interface TaskDetailViewProps {
   };
 }
 
-const TaskDetailView = ({ isOpen, onClose, task }: TaskDetailViewProps) => {
-  const [date, setDate] = useState<Date>();
+const TaskDetailView = ({ isOpen, onClose, onTaskBooked, task }: TaskDetailViewProps) => {
+  const [date, setDate] = useState<Date | undefined>(undefined);
   const [time, setTime] = useState("");
   const [location, setLocation] = useState(task.location);
   const [notes, setNotes] = useState("");
@@ -45,11 +46,17 @@ const TaskDetailView = ({ isOpen, onClose, task }: TaskDetailViewProps) => {
       return;
     }
     
+    // Notify both the user directly and through the callback
     toast.success("Task booked successfully!", {
       description: `Your ${task.title} has been scheduled for ${format(date, "MMMM d, yyyy")} at ${time}`
     });
     
     setFormSubmitted(true);
+    
+    // Call the callback if provided
+    if (onTaskBooked) {
+      onTaskBooked(task.title, date, time);
+    }
     
     // In a real app, we would handle the API call here
     console.log({
@@ -121,7 +128,7 @@ const TaskDetailView = ({ isOpen, onClose, task }: TaskDetailViewProps) => {
                           {date ? format(date, "PPP") : "Select a date"}
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0">
+                      <PopoverContent className="w-auto p-0" align="start">
                         <CalendarComponent
                           mode="single"
                           selected={date}

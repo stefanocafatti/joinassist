@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import CircleBlocks from "@/components/background/CircleBlocks";
 import { PawPrint, Car, Home, Package, Briefcase } from "lucide-react";
 import TaskDetailView from "@/components/ui/TaskDetailView";
+import { format } from "date-fns";
 
 // Import refactored components
 import WelcomeOverlay from "@/components/main-menu/WelcomeOverlay";
