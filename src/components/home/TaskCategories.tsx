@@ -1,4 +1,3 @@
-
 import { 
   Trash2, 
   Car, 
@@ -35,11 +34,11 @@ const TaskCategories = () => {
       title: "Cleaning",
       description: "Keep your spaces tidy",
       tasks: [
-        "Wash my Car",
-        "Clean my Garage",
-        "Clean my Room",
-        "Deep Clean Apartment",
-        "Post Event Clean Up"
+        "🧹 Wash my Car",
+        "🧽 Clean my Garage",
+        "🧼 Clean my Room",
+        "✨ Deep Clean Apartment",
+        "🗑️ Post Event Clean Up"
       ],
       color: "bg-blue-50"
     },
@@ -48,11 +47,11 @@ const TaskCategories = () => {
       title: "Transportation",
       description: "Moving & delivery solutions",
       tasks: [
-        "Moving Assistance",
-        "Help with Loading Items",
-        "Drive me to a Location",
-        "Drop off a package",
-        "Pick up a package"
+        "🚚 Moving Assistance",
+        "📦 Help with Loading Items",
+        "🚗 Drive me to a Location",
+        "📬 Drop off a package",
+        "📫 Pick up a package"
       ],
       color: "bg-green-50"
     },
