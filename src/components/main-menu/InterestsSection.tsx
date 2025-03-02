@@ -1,8 +1,6 @@
 
 import React from "react";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Star, LucideIcon } from "lucide-react";
 
 interface InterestTag {
   id: string;
@@ -22,37 +20,28 @@ const InterestsSection: React.FC<InterestsSectionProps> = ({
   onToggleInterest 
 }) => {
   return (
-    <section className="mb-10 bg-blue-50 rounded-xl p-6">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold text-gray-900">Personalize Your Experience</h2>
-        <Button variant="ghost" size="sm" className="text-assist-blue">
-          <Star className="h-4 w-4 mr-1" /> Save Preferences
-        </Button>
-      </div>
+    <section className="mb-6 bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
+      <h2 className="text-lg font-semibold text-gray-900 mb-3">Select your interests</h2>
       
-      <p className="text-gray-600 mb-4">
-        Select your interests to get personalized task recommendations
-      </p>
-      
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap gap-2">
         {interestTags.map(tag => (
           <Badge
             key={tag.id}
-            className={`cursor-pointer flex items-center px-3 py-2 text-sm rounded-full ${
+            className={`cursor-pointer flex items-center px-3 py-1.5 rounded-full ${
               userInterests.includes(tag.id) 
                 ? 'bg-assist-blue text-white hover:bg-assist-blue/90' 
-                : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-100'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border-0'
             }`}
             onClick={() => onToggleInterest(tag.id)}
           >
-            {tag.icon} {tag.label}
+            {tag.icon} <span className="ml-1">{tag.label}</span>
           </Badge>
         ))}
       </div>
       
       {userInterests.length > 0 && (
-        <p className="text-sm text-assist-blue mt-3">
-          {userInterests.length} interests selected - we'll customize your experience!
+        <p className="text-xs text-gray-500 mt-3">
+          {userInterests.length} selected
         </p>
       )}
     </section>
