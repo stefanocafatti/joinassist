@@ -1,4 +1,3 @@
-
 import { 
   Trash2, 
   Car, 
@@ -161,7 +160,7 @@ const TaskCategories = () => {
   ];
   
   return (
-    <section id="all-tasks" className="py-20 bg-assist-gray/50 relative overflow-hidden">
+    <section id="all-tasks" className="py-16 bg-assist-gray/50 relative overflow-hidden">
       <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute -top-24 -right-24 w-96 h-96 bg-assist-blue/5 rounded-full opacity-70" />
         <div className="absolute bottom-0 left-1/4 w-64 h-64 bg-blue-100/30 rounded-full opacity-60" />

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Quote } from "lucide-react";
 import ImageSlideshow from "@/components/ui/ImageSlideshow";
@@ -50,7 +49,6 @@ const Testimonials = () => {
   
   const [activeIndex, setActiveIndex] = useState(0);
   
-  // Convert testimonials to slideshow format
   const testimonialSlides = testimonials.map(testimonial => ({
     src: testimonial.image,
     alt: `Portrait of ${testimonial.name}`,
@@ -58,7 +56,7 @@ const Testimonials = () => {
   }));
   
   return (
-    <section id="testimonials" className="py-20 mt-0 bg-white overflow-hidden">
+    <section id="testimonials" className="py-16 mt-0 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center gap-16">
           <div className="w-full md:w-1/2">
@@ -72,8 +70,6 @@ const Testimonials = () => {
               <p className="text-lg text-gray-600 mb-8">
                 See how Assist connects busy individuals with reliable student talent, making everyday tasks easier while providing valuable opportunities for students.
               </p>
-              
-              {/* Removed navigation buttons as they're now in the slideshow component */}
             </div>
           </div>
           

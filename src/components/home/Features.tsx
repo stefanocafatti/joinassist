@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { 
   Clock, 
@@ -44,7 +43,7 @@ const Features = () => {
   }, []);
   
   return (
-    <section id="how-it-works" className="py-12 md:py-16 bg-gradient-to-b from-white to-blue-50/30 relative overflow-hidden">
+    <section id="how-it-works" className="py-8 md:py-12 bg-gradient-to-b from-white to-blue-50/30 relative overflow-hidden">
       <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute top-20 left-0 w-72 h-72 bg-soft-blue rounded-full blur-3xl opacity-20 -translate-x-1/2" />
         <div className="absolute bottom-20 right-0 w-80 h-80 bg-soft-pink rounded-full blur-3xl opacity-20 translate-x-1/3" />
