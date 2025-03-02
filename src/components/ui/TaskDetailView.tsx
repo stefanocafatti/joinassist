@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Dialog, DialogContent, DialogTitle, DialogHeader, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Calendar, Clock, MapPin, DollarSign } from "lucide-react";
+import { Calendar, Clock, MapPin } from "lucide-react";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
@@ -28,6 +28,8 @@ const TaskDetailView = ({ isOpen, onClose, task }: TaskDetailViewProps) => {
   const [time, setTime] = useState("");
   const [location, setLocation] = useState(task.location);
   const [notes, setNotes] = useState("");
+  const [price, setPrice] = useState("");
+  const [priceType, setPriceType] = useState("hourly");
   const [formSubmitted, setFormSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -35,6 +37,11 @@ const TaskDetailView = ({ isOpen, onClose, task }: TaskDetailViewProps) => {
     
     if (!date || !time) {
       toast.error("Please select both date and time for your task.");
+      return;
+    }
+    
+    if (!price || isNaN(Number(price)) || Number(price) <= 0) {
+      toast.error("Please enter a valid price offer.");
       return;
     }
     
@@ -50,7 +57,9 @@ const TaskDetailView = ({ isOpen, onClose, task }: TaskDetailViewProps) => {
       date: date ? format(date, "yyyy-MM-dd") : null,
       time,
       location,
-      notes
+      notes,
+      price,
+      priceType
     });
   };
   
@@ -138,6 +147,37 @@ const TaskDetailView = ({ isOpen, onClose, task }: TaskDetailViewProps) => {
                             {time}
                           </SelectItem>
                         ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-1 flex items-center gap-1">
+                      Your Price Offer ($)
+                    </label>
+                    <Input
+                      type="number"
+                      value={price}
+                      min="1"
+                      step="0.01"
+                      onChange={(e) => setPrice(e.target.value)}
+                      placeholder="Enter your price offer"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium mb-1 flex items-center gap-1">
+                      Payment Type
+                    </label>
+                    <Select value={priceType} onValueChange={setPriceType}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select payment type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="hourly">Hourly Rate</SelectItem>
+                        <SelectItem value="fixed">One-time Payment</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>

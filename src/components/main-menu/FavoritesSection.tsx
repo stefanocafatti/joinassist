@@ -1,8 +1,7 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Heart, DollarSign, Eye } from "lucide-react";
+import { Heart, Eye } from "lucide-react";
 
 interface Task {
   title: string;
@@ -68,11 +67,7 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({
                   <h3 className="font-semibold text-gray-900">{task.title}</h3>
                   <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100">{task.category}</Badge>
                 </div>
-                <p className="text-sm text-gray-600 mb-2">{task.description}</p>
-                <div className="flex items-center mb-3 text-sm font-medium text-assist-blue">
-                  <DollarSign className="h-4 w-4 mr-1" /> 
-                  ${task.price}{task.priceType === "hourly" ? "/hr" : " flat rate"}
-                </div>
+                <p className="text-sm text-gray-600 mb-4">{task.description}</p>
                 <div className="flex justify-end items-center">
                   <Button 
                     size="sm" 
