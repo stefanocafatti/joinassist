@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Heart, Bell, Coins, Store, Mail, CheckCircle, User, History, CreditCard, Settings, LogOut, MessageSquare, MessageCircle, MessagesSquare, EllipsisHorizontal } from "lucide-react";
+import { Heart, Bell, Coins, Store, Mail, CheckCircle, User, History, CreditCard, Settings, LogOut, MessageSquare, MessageCircle, MessagesSquare, MoreHorizontal } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import {
@@ -370,7 +370,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
               <span>Settings</span>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <EllipsisHorizontal className="mr-2 h-4 w-4" />
+              <MoreHorizontal className="mr-2 h-4 w-4" />
               <span>More Options</span>
             </DropdownMenuItem>
             <DropdownMenuItem>
