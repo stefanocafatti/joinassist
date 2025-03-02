@@ -802,16 +802,10 @@ const MainMenu = () => {
             <div className="flex items-center gap-3">
               <Button 
                 variant="ghost" 
-                size="icon"
                 onClick={toggleFavoriteView}
-                className={`relative ${showFavorites ? 'text-red-500' : ''}`}
+                className={showFavorites ? 'text-red-500' : ''}
               >
                 <Heart className={`h-5 w-5 ${showFavorites ? 'fill-red-500' : ''}`} />
-                {favoriteTaskIds.length > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                    {favoriteTaskIds.length}
-                  </span>
-                )}
               </Button>
               <Button variant="ghost" size="icon">
                 <Bell className="h-5 w-5" />
