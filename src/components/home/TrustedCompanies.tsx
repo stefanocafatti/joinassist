@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from "react";
 
 interface SchoolLogo {
@@ -91,6 +92,16 @@ const TrustedCompanies = () => {
       src: "/lovable-uploads/dfa8b3e7-eb5c-4c4f-aead-1cb691832ef9.png",
       alt: "University of Florida Gators logo - green alligator head with orange background"
     },
+    {
+      name: "New York University",
+      src: "/lovable-uploads/ecb9ca3e-a5cc-4c7a-bd9b-596ae2745cd6.png",
+      alt: "New York University logo - purple NYU with torch"
+    },
+    {
+      name: "Stanford University",
+      src: "/lovable-uploads/b168f9c7-63a3-4c44-9158-26a838ebd0d7.png",
+      alt: "Stanford University logo - red S with tree"
+    },
   ];
 
   useEffect(() => {
@@ -104,26 +115,13 @@ const TrustedCompanies = () => {
       scrollContainer.appendChild(clone);
     });
 
-    // Set up animation
-    const animateScroll = () => {
-      if (!scrollContainer) return;
-      
-      // If we've scrolled to half the content, reset to start for seamless loop
-      if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth / 2) {
-        scrollContainer.scrollLeft = 0;
-      } else {
-        scrollContainer.scrollLeft += 2; // Increased from 1 to 2 for faster movement
-      }
-      
-      requestAnimationFrame(animateScroll);
-    };
+    // Use CSS animation instead of JS for smoother scrolling
+    const containerWidth = scrollContainer.scrollWidth / 2;
+    scrollContainer.style.setProperty('--scroll-width', `${containerWidth}px`);
+    scrollContainer.classList.add('animate-scroll');
 
-    // Start the animation
-    const animationId = requestAnimationFrame(animateScroll);
-
-    // Clean up animation on unmount
     return () => {
-      cancelAnimationFrame(animationId);
+      scrollContainer.classList.remove('animate-scroll');
     };
   }, []);
 
@@ -142,8 +140,7 @@ const TrustedCompanies = () => {
       <div className="relative overflow-hidden w-full">
         <div 
           ref={scrollContainerRef}
-          className="flex space-x-8 whitespace-nowrap overflow-x-hidden"
-          style={{ scrollBehavior: 'smooth' }}
+          className="flex space-x-8 whitespace-nowrap"
         >
           {schoolLogos.map((logo, index) => (
             <div key={`logo-${index}`} className="flex-shrink-0 px-3">
@@ -158,13 +155,17 @@ const TrustedCompanies = () => {
       </div>
 
       <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes marquee {
+        @keyframes scroll {
           0% {
             transform: translateX(0);
           }
           100% {
-            transform: translateX(-100%);
+            transform: translateX(calc(-1 * var(--scroll-width)));
           }
+        }
+        
+        .animate-scroll {
+          animation: scroll 20s linear infinite;
         }
       ` }} />
     </section>
