@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import CategoryCard from "@/components/ui/CategoryCard";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import TaskDetailView from "@/components/ui/TaskDetailView";
 
 const mockUser = {
   firstName: "Alex",
@@ -67,6 +68,8 @@ const MainMenu = () => {
   const [activeTab, setActiveTab] = useState("home");
   const [searchResults, setSearchResults] = useState<typeof recommendedTasks | null>(null);
   const [searchPerformed, setSearchPerformed] = useState(false);
+  const [selectedTask, setSelectedTask] = useState<(typeof recommendedTasks)[0] | null>(null);
+  const [isTaskDetailOpen, setIsTaskDetailOpen] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -123,7 +126,17 @@ const MainMenu = () => {
     toast.success(`Viewing task: ${taskTitle}`, {
       description: "You'll be redirected to the task details page"
     });
+    
     console.log(`Viewing task: ${taskTitle}`);
+    
+    const task = [...recommendedTasks, ...(searchResults || [])].find(
+      t => t.title === taskTitle
+    );
+    
+    if (task) {
+      setSelectedTask(task);
+      setIsTaskDetailOpen(true);
+    }
   };
 
   const renderContent = () => {
@@ -612,6 +625,14 @@ const MainMenu = () => {
         
         {renderContent()}
       </div>
+      
+      {selectedTask && (
+        <TaskDetailView 
+          isOpen={isTaskDetailOpen}
+          onClose={() => setIsTaskDetailOpen(false)}
+          task={selectedTask}
+        />
+      )}
     </div>
   );
 };
