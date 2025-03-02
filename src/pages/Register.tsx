@@ -15,7 +15,6 @@ const Register = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    accountType: "student",
   });
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -52,7 +51,7 @@ const Register = () => {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      toast.success("Student account created successfully!");
+      toast.success("Account created successfully!");
       navigate("/login");
     } catch (error) {
       toast.error("Registration failed. Please try again.");
@@ -73,7 +72,7 @@ const Register = () => {
               <Logo />
             </Link>
             <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-              Join Assist as a Student
+              Create your account
             </h2>
             <p className="mt-2 text-sm text-gray-600">
               Already have an account?{" "}
@@ -168,8 +167,34 @@ const Register = () => {
                   className="w-full bg-gradient-to-r from-assist-blue to-indigo-600 hover:from-assist-blue/90 hover:to-indigo-600/90"
                   disabled={isLoading}
                 >
-                  {isLoading ? "Creating account..." : "Join as a student"}
+                  {isLoading ? "Creating account..." : "Sign up"}
                 </Button>
+              </div>
+
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-300" />
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="px-2 bg-white text-gray-500">
+                    Or
+                  </span>
+                </div>
+              </div>
+
+              <div>
+                <Link to="/student-register">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full border-assist-blue text-assist-blue hover:bg-assist-blue/10"
+                  >
+                    Join as a student
+                  </Button>
+                </Link>
+                <p className="text-xs text-center mt-2 text-gray-500">
+                  Access additional student features and benefits
+                </p>
               </div>
             </form>
             
