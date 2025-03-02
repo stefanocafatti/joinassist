@@ -13,7 +13,7 @@ import {
   DialogTitle,
   DialogClose
 } from "@/components/ui/dialog";
-import { Calendar, Clock, DollarSign, MapPin, Calendar as CalendarIcon, Repeat } from "lucide-react";
+import { Calendar, Clock, DollarSign, MapPin, Calendar as CalendarIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 
