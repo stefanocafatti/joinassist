@@ -1,9 +1,10 @@
 
-import React from "react";
+import React, { useState } from "react";
 import SearchResultsSection from "./SearchResultsSection";
 import RecommendedTasksSection from "./RecommendedTasksSection";
 import InterestsSection from "./InterestsSection";
 import PastTasksSection from "./PastTasksSection";
+import HomeNavigation from "./HomeNavigation";
 
 interface Task {
   title: string;
@@ -51,6 +52,57 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
   onBookNow,
   onRequestTask,
 }) => {
+  const [activeSection, setActiveSection] = useState("allTasks");
+  
+  const renderSectionContent = () => {
+    switch (activeSection) {
+      case "allTasks":
+        return (
+          <>
+            <InterestsSection
+              interestTags={interestTags}
+              userInterests={userInterests}
+              onToggleInterest={onToggleInterest}
+            />
+            
+            <RecommendedTasksSection
+              tasks={recommendedTasks}
+              favoriteTaskIds={favoriteTaskIds}
+              onFavoriteToggle={onFavoriteToggle}
+              onBookNow={onBookNow}
+            />
+            
+            <PastTasksSection 
+              pastTasks={pastTasks} 
+              favoriteTaskIds={favoriteTaskIds}
+              onFavoriteToggle={onFavoriteToggle}
+              onViewTask={onBookNow} // Using onBookNow for the onViewTask functionality
+            />
+          </>
+        );
+      case "recommended":
+        return (
+          <RecommendedTasksSection
+            tasks={recommendedTasks}
+            favoriteTaskIds={favoriteTaskIds}
+            onFavoriteToggle={onFavoriteToggle}
+            onBookNow={onBookNow}
+          />
+        );
+      case "recentlyViewed":
+        return (
+          <PastTasksSection 
+            pastTasks={pastTasks} 
+            favoriteTaskIds={favoriteTaskIds}
+            onFavoriteToggle={onFavoriteToggle}
+            onViewTask={onBookNow}
+          />
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <div>
       {searchPerformed && (
@@ -67,25 +119,11 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
 
       {!searchPerformed && (
         <>
-          <InterestsSection
-            interestTags={interestTags}
-            userInterests={userInterests}
-            onToggleInterest={onToggleInterest}
+          <HomeNavigation 
+            activeSection={activeSection} 
+            onSectionChange={setActiveSection} 
           />
-          
-          <RecommendedTasksSection
-            tasks={recommendedTasks}
-            favoriteTaskIds={favoriteTaskIds}
-            onFavoriteToggle={onFavoriteToggle}
-            onBookNow={onBookNow}
-          />
-          
-          <PastTasksSection 
-            pastTasks={pastTasks} 
-            favoriteTaskIds={favoriteTaskIds}
-            onFavoriteToggle={onFavoriteToggle}
-            onViewTask={onBookNow} // Using onBookNow for the onViewTask functionality
-          />
+          {renderSectionContent()}
         </>
       )}
     </div>

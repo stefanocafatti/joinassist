@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Grid, ThumbsUp, Search, History, Clock } from "lucide-react";
+import { Grid, Star, Eye, List } from "lucide-react";
 
 interface HomeNavigationProps {
   activeSection: string;
@@ -10,11 +10,9 @@ interface HomeNavigationProps {
 
 const HomeNavigation: React.FC<HomeNavigationProps> = ({ activeSection, onSectionChange }) => {
   const sections = [
-    { id: "categories", label: "All Tasks", icon: <Grid className="h-4 w-4 mr-2" /> },
-    { id: "recommended", label: "Recommended", icon: <ThumbsUp className="h-4 w-4 mr-2" /> },
-    { id: "recent", label: "Recently Viewed", icon: <Clock className="h-4 w-4 mr-2" /> },
-    { id: "searches", label: "Search History", icon: <Search className="h-4 w-4 mr-2" /> },
-    { id: "pastTasks", label: "Past Tasks", icon: <History className="h-4 w-4 mr-2" /> },
+    { id: "allTasks", label: "All Tasks", icon: <List className="h-4 w-4 mr-2" /> },
+    { id: "recommended", label: "Recommended Tasks", icon: <Star className="h-4 w-4 mr-2" /> },
+    { id: "recentlyViewed", label: "Recently Viewed", icon: <Eye className="h-4 w-4 mr-2" /> },
   ];
 
   return (
