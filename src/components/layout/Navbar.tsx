@@ -204,9 +204,13 @@ const Navbar = () => {
                 Login
               </Button>
             </Link>
-            <Button className="rounded-xl bg-assist-blue hover:bg-assist-blue/90 shadow-soft hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
-              Get Started
-            </Button>
+            <Link to="/register">
+              <Button 
+                className="rounded-xl bg-gradient-to-r from-assist-blue to-indigo-600 hover:from-assist-blue/90 hover:to-indigo-600/90 text-white font-medium shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
+              >
+                Get Started
+              </Button>
+            </Link>
           </div>
 
           <div className="md:hidden">
@@ -288,11 +292,13 @@ const Navbar = () => {
                   Login
                 </Button>
               </Link>
-              <Button 
-                className="w-full rounded-xl bg-assist-blue hover:bg-assist-blue/90 shadow-soft transition-all duration-300"
-              >
-                Get Started
-              </Button>
+              <Link to="/register">
+                <Button 
+                  className="w-full rounded-xl bg-gradient-to-r from-assist-blue to-indigo-600 hover:from-assist-blue/90 hover:to-indigo-600/90 text-white font-medium shadow-md hover:shadow-lg transition-all duration-300"
+                >
+                  Get Started
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
