@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -19,9 +18,9 @@ const mockUser = {
   preferences: [],
   // Added mock data for past tasks and payment methods
   pastTasks: [
-    { id: "1", title: "Dog Walking", date: "May 15, 2023", status: "Completed", price: "$25" },
-    { id: "2", title: "House Cleaning", date: "Apr 28, 2023", status: "Completed", price: "$75" },
-    { id: "3", title: "Grocery Delivery", date: "Mar 10, 2023", status: "Completed", price: "$18" }
+    { id: "1", title: "Dog Walking", date: "May 15, 2023", status: "Completed" },
+    { id: "2", title: "House Cleaning", date: "Apr 28, 2023", status: "Completed" },
+    { id: "3", title: "Grocery Delivery", date: "Mar 10, 2023", status: "Completed" }
   ],
   paymentMethods: [
     { id: "1", type: "Credit Card", last4: "4242", brand: "Visa", isDefault: true },
@@ -44,21 +43,18 @@ const recommendedTasks = [
     title: "Dog Walking",
     description: "Regular walks for your furry friend",
     category: "Pets", 
-    price: "$15-25/hr",
     image: "https://images.unsplash.com/photo-1541364983171-a8ba01e95cfc?q=80&w=1000&auto=format&fit=crop"
   },
   {
     title: "House Cleaning",
     description: "Get your space spotless",
     category: "Home", 
-    price: "$20-35/hr",
     image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1000&auto=format&fit=crop"
   },
   {
     title: "Grocery Delivery",
     description: "Get groceries delivered to your door",
     category: "Delivery", 
-    price: "$15/delivery",
     image: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1000&auto=format&fit=crop"
   }
 ];
@@ -163,7 +159,6 @@ const MainMenu = () => {
                       <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
                         {task.status}
                       </Badge>
-                      <span className="font-medium">{task.price}</span>
                     </div>
                   </div>
                 ))}
@@ -273,8 +268,7 @@ const MainMenu = () => {
                     <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100">{task.category}</Badge>
                   </div>
                   <p className="text-sm text-gray-600 mb-3">{task.description}</p>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm font-medium text-gray-700">{task.price}</span>
+                  <div className="flex justify-end items-center">
                     <Button 
                       size="sm" 
                       className="bg-assist-blue hover:bg-assist-blue/90"
