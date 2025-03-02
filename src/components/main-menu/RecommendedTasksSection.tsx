@@ -83,7 +83,7 @@ const RecommendedTasksSection: React.FC<RecommendedTasksSectionProps> = ({
               <div className="flex items-center justify-center">
                 <Button 
                   size="sm" 
-                  className="bg-assist-blue hover:bg-assist-blue/90"
+                  className="bg-assist-blue hover:bg-assist-blue/90 w-full"
                   onClick={(e) => {
                     e.stopPropagation();
                     onBookNow(task.title);

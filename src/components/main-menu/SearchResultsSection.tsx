@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -179,7 +180,7 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
                 <div className="flex items-center justify-center">
                   <Button 
                     size="sm" 
-                    className="bg-assist-blue hover:bg-assist-blue/90"
+                    className="bg-assist-blue hover:bg-assist-blue/90 w-full"
                     onClick={(e) => {
                       e.stopPropagation();
                       onBookNow(task.title);
