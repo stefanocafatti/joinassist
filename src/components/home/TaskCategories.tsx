@@ -35,11 +35,11 @@ const TaskCategories = () => {
       title: "Cleaning",
       description: "Keep your spaces tidy",
       tasks: [
-        "Wash my Car",
-        "Clean my Garage",
-        "Clean my Room",
-        "Deep Clean Apartment",
-        "Post Event Clean Up"
+        "🧹 Wash my Car",
+        "🧽 Clean my Garage",
+        "🧼 Clean my Room",
+        "✨ Deep Clean Apartment",
+        "🗑️ Post Event Clean Up"
       ],
       color: "bg-blue-50"
     },
@@ -48,11 +48,11 @@ const TaskCategories = () => {
       title: "Transportation",
       description: "Moving & delivery solutions",
       tasks: [
-        "Moving Assistance",
-        "Help with Loading Items",
-        "Drive me to a Location",
-        "Drop off a package",
-        "Pick up a package"
+        "🚚 Moving Assistance",
+        "📦 Help with Loading Items",
+        "🚗 Drive me to a Location",
+        "📬 Drop off a package",
+        "📫 Pick up a package"
       ],
       color: "bg-green-50"
     },
@@ -61,11 +61,11 @@ const TaskCategories = () => {
       title: "Assembly",
       description: "Put things together",
       tasks: [
-        "Assemble my Bed Frame",
-        "Assemble IKEA Furniture",
-        "Install my TV Mount",
-        "Install a Shelf",
-        "Assemble Office Desk"
+        "🛏️ Assemble my Bed Frame",
+        "🪑 Assemble IKEA Furniture",
+        "📺 Install my TV Mount",
+        "🔧 Install a Shelf",
+        "🖥️ Assemble Office Desk"
       ],
       color: "bg-yellow-50"
     },
@@ -74,11 +74,11 @@ const TaskCategories = () => {
       title: "Academic Help",
       description: "Educational support",
       tasks: [
-        "Writing Essays",
-        "Teach me Math",
-        "SAT/ACT Prep",
-        "Proofread my Paper",
-        "Study Buddy/Tutor"
+        "📝 Writing Essays",
+        "🔢 Teach me Math",
+        "📚 SAT/ACT Prep",
+        "📖 Proofread my Paper",
+        "👨‍🏫 Study Buddy/Tutor"
       ],
       color: "bg-purple-50"
     },
@@ -87,11 +87,11 @@ const TaskCategories = () => {
       title: "Digital Services",
       description: "Technical expertise",
       tasks: [
-        "Code a Website",
-        "Video Editing",
-        "Graphic Design Support",
-        "Fix my Bugs",
-        "Social Media Content"
+        "💻 Code a Website",
+        "🎬 Video Editing",
+        "🎨 Graphic Design Support",
+        "🐞 Fix my Bugs",
+        "📱 Social Media Content"
       ],
       color: "bg-red-50"
     },
@@ -100,11 +100,11 @@ const TaskCategories = () => {
       title: "Fitness & Wellness",
       description: "Health & wellness support",
       tasks: [
-        "Meal Prep",
-        "Personal Training",
-        "Yoga Instruction",
-        "Home Workout Plans",
-        "Nutrition Counseling"
+        "🥗 Meal Prep",
+        "💪 Personal Training",
+        "🧘 Yoga Instruction",
+        "🏋️ Home Workout Plans",
+        "🍎 Nutrition Counseling"
       ],
       color: "bg-teal-50"
     },
@@ -113,11 +113,11 @@ const TaskCategories = () => {
       title: "Event & Hospitality",
       description: "Event assistance",
       tasks: [
-        "Catering Assistance",
-        "Event Setup/Decoration",
-        "DJ for Event",
-        "Photographers for Events",
-        "Party Coordinator"
+        "🍽️ Catering Assistance",
+        "🎈 Event Setup/Decoration",
+        "🎵 DJ for Event",
+        "📸 Photographers for Events",
+        "🎉 Party Coordinator"
       ],
       color: "bg-pink-50"
     },
@@ -126,11 +126,11 @@ const TaskCategories = () => {
       title: "Special Tasks",
       description: "Unique task solutions",
       tasks: [
-        "Do my Laundry",
-        "Water my plants",
-        "Grocery Store Delivery",
-        "Help me Pack for a Trip",
-        "Organize my Closet"
+        "👕 Do my Laundry",
+        "🌱 Water my plants",
+        "🛒 Grocery Store Delivery",
+        "🧳 Help me Pack for a Trip",
+        "👔 Organize my Closet"
       ],
       color: "bg-orange-50"
     },
@@ -139,11 +139,11 @@ const TaskCategories = () => {
       title: "For Brands",
       description: "Business & brand support",
       tasks: [
-        "Content Creation for Ads",
-        "Brand Ambassador",
-        "Social Media Management",
-        "Market Research",
-        "Product Testing"
+        "📊 Content Creation for Ads",
+        "👨‍💼 Brand Ambassador",
+        "📢 Social Media Management",
+        "📈 Market Research",
+        "🧪 Product Testing"
       ],
       color: "bg-indigo-50"
     }
@@ -170,7 +170,7 @@ const TaskCategories = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
           {categories.map((category, index) => (
             <div key={index} onClick={() => handleCategoryClick(category.title)} className="h-full cursor-pointer">
               <CategoryCard
