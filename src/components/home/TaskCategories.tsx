@@ -1,3 +1,4 @@
+
 import { 
   Trash2, 
   Car, 
@@ -9,7 +10,8 @@ import {
   Star, 
   Briefcase,
   Heart,
-  Eye
+  Eye,
+  Loader
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CategoryCard from "../ui/CategoryCard";
@@ -32,6 +34,7 @@ const TaskCategories = ({
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [visibleTaskCount, setVisibleTaskCount] = useState<number>(9);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleCategoryClick = (category: string) => {
     if (showAllTasks) {
@@ -41,7 +44,13 @@ const TaskCategories = ({
   };
 
   const handleLoadMore = () => {
-    setVisibleTaskCount(prev => prev + 6);
+    setIsLoading(true);
+    
+    // Simulate loading delay for smooth transition
+    setTimeout(() => {
+      setVisibleTaskCount(prev => prev + 6);
+      setIsLoading(false);
+    }, 600);
   };
 
   const handleLocalFavoriteToggle = (taskTitle: string) => {
@@ -432,7 +441,7 @@ const TaskCategories = ({
 
   const filteredTaskListings = selectedCategory 
     ? allTaskListings.filter(task => task.category === selectedCategory || 
-        (selectedCategory === "Transportation and Moving" && task.category === "Transportation"))
+        (selectedCategory === "Transportation" && task.category === "Transportation"))
     : allTaskListings;
 
   const visibleTaskListings = filteredTaskListings.slice(0, visibleTaskCount);
@@ -519,13 +528,19 @@ const TaskCategories = ({
         
         {showAllTasks && hasMoreTasks && (
           <div className="mt-14 text-center">
-            <Button 
-              size="lg" 
-              className="rounded-full bg-assist-blue hover:bg-assist-blue/90 text-white h-14 px-8 text-base"
-              onClick={handleLoadMore}
-            >
-              Load More Tasks
-            </Button>
+            {isLoading ? (
+              <div className="flex justify-center items-center h-14">
+                <Loader className="h-6 w-6 text-assist-blue animate-spin" />
+              </div>
+            ) : (
+              <Button 
+                size="lg" 
+                className="rounded-full bg-assist-blue hover:bg-assist-blue/90 text-white h-14 px-8 text-base"
+                onClick={handleLoadMore}
+              >
+                Load More Tasks
+              </Button>
+            )}
           </div>
         )}
       </div>
