@@ -5,9 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import CircleBlocks from "@/components/background/CircleBlocks";
-import { Search, Heart, Clock, Star, Filter, PawPrint, Car, Home, Package, Briefcase, User, CreditCard, History } from "lucide-react";
+import { Search, Heart, Clock, Star, Filter, PawPrint, Car, Home, Package, Briefcase, User, CreditCard, History, Settings, LogOut, Bell } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import CategoryCard from "@/components/ui/CategoryCard";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 // Mock user data - in a real app this would come from your authentication system
 const mockUser = {
@@ -67,7 +69,7 @@ const MainMenu = () => {
   const [userInterests, setUserInterests] = useState<string[]>([]);
   const [userName, setUserName] = useState(mockUser.firstName);
   const [showWelcome, setShowWelcome] = useState(true);
-  const [activeTab, setActiveTab] = useState("home"); // New state for tracking active tab
+  const [activeTab, setActiveTab] = useState("home"); // State for tracking active tab
 
   useEffect(() => {
     // This would fetch the user's actual data from your backend
@@ -98,6 +100,14 @@ const MainMenu = () => {
     toast.success(`Preferences updated!`);
   };
 
+  const handleBookNow = (taskTitle: string) => {
+    toast.success(`Booking for ${taskTitle}`, {
+      description: "You'll be redirected to the booking page"
+    });
+    // In a real app, this would navigate to the booking page
+    console.log(`Booking task: ${taskTitle}`);
+  };
+
   // Render the appropriate content based on the active tab
   const renderContent = () => {
     if (activeTab === "profile") {
@@ -118,7 +128,7 @@ const MainMenu = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
               <div className="bg-blue-50 p-4 rounded-lg text-center">
-                <p className="text-gray-600 text-sm">Total Tasks</p>
+                <p className="text-gray-600 text-sm">Total Bookings</p>
                 <p className="text-2xl font-bold text-gray-900">{mockUser.pastTasks.length}</p>
               </div>
               <div className="bg-green-50 p-4 rounded-lg text-center">
@@ -132,11 +142,11 @@ const MainMenu = () => {
             </div>
           </section>
           
-          {/* Past Tasks Section */}
+          {/* Past Bookings Section */}
           <section className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-semibold text-gray-900 flex items-center">
-                <History className="h-5 w-5 mr-2 text-assist-blue" /> Past Tasks
+                <History className="h-5 w-5 mr-2 text-assist-blue" /> Past Bookings
               </h2>
               <Button variant="ghost" size="sm" className="text-assist-blue">View All</Button>
             </div>
@@ -159,7 +169,7 @@ const MainMenu = () => {
                 ))}
               </div>
             ) : (
-              <p className="text-gray-500 text-center py-6">You don't have any past tasks yet.</p>
+              <p className="text-gray-500 text-center py-6">You don't have any past bookings yet.</p>
             )}
           </section>
           
@@ -265,7 +275,13 @@ const MainMenu = () => {
                   <p className="text-sm text-gray-600 mb-3">{task.description}</p>
                   <div className="flex justify-between items-center">
                     <span className="text-sm font-medium text-gray-700">{task.price}</span>
-                    <Button size="sm">View Details</Button>
+                    <Button 
+                      size="sm" 
+                      className="bg-assist-blue hover:bg-assist-blue/90"
+                      onClick={() => handleBookNow(task.title)}
+                    >
+                      Book Now
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -358,19 +374,57 @@ const MainMenu = () => {
       )}
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 relative z-10">
-        {/* Header Section */}
+        {/* Header Section with Profile Menu in Top Corner */}
         <header className="mb-8">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
               Hello, {userName}!
             </h1>
-            <div className="flex gap-3">
+            <div className="flex items-center gap-3">
               <Button variant="ghost" size="icon">
-                <Heart className="h-5 w-5" />
+                <Bell className="h-5 w-5" />
               </Button>
-              <Button variant="ghost" size="icon">
-                <Clock className="h-5 w-5" />
-              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="h-10 w-10 rounded-full p-0">
+                    <Avatar className="h-9 w-9">
+                      <AvatarImage src="" />
+                      <AvatarFallback className="bg-assist-blue text-white">
+                        {userName.charAt(0)}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => setActiveTab("profile")}>
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Profile</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <History className="mr-2 h-4 w-4" />
+                    <span>My Bookings</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <CreditCard className="mr-2 h-4 w-4" />
+                    <span>Payment Methods</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Heart className="mr-2 h-4 w-4" />
+                    <span>Saved Tasks</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Settings</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Logout</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
           
