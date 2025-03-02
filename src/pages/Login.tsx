@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,6 +14,7 @@ const Login = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,6 +30,14 @@ const Login = () => {
           description: "You have been logged in successfully!",
           variant: "default",
         });
+        
+        // Save user info to localStorage if remember me is checked
+        if (rememberMe) {
+          localStorage.setItem("userEmail", email);
+        }
+        
+        // Navigate to main menu after successful login
+        navigate("/main-menu");
       } else {
         toast({
           title: "Login failed",
