@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -126,6 +127,7 @@ const MainMenu = () => {
   const [showFavorites, setShowFavorites] = useState(false);
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [assistPoints, setAssistPoints] = useState(mockUser.assistPoints);
+  const [recentlyViewedTasks, setRecentlyViewedTasks] = useState<typeof recommendedTasks>([]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -134,6 +136,16 @@ const MainMenu = () => {
 
     return () => clearTimeout(timer);
   }, []);
+
+  // Function to add a task to recently viewed
+  const addToRecentlyViewed = (task: (typeof recommendedTasks)[0]) => {
+    setRecentlyViewedTasks(prev => {
+      // Remove the task if it already exists (to avoid duplicates)
+      const filteredTasks = prev.filter(t => t.title !== task.title);
+      // Add the task to the beginning of the array (most recent first)
+      return [task, ...filteredTasks].slice(0, 5); // Keep only the 5 most recent tasks
+    });
+  };
 
   const handleUpdateUserName = (firstName: string, lastName: string) => {
     setUser(prevUser => ({
@@ -249,6 +261,8 @@ const MainMenu = () => {
     if (task) {
       setSelectedTask(task);
       setIsTaskDetailOpen(true);
+      // Add to recently viewed when viewing task details
+      addToRecentlyViewed(task);
     }
   };
 
@@ -311,6 +325,7 @@ const MainMenu = () => {
         searchPerformed={searchPerformed}
         searchResults={searchResults}
         recommendedTasks={recommendedTasks}
+        recentlyViewedTasks={recentlyViewedTasks}
         interestTags={interestTags}
         userInterests={userInterests}
         favoriteTaskIds={favoriteTaskIds}

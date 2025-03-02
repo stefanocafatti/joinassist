@@ -6,6 +6,8 @@ import InterestsSection from "./InterestsSection";
 import PastTasksSection from "./PastTasksSection";
 import HomeNavigation from "./HomeNavigation";
 import TaskCategories from "../home/TaskCategories";
+import { Button } from "@/components/ui/button";
+import { Eye } from "lucide-react";
 
 interface Task {
   title: string;
@@ -27,6 +29,7 @@ interface HomeTabContentProps {
   searchPerformed: boolean;
   searchResults: Task[] | null;
   recommendedTasks: Task[];
+  recentlyViewedTasks: Task[];
   interestTags: { id: string; label: string; icon: React.ReactNode }[];
   userInterests: string[];
   favoriteTaskIds: string[];
@@ -43,6 +46,7 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
   searchPerformed,
   searchResults,
   recommendedTasks,
+  recentlyViewedTasks,
   interestTags,
   userInterests,
   favoriteTaskIds,
@@ -86,13 +90,29 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
           />
         );
       case "recentlyViewed":
-        return (
-          <PastTasksSection 
-            pastTasks={pastTasks} 
+        return recentlyViewedTasks.length > 0 ? (
+          <RecommendedTasksSection
+            tasks={recentlyViewedTasks}
             favoriteTaskIds={favoriteTaskIds}
             onFavoriteToggle={onFavoriteToggle}
-            onViewTask={onBookNow}
+            onBookNow={onBookNow}
+            sectionTitle="Recently Viewed Tasks"
           />
+        ) : (
+          <div className="bg-gray-50 rounded-xl p-8 text-center border border-gray-200 my-8">
+            <div className="max-w-md mx-auto">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">No Recently Viewed Tasks</h3>
+              <p className="text-gray-600 mb-6">
+                You haven't viewed any tasks yet. Browse our available tasks to find something that interests you.
+              </p>
+              <Button 
+                onClick={() => setActiveSection("recommended")}
+                className="bg-assist-blue hover:bg-assist-blue/90"
+              >
+                <Eye className="h-4 w-4 mr-2" /> Browse Tasks
+              </Button>
+            </div>
+          </div>
         );
       case "pastOrders":
         return (
