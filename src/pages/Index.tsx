@@ -1,12 +1,11 @@
-
 import { useEffect } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/home/Hero";
 import Features from "@/components/home/Features";
 import Benefits from "@/components/home/Benefits";
+import TaskCategories from "@/components/home/TaskCategories";
 import Testimonials from "@/components/home/Testimonials";
-import FAQ from "@/components/home/FAQ";
 import CTASection from "@/components/home/CTASection";
 import CircleBlocks from "@/components/background/CircleBlocks";
 import TrustedCompanies from "@/components/home/TrustedCompanies";
@@ -48,8 +47,8 @@ const Index = () => {
         <TrustedCompanies />
         <Features />
         <Benefits />
+        <TaskCategories />
         <Testimonials />
-        <FAQ />
         <CTASection />
       </main>
       
