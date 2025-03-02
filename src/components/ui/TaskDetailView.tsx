@@ -1,20 +1,14 @@
 
 import React, { useState } from "react";
+import { Dialog, DialogContent, DialogTitle, DialogHeader, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { 
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogClose
-} from "@/components/ui/dialog";
-import { Calendar, Clock, DollarSign, MapPin, Calendar as CalendarIcon } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Calendar, Clock, MapPin, DollarSign } from "lucide-react";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 
 interface TaskDetailViewProps {
@@ -24,194 +18,180 @@ interface TaskDetailViewProps {
     title: string;
     description: string;
     category: string;
-    image?: string;
+    location: string;
+    image: string;
   };
 }
 
 const TaskDetailView = ({ isOpen, onClose, task }: TaskDetailViewProps) => {
-  const [offerAmount, setOfferAmount] = useState("");
-  const [location, setLocation] = useState("");
-  const [preferredDate, setPreferredDate] = useState("");
-  const [preferredTime, setPreferredTime] = useState("");
-  const [additionalInfo, setAdditionalInfo] = useState("");
-  const [paymentType, setPaymentType] = useState<"onetime" | "hourly">("onetime");
+  const [date, setDate] = useState<Date>();
+  const [time, setTime] = useState("");
+  const [location, setLocation] = useState(task.location);
+  const [notes, setNotes] = useState("");
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
-  const handleSubmitRequest = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validate form
-    if (!offerAmount || !location || !preferredDate || !preferredTime) {
-      toast.error("Please fill in all required fields");
+    if (!date || !time) {
+      toast.error("Please select both date and time for your task.");
       return;
     }
     
-    // Here you would typically send the request to your backend
+    toast.success("Task booked successfully!", {
+      description: `Your ${task.title} has been scheduled for ${format(date, "MMMM d, yyyy")} at ${time}`
+    });
+    
+    setFormSubmitted(true);
+    
+    // In a real app, we would handle the API call here
     console.log({
       task: task.title,
-      offerAmount,
-      paymentType,
+      date: date ? format(date, "yyyy-MM-dd") : null,
+      time,
       location,
-      preferredDate,
-      preferredTime,
-      additionalInfo
+      notes
     });
-    
-    toast.success("Your request has been submitted!", {
-      description: "We'll notify you when the provider responds to your request."
-    });
-    
-    // Reset form and close dialog
-    setOfferAmount("");
-    setLocation("");
-    setPreferredDate("");
-    setPreferredTime("");
-    setAdditionalInfo("");
-    setPaymentType("onetime");
-    onClose();
   };
+  
+  const timeOptions = [
+    "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM",
+    "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM"
+  ];
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-bold">{task.title}</DialogTitle>
-          <DialogDescription className="flex items-center gap-2 mt-1">
-            <Badge className="bg-blue-100 text-blue-800 border-blue-200">
-              {task.category}
-            </Badge>
-          </DialogDescription>
-        </DialogHeader>
-        
-        <div className="grid gap-6 py-4">
-          {task.image && (
-            <div className="w-full h-56 bg-cover bg-center rounded-lg" 
-                style={{ backgroundImage: `url(${task.image})` }} 
-            />
-          )}
-          
-          <div>
-            <h3 className="font-medium text-lg mb-2">Task Description</h3>
-            <p className="text-gray-700">{task.description}</p>
+      <DialogContent className="max-w-2xl p-0 overflow-hidden rounded-xl">
+        <div className="relative">
+          <div
+            className="h-56 bg-cover bg-center"
+            style={{ backgroundImage: `url(${task.image})` }}
+          />
+          <DialogHeader className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent">
+            <DialogTitle className="text-2xl font-bold text-white">
+              {task.title}
+            </DialogTitle>
+          </DialogHeader>
+        </div>
+
+        <div className="p-6">
+          <div className="mb-6">
+            <h3 className="text-lg font-medium mb-2">Description</h3>
+            <p className="text-gray-600">{task.description}</p>
           </div>
-          
-          <form onSubmit={handleSubmitRequest}>
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="offerAmount" className="text-base font-medium">
-                  Your Offer Amount *
-                </Label>
-                <div className="flex gap-3 mb-2">
-                  <Button
-                    type="button"
-                    variant={paymentType === "onetime" ? "default" : "outline"}
-                    className={`flex-1 ${paymentType === "onetime" ? "bg-assist-blue hover:bg-assist-blue/90" : ""}`}
-                    onClick={() => setPaymentType("onetime")}
-                  >
-                    <DollarSign className="h-4 w-4 mr-2" />
-                    One Time
-                  </Button>
-                  <Button
-                    type="button"
-                    variant={paymentType === "hourly" ? "default" : "outline"}
-                    className={`flex-1 ${paymentType === "hourly" ? "bg-assist-blue hover:bg-assist-blue/90" : ""}`}
-                    onClick={() => setPaymentType("hourly")}
-                  >
-                    <Clock className="h-4 w-4 mr-2" />
-                    Per Hour
-                  </Button>
-                </div>
-                <div className="relative mt-1">
-                  <DollarSign className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                  <Input
-                    id="offerAmount"
-                    placeholder="Enter your offer (e.g. 25.00)"
-                    className="pl-10"
-                    type="number"
-                    min="0"
-                    step="0.01"
-                    value={offerAmount}
-                    onChange={(e) => setOfferAmount(e.target.value)}
-                    required
-                  />
-                </div>
-              </div>
-              
-              <div>
-                <Label htmlFor="location" className="text-base font-medium">
-                  Location *
-                </Label>
-                <div className="relative mt-1">
-                  <MapPin className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                  <Input
-                    id="location"
-                    placeholder="Enter the location for this task"
-                    className="pl-10"
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
-                    required
-                  />
-                </div>
-              </div>
-              
-              <div>
-                <Label htmlFor="preferredDate" className="text-base font-medium">
-                  Preferred Date & Time *
-                </Label>
-                <div className="grid grid-cols-2 gap-3 mt-1">
-                  <div className="relative">
-                    <CalendarIcon className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                    <Input
-                      id="preferredDate"
-                      type="date"
-                      className="pl-10"
-                      value={preferredDate}
-                      onChange={(e) => setPreferredDate(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <div className="relative">
-                    <Clock className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                    <Input
-                      id="preferredTime"
-                      type="time"
-                      className="pl-10"
-                      value={preferredTime}
-                      onChange={(e) => setPreferredTime(e.target.value)}
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
-              
-              <div>
-                <Label htmlFor="additionalInfo" className="text-base font-medium">
-                  Additional Information
-                </Label>
-                <Textarea
-                  id="additionalInfo"
-                  placeholder="Any special requirements or details for this task?"
-                  className="mt-1 resize-none"
-                  rows={4}
-                  value={additionalInfo}
-                  onChange={(e) => setAdditionalInfo(e.target.value)}
-                />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div className="flex items-center gap-2 text-gray-600">
+              <MapPin className="h-5 w-5 text-assist-blue" />
+              <span>{task.location}</span>
+            </div>
+            <div className="flex items-center gap-2 text-gray-600">
+              <div className="flex items-center gap-1 px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-sm">
+                {task.category}
               </div>
             </div>
-          </form>
+          </div>
+
+          {!formSubmitted ? (
+            <form onSubmit={handleSubmit}>
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-1 flex items-center gap-1">
+                      <Calendar className="h-4 w-4" /> Preferred Date
+                    </label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-full justify-start text-left font-normal",
+                            !date && "text-gray-400"
+                          )}
+                        >
+                          {date ? format(date, "PPP") : "Select a date"}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0">
+                        <CalendarComponent
+                          mode="single"
+                          selected={date}
+                          onSelect={setDate}
+                          initialFocus
+                          disabled={(date) => date < new Date()}
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium mb-1 flex items-center gap-1">
+                      <Clock className="h-4 w-4" /> Preferred Time
+                    </label>
+                    <Select value={time} onValueChange={setTime}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select a time" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {timeOptions.map((time) => (
+                          <SelectItem key={time} value={time}>
+                            {time}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-1 flex items-center gap-1">
+                    <MapPin className="h-4 w-4" /> Location
+                  </label>
+                  <Input
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    placeholder="Enter location details"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-1">
+                    Additional Notes
+                  </label>
+                  <Input
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
+                    placeholder="Any specific requirements?"
+                  />
+                </div>
+              </div>
+
+              <DialogFooter className="mt-6 gap-2">
+                <Button type="button" variant="outline" onClick={onClose}>
+                  Cancel
+                </Button>
+                <Button type="submit" className="bg-assist-blue hover:bg-assist-blue/90">
+                  Book Now
+                </Button>
+              </DialogFooter>
+            </form>
+          ) : (
+            <div className="bg-green-50 p-6 rounded-lg text-center">
+              <h3 className="text-xl font-semibold text-green-800 mb-2">
+                Task Booked Successfully!
+              </h3>
+              <p className="text-green-700 mb-6">
+                Your request has been submitted. We'll notify you once a provider accepts.
+              </p>
+              <Button
+                onClick={onClose}
+                className="bg-green-600 hover:bg-green-700 text-white"
+              >
+                Close
+              </Button>
+            </div>
+          )}
         </div>
-        
-        <DialogFooter className="flex flex-col sm:flex-row gap-2">
-          <Button type="button" variant="outline" onClick={onClose}>
-            Cancel
-          </Button>
-          <Button 
-            type="button" 
-            className="bg-assist-blue hover:bg-assist-blue/90"
-            onClick={handleSubmitRequest}
-          >
-            Submit Request
-          </Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

@@ -109,6 +109,7 @@ const MainMenu = () => {
   const [searchPerformed, setSearchPerformed] = useState(false);
   const [selectedTask, setSelectedTask] = useState<(typeof recommendedTasks)[0] | null>(null);
   const [isTaskDetailOpen, setIsTaskDetailOpen] = useState(false);
+  const [favoriteTaskIds, setFavoriteTaskIds] = useState<string[]>([]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -117,6 +118,18 @@ const MainMenu = () => {
 
     return () => clearTimeout(timer);
   }, []);
+
+  const handleFavoriteToggle = (taskTitle: string) => {
+    setFavoriteTaskIds(prev => {
+      if (prev.includes(taskTitle)) {
+        toast.success(`Removed ${taskTitle} from favorites`);
+        return prev.filter(id => id !== taskTitle);
+      } else {
+        toast.success(`Added ${taskTitle} to favorites`);
+        return [...prev, taskTitle];
+      }
+    });
+  };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -411,10 +424,23 @@ const MainMenu = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {searchResults.map((task, index) => (
                   <div key={index} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100">
-                    <div 
-                      className="h-40 bg-cover bg-center" 
-                      style={{ backgroundImage: `url(${task.image})` }}
-                    />
+                    <div className="relative">
+                      <div 
+                        className="h-40 bg-cover bg-center" 
+                        style={{ backgroundImage: `url(${task.image})` }}
+                      />
+                      <button 
+                        className="absolute top-3 right-3 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleFavoriteToggle(task.title);
+                        }}
+                      >
+                        <Heart 
+                          className={`h-5 w-5 ${favoriteTaskIds.includes(task.title) ? 'fill-red-500 text-red-500' : 'text-gray-500'}`} 
+                        />
+                      </button>
+                    </div>
                     <div className="p-4">
                       <div className="flex justify-between items-start mb-2">
                         <h3 className="font-semibold text-gray-900">{task.title}</h3>
@@ -482,10 +508,23 @@ const MainMenu = () => {
                     className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 cursor-pointer"
                     onClick={() => handleBookNow(task.title)}
                   >
-                    <div 
-                      className="h-40 bg-cover bg-center" 
-                      style={{ backgroundImage: `url(${task.image})` }}
-                    />
+                    <div className="relative">
+                      <div 
+                        className="h-40 bg-cover bg-center" 
+                        style={{ backgroundImage: `url(${task.image})` }}
+                      />
+                      <button 
+                        className="absolute top-3 right-3 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleFavoriteToggle(task.title);
+                        }}
+                      >
+                        <Heart 
+                          className={`h-5 w-5 ${favoriteTaskIds.includes(task.title) ? 'fill-red-500 text-red-500' : 'text-gray-500'}`} 
+                        />
+                      </button>
+                    </div>
                     <div className="p-4">
                       <div className="flex justify-between items-start mb-2">
                         <h3 className="font-semibold text-gray-900">{task.title}</h3>
@@ -553,9 +592,22 @@ const MainMenu = () => {
                     <div key={task.id} className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer">
                       <div className="flex justify-between items-start mb-3">
                         <h3 className="font-semibold text-gray-900">{task.title}</h3>
-                        <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
-                          {task.status}
-                        </Badge>
+                        <div className="flex items-center gap-2">
+                          <button 
+                            className="p-1 hover:bg-gray-100 rounded-full transition-colors"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleFavoriteToggle(task.title);
+                            }}
+                          >
+                            <Heart 
+                              className={`h-4 w-4 ${favoriteTaskIds.includes(task.title) ? 'fill-red-500 text-red-500' : 'text-gray-500'}`} 
+                            />
+                          </button>
+                          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                            {task.status}
+                          </Badge>
+                        </div>
                       </div>
                       <div className="flex items-center text-sm text-gray-500 mb-3">
                         <Calendar className="h-4 w-4 mr-1" /> {task.date}
