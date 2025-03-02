@@ -47,6 +47,8 @@ interface HomeTabContentProps {
   onBookNow: (taskTitle: string) => void;
   onRequestTask: () => void;
   onSetActiveTab?: (tab: string) => void;
+  recentSearches?: string[]; // Add this to match RecentSearchesSection props
+  onSearchClick?: (search: string) => void; // Add this to match RecentSearchesSection props
 }
 
 const HomeTabContent: React.FC<HomeTabContentProps> = ({
@@ -64,7 +66,9 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
   onFavoriteToggle,
   onBookNow,
   onRequestTask,
-  onSetActiveTab
+  onSetActiveTab,
+  recentSearches = [], // Default to empty array
+  onSearchClick = () => {} // Default to empty function
 }) => {
   // Render based on search state
   if (searchPerformed && searchResults) {
@@ -89,10 +93,13 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
         onToggleInterest={onToggleInterest}
       />
       
-      <RecentSearchesSection searchQuery={searchQuery} />
+      <RecentSearchesSection 
+        recentSearches={recentSearches}
+        onSearchClick={onSearchClick}
+      />
       
       <RecommendedTasksSection
-        recommendedTasks={recommendedTasks}
+        tasks={recommendedTasks} // Change recommendedTasks to tasks to match the component interface
         favoriteTaskIds={favoriteTaskIds}
         onFavoriteToggle={onFavoriteToggle}
         onBookNow={onBookNow}

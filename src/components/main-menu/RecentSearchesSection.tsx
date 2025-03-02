@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 
 interface RecentSearchesSectionProps {
   recentSearches: string[];
+  searchQuery?: string; // Make this optional to accommodate existing usage
   onSearchClick: (search: string) => void;
 }
 
