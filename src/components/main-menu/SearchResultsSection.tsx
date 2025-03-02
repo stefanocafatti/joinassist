@@ -105,7 +105,7 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
       // Event tasks
       "Event Setup/Decoration": "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?q=80&w=1000&auto=format&fit=crop",
       "DJ for Event": "https://images.unsplash.com/photo-1594387310561-7ce9fd3312a9?q=80&w=1000&auto=format&fit=crop",
-      "Party Coordinator": "https://images.unsplash.com/photo-1528495612343-9ca9f4a4de28?q=80&w=1000&auto=format&fit=crop",
+      "Party Coordinator": "https://images.unsplash.com/photo-1528495612343-9ca9f41856c4?q=80&w=1000&auto=format&fit=crop",
       
       // Special tasks
       "Grocery Delivery": "https://images.unsplash.com/photo-1543168256-418811576931?q=80&w=1000&auto=format&fit=crop",
@@ -188,8 +188,7 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
                   <Badge className={cn(getCategoryColor(task.category), "hover:opacity-90")}>{task.category}</Badge>
                 </div>
                 <p className="text-sm text-gray-600 mb-4">{task.description}</p>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-500">{task.location}</span>
+                <div className="flex items-center justify-end">
                   <Button 
                     size="sm" 
                     className="bg-assist-blue hover:bg-assist-blue/90"

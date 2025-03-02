@@ -80,8 +80,7 @@ const RecommendedTasksSection: React.FC<RecommendedTasksSectionProps> = ({
                 <Badge className={cn(getCategoryColor(task.category), "hover:bg-opacity-90")}>{task.category}</Badge>
               </div>
               <p className="text-sm text-gray-600 mb-4">{task.description}</p>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-500">{task.location}</span>
+              <div className="flex items-center justify-end">
                 <Button 
                   size="sm" 
                   className="bg-assist-blue hover:bg-assist-blue/90"
