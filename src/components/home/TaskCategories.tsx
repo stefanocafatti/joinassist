@@ -8,11 +8,9 @@ import {
   Dumbbell, 
   PartyPopper, 
   Star, 
-  Briefcase,
-  Search
+  Briefcase
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import CategoryCard from "../ui/CategoryCard";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -29,19 +27,6 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
       description: "This would navigate to the category page in a full implementation."
     });
     console.log(`Category selected: ${category}`);
-  };
-
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const searchQuery = formData.get('searchQuery') as string;
-    
-    if (searchQuery.trim()) {
-      toast.info(`Searching for "${searchQuery}"`, {
-        description: "Search functionality would be implemented in a full version."
-      });
-      console.log(`Search query: ${searchQuery}`);
-    }
   };
   
   const categories = [
@@ -220,36 +205,17 @@ const TaskCategories = ({ showAllTasks = false }: TaskCategoriesProps) => {
       </div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {!showAllTasks && (
-          <div className="text-center max-w-3xl mx-auto mb-8">
-            <div className="inline-flex items-center gap-1 py-1 px-4 rounded-full bg-assist-blue/10 text-assist-blue text-sm font-medium mb-4">
-              Many Skills, One Platform
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Explore Task Categories
-            </h2>
-            <p className="text-lg text-gray-600 mb-8">
-              From cleaning to coding, our vetted students can assist you with any task you need completed
-            </p>
-            
-            <form onSubmit={handleSearch} className="max-w-xl mx-auto mb-8">
-              <div className="relative flex items-center">
-                <Input 
-                  type="text" 
-                  name="searchQuery"
-                  placeholder="What do you need help with?"
-                  className="pr-12 h-14 rounded-full border-2 border-assist-blue/30 shadow-md bg-white focus:border-assist-blue focus:ring-2 focus:ring-assist-blue/20 text-base placeholder:text-assist-blue/60"
-                />
-                <button 
-                  type="submit" 
-                  className="absolute right-4 text-assist-blue hover:text-assist-blue/80 transition-colors"
-                >
-                  <Search className="h-5 w-5" />
-                </button>
-              </div>
-            </form>
+        <div className="text-center max-w-3xl mx-auto mb-8">
+          <div className="inline-flex items-center gap-1 py-1 px-4 rounded-full bg-assist-blue/10 text-assist-blue text-sm font-medium mb-4">
+            Many Skills, One Platform
           </div>
-        )}
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Explore Task Categories
+          </h2>
+          <p className="text-lg text-gray-600 mb-8">
+            From cleaning to coding, our vetted students can assist you with any task you need completed
+          </p>
+        </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {displayCategories.map((category, index) => (
