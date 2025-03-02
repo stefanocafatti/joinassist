@@ -93,7 +93,7 @@ const TrustedCompanies = () => {
       if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth / 2) {
         scrollContainer.scrollLeft = 0;
       } else {
-        scrollContainer.scrollLeft += 1;
+        scrollContainer.scrollLeft += 2; // Increased from 1 to 2 for faster movement
       }
       
       requestAnimationFrame(animateScroll);
