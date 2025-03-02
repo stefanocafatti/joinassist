@@ -9,8 +9,8 @@ const Messages = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-6 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
         <Button
           variant="ghost"
           className="mb-4"
@@ -19,9 +19,12 @@ const Messages = () => {
           <ArrowLeft className="h-4 w-4 mr-2" />
           Back to Main Menu
         </Button>
+        
         <h1 className="text-2xl font-bold mb-6">Your Messages</h1>
         
-        <MessagesTab />
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+          <MessagesTab />
+        </div>
       </div>
     </div>
   );

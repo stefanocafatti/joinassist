@@ -1,6 +1,5 @@
-
 import React, { useState } from "react";
-import { MessageSquare, Search, Send, User, MoreHorizontal, ChevronLeft } from "lucide-react";
+import { MessageSquare, Search, Send, MoreHorizontal, ChevronLeft } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,7 +10,6 @@ import {
   DropdownMenuItem, 
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
-import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
@@ -187,7 +185,6 @@ const MessagesTab = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSelectConversation = (conversation: Conversation) => {
-    // Mark all messages as read when conversation is selected
     const updatedConversations = conversations.map(c => {
       if (c.id === conversation.id) {
         const updatedMessages = c.messages.map(m => ({
@@ -252,185 +249,183 @@ const MessagesTab = () => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-100">
-      <div className="flex h-[calc(100vh-220px)] max-h-[700px]">
-        {/* Conversations List - Hide on mobile when conversation is selected */}
-        <div className={cn(
-          "w-full md:w-1/3 border-r border-gray-100 flex flex-col",
-          selectedConversation ? "hidden md:flex" : "flex"
-        )}>
-          <div className="p-4 border-b border-gray-100">
-            <h2 className="text-xl font-semibold mb-4">Messages</h2>
-            <div className="relative">
-              <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
-              <Input 
-                placeholder="Search conversations..." 
-                className="pl-10"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-          </div>
-          
-          <div className="flex-1 overflow-y-auto">
-            {filteredConversations.length > 0 ? (
-              filteredConversations.map((conversation) => (
-                <div 
-                  key={conversation.id}
-                  className={cn(
-                    "p-3 border-b border-gray-100 cursor-pointer hover:bg-gray-50 transition-colors",
-                    conversation.isActive && "bg-blue-50 hover:bg-blue-100",
-                    !conversation.lastMessage.isRead && "bg-blue-50/30"
-                  )}
-                  onClick={() => handleSelectConversation(conversation)}
-                >
-                  <div className="flex items-start gap-3">
-                    <Avatar className="h-10 w-10 shrink-0">
-                      <AvatarImage src={conversation.user.avatar || ""} />
-                      <AvatarFallback className="bg-blue-100 text-blue-800">
-                        {conversation.user.name.charAt(0)}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex justify-between items-start">
-                        <h3 className="font-medium text-gray-900 truncate">
-                          {conversation.user.name}
-                        </h3>
-                        <span className="text-xs text-gray-500 whitespace-nowrap ml-1">
-                          {conversation.lastMessage.time}
-                        </span>
-                      </div>
-                      <p className="text-xs text-gray-500 mt-0.5">
-                        {conversation.taskTitle}
-                      </p>
-                      <p className={cn(
-                        "text-sm mt-1 line-clamp-1",
-                        !conversation.lastMessage.isRead ? "font-medium text-gray-900" : "text-gray-600"
-                      )}>
-                        {conversation.lastMessage.text}
-                      </p>
-                      {!conversation.lastMessage.isRead && (
-                        <Badge variant="outline" className="bg-blue-100 text-blue-800 border-blue-200 text-xs mt-1">New</Badge>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div className="p-8 text-center">
-                <MessageSquare className="h-8 w-8 text-gray-300 mx-auto mb-2" />
-                <p className="text-gray-500">No conversations found</p>
-              </div>
-            )}
+    <div className="flex h-[calc(100vh-200px)] min-h-[650px]">
+      <div className={cn(
+        "w-full md:w-1/3 border-r border-gray-100 flex flex-col",
+        selectedConversation ? "hidden md:flex" : "flex"
+      )}>
+        <div className="p-4 border-b border-gray-100">
+          <h2 className="text-xl font-semibold mb-4">Messages</h2>
+          <div className="relative">
+            <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
+            <Input 
+              placeholder="Search conversations..." 
+              className="pl-10"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
           </div>
         </div>
-
-        {/* Message Detail View */}
-        <div className={cn(
-          "w-full md:w-2/3 flex flex-col",
-          !selectedConversation ? "hidden md:flex" : "flex"
-        )}>
-          {selectedConversation ? (
-            <>
-              <div className="p-4 border-b border-gray-100 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <Button 
-                    variant="ghost" 
-                    size="icon"
-                    className="md:hidden"
-                    onClick={backToConversationList}
-                  >
-                    <ChevronLeft className="h-5 w-5" />
-                  </Button>
-                  <Avatar className="h-10 w-10">
-                    <AvatarImage src={selectedConversation.user.avatar || ""} />
+        
+        <div className="flex-1 overflow-y-auto">
+          {filteredConversations.length > 0 ? (
+            filteredConversations.map((conversation) => (
+              <div 
+                key={conversation.id}
+                className={cn(
+                  "p-3 border-b border-gray-100 cursor-pointer hover:bg-gray-50 transition-colors",
+                  conversation.isActive && "bg-blue-50 hover:bg-blue-100",
+                  !conversation.lastMessage.isRead && "bg-blue-50/30"
+                )}
+                onClick={() => handleSelectConversation(conversation)}
+              >
+                <div className="flex items-start gap-3">
+                  <Avatar className="h-10 w-10 shrink-0">
+                    <AvatarImage src={conversation.user.avatar || ""} />
                     <AvatarFallback className="bg-blue-100 text-blue-800">
-                      {selectedConversation.user.name.charAt(0)}
+                      {conversation.user.name.charAt(0)}
                     </AvatarFallback>
                   </Avatar>
-                  <div>
-                    <h3 className="font-medium">{selectedConversation.user.name}</h3>
-                    <p className="text-xs text-gray-500">{selectedConversation.taskTitle}</p>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex justify-between items-start">
+                      <h3 className="font-medium text-gray-900 truncate">
+                        {conversation.user.name}
+                      </h3>
+                      <span className="text-xs text-gray-500 whitespace-nowrap ml-1">
+                        {conversation.lastMessage.time}
+                      </span>
+                    </div>
+                    <p className="text-xs text-gray-500 mt-0.5">
+                      {conversation.taskTitle}
+                    </p>
+                    <p className={cn(
+                      "text-sm mt-1 line-clamp-1",
+                      !conversation.lastMessage.isRead ? "font-medium text-gray-900" : "text-gray-600"
+                    )}>
+                      {conversation.lastMessage.text}
+                    </p>
+                    {!conversation.lastMessage.isRead && (
+                      <Badge variant="outline" className="bg-blue-100 text-blue-800 border-blue-200 text-xs mt-1">New</Badge>
+                    )}
                   </div>
                 </div>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon">
-                      <MoreHorizontal className="h-5 w-5" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem>View task details</DropdownMenuItem>
-                    <DropdownMenuItem>Report conversation</DropdownMenuItem>
-                    <DropdownMenuItem>Block user</DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
               </div>
-              
-              <div className="flex-1 overflow-y-auto p-4 bg-gray-50">
-                <div className="space-y-4">
-                  {selectedConversation.messages.map((message) => (
-                    <div 
-                      key={message.id}
-                      className={cn(
-                        "flex",
-                        message.isFromMe ? "justify-end" : "justify-start"
-                      )}
-                    >
-                      <div className={cn(
-                        "max-w-[80%] rounded-lg p-3",
-                        message.isFromMe 
-                          ? "bg-assist-blue text-white rounded-br-none" 
-                          : "bg-white shadow-sm border border-gray-100 rounded-bl-none"
-                      )}>
-                        <p className="text-sm">{message.text}</p>
-                        <p className={cn(
-                          "text-xs mt-1",
-                          message.isFromMe ? "text-blue-100" : "text-gray-500"
-                        )}>
-                          {message.time}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              
-              <div className="p-4 border-t border-gray-100 bg-white">
-                <div className="flex gap-2">
-                  <Textarea
-                    placeholder="Type your message..."
-                    className="min-h-[60px] resize-none"
-                    value={newMessage}
-                    onChange={(e) => setNewMessage(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' && !e.shiftKey) {
-                        e.preventDefault();
-                        handleSendMessage();
-                      }
-                    }}
-                  />
-                  <Button 
-                    className="h-[60px]" 
-                    onClick={handleSendMessage}
-                    disabled={!newMessage.trim()}
-                  >
-                    <Send className="h-5 w-5" />
-                  </Button>
-                </div>
-                <div className="mt-2 text-xs text-gray-500 text-center">
-                  <p>Sharing personal contact information is prohibited by our terms of service</p>
-                </div>
-              </div>
-            </>
+            ))
           ) : (
-            <div className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-gray-50">
-              <MessageSquare className="h-12 w-12 text-gray-300 mb-4" />
-              <h3 className="text-lg font-medium text-gray-700">Select a conversation</h3>
-              <p className="text-gray-500 max-w-md mt-2">Choose a conversation from the list to start messaging</p>
+            <div className="p-8 text-center">
+              <MessageSquare className="h-8 w-8 text-gray-300 mx-auto mb-2" />
+              <p className="text-gray-500">No conversations found</p>
             </div>
           )}
         </div>
+      </div>
+
+      <div className={cn(
+        "w-full md:w-2/3 flex flex-col",
+        !selectedConversation ? "hidden md:flex" : "flex"
+      )}>
+        {selectedConversation ? (
+          <>
+            <div className="p-4 border-b border-gray-100 flex items-center justify-between bg-white">
+              <div className="flex items-center gap-3">
+                <Button 
+                  variant="ghost" 
+                  size="icon"
+                  className="md:hidden"
+                  onClick={backToConversationList}
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </Button>
+                <Avatar className="h-10 w-10">
+                  <AvatarImage src={selectedConversation.user.avatar || ""} />
+                  <AvatarFallback className="bg-blue-100 text-blue-800">
+                    {selectedConversation.user.name.charAt(0)}
+                  </AvatarFallback>
+                </Avatar>
+                <div>
+                  <h3 className="font-medium">{selectedConversation.user.name}</h3>
+                  <p className="text-xs text-gray-500">{selectedConversation.taskTitle}</p>
+                </div>
+              </div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon">
+                    <MoreHorizontal className="h-5 w-5" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem>View task details</DropdownMenuItem>
+                  <DropdownMenuItem>Report conversation</DropdownMenuItem>
+                  <DropdownMenuItem>Block user</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+            
+            <div className="flex-1 overflow-y-auto p-4 bg-gray-50">
+              <div className="space-y-4">
+                {selectedConversation.messages.map((message) => (
+                  <div 
+                    key={message.id}
+                    className={cn(
+                      "flex",
+                      message.isFromMe ? "justify-end" : "justify-start"
+                    )}
+                  >
+                    <div className={cn(
+                      "max-w-[80%] rounded-lg p-3",
+                      message.isFromMe 
+                        ? "bg-assist-blue text-white rounded-br-none shadow-sm" 
+                        : "bg-white shadow-sm border border-gray-100 rounded-bl-none"
+                    )}>
+                      <p className="text-sm">{message.text}</p>
+                      <p className={cn(
+                        "text-xs mt-1",
+                        message.isFromMe ? "text-blue-100" : "text-gray-500"
+                      )}>
+                        {message.time}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <div className="p-4 border-t border-gray-100 bg-white">
+              <div className="flex gap-2">
+                <Textarea
+                  placeholder="Type your message..."
+                  className="min-h-[60px] resize-none"
+                  value={newMessage}
+                  onChange={(e) => setNewMessage(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                      e.preventDefault();
+                      handleSendMessage();
+                    }
+                  }}
+                />
+                <Button 
+                  className="h-[60px] bg-assist-blue hover:bg-blue-700" 
+                  onClick={handleSendMessage}
+                  disabled={!newMessage.trim()}
+                >
+                  <Send className="h-5 w-5" />
+                </Button>
+              </div>
+              <div className="mt-2 text-xs text-gray-500 text-center">
+                <p>Sharing personal contact information is prohibited by our terms of service</p>
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-gray-50">
+            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 max-w-md">
+              <MessageSquare className="h-12 w-12 text-gray-300 mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-gray-700">Select a conversation</h3>
+              <p className="text-gray-500 mt-2">Choose a conversation from the list to start messaging</p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
