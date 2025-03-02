@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Heart, Bell, Coins, Store, Mail, CheckCircle, User, History, CreditCard, Settings, LogOut, MessageSquare, MessageCircle, MessagesSquare, MoreHorizontal } from "lucide-react";
+import { Heart, Bell, Coins, Store, Mail, CheckCircle, User, History, CreditCard, Settings, LogOut, MessageSquare, MoreHorizontal } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import {
@@ -159,7 +159,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
           <Heart className={`h-5 w-5 ${showFavorites ? 'fill-red-500' : ''}`} />
         </Button>
         
-        {/* New Messages Icon */}
+        {/* Messages Icon */}
         <Popover open={isMessagesOpen} onOpenChange={setIsMessagesOpen}>
           <PopoverTrigger asChild>
             <Button variant="ghost" size="icon" className="relative">
