@@ -84,8 +84,10 @@ const MainHeader: React.FC<MainHeaderProps> = ({
 
   return (
     <div className="flex justify-between items-center mb-6">
-      <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
-        Hello, {userName}!
+      <h1 className="text-2xl md:text-3xl font-bold">
+        <span className="bg-gradient-to-r from-assist-blue via-blue-500 to-blue-400 bg-clip-text text-transparent">
+          Hello, {userName}!
+        </span>
       </h1>
       <div className="flex items-center gap-3">
         <Button 

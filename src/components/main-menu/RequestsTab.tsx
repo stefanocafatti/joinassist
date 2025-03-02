@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ClipboardList, Filter, Bell, BellOff } from "lucide-react";
+import { ClipboardList, Bell, BellOff } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import TaskStatusView from "@/components/ui/TaskStatusView";
@@ -59,14 +59,6 @@ const RequestsTab: React.FC<RequestsTabProps> = ({
           <h2 className="text-xl font-semibold text-gray-900 flex items-center">
             <ClipboardList className="h-5 w-5 mr-2 text-assist-blue" /> Open Task Requests
           </h2>
-          <div className="flex gap-2">
-            <Button variant="outline" size="sm" className="gap-1">
-              <Filter className="h-4 w-4" /> Filter
-            </Button>
-            <Button variant="outline" size="sm">
-              Sort by Date
-            </Button>
-          </div>
         </div>
         
         <div className="mb-6 flex items-center justify-between bg-gray-50 p-3 rounded-lg">
