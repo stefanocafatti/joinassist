@@ -117,7 +117,7 @@ const PastTasksSection: React.FC<PastTasksSectionProps> = ({
                 </div>
               )}
               
-              <div className="flex justify-between">
+              <div className="flex justify-center gap-3">
                 <Button 
                   variant="outline" 
                   size="sm"

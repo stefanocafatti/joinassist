@@ -68,7 +68,7 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({
                   <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100">{task.category}</Badge>
                 </div>
                 <p className="text-sm text-gray-600 mb-4">{task.description}</p>
-                <div className="flex justify-end items-center">
+                <div className="flex justify-center items-center">
                   <Button 
                     size="sm" 
                     className="bg-assist-blue hover:bg-assist-blue/90"

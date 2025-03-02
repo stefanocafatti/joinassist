@@ -175,7 +175,7 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
                   <Badge className={cn(getCategoryColor(task.category), "hover:opacity-90")}>{task.category}</Badge>
                 </div>
                 <p className="text-sm text-gray-600 mb-4">{task.description}</p>
-                <div className="flex items-center justify-end">
+                <div className="flex items-center justify-center">
                   <Button 
                     size="sm" 
                     className="bg-assist-blue hover:bg-assist-blue/90"
