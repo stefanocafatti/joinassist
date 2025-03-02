@@ -103,6 +103,18 @@ const TrustedCompanies = () => {
     };
   }, []);
 
+  // Define the keyframes style as a string
+  const scrollKeyframes = `
+    @keyframes scroll {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        transform: translateX(-100%);
+      }
+    }
+  `;
+
   return (
     <section className="py-12 bg-gradient-to-r from-soft-green via-white to-soft-green">
       <div className="max-w-6xl mx-auto px-4 mb-8">
@@ -153,16 +165,8 @@ const TrustedCompanies = () => {
         </div>
       </div>
 
-      <style jsx>{`
-        @keyframes scroll {
-          from {
-            transform: translateX(0);
-          }
-          to {
-            transform: translateX(-100%);
-          }
-        }
-      `}</style>
+      {/* Add the keyframes as a standard style element */}
+      <style dangerouslySetInnerHTML={{ __html: scrollKeyframes }} />
     </section>
   );
 };
