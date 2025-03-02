@@ -272,21 +272,26 @@ const MainMenu = () => {
   };
 
   const handleBookNow = (taskTitle: string) => {
-    toast.success(`Viewing task: ${taskTitle}`, {
-      description: "You'll be redirected to the task details page"
-    });
-    
     console.log(`Viewing task: ${taskTitle}`);
     
-    const task = [...recommendedTasks, ...(searchResults || [])].find(
-      t => t.title === taskTitle
-    );
+    // Find the task in all possible sources
+    const allTasks = [...recommendedTasks, ...(searchResults || [])];
+    const task = allTasks.find(t => t.title === taskTitle);
     
     if (task) {
       setSelectedTask(task);
       setIsTaskDetailOpen(true);
       // Add to recently viewed when viewing task details
       addToRecentlyViewed(task);
+      
+      toast.success(`Viewing task: ${taskTitle}`, {
+        description: "You can now see the task details"
+      });
+    } else {
+      console.error(`Task not found: ${taskTitle}`);
+      toast.error("Task not found", {
+        description: "We couldn't find the task you were looking for"
+      });
     }
   };
 
