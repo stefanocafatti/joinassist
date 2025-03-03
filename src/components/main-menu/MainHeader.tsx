@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Heart, Bell, Coins, Mail, CheckCircle, User, History, CreditCard, Settings, LogOut, MessageSquare, ChevronRight } from "lucide-react";
+import { Heart, Bell, Coins, Mail, CheckCircle, User, History, LogOut, MessageSquare } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import {
@@ -345,11 +345,6 @@ const MainHeader: React.FC<MainHeaderProps> = ({
             <DropdownMenuItem onClick={() => onSetActiveTab("requests")}>
               <History className="mr-2 h-4 w-4" />
               <span>My Bookings</span>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Settings className="mr-2 h-4 w-4" />
-              <span>Settings</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
