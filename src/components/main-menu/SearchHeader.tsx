@@ -10,6 +10,7 @@ interface SearchHeaderProps {
   onSearchQueryChange: (value: string) => void;
   onSearch: (e: React.FormEvent) => void;
   onSearchClick: (search: string) => void;
+  isVisible?: boolean;
 }
 
 const SearchHeader: React.FC<SearchHeaderProps> = ({ 
@@ -17,7 +18,8 @@ const SearchHeader: React.FC<SearchHeaderProps> = ({
   recentSearches,
   onSearchQueryChange, 
   onSearch,
-  onSearchClick
+  onSearchClick,
+  isVisible = true
 }) => {
   const [isInputFocused, setIsInputFocused] = useState(false);
   const searchContainerRef = useRef<HTMLDivElement>(null);
@@ -51,6 +53,8 @@ const SearchHeader: React.FC<SearchHeaderProps> = ({
       }
     }, 10);
   };
+
+  if (!isVisible) return null;
 
   return (
     <div ref={searchContainerRef} className="mb-8 relative">

@@ -577,6 +577,10 @@ const MainMenu = () => {
     );
   };
 
+  const shouldShowSearchHeader = () => {
+    return activeTab === "home" || activeTab === "allTasks";
+  };
+
   const taskListings = [
     {
       title: "Clean my Windows",
@@ -695,7 +699,6 @@ const MainMenu = () => {
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 relative z-10">
         
-        
         <header className="mb-8">
           <MainHeader 
             userName={userName}
@@ -712,6 +715,7 @@ const MainMenu = () => {
             onSearchQueryChange={setSearchQuery}
             onSearch={handleSearch}
             onSearchClick={handleRecentSearchClick}
+            isVisible={shouldShowSearchHeader()}
           />
         </header>
         
