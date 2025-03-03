@@ -39,64 +39,66 @@ const MainHeader: React.FC<MainHeaderProps> = ({
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isMessagesOpen, setIsMessagesOpen] = useState(false);
 
+  // Updated notifications for student perspective (as service provider)
   const [notifications, setNotifications] = useState([
     {
       id: "1",
-      title: "Task Request Accepted",
-      message: "Your dog walking request has been accepted by Jessica T.",
+      title: "New Task Request",
+      message: "You have a new tutoring request from Jessica for Math Tutoring.",
       time: "10 minutes ago",
       isRead: false,
     },
     {
       id: "2",
-      title: "New Message",
-      message: "You have a new message from Michael regarding your furniture assembly task.",
+      title: "Upcoming Task",
+      message: "Reminder: You have a Computer Science tutoring session at 2:30 PM tomorrow.",
       time: "2 hours ago",
       isRead: false,
     },
     {
       id: "3",
-      title: "Task Completed",
-      message: "Your grocery delivery task has been marked as completed.",
+      title: "Payment Received",
+      message: "You received $45 for completing the Physics Tutoring task.",
       time: "Yesterday",
       isRead: true,
     },
     {
       id: "4",
-      title: "Points Earned",
-      message: "You earned 10 Assist Points for your recent booking.",
+      title: "5-Star Rating",
+      message: "Eric M. gave you a 5-star rating for Physics Tutoring. Great job!",
       time: "2 days ago",
       isRead: true,
     },
   ]);
 
+  // Updated messages for student perspective (as service provider)
   const [messages, setMessages] = useState([
     {
       id: "1",
       sender: "Jessica T.",
       avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop",
-      message: "Hello! I'll be arriving in about 15 minutes for the dog walking task.",
+      message: "Hi! I was wondering if you could help me with some calculus problems for my midterm exam?",
       time: "2 hours ago",
       isRead: false,
-      taskTitle: "Dog Walking"
+      taskTitle: "Math Tutoring"
     },
     {
       id: "2",
       sender: "Michael R.",
       avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop",
-      message: "I've completed the furniture assembly. Could you verify everything is as expected?",
+      message: "Are you familiar with data visualization using matplotlib and pandas in Python?",
       time: "Yesterday",
       isRead: true,
-      taskTitle: "Furniture Assembly"
+      taskTitle: "Computer Science Project"
     },
     {
       id: "3",
       sender: "Lisa W.",
       avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop",
-      message: "I have a question about the cleaning requirements for the apartment.",
+      message: "Just confirming our dog walking appointment on Friday. Fluffy is excited to meet you!",
       time: "3 days ago",
       isRead: true,
-      taskTitle: "Apartment Cleaning"
+      taskTitle: "Dog Walking"
     }
   ]);
 
@@ -391,4 +393,3 @@ const MainHeader: React.FC<MainHeaderProps> = ({
 };
 
 export default MainHeader;
-

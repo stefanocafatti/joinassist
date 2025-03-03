@@ -20,6 +20,8 @@ interface Request {
   clientImage?: string;
   rating?: number;
   completed?: boolean;
+  // For provider perspective
+  provider?: string;
 }
 
 interface RequestsTabProps {

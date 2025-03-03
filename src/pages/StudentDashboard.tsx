@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -229,30 +230,47 @@ const StudentDashboard = () => {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <div className="rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 p-6 text-white">
-                  <div className="flex items-center mb-4">
-                    <CalendarIcon className="h-6 w-6 mr-2" />
-                    <h3 className="text-lg font-semibold">Upcoming Tasks</h3>
-                  </div>
-                  <div className="flex items-baseline">
-                    <span className="text-4xl font-bold">750</span>
-                    <span className="ml-2 text-purple-200">points</span>
-                  </div>
-                  <div className="mt-4 space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span>Next Reward: 1000 points</span>
-                      <span>75%</span>
+                  <div className="flex justify-between mb-4">
+                    <div>
+                      <div className="flex items-center">
+                        <CalendarIcon className="h-6 w-6 mr-2" />
+                        <h3 className="text-lg font-semibold">Upcoming Tasks</h3>
+                      </div>
+                      <p className="text-sm text-purple-200 mt-1">Your scheduled gigs</p>
                     </div>
-                    <div className="bg-white/20 h-2 rounded-full overflow-hidden">
-                      <div className="bg-white h-2 rounded-full" style={{ width: '75%' }}></div>
-                    </div>
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      className="border-white/30 text-white hover:bg-white/20 hover:text-white"
+                      onClick={() => setActiveTab("requests")}
+                    >
+                      View All
+                    </Button>
                   </div>
-                  <Button 
-                    variant="outline" 
-                    className="mt-4 border-white text-white hover:bg-white/20 hover:text-white w-full"
-                    onClick={() => setActiveTab("points")}
-                  >
-                    View Rewards
-                  </Button>
+                  
+                  <div className="space-y-3 mt-2">
+                    {upcomingTasks.slice(0, 2).map((task, index) => (
+                      <div key={index} className="bg-white/10 rounded-lg p-3">
+                        <div className="flex justify-between">
+                          <h4 className="font-medium">{task.title}</h4>
+                          <span className="text-green-300 font-medium">{task.earnings}</span>
+                        </div>
+                        <div className="flex items-center text-sm text-purple-200 mt-1">
+                          <CalendarIcon className="h-3 w-3 mr-1" />
+                          <span>{task.date}</span>
+                          <span className="mx-2">•</span>
+                          <MapPin className="h-3 w-3 mr-1" />
+                          <span>{task.location}</span>
+                        </div>
+                      </div>
+                    ))}
+                    
+                    {upcomingTasks.length === 0 && (
+                      <div className="text-center py-4 bg-white/10 rounded-lg">
+                        <p className="text-sm">No upcoming tasks</p>
+                      </div>
+                    )}
+                  </div>
                 </div>
                 
                 <div className="rounded-lg border border-gray-200 p-6">
@@ -260,31 +278,31 @@ const StudentDashboard = () => {
                   <div className="grid grid-cols-2 gap-4">
                     <div className="bg-blue-50 rounded-lg p-3 text-center">
                       <div className="text-blue-500 mb-1">
+                        <Coins className="h-5 w-5 mx-auto" />
+                      </div>
+                      <p className="text-sm text-gray-600">Current Balance</p>
+                      <p className="text-xl font-bold text-gray-900">${currentBalance.toFixed(2)}</p>
+                    </div>
+                    <div className="bg-green-50 rounded-lg p-3 text-center">
+                      <div className="text-green-500 mb-1">
+                        <Trophy className="h-5 w-5 mx-auto" />
+                      </div>
+                      <p className="text-sm text-gray-600">All-time Earnings</p>
+                      <p className="text-xl font-bold text-gray-900">$345.00</p>
+                    </div>
+                    <div className="bg-yellow-50 rounded-lg p-3 text-center">
+                      <div className="text-yellow-500 mb-1">
                         <CalendarIcon className="h-5 w-5 mx-auto" />
                       </div>
                       <p className="text-sm text-gray-600">Tasks Completed</p>
                       <p className="text-xl font-bold text-gray-900">8</p>
                     </div>
-                    <div className="bg-green-50 rounded-lg p-3 text-center">
-                      <div className="text-green-500 mb-1">
-                        <Star className="h-5 w-5 mx-auto fill-green-500" />
+                    <div className="bg-purple-50 rounded-lg p-3 text-center">
+                      <div className="text-purple-500 mb-1">
+                        <Star className="h-5 w-5 mx-auto fill-yellow-500" />
                       </div>
                       <p className="text-sm text-gray-600">Average Rating</p>
                       <p className="text-xl font-bold text-gray-900">4.8</p>
-                    </div>
-                    <div className="bg-yellow-50 rounded-lg p-3 text-center">
-                      <div className="text-yellow-500 mb-1">
-                        <Trophy className="h-5 w-5 mx-auto" />
-                      </div>
-                      <p className="text-sm text-gray-600">Achievements</p>
-                      <p className="text-xl font-bold text-gray-900">{badges.length}</p>
-                    </div>
-                    <div className="bg-purple-50 rounded-lg p-3 text-center">
-                      <div className="text-purple-500 mb-1">
-                        <Coins className="h-5 w-5 mx-auto" />
-                      </div>
-                      <p className="text-sm text-gray-600">Total Earned</p>
-                      <p className="text-xl font-bold text-gray-900">$345</p>
                     </div>
                   </div>
                 </div>
