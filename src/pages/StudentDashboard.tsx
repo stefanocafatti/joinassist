@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -18,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import ConfettiPopup from "@/components/ui/ConfettiPopup";
+import TaskConfirmationDialog from "@/components/ui/TaskConfirmationDialog";
 
 interface TaskDetailViewProps {
   isOpen: boolean;
@@ -53,6 +53,8 @@ const StudentDashboard = () => {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [confettiPopupOpen, setConfettiPopupOpen] = useState(false);
   const [selectedAcceptedTask, setSelectedAcceptedTask] = useState<any>(null);
+  const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
+  const [taskToConfirm, setTaskToConfirm] = useState<any>(null);
 
   const [upcomingTasks, setUpcomingTasks] = useState([
     {
@@ -325,8 +327,20 @@ const StudentDashboard = () => {
   const handleAcceptTask = (task: any, e: React.MouseEvent) => {
     e.stopPropagation();
     
-    setSelectedAcceptedTask(task);
+    setTaskToConfirm(task);
+    setShowConfirmationDialog(true);
+  };
+  
+  const handleConfirmTask = () => {
+    setShowConfirmationDialog(false);
+    
+    setSelectedAcceptedTask(taskToConfirm);
     setConfettiPopupOpen(true);
+  };
+  
+  const handleCancelConfirmation = () => {
+    setShowConfirmationDialog(false);
+    setTaskToConfirm(null);
   };
   
   const handleConfirmAcceptTask = () => {
@@ -801,6 +815,15 @@ const StudentDashboard = () => {
               </div>
             </div>
           }
+        />
+      )}
+      
+      {showConfirmationDialog && taskToConfirm && (
+        <TaskConfirmationDialog
+          isOpen={showConfirmationDialog}
+          onClose={handleCancelConfirmation}
+          onConfirm={handleConfirmTask}
+          task={taskToConfirm}
         />
       )}
     </div>

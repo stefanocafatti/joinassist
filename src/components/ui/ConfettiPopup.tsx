@@ -1,162 +1,105 @@
 
 import React, { useEffect, useState } from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { 
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { PartyPopper, CheckCircle, Calendar } from "lucide-react";
-import { cn } from "@/lib/utils";
+import Confetti from 'react-confetti';
+import { useWindowSize } from "@/hooks/use-window-size";
 
 interface ConfettiPopupProps {
   isOpen: boolean;
   onClose: () => void;
-  taskTitle?: string;
   title?: string;
   description?: string;
-  buttonText?: string;
-  onButtonClick?: () => void;
-  showAddToCalendarButton?: boolean;
-  onAddToCalendar?: () => void;
-  location?: string;
-  date?: string;
-  earnings?: string;
+  confirmText?: string;
+  onConfirm?: () => void;
+  secondaryText?: string;
+  onSecondaryAction?: () => void;
+  content?: React.ReactNode;
+  taskTitle?: string;
 }
 
 const ConfettiPopup: React.FC<ConfettiPopupProps> = ({ 
   isOpen, 
   onClose,
-  taskTitle = "",
-  title,
+  title = "Success!",
   description,
-  buttonText = "Got it!",
-  onButtonClick,
-  showAddToCalendarButton = false,
-  onAddToCalendar,
-  location,
-  date,
-  earnings
+  confirmText = "Continue",
+  onConfirm,
+  secondaryText,
+  onSecondaryAction,
+  content,
+  taskTitle 
 }) => {
-  const [particles, setParticles] = useState<Array<{
-    left: number;
-    top: number;
-    size: number;
-    color: string;
-    delay: number;
-  }>>([]);
-
+  const { width, height } = useWindowSize();
+  const [showConfetti, setShowConfetti] = useState(false);
+  
   useEffect(() => {
     if (isOpen) {
-      // Generate confetti particles when popup opens
-      const colors = ['#FF5252', '#FFD740', '#64FFDA', '#448AFF', '#B388FF', '#FFAB40'];
-      const newParticles = Array.from({ length: 100 }, (_, i) => ({
-        left: Math.random() * 100,
-        top: Math.random() * 100,
-        size: Math.random() * 10 + 5,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        delay: Math.random() * 0.5
-      }));
-      setParticles(newParticles);
+      setShowConfetti(true);
+      const timer = setTimeout(() => {
+        setShowConfetti(false);
+      }, 4000);
+      
+      return () => clearTimeout(timer);
     }
   }, [isOpen]);
-
-  const handleButtonClick = () => {
-    if (onButtonClick) {
-      onButtonClick();
-    } else {
-      onClose();
-    }
-  };
-
+  
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px] rounded-lg bg-white">
-        <div className="relative overflow-hidden px-6 py-10">
-          {/* Confetti animation */}
-          <div className="absolute inset-0 pointer-events-none">
-            {particles.map((particle, index) => (
-              <div 
-                key={index}
-                className="absolute animate-fall"
-                style={{
-                  left: `${particle.left}%`,
-                  top: `-20px`,
-                  width: `${particle.size}px`,
-                  height: `${particle.size}px`,
-                  backgroundColor: particle.color,
-                  borderRadius: '50%',
-                  opacity: 0,
-                  animation: `fall 3s ease-out forwards ${particle.delay}s`,
-                }}
-              />
-            ))}
-          </div>
+    <>
+      {showConfetti && (
+        <Confetti
+          width={width}
+          height={height}
+          recycle={false}
+          numberOfPieces={150}
+          gravity={0.15}
+        />
+      )}
+      
+      <Dialog open={isOpen} onOpenChange={onClose}>
+        <DialogContent className="sm:max-w-[400px] bg-white">
+          <DialogHeader>
+            <DialogTitle className="text-xl text-center">{title}</DialogTitle>
+          </DialogHeader>
           
-          <div className="text-center space-y-5">
-            <div className="mx-auto bg-green-100 p-3 rounded-full w-16 h-16 flex items-center justify-center">
-              <PartyPopper className="h-10 w-10 text-green-600" />
-            </div>
-            
-            <h3 className="text-xl font-semibold text-gray-900">
-              {title || "Awesome! You've accepted a task"}
-            </h3>
-            
-            <div className="bg-gray-50 rounded-lg p-3 border border-gray-100 flex items-center space-x-3">
-              <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0" />
-              <p className="text-gray-700 text-sm">
-                <span className="font-medium text-gray-900">{taskTitle}</span> has been accepted
-              </p>
-            </div>
-            
-            {(location || date || earnings) && (
-              <div className="bg-gray-50 rounded-lg p-3 border border-gray-100 text-left">
-                <div className="space-y-1.5">
-                  {location && (
-                    <div className="flex items-center text-sm">
-                      <span className="text-gray-500 mr-2">Location:</span>
-                      <span className="font-medium text-gray-900">{location}</span>
-                    </div>
-                  )}
-                  {date && (
-                    <div className="flex items-center text-sm">
-                      <span className="text-gray-500 mr-2">Date:</span>
-                      <span className="font-medium text-gray-900">{date}</span>
-                    </div>
-                  )}
-                  {earnings && (
-                    <div className="flex items-center text-sm">
-                      <span className="text-gray-500 mr-2">Earnings:</span>
-                      <span className="font-medium text-assist-blue">{earnings}</span>
-                    </div>
-                  )}
-                </div>
-              </div>
+          <div className="mt-2 text-center">
+            {description && (
+              <p className="text-gray-600 mb-4">{description}</p>
             )}
             
-            <p className="text-gray-600 text-sm">
-              {description || "You can check your upcoming tasks in the Dashboard tab."}
-            </p>
+            {content && content}
             
-            <div className="pt-2 space-y-3">
-              <Button 
-                onClick={handleButtonClick}
-                className="w-full bg-assist-blue hover:bg-assist-blue/90"
-              >
-                {buttonText}
-              </Button>
-              
-              {showAddToCalendarButton && onAddToCalendar && (
-                <Button 
-                  onClick={onAddToCalendar}
-                  variant="outline"
-                  className="w-full border-assist-blue text-assist-blue hover:bg-assist-blue/10"
-                >
-                  <Calendar className="h-4 w-4 mr-2" />
-                  Add to Calendar
-                </Button>
-              )}
-            </div>
+            {taskTitle && !content && (
+              <div className="bg-gray-50 p-4 rounded-lg mb-4">
+                <p className="text-lg font-medium">{taskTitle}</p>
+                <p className="text-sm text-gray-500">has been added to your tasks</p>
+              </div>
+            )}
           </div>
-        </div>
-      </DialogContent>
-    </Dialog>
+          
+          <DialogFooter className="mt-4 flex flex-col gap-2 sm:flex-row sm:justify-center">
+            {secondaryText && onSecondaryAction && (
+              <Button variant="outline" onClick={onSecondaryAction} className="w-full sm:w-auto">
+                {secondaryText}
+              </Button>
+            )}
+            
+            <Button 
+              className="bg-assist-blue hover:bg-assist-blue/90 w-full sm:w-auto" 
+              onClick={onConfirm || onClose}
+            >
+              {confirmText}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 
