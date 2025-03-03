@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { PartyPopper, CheckCircle } from "lucide-react";
+import { PartyPopper, CheckCircle, Calendar } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ConfettiPopupProps {
@@ -13,6 +13,11 @@ interface ConfettiPopupProps {
   description?: string;
   buttonText?: string;
   onButtonClick?: () => void;
+  showAddToCalendarButton?: boolean;
+  onAddToCalendar?: () => void;
+  location?: string;
+  date?: string;
+  earnings?: string;
 }
 
 const ConfettiPopup: React.FC<ConfettiPopupProps> = ({ 
@@ -22,7 +27,12 @@ const ConfettiPopup: React.FC<ConfettiPopupProps> = ({
   title,
   description,
   buttonText = "Got it!",
-  onButtonClick
+  onButtonClick,
+  showAddToCalendarButton = false,
+  onAddToCalendar,
+  location,
+  date,
+  earnings
 }) => {
   const [particles, setParticles] = useState<Array<{
     left: number;
@@ -85,27 +95,63 @@ const ConfettiPopup: React.FC<ConfettiPopupProps> = ({
             </div>
             
             <h3 className="text-xl font-semibold text-gray-900">
-              {title || "Awesome! You've booked a task"}
+              {title || "Awesome! You've accepted a task"}
             </h3>
             
             <div className="bg-gray-50 rounded-lg p-3 border border-gray-100 flex items-center space-x-3">
               <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0" />
               <p className="text-gray-700 text-sm">
-                <span className="font-medium text-gray-900">{taskTitle}</span> has been booked
+                <span className="font-medium text-gray-900">{taskTitle}</span> has been accepted
               </p>
             </div>
             
+            {(location || date || earnings) && (
+              <div className="bg-gray-50 rounded-lg p-3 border border-gray-100 text-left">
+                <div className="space-y-1.5">
+                  {location && (
+                    <div className="flex items-center text-sm">
+                      <span className="text-gray-500 mr-2">Location:</span>
+                      <span className="font-medium text-gray-900">{location}</span>
+                    </div>
+                  )}
+                  {date && (
+                    <div className="flex items-center text-sm">
+                      <span className="text-gray-500 mr-2">Date:</span>
+                      <span className="font-medium text-gray-900">{date}</span>
+                    </div>
+                  )}
+                  {earnings && (
+                    <div className="flex items-center text-sm">
+                      <span className="text-gray-500 mr-2">Earnings:</span>
+                      <span className="font-medium text-assist-blue">{earnings}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+            
             <p className="text-gray-600 text-sm">
-              {description || "We'll notify you once a student has confirmed your task. You can check your bookings in the Requests tab."}
+              {description || "You can check your upcoming tasks in the Dashboard tab."}
             </p>
             
-            <div className="pt-2">
+            <div className="pt-2 space-y-3">
               <Button 
                 onClick={handleButtonClick}
                 className="w-full bg-assist-blue hover:bg-assist-blue/90"
               >
                 {buttonText}
               </Button>
+              
+              {showAddToCalendarButton && onAddToCalendar && (
+                <Button 
+                  onClick={onAddToCalendar}
+                  variant="outline"
+                  className="w-full border-assist-blue text-assist-blue hover:bg-assist-blue/10"
+                >
+                  <Calendar className="h-4 w-4 mr-2" />
+                  Add to Calendar
+                </Button>
+              )}
             </div>
           </div>
         </div>

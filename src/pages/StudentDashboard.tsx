@@ -1,11 +1,10 @@
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { UserRound, Coins, CalendarIcon, BadgeCheck, BookOpen, Clock, MapPin, ThumbsUp, Filter, Search, Sparkles, X, SlidersHorizontal } from "lucide-react";
+import { UserRound, Coins, CalendarIcon, BadgeCheck, BookOpen, Clock, MapPin, ThumbsUp, Filter, Search, Sparkles, X, SlidersHorizontal, DollarSign } from "lucide-react";
 import MainHeader from "@/components/main-menu/MainHeader";
 import StudentBalance from "@/components/student/StudentBalance";
 import StudentBadges from "@/components/student/StudentBadges";
@@ -17,6 +16,7 @@ import TaskDetailView from "@/components/ui/TaskDetailView";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import ConfettiPopup from "@/components/ui/ConfettiPopup";
 
 interface TaskDetailViewProps {
   isOpen: boolean;
@@ -50,6 +50,8 @@ const StudentDashboard = () => {
   const [currentBalance, setCurrentBalance] = useState(345.50);
   const [campus, setCampus] = useState("University of Technology");
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const [confettiPopupOpen, setConfettiPopupOpen] = useState(false);
+  const [selectedAcceptedTask, setSelectedAcceptedTask] = useState<any>(null);
 
   const [upcomingTasks, setUpcomingTasks] = useState([
     {
@@ -304,17 +306,33 @@ const StudentDashboard = () => {
   const handleAcceptTask = (task: any, e: React.MouseEvent) => {
     e.stopPropagation();
     
+    setSelectedAcceptedTask(task);
+    setConfettiPopupOpen(true);
+  };
+  
+  const handleConfirmAcceptTask = () => {
+    if (!selectedAcceptedTask) return;
+    
     const newTask = {
-      title: task.title,
+      title: selectedAcceptedTask.title,
       date: "Today, " + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
       status: "Pending",
-      earnings: task.rate,
-      category: task.category,
-      location: task.location
+      earnings: selectedAcceptedTask.rate,
+      category: selectedAcceptedTask.category,
+      location: selectedAcceptedTask.location
     };
     
     setUpcomingTasks([...upcomingTasks, newTask]);
-    toast.success(`Successfully accepted: ${task.title}`);
+    toast.success(`Successfully accepted: ${selectedAcceptedTask.title}`);
+    setConfettiPopupOpen(false);
+  };
+  
+  const handleAddToCalendar = () => {
+    if (!selectedAcceptedTask) return;
+    
+    setActiveTab("calendar");
+    setConfettiPopupOpen(false);
+    toast.success(`${selectedAcceptedTask.title} added to your calendar`);
   };
   
   const handleTaskBooked = (
@@ -677,12 +695,15 @@ const StudentDashboard = () => {
                           </Badge>
                         </div>
                         <p className="text-gray-600 text-sm mb-3 line-clamp-2">{task.description}</p>
-                        <div className="flex justify-between items-center text-sm">
-                          <div className="flex items-center text-gray-500">
-                            <MapPin className="mr-1 h-3.5 w-3.5" />
+                        <div className="flex flex-wrap gap-2 mb-3">
+                          <Badge variant="outline" className="flex items-center gap-1 bg-gray-50">
+                            <MapPin className="h-3 w-3 text-gray-500" />
                             {task.location}
-                          </div>
-                          <span className="font-bold text-assist-blue">{task.rate}</span>
+                          </Badge>
+                          <Badge variant="outline" className="flex items-center gap-1 bg-gray-50">
+                            <DollarSign className="h-3 w-3 text-green-500" />
+                            {task.rate}
+                          </Badge>
                         </div>
                         <div className="mt-3 mb-3">
                           <div className="flex flex-wrap gap-1">
@@ -769,6 +790,23 @@ const StudentDashboard = () => {
           task={selectedTask}
           onClose={() => setTaskDetailOpen(false)}
           onTaskBooked={handleTaskBooked}
+        />
+      )}
+      
+      {confettiPopupOpen && selectedAcceptedTask && (
+        <ConfettiPopup
+          isOpen={confettiPopupOpen}
+          onClose={() => setConfettiPopupOpen(false)}
+          taskTitle={selectedAcceptedTask.title}
+          title="Awesome! You've accepted a task"
+          description="You can check your upcoming tasks in the Dashboard tab."
+          buttonText="Got it!"
+          onButtonClick={handleConfirmAcceptTask}
+          showAddToCalendarButton={true}
+          onAddToCalendar={handleAddToCalendar}
+          location={selectedAcceptedTask.location}
+          date={new Date().toLocaleDateString() + ', ' + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+          earnings={selectedAcceptedTask.rate}
         />
       )}
     </div>
