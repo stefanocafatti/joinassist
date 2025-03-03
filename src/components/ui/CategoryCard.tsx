@@ -8,28 +8,24 @@ interface CategoryCardProps {
   icon: LucideIcon;
   title: string;
   description: string;
-  tasks?: string[];
+  tasks: string[];
   color?: string;
   emoji?: string;
   onFavoriteToggle?: (taskTitle: string) => void;
   onViewTask?: (taskTitle: string) => void;
   isFavorite?: boolean;
-  isSelected?: boolean;
-  onClick?: () => void;
 }
 
 const CategoryCard = ({
   icon: Icon,
   title,
   description,
-  tasks = [],
+  tasks,
   color = "bg-blue-50",
   emoji = "✨",
   onFavoriteToggle,
   onViewTask,
   isFavorite = false,
-  isSelected = false,
-  onClick,
 }: CategoryCardProps) => {
   // Function to get corresponding text color based on background color
   const getTextColor = (bgColor: string) => {
@@ -38,33 +34,11 @@ const CategoryCard = ({
     return `text-${colorType}-800`;
   };
 
-  // Enhanced card styles based on selection state
-  const cardStyles = cn(
-    "rounded-xl overflow-hidden h-full transition-all duration-300 hover:shadow-md hover:-translate-y-1 relative",
-    color,
-    isSelected && "ring-2 ring-offset-2 ring-blue-500"
-  );
-
-  // If the card is being used as a category selector (with onClick)
-  if (onClick) {
-    return (
-      <div className={cardStyles} onClick={onClick}>
-        <div className="p-4 flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm flex-shrink-0">
-            <div className="text-lg">{emoji}</div>
-          </div>
-          <div className="flex-1 min-w-0">
-            <h3 className="font-semibold text-gray-900 line-clamp-1">{title}</h3>
-            <p className="text-xs text-gray-600 line-clamp-1">{description}</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Original card with tasks display
   return (
-    <div className={cardStyles}>
+    <div className={cn(
+      "rounded-xl overflow-hidden h-full transition-all duration-300 hover:shadow-md hover:-translate-y-1 relative",
+      color
+    )}>
       {onFavoriteToggle && (
         <button 
           className="absolute top-3 right-3 z-10"
@@ -90,50 +64,48 @@ const CategoryCard = ({
           </div>
         </div>
         
-        {tasks.length > 0 && (
-          <div className="mt-4 space-y-3 flex-grow">
-            {tasks.map((task, i) => {
-              // This will ensure we extract just the emoji and text, removing any numbers
-              const taskContent = task.trim();
-              
-              return (
-                <div
-                  key={i}
-                  className="bg-white py-3 px-4 rounded-lg shadow-sm text-left relative group hover:bg-gray-50 cursor-pointer"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (onViewTask) {
-                      // Get task name without emoji
-                      const taskName = taskContent.replace(/^[\p{Emoji}\s]+/u, '').trim();
-                      onViewTask(taskName);
-                    }
-                  }}
-                >
-                  <span className="text-sm text-gray-700 line-clamp-2">{taskContent}</span>
-                  {onViewTask && (
-                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-5 flex items-center justify-end transition-opacity duration-200 opacity-0 group-hover:opacity-100 rounded-lg">
-                      <Button 
-                        size="sm" 
-                        variant="ghost" 
-                        className={cn("mr-2 hover:bg-opacity-10", getTextColor(color))}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          if (onViewTask) {
-                            // Get task name without emoji
-                            const taskName = taskContent.replace(/^[\p{Emoji}\s]+/u, '').trim();
-                            onViewTask(taskName);
-                          }
-                        }}
-                      >
-                        <Eye className="h-3 w-3 mr-1" /> View
-                      </Button>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        )}
+        <div className="mt-4 space-y-3 flex-grow">
+          {tasks.map((task, i) => {
+            // This will ensure we extract just the emoji and text, removing any numbers
+            const taskContent = task.trim();
+            
+            return (
+              <div
+                key={i}
+                className="bg-white py-3 px-4 rounded-lg shadow-sm text-left relative group hover:bg-gray-50 cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (onViewTask) {
+                    // Get task name without emoji
+                    const taskName = taskContent.replace(/^[\p{Emoji}\s]+/u, '').trim();
+                    onViewTask(taskName);
+                  }
+                }}
+              >
+                <span className="text-sm text-gray-700 line-clamp-2">{taskContent}</span>
+                {onViewTask && (
+                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-5 flex items-center justify-end transition-opacity duration-200 opacity-0 group-hover:opacity-100 rounded-lg">
+                    <Button 
+                      size="sm" 
+                      variant="ghost" 
+                      className={cn("mr-2 hover:bg-opacity-10", getTextColor(color))}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (onViewTask) {
+                          // Get task name without emoji
+                          const taskName = taskContent.replace(/^[\p{Emoji}\s]+/u, '').trim();
+                          onViewTask(taskName);
+                        }
+                      }}
+                    >
+                      <Eye className="h-3 w-3 mr-1" /> View
+                    </Button>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
