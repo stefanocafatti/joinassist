@@ -5,6 +5,8 @@ import { PawPrint, Car, Home, Package, Briefcase } from "lucide-react";
 import TaskDetailView from "@/components/ui/TaskDetailView";
 import { format } from "date-fns";
 import { useToast } from "@/hooks/use-toast";
+import ConfettiPopup from "@/components/ui/ConfettiPopup";
+import TaskRequestConfetti from "@/components/ui/TaskRequestConfetti";
 
 // Import refactored components
 import WelcomeOverlay from "@/components/main-menu/WelcomeOverlay";
@@ -132,6 +134,10 @@ const MainMenu = () => {
   const [submittedRequests, setSubmittedRequests] = useState(mockSubmittedRequests);
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
   const [isCustomTaskModalOpen, setIsCustomTaskModalOpen] = useState(false);
+  const [isConfettiOpen, setIsConfettiOpen] = useState(false);
+  const [bookedTaskTitle, setBookedTaskTitle] = useState("");
+  const [isRequestConfettiOpen, setIsRequestConfettiOpen] = useState(false);
+  const [requestedTaskTitle, setRequestedTaskTitle] = useState("");
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -408,6 +414,17 @@ const MainMenu = () => {
     setIsTaskDetailOpen(false);
     setIsCustomTaskModalOpen(false);
     
+    // Show confetti for booked tasks
+    setBookedTaskTitle(taskTitle);
+    setIsConfettiOpen(true);
+    
+    // If this is a custom task request, show the request confetti instead
+    if (taskTitle === "Custom Task" || !selectedTask) {
+      setRequestedTaskTitle(taskTitle);
+      setIsRequestConfettiOpen(true);
+      setIsConfettiOpen(false);
+    }
+    
     setActiveTab("requests");
     
     toast({
@@ -671,6 +688,8 @@ const MainMenu = () => {
       <WelcomeOverlay userName={userName} showWelcome={showWelcome} />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 relative z-10">
+        
+        
         <header className="mb-8">
           <MainHeader 
             userName={userName}
@@ -714,6 +733,20 @@ const MainMenu = () => {
         onClose={() => setIsCustomTaskModalOpen(false)}
         onTaskBooked={handleBookTask}
         isCustomTask={true}
+      />
+      
+      {/* Confetti popup for successfully booked tasks */}
+      <ConfettiPopup 
+        isOpen={isConfettiOpen}
+        onClose={() => setIsConfettiOpen(false)}
+        taskTitle={bookedTaskTitle}
+      />
+      
+      {/* Confetti popup for task requests */}
+      <TaskRequestConfetti
+        isOpen={isRequestConfettiOpen}
+        onClose={() => setIsRequestConfettiOpen(false)}
+        taskTitle={requestedTaskTitle}
       />
     </div>
   );
