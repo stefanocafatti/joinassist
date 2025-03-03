@@ -373,6 +373,52 @@ const TaskCategories = ({
 
   const allTaskListings = [...taskListings, ...additionalTaskListings];
 
+  // Function to get the proper category background and text colors
+  const getCategoryButtonColors = (category: string) => {
+    const categoryColorMap: {[key: string]: string} = {
+      "Cleaning": selectedCategory === category 
+        ? "bg-sky-100 text-sky-800 border-sky-200" 
+        : "bg-white border-gray-200 text-gray-700 hover:bg-sky-50",
+      "Transportation": selectedCategory === category 
+        ? "bg-indigo-100 text-indigo-800 border-indigo-200" 
+        : "bg-white border-gray-200 text-gray-700 hover:bg-indigo-50",
+      "Assembly": selectedCategory === category 
+        ? "bg-purple-100 text-purple-800 border-purple-200" 
+        : "bg-white border-gray-200 text-gray-700 hover:bg-purple-50",
+      "Academic Help": selectedCategory === category 
+        ? "bg-yellow-100 text-yellow-800 border-yellow-200" 
+        : "bg-white border-gray-200 text-gray-700 hover:bg-yellow-50",
+      "Digital Services": selectedCategory === category 
+        ? "bg-red-100 text-red-800 border-red-200" 
+        : "bg-white border-gray-200 text-gray-700 hover:bg-red-50",
+      "Fitness & Wellness": selectedCategory === category 
+        ? "bg-emerald-100 text-emerald-800 border-emerald-200" 
+        : "bg-white border-gray-200 text-gray-700 hover:bg-emerald-50",
+      "Event & Hospitality": selectedCategory === category 
+        ? "bg-pink-100 text-pink-800 border-pink-200" 
+        : "bg-white border-gray-200 text-gray-700 hover:bg-pink-50",
+      "Special Tasks": selectedCategory === category 
+        ? "bg-orange-100 text-orange-800 border-orange-200" 
+        : "bg-white border-gray-200 text-gray-700 hover:bg-orange-50",
+      "For Brands": selectedCategory === category 
+        ? "bg-blue-100 text-blue-800 border-blue-200" 
+        : "bg-white border-gray-200 text-gray-700 hover:bg-blue-50",
+      "Home Maintenance": selectedCategory === category 
+        ? "bg-cyan-100 text-cyan-800 border-cyan-200" 
+        : "bg-white border-gray-200 text-gray-700 hover:bg-cyan-50",
+      "Vehicle Care": selectedCategory === category 
+        ? "bg-lime-100 text-lime-800 border-lime-200" 
+        : "bg-white border-gray-200 text-gray-700 hover:bg-lime-50",
+      "Delivery & Errands": selectedCategory === category 
+        ? "bg-amber-100 text-amber-800 border-amber-200" 
+        : "bg-white border-gray-200 text-gray-700 hover:bg-amber-50",
+    };
+    
+    return categoryColorMap[category] || (selectedCategory === category 
+      ? "bg-gray-100 text-gray-800 border-gray-200" 
+      : "bg-white border-gray-200 text-gray-700 hover:bg-gray-50");
+  };
+
   const getCategoryColor = (category: string) => {
     const categoryColorMap: {[key: string]: string} = {
       "Cleaning": "bg-sky-100 text-sky-800",
@@ -488,19 +534,21 @@ const TaskCategories = ({
             </h2>
             
             <div className="mb-8">
-              <div className="flex space-x-2">
+              <div className="flex space-x-2 overflow-x-auto pb-3">
                 {categories.map((category, index) => (
                   <div 
                     key={index}
                     onClick={() => handleCategoryClick(category.title)}
-                    className={`cursor-pointer flex-shrink-0 px-4 py-2 rounded-full border transition-all flex items-center space-x-2 ${
-                      selectedCategory === category.title 
-                        ? "bg-assist-blue text-white border-assist-blue shadow-md" 
-                        : "bg-white border-gray-200 shadow-sm hover:shadow-md text-gray-700"
+                    className={`cursor-pointer flex-shrink-0 px-4 py-2 rounded-full border transition-all flex items-center space-x-2 shadow-sm ${
+                      getCategoryButtonColors(category.title)
                     }`}
                   >
-                    <category.icon className={`h-5 w-5 ${selectedCategory === category.title ? "text-white" : "text-gray-700"}`} />
-                    <span className="font-medium text-sm">{category.title}</span>
+                    <category.icon className={`h-5 w-5 ${
+                      selectedCategory === category.title 
+                        ? `text-${category.color.split('-')[1]}-800` 
+                        : "text-gray-700"
+                    }`} />
+                    <span className="font-medium text-sm whitespace-nowrap">{category.title}</span>
                   </div>
                 ))}
               </div>
