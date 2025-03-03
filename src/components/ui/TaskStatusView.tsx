@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Calendar, Clock, DollarSign, Info, User } from "lucide-react";
+import { MapPin, Calendar, Clock, DollarSign, Info, User, CheckCircle, AlertCircle } from "lucide-react";
 
 interface TaskStatusViewProps {
   isOpen: boolean;
@@ -41,8 +41,25 @@ const TaskStatusView: React.FC<TaskStatusViewProps> = ({
         return 'bg-yellow-100 text-yellow-800 border-yellow-200';
       case 'Rejected':
         return 'bg-red-100 text-red-800 border-red-200';
+      case 'Completed':
+        return 'bg-blue-100 text-blue-800 border-blue-200';
       default:
         return 'bg-gray-100 text-gray-800 border-gray-200';
+    }
+  };
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'Confirmed':
+        return <CheckCircle className="h-5 w-5 text-green-600" />;
+      case 'Pending':
+        return <Clock className="h-5 w-5 text-yellow-600" />;
+      case 'Rejected':
+        return <AlertCircle className="h-5 w-5 text-red-600" />;
+      case 'Completed':
+        return <CheckCircle className="h-5 w-5 text-blue-600" />;
+      default:
+        return <Info className="h-5 w-5 text-gray-600" />;
     }
   };
 
@@ -56,7 +73,12 @@ const TaskStatusView: React.FC<TaskStatusViewProps> = ({
         <div className="mt-4 space-y-6">
           <div className="flex justify-between items-center">
             <h3 className="text-lg font-semibold">Task Details</h3>
-            <Badge className={getStatusColor(task.status)}>{task.status}</Badge>
+            <Badge className={getStatusColor(task.status)}>
+              <div className="flex items-center gap-1">
+                {getStatusIcon(task.status)}
+                <span>{task.status}</span>
+              </div>
+            </Badge>
           </div>
           
           <div className="space-y-4">

@@ -55,6 +55,32 @@ const StudentDashboard = () => {
   const [selectedAcceptedTask, setSelectedAcceptedTask] = useState<any>(null);
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
   const [taskToConfirm, setTaskToConfirm] = useState<any>(null);
+  const [completedTasks, setCompletedTasks] = useState([
+    {
+      title: "Essay Editing",
+      date: "Yesterday, 5:00 PM",
+      status: "Completed",
+      earnings: "$35",
+      category: "Academic Help",
+      location: "Library"
+    },
+    {
+      title: "Python Debugging",
+      date: "Apr 10, 2:00 PM",
+      status: "Completed",
+      earnings: "$50",
+      category: "Digital Services",
+      location: "Computer Lab"
+    },
+    {
+      title: "Research Assistant",
+      date: "Apr 5, 1:30 PM",
+      status: "Completed",
+      earnings: "$40",
+      category: "Academic Help",
+      location: "Science Building"
+    }
+  ]);
 
   const [upcomingTasks, setUpcomingTasks] = useState([
     {
@@ -351,8 +377,8 @@ const StudentDashboard = () => {
       date: "Today, " + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
       status: "Pending",
       earnings: selectedAcceptedTask.rate,
-      category: selectedAcceptedTask.category,
-      location: selectedAcceptedTask.location
+      category: selectedTask?.category || "Academic Help",
+      location: selectedTask?.location || "Campus"
     };
     
     setUpcomingTasks([...upcomingTasks, newTask]);
@@ -537,18 +563,63 @@ const StudentDashboard = () => {
                 </CardContent>
               </Card>
               
-              <Card className="overflow-hidden border-none shadow-md hover:shadow-lg transition-shadow duration-300 bg-gradient-to-br from-soft-yellow to-white">
+              <Card className="overflow-hidden border-none shadow-md hover:shadow-lg transition-shadow duration-300 bg-gradient-to-br from-soft-green to-white">
                 <CardHeader className="pb-2">
                   <CardTitle className="flex items-center text-lg text-gray-800">
-                    <div className="bg-yellow-500/10 p-2 rounded-full mr-3">
-                      <BookOpen className="h-5 w-5 text-yellow-600" />
+                    <div className="bg-green-500/10 p-2 rounded-full mr-3">
+                      <CalendarIcon className="h-5 w-5 text-green-600" />
                     </div>
-                    Learning
+                    Upcoming Tasks
                   </CardTitle>
-                  <CardDescription>Your skills progress</CardDescription>
+                  <CardDescription>Tasks you need to complete</CardDescription>
                 </CardHeader>
                 <CardContent className="pt-4">
-                  <StudentBadges minimal />
+                  {upcomingTasks.length > 0 ? (
+                    <div className="space-y-2">
+                      {upcomingTasks.slice(0, 2).map((task, index) => (
+                        <div key={index} className="flex items-center justify-between py-2">
+                          <div className="flex items-center">
+                            <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 
+                              ${task.status === "Confirmed" ? "bg-green-100" : 
+                              task.status === "Pending" ? "bg-yellow-100" : "bg-blue-100"}`}>
+                              {task.status === "Confirmed" ? 
+                                <CheckCircle className="h-4 w-4 text-green-600" /> : 
+                                <Clock className="h-4 w-4 text-yellow-600" />
+                              }
+                            </div>
+                            <div className="ml-2">
+                              <p className="text-sm font-medium text-gray-900 line-clamp-1">{task.title}</p>
+                              <p className="text-xs text-gray-500">{task.date}</p>
+                            </div>
+                          </div>
+                          <Badge className={`text-xs ${
+                            task.status === "Confirmed" ? "bg-green-100 text-green-800" :
+                            "bg-yellow-100 text-yellow-800"
+                          }`}>
+                            {task.status}
+                          </Badge>
+                        </div>
+                      ))}
+                      {upcomingTasks.length > 2 && (
+                        <button 
+                          className="text-xs text-assist-blue hover:text-assist-blue/80 mt-2 font-medium"
+                          onClick={() => setActiveTab("calendar")}
+                        >
+                          View all {upcomingTasks.length} tasks
+                        </button>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="text-center py-2">
+                      <p className="text-sm text-gray-500">No upcoming tasks</p>
+                      <button 
+                        className="text-xs text-assist-blue hover:text-assist-blue/80 mt-2 font-medium"
+                        onClick={() => document.getElementById('available-tasks-section')?.scrollIntoView({behavior: 'smooth'})}
+                      >
+                        Browse available tasks
+                      </button>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </div>
@@ -568,7 +639,7 @@ const StudentDashboard = () => {
                 {upcomingTasks.length === 0 ? (
                   <div className="text-center py-8">
                     <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 mb-4">
-                      <Calendar className="h-8 w-8 text-gray-400" />
+                      <CalendarIcon className="h-8 w-8 text-gray-400" />
                     </div>
                     <h3 className="text-lg font-medium text-gray-700">No active tasks</h3>
                     <p className="text-gray-500 mt-2">You don't have any upcoming tasks scheduled</p>
@@ -615,6 +686,56 @@ const StudentDashboard = () => {
             </div>
             
             <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+              <div className="border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white px-6 py-5">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <CheckCircle className="h-5 w-5 text-green-600 mr-2" />
+                    <h2 className="text-xl font-semibold text-gray-900">Completed Tasks</h2>
+                  </div>
+                  <p className="text-sm text-gray-500">Your task history</p>
+                </div>
+              </div>
+              
+              <div className="p-6">
+                {completedTasks.length === 0 ? (
+                  <div className="text-center py-8">
+                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 mb-4">
+                      <CheckCircle className="h-8 w-8 text-gray-400" />
+                    </div>
+                    <h3 className="text-lg font-medium text-gray-700">No completed tasks</h3>
+                    <p className="text-gray-500 mt-2">You haven't completed any tasks yet</p>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {completedTasks.map((task, index) => (
+                      <div key={index} className="flex items-center justify-between p-4 rounded-lg border border-gray-100 hover:border-assist-blue/50 hover:shadow-md transition-all duration-200">
+                        <div className="flex items-center space-x-4">
+                          <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 bg-green-100">
+                            <CheckCircle className="h-5 w-5 text-green-600" />
+                          </div>
+                          <div>
+                            <h3 className="font-medium text-gray-900">{task.title}</h3>
+                            <div className="flex items-center text-sm text-gray-500">
+                              <Clock className="h-3.5 w-3.5 mr-1" /> {task.date}
+                              <span className="mx-2">•</span>
+                              <MapPin className="h-3.5 w-3.5 mr-1" /> {task.location}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center">
+                          <Badge className="bg-green-100 text-green-800">
+                            {task.status}
+                          </Badge>
+                          <span className="ml-4 font-medium text-green-600">{task.earnings}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+            
+            <div id="available-tasks-section" className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
               <div className="border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white px-6 py-5">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
