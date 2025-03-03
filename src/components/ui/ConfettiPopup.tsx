@@ -22,6 +22,8 @@ interface ConfettiPopupProps {
   onSecondaryAction?: () => void;
   content?: React.ReactNode;
   taskTitle?: string;
+  buttonText?: string; // Added this prop to match usage in MainMenu.tsx
+  onButtonClick?: () => void; // Added this prop to match usage in MainMenu.tsx
 }
 
 const ConfettiPopup: React.FC<ConfettiPopupProps> = ({ 
@@ -34,7 +36,9 @@ const ConfettiPopup: React.FC<ConfettiPopupProps> = ({
   secondaryText,
   onSecondaryAction,
   content,
-  taskTitle 
+  taskTitle,
+  buttonText, // Added this prop to match usage in MainMenu.tsx
+  onButtonClick // Added this prop to match usage in MainMenu.tsx 
 }) => {
   const { width, height } = useWindowSize();
   const [showConfetti, setShowConfetti] = useState(false);
@@ -49,6 +53,11 @@ const ConfettiPopup: React.FC<ConfettiPopupProps> = ({
       return () => clearTimeout(timer);
     }
   }, [isOpen]);
+  
+  // If buttonText is provided, use that for the main button text
+  const finalConfirmText = buttonText || confirmText;
+  // If onButtonClick is provided, use that for the main button action
+  const finalOnConfirm = onButtonClick || onConfirm || onClose;
   
   return (
     <>
@@ -92,9 +101,9 @@ const ConfettiPopup: React.FC<ConfettiPopupProps> = ({
             
             <Button 
               className="bg-assist-blue hover:bg-assist-blue/90 w-full sm:w-auto" 
-              onClick={onConfirm || onClose}
+              onClick={finalOnConfirm}
             >
-              {confirmText}
+              {finalConfirmText}
             </Button>
           </DialogFooter>
         </DialogContent>
