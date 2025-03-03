@@ -22,8 +22,8 @@ interface ConfettiPopupProps {
   onSecondaryAction?: () => void;
   content?: React.ReactNode;
   taskTitle?: string;
-  buttonText?: string; // Added this prop to match usage in MainMenu.tsx
-  onButtonClick?: () => void; // Added this prop to match usage in MainMenu.tsx
+  buttonText?: string;
+  onButtonClick?: () => void;
 }
 
 const ConfettiPopup: React.FC<ConfettiPopupProps> = ({ 
@@ -37,8 +37,8 @@ const ConfettiPopup: React.FC<ConfettiPopupProps> = ({
   onSecondaryAction,
   content,
   taskTitle,
-  buttonText, // Added this prop to match usage in MainMenu.tsx
-  onButtonClick // Added this prop to match usage in MainMenu.tsx 
+  buttonText,
+  onButtonClick
 }) => {
   const { width, height } = useWindowSize();
   const [showConfetti, setShowConfetti] = useState(false);
@@ -48,7 +48,7 @@ const ConfettiPopup: React.FC<ConfettiPopupProps> = ({
       setShowConfetti(true);
       const timer = setTimeout(() => {
         setShowConfetti(false);
-      }, 4000);
+      }, 5000); // Extended duration for more celebration
       
       return () => clearTimeout(timer);
     }
@@ -66,8 +66,16 @@ const ConfettiPopup: React.FC<ConfettiPopupProps> = ({
           width={width}
           height={height}
           recycle={false}
-          numberOfPieces={150}
+          numberOfPieces={200}
           gravity={0.15}
+          colors={['#FFD700', '#FF6347', '#4169E1', '#32CD32', '#9932CC']}
+          tweenDuration={8000}
+          confettiSource={{
+            x: width / 2,
+            y: height / 2,
+            w: 0,
+            h: 0
+          }}
         />
       )}
       
