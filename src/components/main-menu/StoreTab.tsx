@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -91,7 +90,7 @@ const StoreTab: React.FC<StoreTabProps> = ({ assistPoints, onPointsUpdated }) =>
       description: "Get $15 off your next food delivery order with our partner service",
       pointsCost: 120,
       category: "food",
-      image: "https://images.unsplash.com/photo-1576866209830-589e1bfbaa4d?q=80&w=1000&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1576866209830-5fdb8e8ff7b7?q=80&w=1000&auto=format&fit=crop",
       discount: "$15",
       partner: "DoorDash",
     },
@@ -198,7 +197,6 @@ const StoreTab: React.FC<StoreTabProps> = ({ assistPoints, onPointsUpdated }) =>
                       <li>10 points for each task booked</li>
                       <li>Additional points based on the cost of the task</li>
                       <li>Bonus points for referring friends to the app</li>
-                      <li>Special promotion points during campus events</li>
                     </ul>
                     <p className="text-sm text-gray-600 mt-2">
                       Redeem your points for exclusive rewards, discounts, and special offers!

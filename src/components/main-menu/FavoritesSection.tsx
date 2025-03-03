@@ -143,7 +143,10 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({
             </p>
             <Button 
               className="bg-assist-blue hover:bg-assist-blue/90"
-              onClick={onHideSection}
+              onClick={() => {
+                onHideSection();
+                // This function needs to be updated in MainMenu.tsx to set activeTab to "allTasks"
+              }}
             >
               Browse Tasks
             </Button>

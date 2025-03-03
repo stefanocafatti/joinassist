@@ -495,6 +495,11 @@ const MainMenu = () => {
     }
   };
 
+  const handleHideFavoritesSection = () => {
+    setShowFavorites(false);
+    setActiveTab("allTasks");
+  };
+
   const handleClearSearchResults = () => {
     setSearchResults(null);
     setSearchPerformed(false);
@@ -534,10 +539,7 @@ const MainMenu = () => {
           favoriteTaskIds={favoriteTaskIds}
           onFavoriteToggle={handleFavoriteToggle}
           onBookNow={handleBookNow}
-          onHideSection={() => {
-            setShowFavorites(false);
-            setActiveTab("home");
-          }}
+          onHideSection={handleHideFavoritesSection}
         />
       );
     } else if (activeTab === "allTasks") {
