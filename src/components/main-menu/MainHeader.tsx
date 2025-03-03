@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Heart, Bell, Coins, Store, Mail, CheckCircle, User, History, CreditCard, Settings, LogOut, MessageSquare, ChevronRight } from "lucide-react";
+import { Heart, Bell, Coins, Mail, CheckCircle, User, History, CreditCard, Settings, LogOut, MessageSquare, ChevronRight } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import {
@@ -158,7 +158,6 @@ const MainHeader: React.FC<MainHeaderProps> = ({
           <Heart className={`h-5 w-5 ${showFavorites ? 'fill-red-500' : ''}`} />
         </Button>
         
-        {/* Messages Icon */}
         <Popover open={isMessagesOpen} onOpenChange={setIsMessagesOpen}>
           <PopoverTrigger asChild>
             <Button variant="ghost" size="icon" className="relative">
@@ -343,25 +342,14 @@ const MainHeader: React.FC<MainHeaderProps> = ({
               <User className="mr-2 h-4 w-4" />
               <span>Profile</span>
             </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => onSetActiveTab("requests")}>
+              <History className="mr-2 h-4 w-4" />
+              <span>My Bookings</span>
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <Settings className="mr-2 h-4 w-4" />
               <span>Settings</span>
-              <DropdownMenu>
-                <DropdownMenuTrigger className="ml-auto">
-                  <ChevronRight className="h-4 w-4" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56" align="end" side="right">
-                  <DropdownMenuItem>
-                    <History className="mr-2 h-4 w-4" />
-                    <span>My Bookings</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <CreditCard className="mr-2 h-4 w-4" />
-                    <span>Payment Methods</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
