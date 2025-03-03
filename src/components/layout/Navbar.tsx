@@ -34,7 +34,7 @@ const Navbar = () => {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
-        scrolled ? 'bg-white shadow-md' : 'bg-white/90'
+        scrolled ? 'bg-white/90 backdrop-blur-sm shadow-md' : 'bg-white/70 backdrop-blur-sm'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -75,7 +75,7 @@ const Navbar = () => {
       </div>
 
       {isMenuOpen && (
-        <div className="md:hidden bg-white shadow-lg animate-slide-in">
+        <div className="md:hidden bg-white/90 backdrop-blur-sm shadow-lg animate-slide-in">
           <div className="px-4 pt-2 pb-6 space-y-2">
             <div className="pt-3 flex flex-col space-y-2">
               <Link to="/login">
