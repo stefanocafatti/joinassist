@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -12,6 +13,7 @@ import StudentCalendar from "@/components/student/StudentCalendar";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import ConfettiPopup from "@/components/ui/ConfettiPopup";
 
 const StudentDashboard = () => {
   const navigate = useNavigate();
@@ -23,6 +25,17 @@ const StudentDashboard = () => {
   const [searchText, setSearchText] = useState("");
   const [currentBalance, setCurrentBalance] = useState(345.50);
   const [campus, setCampus] = useState("University of Technology");
+  const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
+  const [showSuccessConfetti, setShowSuccessConfetti] = useState(false);
+  const [selectedGig, setSelectedGig] = useState<{
+    id: string;
+    title: string;
+    date: string;
+    location: string;
+    price: string;
+    category: string;
+  } | null>(null);
+  
   const [upcomingTasks, setUpcomingTasks] = useState([
     {
       title: "Mathematics Tutoring",
@@ -47,6 +60,45 @@ const StudentDashboard = () => {
       earnings: "$60",
       category: "Digital Services", 
       location: "Remote"
+    }
+  ]);
+  
+  const [availableGigs, setAvailableGigs] = useState([
+    {
+      id: "gig1",
+      title: "Biology Tutoring",
+      date: "Monday, 4:00 PM",
+      location: "Science Building, Room 302",
+      price: "$35/hr",
+      category: "Academic Help",
+      description: "Help a first-year student with biology fundamentals and lab preparation."
+    },
+    {
+      id: "gig2",
+      title: "Computer Science Project",
+      date: "Wednesday, 2:30 PM",
+      location: "Engineering Hall, Lab 104",
+      price: "$45/hr",
+      category: "Digital Services",
+      description: "Assist with a Python programming project focused on data visualization."
+    },
+    {
+      id: "gig3",
+      title: "Math Homework Help",
+      date: "Thursday, 5:00 PM",
+      location: "University Center, Study Area",
+      price: "$30/hr",
+      category: "Academic Help",
+      description: "Help with calculus problems and exam preparation."
+    },
+    {
+      id: "gig4",
+      title: "Move Furniture",
+      date: "Saturday, 11:00 AM",
+      location: "Student Apartments, Building C",
+      price: "$25/hr",
+      category: "Moving",
+      description: "Help moving furniture to a new apartment on campus. Lifting required."
     }
   ]);
 
@@ -91,6 +143,38 @@ const StudentDashboard = () => {
   const handleSetActiveTab = (tab: string) => {
     setActiveTab(tab);
   };
+  
+  const handleAcceptGig = (gig: typeof availableGigs[0]) => {
+    setSelectedGig(gig);
+    setShowConfirmationDialog(true);
+  };
+  
+  const confirmAcceptGig = () => {
+    setShowConfirmationDialog(false);
+    
+    // Add the gig to upcoming tasks
+    const newTask = {
+      title: selectedGig?.title || "",
+      date: selectedGig?.date || "",
+      status: "Confirmed",
+      earnings: selectedGig?.price || "",
+      category: selectedGig?.category || "",
+      location: selectedGig?.location || ""
+    };
+    
+    setUpcomingTasks([...upcomingTasks, newTask]);
+    
+    // Remove from available gigs
+    if (selectedGig) {
+      setAvailableGigs(availableGigs.filter(gig => gig.id !== selectedGig.id));
+    }
+    
+    // Show success animation
+    setShowSuccessConfetti(true);
+    
+    // Show toast notification
+    toast.success("Gig accepted successfully!");
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 pb-8">
@@ -108,27 +192,6 @@ const StudentDashboard = () => {
       </div>
       
       <div className="container mx-auto px-4 py-4">
-        <div className="mb-8">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between bg-gradient-to-r from-assist-blue to-indigo-600 rounded-2xl p-6 shadow-md text-white">
-            <div className="flex items-center">
-              <div className="bg-white/20 p-3 rounded-full mr-4">
-                <UserRound className="h-8 w-8 text-white" />
-              </div>
-              <div>
-                <h1 className="text-3xl font-bold mb-1">My Dashboard</h1>
-                <p className="text-white/80 mb-2">
-                  Manage your tasks, earnings, and rewards
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col mt-4 md:mt-0 md:items-end">
-              <Badge className="bg-white text-assist-blue px-4 py-2 text-sm font-medium shadow-sm">
-                Student Account
-              </Badge>
-            </div>
-          </div>
-        </div>
-        
         <Tabs defaultValue="dashboard" onValueChange={setActiveTab} className="space-y-8">
           <TabsContent value="dashboard" className="mt-6 space-y-8 animate-fade-in">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -152,7 +215,7 @@ const StudentDashboard = () => {
                               ${task.status === "Confirmed" ? "bg-green-100" : 
                               task.status === "Pending" ? "bg-yellow-100" : "bg-blue-100"}`}>
                               {task.status === "Confirmed" ? 
-                                <CheckCircle className="h-4 w-4 text-green-600" /> : 
+                                <ThumbsUp className="h-4 w-4 text-green-600" /> : 
                                 <Clock className="h-4 w-4 text-yellow-600" />
                               }
                             </div>
@@ -183,9 +246,9 @@ const StudentDashboard = () => {
                       <p className="text-sm text-gray-500">No upcoming tasks</p>
                       <button 
                         className="text-xs text-assist-blue hover:text-assist-blue/80 mt-2 font-medium"
-                        onClick={() => document.getElementById('available-tasks-section')?.scrollIntoView({behavior: 'smooth'})}
+                        onClick={() => document.getElementById('available-gigs-section')?.scrollIntoView({behavior: 'smooth'})}
                       >
-                        Browse available tasks
+                        Browse available gigs
                       </button>
                     </div>
                   )}
@@ -222,9 +285,114 @@ const StudentDashboard = () => {
                 </CardContent>
               </Card>
             </div>
+            
+            {/* Available Gigs Section */}
+            <section id="available-gigs-section" className="bg-white rounded-xl shadow-md p-6 mt-8">
+              <h2 className="text-xl font-semibold mb-4">Available Gigs</h2>
+              <div className="space-y-4">
+                {availableGigs.map((gig) => (
+                  <div key={gig.id} className="border border-gray-100 rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between">
+                      <div className="mb-3 md:mb-0">
+                        <h3 className="font-semibold text-lg">{gig.title}</h3>
+                        <div className="flex flex-col sm:flex-row sm:items-center mt-2 space-y-1 sm:space-y-0 sm:space-x-4 text-sm text-gray-600">
+                          <div className="flex items-center">
+                            <CalendarIcon className="h-4 w-4 mr-1 text-gray-500" />
+                            <span>{gig.date}</span>
+                          </div>
+                          <div className="flex items-center">
+                            <MapPin className="h-4 w-4 mr-1 text-gray-500" />
+                            <span>{gig.location}</span>
+                          </div>
+                          <div className="flex items-center font-medium text-green-600">
+                            <Coins className="h-4 w-4 mr-1" />
+                            <span>{gig.price}</span>
+                          </div>
+                        </div>
+                        <p className="text-sm text-gray-500 mt-2">{gig.description}</p>
+                      </div>
+                      <div className="flex-shrink-0">
+                        <Button 
+                          onClick={() => handleAcceptGig(gig)} 
+                          className="bg-green-600 hover:bg-green-700"
+                        >
+                          Accept Gig
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                
+                {availableGigs.length === 0 && (
+                  <div className="text-center py-6">
+                    <p className="text-gray-500">No available gigs at the moment.</p>
+                    <p className="text-sm text-gray-400 mt-2">Check back later for new opportunities!</p>
+                  </div>
+                )}
+              </div>
+            </section>
           </TabsContent>
         </Tabs>
       </div>
+      
+      {/* Confirmation Dialog */}
+      {showConfirmationDialog && selectedGig && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+            <h2 className="text-xl font-semibold mb-2">Confirm Gig Acceptance</h2>
+            <p className="text-gray-600 mb-4">Are you sure you want to accept this gig?</p>
+            
+            <div className="bg-gray-50 p-4 rounded-lg mb-6">
+              <h3 className="font-medium">{selectedGig.title}</h3>
+              <div className="text-sm text-gray-600 mt-1 space-y-1">
+                <div className="flex items-center">
+                  <CalendarIcon className="h-4 w-4 mr-2" />
+                  <span>{selectedGig.date}</span>
+                </div>
+                <div className="flex items-center">
+                  <MapPin className="h-4 w-4 mr-2" />
+                  <span>{selectedGig.location}</span>
+                </div>
+                <div className="flex items-center text-green-600 font-medium">
+                  <Coins className="h-4 w-4 mr-2" />
+                  <span>{selectedGig.price}</span>
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex justify-end space-x-3">
+              <Button 
+                variant="outline" 
+                onClick={() => setShowConfirmationDialog(false)}
+              >
+                Cancel
+              </Button>
+              <Button 
+                className="bg-green-600 hover:bg-green-700"
+                onClick={confirmAcceptGig}
+              >
+                Confirm
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+      
+      {/* Success Confetti Popup */}
+      <ConfettiPopup
+        isOpen={showSuccessConfetti}
+        onClose={() => setShowSuccessConfetti(false)}
+        title="Gig Accepted!"
+        description="You've successfully accepted this gig. It has been added to your upcoming tasks."
+        confirmText="View Calendar"
+        onConfirm={() => {
+          setShowSuccessConfetti(false);
+          setActiveTab("calendar");
+        }}
+        secondaryText="Close"
+        onSecondaryAction={() => setShowSuccessConfetti(false)}
+        taskTitle={selectedGig?.title}
+      />
     </div>
   );
 };
