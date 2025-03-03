@@ -9,7 +9,6 @@ import MainHeader from "@/components/main-menu/MainHeader";
 import StudentBalance from "@/components/student/StudentBalance";
 import StudentBadges from "@/components/student/StudentBadges";
 import StudentCalendar from "@/components/student/StudentCalendar";
-import StudentWithdrawal from "@/components/student/StudentWithdrawal";
 import StudentPoints from "@/components/student/StudentPoints";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -18,7 +17,6 @@ import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
-// Define props interface for TaskDetailView
 interface TaskDetailViewProps {
   isOpen: boolean;
   task: any;
@@ -426,11 +424,11 @@ const StudentDashboard = () => {
                 <span className="text-xs font-medium">Dashboard</span>
               </TabsTrigger>
               <TabsTrigger 
-                value="earnings" 
+                value="payments" 
                 className="flex-1 flex flex-col items-center gap-1 py-3 px-2 data-[state=active]:bg-assist-blue data-[state=active]:text-white rounded-lg transition-all duration-200 hover:bg-gray-200/80"
               >
                 <Coins className="h-5 w-5" />
-                <span className="text-xs font-medium">Earnings</span>
+                <span className="text-xs font-medium">Payments</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="badges" 
@@ -447,11 +445,11 @@ const StudentDashboard = () => {
                 <span className="text-xs font-medium">Calendar</span>
               </TabsTrigger>
               <TabsTrigger 
-                value="payments" 
+                value="rewards" 
                 className="flex-1 flex flex-col items-center gap-1 py-3 px-2 data-[state=active]:bg-assist-blue data-[state=active]:text-white rounded-lg transition-all duration-200 hover:bg-gray-200/80"
               >
-                <Coins className="h-5 w-5" />
-                <span className="text-xs font-medium">Payments</span>
+                <BadgeCheck className="h-5 w-5" />
+                <span className="text-xs font-medium">Rewards</span>
               </TabsTrigger>
             </TabsList>
           </div>
@@ -723,63 +721,4 @@ const StudentDashboard = () => {
                 {upcomingTasks.map((task, index) => (
                   <div key={index} className="p-5 hover:bg-blue-50/30 transition-colors duration-150">
                     <div className="flex items-center justify-between mb-2">
-                      <h3 className="font-medium text-gray-900">{task.title}</h3>
-                      <Badge className={getCategoryColor(task.category)}>
-                        {task.category}
-                      </Badge>
-                    </div>
-                    <p className="text-gray-500 text-sm mb-3">{task.date}</p>
-                    <div className="flex justify-between items-center text-sm">
-                      <div className="flex items-center text-gray-500">
-                        <MapPin className="mr-1 h-3.5 w-3.5" />
-                        {task.location}
-                      </div>
-                      <span className="font-bold text-assist-blue">{task.earnings}</span>
-                    </div>
-                    <div className="mt-3 pt-3 border-t border-gray-100">
-                      <Button 
-                        className="w-full bg-assist-blue hover:bg-assist-blue/90 font-medium" 
-                        size="sm"
-                        onClick={(e) => handleAcceptTask(task, e)}
-                      >
-                        <ThumbsUp className="mr-2 h-4 w-4" />
-                        Accept Task
-                      </Button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="earnings" className="mt-6 space-y-4">
-            <StudentBalance />
-          </TabsContent>
-          
-          <TabsContent value="badges" className="mt-6 space-y-4">
-            <StudentBadges />
-          </TabsContent>
-          
-          <TabsContent value="calendar" className="mt-6 space-y-4">
-            <StudentCalendar />
-          </TabsContent>
-          
-          <TabsContent value="payments" className="mt-6 space-y-4">
-            <StudentWithdrawal />
-          </TabsContent>
-        </Tabs>
-      </div>
-      
-      {taskDetailOpen && selectedTask && (
-        <TaskDetailView
-          isOpen={taskDetailOpen}
-          task={selectedTask}
-          onClose={() => setTaskDetailOpen(false)}
-          onTaskBooked={handleTaskBooked}
-        />
-      )}
-    </div>
-  );
-};
-
-export default StudentDashboard;
+                      <h3 className="font-medium text-gray-9
