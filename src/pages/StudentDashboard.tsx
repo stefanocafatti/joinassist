@@ -759,7 +759,7 @@ const StudentDashboard = () => {
           isOpen={taskDetailOpen}
           onClose={() => setTaskDetailOpen(false)}
           task={selectedTask}
-          onBookTask={handleTaskBooked}
+          onTaskBooked={handleTaskBooked}
         />
       )}
     </div>
