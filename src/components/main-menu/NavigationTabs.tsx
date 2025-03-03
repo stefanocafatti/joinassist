@@ -1,68 +1,157 @@
 
 import React from "react";
-import { Home, Search, PanelRight, Heart, User, ShoppingBag, BarChart, BookOpen, Wallet } from "lucide-react";
+import { ClipboardList, Heart, User, Gift, Grid, MessageSquare } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface NavigationTabsProps {
   activeTab: string;
   showFavorites: boolean;
   onTabChange: (tab: string) => void;
   onToggleFavoriteView: () => void;
-  isStudentView?: boolean;
 }
 
 const NavigationTabs: React.FC<NavigationTabsProps> = ({ 
   activeTab, 
   showFavorites, 
   onTabChange, 
-  onToggleFavoriteView,
-  isStudentView = false
+  onToggleFavoriteView 
 }) => {
-  const tabs = isStudentView 
-    ? [
-        { id: "home", label: "Dashboard", icon: <Home className="h-5 w-5" /> },
-        { id: "tasks", label: "Tasks", icon: <BookOpen className="h-5 w-5" /> },
-        { id: "earnings", label: "Earnings", icon: <Wallet className="h-5 w-5" /> },
-        { id: "stats", label: "Stats", icon: <BarChart className="h-5 w-5" /> },
-        { id: "profile", label: "Profile", icon: <User className="h-5 w-5" /> }
-      ]
-    : [
-        { id: "home", label: "Home", icon: <Home className="h-5 w-5" /> },
-        { id: "allTasks", label: "Browse", icon: <Search className="h-5 w-5" /> },
-        { id: "requests", label: "Requests", icon: <PanelRight className="h-5 w-5" /> },
-        { id: "rewards", label: "Store", icon: <ShoppingBag className="h-5 w-5" /> },
-        { id: "profile", label: "Profile", icon: <User className="h-5 w-5" /> }
-      ];
+  const navigate = useNavigate();
+
+  // Define the tabs in the new order (3 above, 3 below)
+  const topTabs = [
+    {
+      name: "allTasks",
+      label: "Tasks",
+      icon: Grid,
+      color: "blue",
+      activeBg: "bg-blue-600",
+      activeText: "text-white",
+      activeShadow: "shadow-blue-200",
+      hoverBg: "hover:bg-blue-100",
+      hoverText: "hover:text-blue-800"
+    },
+    {
+      name: "requests",
+      label: "Open Task Requests",
+      icon: ClipboardList,
+      color: "green",
+      activeBg: "bg-green-600",
+      activeText: "text-white",
+      activeShadow: "shadow-green-200",
+      hoverBg: "hover:bg-green-100",
+      hoverText: "hover:text-green-800"
+    },
+    {
+      name: "favorites",
+      label: "Favorites",
+      icon: Heart,
+      color: "pink",
+      activeBg: "bg-pink-600",
+      activeText: "text-white",
+      activeShadow: "shadow-pink-200",
+      hoverBg: "hover:bg-pink-100",
+      hoverText: "hover:text-pink-800"
+    }
+  ];
   
+  const bottomTabs = [
+    {
+      name: "messages",
+      label: "Messages",
+      icon: MessageSquare,
+      color: "violet",
+      activeBg: "bg-violet-600",
+      activeText: "text-white",
+      activeShadow: "shadow-violet-200",
+      hoverBg: "hover:bg-violet-100",
+      hoverText: "hover:text-violet-800"
+    },
+    {
+      name: "rewards",
+      label: "Rewards",
+      icon: Gift,
+      color: "amber",
+      activeBg: "bg-amber-600",
+      activeText: "text-white",
+      activeShadow: "shadow-amber-200",
+      hoverBg: "hover:bg-amber-100",
+      hoverText: "hover:text-amber-800"
+    },
+    {
+      name: "profile",
+      label: "Profile",
+      icon: User,
+      color: "purple",
+      activeBg: "bg-purple-600",
+      activeText: "text-white",
+      activeShadow: "shadow-purple-200",
+      hoverBg: "hover:bg-purple-100",
+      hoverText: "hover:text-purple-800"
+    }
+  ];
+
+  // Get color classes based on tab's state and color theme
+  const getColorClasses = (isActive: boolean, tab: any) => {
+    return {
+      bg: isActive ? tab.activeBg : "bg-white",
+      text: isActive ? tab.activeText : `text-${tab.color}-600`,
+      shadow: isActive ? `shadow-md shadow-${tab.activeShadow}` : "",
+      hover: !isActive ? `${tab.hoverBg} ${tab.hoverText}` : ""
+    };
+  };
+
+  const renderTabRow = (tabs: typeof topTabs) => {
+    return (
+      <div className="grid grid-cols-3 gap-2">
+        {tabs.map((tab) => {
+          const isActive = activeTab === tab.name;
+          const colorClasses = getColorClasses(isActive, tab);
+          
+          const handleClick = () => {
+            if (tab.name === "messages") {
+              navigate("/messages");
+              return;
+            }
+            
+            onTabChange(tab.name);
+            if (tab.name === "favorites") {
+              onToggleFavoriteView();
+            } else if (showFavorites) {
+              onToggleFavoriteView();
+            }
+          };
+          
+          return (
+            <button
+              key={tab.name}
+              className={`relative flex items-center justify-center p-2 rounded-lg transition-all duration-200 transform ${isActive ? 'scale-105' : 'scale-100'} ${colorClasses.bg} ${colorClasses.text} ${colorClasses.shadow} ${!isActive ? colorClasses.hover : ''} border border-${tab.color}-100`}
+              onClick={handleClick}
+              aria-current={isActive ? "page" : undefined}
+            >
+              <div className="flex flex-col items-center justify-center space-y-1">
+                {React.createElement(tab.icon, {
+                  className: `h-5 w-5 ${isActive ? 'animate-pulse' : ''}`
+                })}
+                <span className="text-xs font-medium">{tab.label}</span>
+              </div>
+              
+              {isActive && (
+                <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-white rounded-full -mb-0.5"></span>
+              )}
+            </button>
+          );
+        })}
+      </div>
+    );
+  };
+
   return (
-    <div className="flex overflow-x-auto border-b border-gray-200 mb-6 pb-1">
-      {tabs.map((tab) => (
-        <button
-          key={tab.id}
-          className={`flex items-center px-4 py-2 font-medium whitespace-nowrap ${
-            activeTab === tab.id || (tab.id === "favorites" && showFavorites)
-              ? "text-assist-blue border-b-2 border-assist-blue"
-              : "text-gray-600 hover:text-gray-900"
-          }`}
-          onClick={() => onTabChange(tab.id)}
-        >
-          {tab.icon}
-          <span className="ml-2">{tab.label}</span>
-        </button>
-      ))}
-      
-      {!isStudentView && (
-        <button
-          className={`flex items-center px-4 py-2 font-medium whitespace-nowrap ml-auto ${
-            showFavorites
-              ? "text-assist-blue border-b-2 border-assist-blue"
-              : "text-gray-600 hover:text-gray-900"
-          }`}
-          onClick={onToggleFavoriteView}
-        >
-          <Heart className={`h-5 w-5 ${showFavorites ? "fill-assist-blue" : ""}`} />
-          <span className="ml-2">Favorites</span>
-        </button>
-      )}
+    <div className="mb-6 p-3 bg-white/80 backdrop-blur-sm rounded-xl shadow-sm">
+      <div className="flex flex-col space-y-2">
+        {renderTabRow(topTabs)}
+        {renderTabRow(bottomTabs)}
+      </div>
     </div>
   );
 };
