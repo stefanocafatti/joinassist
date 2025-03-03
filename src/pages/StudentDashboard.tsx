@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -342,7 +341,7 @@ const StudentDashboard = () => {
         balance={currentBalance} // Pass the current balance
       />
       
-      <div className="container mx-auto px-4 py-8 mt-6">
+      <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between bg-gradient-to-r from-assist-blue to-indigo-600 rounded-2xl p-6 shadow-md text-white">
             <div className="flex items-center">
@@ -364,26 +363,26 @@ const StudentDashboard = () => {
         
         <Tabs defaultValue="dashboard" onValueChange={setActiveTab} className="space-y-8">
           <div className="bg-white rounded-xl p-2 shadow-md">
-            <TabsList className="grid w-full grid-cols-5 gap-3 p-1.5">
-              <TabsTrigger value="dashboard" className="flex items-center justify-center gap-2 py-3 px-4 font-medium data-[state=active]:bg-blue-500 data-[state=active]:text-white whitespace-nowrap">
+            <TabsList className="grid w-full grid-cols-5 gap-2 p-1">
+              <TabsTrigger value="dashboard" className="flex items-center gap-2 py-3 data-[state=active]:bg-assist-blue data-[state=active]:text-white">
                 <UserRound className="h-4 w-4" />
-                <span className="hidden sm:inline">Dashboard</span>
+                <span className="hidden md:inline">Dashboard</span>
               </TabsTrigger>
-              <TabsTrigger value="earnings" className="flex items-center justify-center gap-2 py-3 px-4 font-medium data-[state=active]:bg-green-500 data-[state=active]:text-white whitespace-nowrap">
+              <TabsTrigger value="earnings" className="flex items-center gap-2 py-3 data-[state=active]:bg-assist-blue data-[state=active]:text-white">
                 <Coins className="h-4 w-4" />
-                <span className="hidden sm:inline">Earnings</span>
+                <span className="hidden md:inline">Earnings</span>
               </TabsTrigger>
-              <TabsTrigger value="badges" className="flex items-center justify-center gap-2 py-3 px-4 font-medium data-[state=active]:bg-purple-500 data-[state=active]:text-white whitespace-nowrap">
+              <TabsTrigger value="badges" className="flex items-center gap-2 py-3 data-[state=active]:bg-assist-blue data-[state=active]:text-white">
                 <BadgeCheck className="h-4 w-4" />
-                <span className="hidden sm:inline">Badges</span>
+                <span className="hidden md:inline">Badges</span>
               </TabsTrigger>
-              <TabsTrigger value="calendar" className="flex items-center justify-center gap-2 py-3 px-4 font-medium data-[state=active]:bg-amber-500 data-[state=active]:text-white whitespace-nowrap">
+              <TabsTrigger value="calendar" className="flex items-center gap-2 py-3 data-[state=active]:bg-assist-blue data-[state=active]:text-white">
                 <CalendarIcon className="h-4 w-4" />
-                <span className="hidden sm:inline">Calendar</span>
+                <span className="hidden md:inline">Calendar</span>
               </TabsTrigger>
-              <TabsTrigger value="withdrawal" className="flex items-center justify-center gap-2 py-3 px-4 font-medium data-[state=active]:bg-red-500 data-[state=active]:text-white whitespace-nowrap">
+              <TabsTrigger value="withdrawal" className="flex items-center gap-2 py-3 data-[state=active]:bg-assist-blue data-[state=active]:text-white">
                 <ArrowDown className="h-4 w-4" />
-                <span className="hidden sm:inline">Withdraw</span>
+                <span className="hidden md:inline">Withdraw</span>
               </TabsTrigger>
             </TabsList>
           </div>
@@ -702,66 +701,48 @@ const StudentDashboard = () => {
               
               <div className="divide-y divide-gray-100">
                 {recentActivity.map((activity, index) => (
-                  <div key={index} className="p-5 hover:bg-blue-50/30 transition-colors duration-150">
-                    <div className="flex justify-between items-center">
-                      <div>
-                        <h3 className="font-medium text-gray-900">{activity.title}</h3>
-                        <p className="text-sm text-gray-500 mt-1">{activity.date}</p>
-                      </div>
-                      <span className={`font-bold ${
-                        activity.type === "earning" ? "text-green-600" :
-                        activity.type === "badge" ? "text-purple-600" :
-                        "text-red-600"
-                      }`}>
-                        {activity.amount}
-                      </span>
+                  <div key={index} className="flex items-center justify-between p-5 hover:bg-blue-50/30 transition-colors duration-150">
+                    <div>
+                      <h3 className="font-medium text-gray-900">{activity.title}</h3>
+                      <p className="text-sm text-gray-600">{activity.date}</p>
                     </div>
+                    <Badge className={
+                      activity.type === "earning" ? "bg-green-100 text-green-800 font-medium" :
+                      activity.type === "badge" ? "bg-purple-100 text-purple-800 font-medium" :
+                      "bg-blue-100 text-blue-800 font-medium"
+                    }>
+                      {activity.amount}
+                    </Badge>
                   </div>
                 ))}
               </div>
-              
-              <div className="bg-gray-50 px-6 py-4 flex justify-end">
-                <Button variant="outline" className="border-assist-blue text-assist-blue hover:bg-assist-blue/5 font-medium">
-                  View All Activity
-                </Button>
-              </div>
             </div>
           </TabsContent>
           
-          <TabsContent value="earnings">
-            <div className="bg-white rounded-xl p-6 shadow-md">
-              <StudentBalance />
-            </div>
+          <TabsContent value="earnings" className="animate-fade-in">
+            <StudentBalance />
           </TabsContent>
           
-          <TabsContent value="badges">
-            <div className="bg-white rounded-xl p-6 shadow-md">
-              <StudentBadges />
-            </div>
+          <TabsContent value="badges" className="animate-fade-in">
+            <StudentBadges />
           </TabsContent>
           
-          <TabsContent value="calendar">
-            <div className="bg-white rounded-xl p-6 shadow-md">
-              <StudentCalendar />
-            </div>
+          <TabsContent value="calendar" className="animate-fade-in">
+            <StudentCalendar />
           </TabsContent>
           
-          <TabsContent value="withdrawal">
-            <div className="bg-white rounded-xl p-6 shadow-md">
-              <StudentWithdrawal />
-            </div>
+          <TabsContent value="withdrawal" className="animate-fade-in">
+            <StudentWithdrawal />
           </TabsContent>
         </Tabs>
       </div>
       
-      {taskDetailOpen && selectedTask && (
-        <TaskDetailView
-          isOpen={taskDetailOpen}
-          onClose={() => setTaskDetailOpen(false)}
-          task={selectedTask}
-          onTaskBooked={handleTaskBooked}
-        />
-      )}
+      <TaskDetailView
+        isOpen={taskDetailOpen}
+        onClose={() => setTaskDetailOpen(false)}
+        onTaskBooked={handleTaskBooked}
+        task={selectedTask}
+      />
     </div>
   );
 };

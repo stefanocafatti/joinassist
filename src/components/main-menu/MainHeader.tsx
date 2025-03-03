@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Bell, Coins, Mail, CheckCircle, User, History, LogOut, MessageSquare, DollarSign } from "lucide-react";
@@ -152,9 +153,9 @@ const MainHeader: React.FC<MainHeaderProps> = ({
   };
 
   return (
-    <div className="flex justify-between items-center mb-8 mt-4">
+    <div className="flex justify-between items-center mb-6">
       <h1 className="text-2xl md:text-3xl font-bold">
-        <span className="text-gray-700">
+        <span className="bg-gradient-to-r from-assist-blue via-blue-500 to-blue-400 bg-clip-text text-transparent">
           Hello, {userName}!
         </span>
       </h1>
@@ -162,26 +163,26 @@ const MainHeader: React.FC<MainHeaderProps> = ({
         <Button 
           variant="ghost"
           size="sm"
-          className="flex items-center bg-soft-green text-green-600 px-3 py-1 rounded-full hover:bg-green-500/10"
-          onClick={() => onSetActiveTab("earnings")}
-        >
-          <DollarSign className="h-4 w-4 mr-1" />
-          <span className="text-sm font-medium">{balance.toFixed(2)}</span>
-        </Button>
-        
-        <Button 
-          variant="ghost"
-          size="sm"
-          className="flex items-center bg-soft-blue text-assist-blue px-3 py-1 rounded-full hover:bg-assist-blue/10"
+          className="flex items-center bg-assist-blue/10 text-assist-blue px-3 py-1 rounded-full hover:bg-assist-blue/20"
           onClick={() => onSetActiveTab("rewards")}
         >
           <Coins className="h-4 w-4 mr-1" />
           <span className="text-sm font-medium">{assistPoints} points</span>
         </Button>
         
+        <Button 
+          variant="ghost"
+          size="sm"
+          className="flex items-center bg-green-500/10 text-green-600 px-3 py-1 rounded-full hover:bg-green-500/20"
+          onClick={() => onSetActiveTab("earnings")}
+        >
+          <DollarSign className="h-4 w-4 mr-1" />
+          <span className="text-sm font-medium">${balance.toFixed(2)}</span>
+        </Button>
+        
         <Popover open={isMessagesOpen} onOpenChange={setIsMessagesOpen}>
           <PopoverTrigger asChild>
-            <Button variant="ghost" size="icon" className="relative text-neutral-gray hover:bg-gray-100">
+            <Button variant="ghost" size="icon" className="relative">
               <MessageSquare className="h-5 w-5" />
               {unreadMessagesCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-green-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
@@ -260,7 +261,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
         
         <Popover open={isNotificationsOpen} onOpenChange={setIsNotificationsOpen}>
           <PopoverTrigger asChild>
-            <Button variant="ghost" size="icon" className="relative text-neutral-gray hover:bg-gray-100">
+            <Button variant="ghost" size="icon" className="relative">
               <Bell className="h-5 w-5" />
               {unreadCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
@@ -350,7 +351,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
             <Button variant="ghost" className="h-10 w-10 rounded-full p-0">
               <Avatar className="h-9 w-9">
                 <AvatarImage src={profileImage || ""} />
-                <AvatarFallback className="bg-soft-blue text-gray-700">
+                <AvatarFallback className="bg-assist-blue text-white">
                   {userName.charAt(0)}
                 </AvatarFallback>
               </Avatar>
