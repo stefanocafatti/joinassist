@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { User, History, CreditCard, Phone, Mail, MapPin, Plus, Award, Coins } from "lucide-react";
+import { User, History, CreditCard, Phone, Mail, MapPin, Plus, Award, Coins, LogOut } from "lucide-react";
 import { 
   Dialog,
   DialogContent,
@@ -14,6 +14,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 interface ProfileTabProps {
   user: {
@@ -46,6 +47,7 @@ interface ProfileTabProps {
 }
 
 const ProfileTab: React.FC<ProfileTabProps> = ({ user, onUpdateUserName, onUpdateProfile, profileImage }) => {
+  const navigate = useNavigate();
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [profileForm, setProfileForm] = useState({
     firstName: user.firstName,
@@ -95,6 +97,11 @@ const ProfileTab: React.FC<ProfileTabProps> = ({ user, onUpdateUserName, onUpdat
     return `${profileForm.firstName.charAt(0)}${profileForm.lastName.charAt(0)}`;
   };
   
+  const handleLogout = () => {
+    toast.success("Logged out successfully");
+    navigate("/");
+  };
+  
   return (
     <div className="space-y-8">
       <section className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
@@ -117,7 +124,17 @@ const ProfileTab: React.FC<ProfileTabProps> = ({ user, onUpdateUserName, onUpdat
             <h2 className="text-xl font-bold">{profileForm.firstName} {profileForm.lastName}</h2>
             <p className="text-gray-500">Member since 2023</p>
           </div>
-          <Button className="ml-auto" variant="default" size="sm" onClick={handleEditProfile}>Edit Profile</Button>
+          <div className="ml-auto flex gap-2">
+            <Button variant="default" size="sm" onClick={handleEditProfile}>Edit Profile</Button>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={handleLogout}
+              className="text-red-500 hover:text-red-700 hover:bg-red-50 border-red-200"
+            >
+              <LogOut className="h-4 w-4 mr-1" /> Log Out
+            </Button>
+          </div>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
