@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { PartyPopper, CheckCircle } from "lucide-react";
-import { cn } from "@/lib/utils";
 import Confetti from 'react-confetti';
 import { useWindowSize } from "@/hooks/use-window-size";
 
@@ -53,7 +52,7 @@ const TaskRequestConfetti: React.FC<TaskRequestConfettiProps> = ({
       setShowConfetti(true);
       const timer = setTimeout(() => {
         setShowConfetti(false);
-      }, 5000);
+      }, 6000); // Extended duration
       
       return () => clearTimeout(timer);
     } else {
@@ -76,12 +75,12 @@ const TaskRequestConfetti: React.FC<TaskRequestConfettiProps> = ({
           width={width}
           height={height}
           recycle={false}
-          numberOfPieces={250}
-          gravity={0.2}
+          numberOfPieces={500}
+          gravity={0.15}
           colors={['#FF5252', '#FFD740', '#64FFDA', '#448AFF', '#B388FF', '#FFAB40']}
           confettiSource={{
             x: width / 2,
-            y: height / 2,
+            y: height / 3,
             w: 0,
             h: 0
           }}

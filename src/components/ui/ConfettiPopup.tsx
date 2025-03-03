@@ -69,13 +69,13 @@ const ConfettiPopup: React.FC<ConfettiPopupProps> = ({
           width={width}
           height={height}
           recycle={false}
-          numberOfPieces={300}
+          numberOfPieces={500}
           gravity={0.15}
-          colors={['#FFD700', '#FF6347', '#4169E1', '#32CD32', '#9932CC']}
+          colors={['#FFD700', '#FF6347', '#4169E1', '#32CD32', '#9932CC', '#FF8C00', '#00BFFF']}
           tweenDuration={8000}
           confettiSource={{
             x: width / 2,
-            y: height / 2,
+            y: height / 3,
             w: 0,
             h: 0
           }}
@@ -83,40 +83,56 @@ const ConfettiPopup: React.FC<ConfettiPopupProps> = ({
       )}
       
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="sm:max-w-[400px] bg-white">
-          <DialogHeader>
-            <DialogTitle className="text-xl text-center">{title}</DialogTitle>
-          </DialogHeader>
-          
-          <div className="mt-2 text-center">
-            {description && (
-              <p className="text-gray-600 mb-4">{description}</p>
-            )}
+        <DialogContent className="sm:max-w-[400px] bg-white rounded-lg p-0 overflow-hidden">
+          <div className="p-6">
+            <DialogHeader className="pb-2">
+              <DialogTitle className="text-2xl font-bold text-center">{title}</DialogTitle>
+            </DialogHeader>
             
-            {content && content}
+            <div className="mt-2 text-center">
+              {description && (
+                <p className="text-gray-600 mb-4">{description}</p>
+              )}
+              
+              {content && content}
+              
+              {taskTitle && !content && (
+                <div className="bg-gray-50 p-6 rounded-lg mb-4 mt-4 text-left">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-gray-600 font-medium">Task:</span>
+                    <span className="font-semibold text-gray-900">{taskTitle}</span>
+                  </div>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-gray-600 font-medium">Price:</span>
+                    <span className="font-semibold text-green-600">$40/hr</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-600 font-medium">Location:</span>
+                    <span className="font-semibold text-gray-900">Campus Center</span>
+                  </div>
+                </div>
+              )}
+            </div>
             
-            {taskTitle && !content && (
-              <div className="bg-gray-50 p-4 rounded-lg mb-4">
-                <p className="text-lg font-medium">{taskTitle}</p>
-                <p className="text-sm text-gray-500">has been added to your tasks</p>
-              </div>
-            )}
-          </div>
-          
-          <DialogFooter className="mt-4 flex flex-col gap-2 sm:flex-row sm:justify-center">
-            {secondaryText && onSecondaryAction && (
-              <Button variant="outline" onClick={onSecondaryAction} className="w-full sm:w-auto">
-                {secondaryText}
+            <DialogFooter className="mt-6 flex flex-col-reverse sm:flex-row gap-3">
+              {secondaryText && onSecondaryAction && (
+                <Button 
+                  variant="outline" 
+                  onClick={onSecondaryAction} 
+                  className="w-full sm:w-auto border-gray-300"
+                >
+                  {secondaryText}
+                </Button>
+              )}
+              
+              <Button 
+                className="bg-assist-blue hover:bg-assist-blue/90 w-full sm:w-auto" 
+                onClick={finalOnConfirm}
+              >
+                {finalConfirmText}
               </Button>
-            )}
-            
-            <Button 
-              className="bg-assist-blue hover:bg-assist-blue/90 w-full sm:w-auto" 
-              onClick={finalOnConfirm}
-            >
-              {finalConfirmText}
-            </Button>
-          </DialogFooter>
+            </DialogFooter>
+          </div>
         </DialogContent>
       </Dialog>
     </>

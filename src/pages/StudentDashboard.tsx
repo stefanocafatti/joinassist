@@ -800,18 +800,18 @@ const StudentDashboard = () => {
           secondaryText="Add to Calendar"
           onSecondaryAction={handleAddToCalendar}
           content={
-            <div className="p-4 bg-gray-50 rounded-lg mb-4">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium text-gray-500">Task:</span>
-                <span className="text-sm font-medium text-gray-900">{selectedAcceptedTask.title}</span>
+            <div className="bg-gray-50 p-6 rounded-lg mb-4 mt-4 text-left">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-gray-600 font-medium">Task:</span>
+                <span className="font-semibold text-gray-900">{selectedAcceptedTask.title}</span>
               </div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium text-gray-500">Price:</span>
-                <span className="text-sm font-medium text-green-600">{selectedAcceptedTask.rate}</span>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-gray-600 font-medium">Price:</span>
+                <span className="font-semibold text-green-600">{selectedAcceptedTask.rate}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-gray-500">Location:</span>
-                <span className="text-sm font-medium text-gray-900">{selectedAcceptedTask.location}</span>
+                <span className="text-gray-600 font-medium">Location:</span>
+                <span className="font-semibold text-gray-900">{selectedAcceptedTask.location}</span>
               </div>
             </div>
           }
