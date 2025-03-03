@@ -77,7 +77,7 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-semibold text-gray-900">Your Favorited Listings</h2>
         <Button variant="outline" size="sm" onClick={onHideSection}>
-          Back to Homepage
+          Back to Home
         </Button>
       </div>
       
