@@ -363,26 +363,26 @@ const StudentDashboard = () => {
         
         <Tabs defaultValue="dashboard" onValueChange={setActiveTab} className="space-y-8">
           <div className="bg-white rounded-xl p-2 shadow-md">
-            <TabsList className="grid w-full grid-cols-5 gap-2 p-1">
-              <TabsTrigger value="dashboard" className="flex items-center gap-2 py-3 data-[state=active]:bg-assist-blue data-[state=active]:text-white">
+            <TabsList className="grid w-full grid-cols-5 gap-3 p-1.5">
+              <TabsTrigger value="dashboard" className="flex items-center justify-center gap-2 py-3 px-4 font-medium data-[state=active]:bg-assist-blue data-[state=active]:text-white">
                 <UserRound className="h-4 w-4" />
-                <span className="hidden md:inline">Dashboard</span>
+                <span className="hidden sm:inline whitespace-nowrap">Dashboard</span>
               </TabsTrigger>
-              <TabsTrigger value="earnings" className="flex items-center gap-2 py-3 data-[state=active]:bg-assist-blue data-[state=active]:text-white">
+              <TabsTrigger value="earnings" className="flex items-center justify-center gap-2 py-3 px-4 font-medium data-[state=active]:bg-assist-blue data-[state=active]:text-white">
                 <Coins className="h-4 w-4" />
-                <span className="hidden md:inline">Earnings</span>
+                <span className="hidden sm:inline whitespace-nowrap">Earnings</span>
               </TabsTrigger>
-              <TabsTrigger value="badges" className="flex items-center gap-2 py-3 data-[state=active]:bg-assist-blue data-[state=active]:text-white">
+              <TabsTrigger value="badges" className="flex items-center justify-center gap-2 py-3 px-4 font-medium data-[state=active]:bg-assist-blue data-[state=active]:text-white">
                 <BadgeCheck className="h-4 w-4" />
-                <span className="hidden md:inline">Badges</span>
+                <span className="hidden sm:inline whitespace-nowrap">Badges</span>
               </TabsTrigger>
-              <TabsTrigger value="calendar" className="flex items-center gap-2 py-3 data-[state=active]:bg-assist-blue data-[state=active]:text-white">
+              <TabsTrigger value="calendar" className="flex items-center justify-center gap-2 py-3 px-4 font-medium data-[state=active]:bg-assist-blue data-[state=active]:text-white">
                 <CalendarIcon className="h-4 w-4" />
-                <span className="hidden md:inline">Calendar</span>
+                <span className="hidden sm:inline whitespace-nowrap">Calendar</span>
               </TabsTrigger>
-              <TabsTrigger value="withdrawal" className="flex items-center gap-2 py-3 data-[state=active]:bg-assist-blue data-[state=active]:text-white">
+              <TabsTrigger value="withdrawal" className="flex items-center justify-center gap-2 py-3 px-4 font-medium data-[state=active]:bg-assist-blue data-[state=active]:text-white">
                 <ArrowDown className="h-4 w-4" />
-                <span className="hidden md:inline">Withdraw</span>
+                <span className="hidden sm:inline whitespace-nowrap">Withdraw</span>
               </TabsTrigger>
             </TabsList>
           </div>
@@ -698,53 +698,3 @@ const StudentDashboard = () => {
                 </div>
                 <p className="mt-1 text-sm text-gray-500 ml-7">Your latest actions and updates</p>
               </div>
-              
-              <div className="divide-y divide-gray-100">
-                {recentActivity.map((activity, index) => (
-                  <div key={index} className="flex items-center justify-between p-5 hover:bg-blue-50/30 transition-colors duration-150">
-                    <div>
-                      <h3 className="font-medium text-gray-900">{activity.title}</h3>
-                      <p className="text-sm text-gray-600">{activity.date}</p>
-                    </div>
-                    <Badge className={
-                      activity.type === "earning" ? "bg-green-100 text-green-800 font-medium" :
-                      activity.type === "badge" ? "bg-purple-100 text-purple-800 font-medium" :
-                      "bg-blue-100 text-blue-800 font-medium"
-                    }>
-                      {activity.amount}
-                    </Badge>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="earnings" className="animate-fade-in">
-            <StudentBalance />
-          </TabsContent>
-          
-          <TabsContent value="badges" className="animate-fade-in">
-            <StudentBadges />
-          </TabsContent>
-          
-          <TabsContent value="calendar" className="animate-fade-in">
-            <StudentCalendar />
-          </TabsContent>
-          
-          <TabsContent value="withdrawal" className="animate-fade-in">
-            <StudentWithdrawal />
-          </TabsContent>
-        </Tabs>
-      </div>
-      
-      <TaskDetailView
-        isOpen={taskDetailOpen}
-        onClose={() => setTaskDetailOpen(false)}
-        onTaskBooked={handleTaskBooked}
-        task={selectedTask}
-      />
-    </div>
-  );
-};
-
-export default StudentDashboard;
