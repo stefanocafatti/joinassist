@@ -52,6 +52,8 @@ interface TaskDetailViewProps {
   ) => void;
   task?: Task;
   isCustomTask?: boolean;
+  isFavorite?: boolean;
+  onFavoriteToggle?: (taskTitle: string) => void;
 }
 
 const times = [
@@ -60,7 +62,6 @@ const times = [
   "6:00 PM", "7:00 PM", "8:00 PM"
 ];
 
-// Company defined prices for different task categories
 const companyDefinedPrices: {[key: string]: number} = {
   "Cleaning": 30,
   "Transportation": 25,
@@ -78,11 +79,9 @@ const companyDefinedPrices: {[key: string]: number} = {
   "For Brands": 60,
   "Pets": 25,
   "Home": 35,
-  // Default price if category not found
   "default": 25
 };
 
-// Categories available for custom tasks
 const availableCategories = [
   "Cleaning", 
   "Transportation", 
@@ -97,7 +96,6 @@ const availableCategories = [
   "Home"
 ];
 
-// Set of placeholder images for custom tasks
 const customTaskPlaceholderImages = [
   "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7",
   "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
@@ -110,23 +108,22 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
   onClose, 
   onTaskBooked,
   task,
-  isCustomTask = false
+  isCustomTask = false,
+  isFavorite = false,
+  onFavoriteToggle
 }) => {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [time, setTime] = useState<string>(times[0]);
   const [location, setLocation] = useState<string>(task?.location || "");
   const [additionalInfo, setAdditionalInfo] = useState<string>("");
   
-  // Custom task fields
   const [customTitle, setCustomTitle] = useState<string>("");
   const [customDescription, setCustomDescription] = useState<string>("");
   const [customCategory, setCustomCategory] = useState<string>("Special Tasks");
   
-  // Confetti popup state
   const [showConfetti, setShowConfetti] = useState(false);
   const [bookedTaskTitle, setBookedTaskTitle] = useState("");
   
-  // Get the company defined price for this task category
   const taskPrice = isCustomTask 
     ? companyDefinedPrices[customCategory] || companyDefinedPrices["default"] 
     : task ? companyDefinedPrices[task.category] || companyDefinedPrices["default"] : companyDefinedPrices["default"];
@@ -142,16 +139,13 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
       return;
     }
     
-    // For custom tasks, use the custom title/description/category
     const finalTitle = isCustomTask ? customTitle : (task ? task.title : "");
     const finalLocation = location || "Not specified";
     
     if (isCustomTask && !customTitle.trim()) {
-      // Validate custom task title
       return;
     }
     
-    // Show confetti and store task title
     setBookedTaskTitle(finalTitle);
     setShowConfetti(true);
     
@@ -159,7 +153,7 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
       finalTitle,
       date,
       time,
-      "hourly", // Always hourly rate
+      "hourly",
       taskPrice,
       finalLocation,
       additionalInfo
@@ -173,7 +167,6 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
 
   const getTaskImage = (taskTitle: string) => {
     if (isCustomTask) {
-      // For custom tasks, pick a random placeholder image
       const randomIndex = Math.floor(Math.random() * customTaskPlaceholderImages.length);
       return customTaskPlaceholderImages[randomIndex];
     }
@@ -218,13 +211,11 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
           
           <div className="mt-4">
             {!isCustomTask ? (
-              // Standard task view with image
               <div 
                 className="h-44 mb-6 rounded-lg bg-cover bg-center"
                 style={{ backgroundImage: `url(${getTaskImage(task?.title || "")})` }}
               />
             ) : (
-              // Custom task view with form for title and description
               <div className="space-y-4 mb-6">
                 <div className="space-y-2">
                   <Label htmlFor="custom-title">Task Title</Label>
@@ -279,7 +270,6 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
             
             <form onSubmit={handleSubmit}>
               <div className="space-y-6">
-                {/* Date and Time Selection */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="date" className="flex items-center gap-2">
@@ -327,7 +317,6 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
                   </div>
                 </div>
                 
-                {/* Price Section - Company defined price */}
                 <div className="space-y-3">
                   <Label className="flex items-center gap-2">
                     Price Information
@@ -343,7 +332,6 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
                   </div>
                 </div>
                 
-                {/* Location */}
                 <div className="space-y-2">
                   <Label htmlFor="location" className="flex items-center gap-2">
                     <MapPin className="h-4 w-4" /> Location
@@ -356,7 +344,6 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
                   />
                 </div>
                 
-                {/* Additional Information */}
                 <div className="space-y-2">
                   <Label htmlFor="additionalInfo" className="flex items-center gap-2">
                     <Info className="h-4 w-4" /> Additional Notes
@@ -384,7 +371,6 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
         </DialogContent>
       </Dialog>
       
-      {/* Confetti Popup */}
       <ConfettiPopup 
         isOpen={showConfetti} 
         onClose={handleConfettiClose}

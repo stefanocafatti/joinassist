@@ -9,12 +9,20 @@ interface TaskRequestConfettiProps {
   isOpen: boolean;
   onClose: () => void;
   taskTitle?: string;
+  title?: string;
+  description?: string;
+  buttonText?: string;
+  onButtonClick?: () => void;
 }
 
 const TaskRequestConfetti: React.FC<TaskRequestConfettiProps> = ({ 
   isOpen, 
   onClose,
-  taskTitle = "Custom Task"
+  taskTitle = "Custom Task",
+  title,
+  description,
+  buttonText = "Got it!",
+  onButtonClick
 }) => {
   const [particles, setParticles] = useState<Array<{
     left: number;
@@ -38,6 +46,14 @@ const TaskRequestConfetti: React.FC<TaskRequestConfettiProps> = ({
       setParticles(newParticles);
     }
   }, [isOpen]);
+
+  const handleButtonClick = () => {
+    if (onButtonClick) {
+      onButtonClick();
+    } else {
+      onClose();
+    }
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -69,7 +85,7 @@ const TaskRequestConfetti: React.FC<TaskRequestConfettiProps> = ({
             </div>
             
             <h3 className="text-xl font-semibold text-gray-900">
-              Great! You've submitted a task request
+              {title || "Great! You've submitted a task request"}
             </h3>
             
             <div className="bg-gray-50 rounded-lg p-3 border border-gray-100 flex items-center space-x-3">
@@ -80,15 +96,15 @@ const TaskRequestConfetti: React.FC<TaskRequestConfettiProps> = ({
             </div>
             
             <p className="text-gray-600 text-sm">
-              We'll notify providers in your area about your task. You can check the status in the Requests tab.
+              {description || "We'll notify providers in your area about your task. You can check the status in the Requests tab."}
             </p>
             
             <div className="pt-2">
               <Button 
-                onClick={onClose}
+                onClick={handleButtonClick}
                 className="w-full bg-assist-blue hover:bg-assist-blue/90"
               >
-                Got it!
+                {buttonText}
               </Button>
             </div>
           </div>

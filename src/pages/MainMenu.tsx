@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import CircleBlocks from "@/components/background/CircleBlocks";
@@ -768,7 +767,7 @@ const MainMenu = () => {
           isOpen={isTaskDetailOpen}
           onClose={() => setIsTaskDetailOpen(false)}
           task={selectedTask}
-          onBookTask={handleBookTask}
+          onTaskBooked={handleBookTask}
           onFavoriteToggle={handleFavoriteToggle}
           isFavorite={favoriteTaskIds.includes(selectedTask.title)}
         />

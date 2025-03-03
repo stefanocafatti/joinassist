@@ -8,13 +8,21 @@ import { cn } from "@/lib/utils";
 interface ConfettiPopupProps {
   isOpen: boolean;
   onClose: () => void;
-  taskTitle: string;
+  taskTitle?: string;
+  title?: string;
+  description?: string;
+  buttonText?: string;
+  onButtonClick?: () => void;
 }
 
 const ConfettiPopup: React.FC<ConfettiPopupProps> = ({ 
   isOpen, 
   onClose,
-  taskTitle
+  taskTitle = "",
+  title,
+  description,
+  buttonText = "Got it!",
+  onButtonClick
 }) => {
   const [particles, setParticles] = useState<Array<{
     left: number;
@@ -38,6 +46,14 @@ const ConfettiPopup: React.FC<ConfettiPopupProps> = ({
       setParticles(newParticles);
     }
   }, [isOpen]);
+
+  const handleButtonClick = () => {
+    if (onButtonClick) {
+      onButtonClick();
+    } else {
+      onClose();
+    }
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -69,7 +85,7 @@ const ConfettiPopup: React.FC<ConfettiPopupProps> = ({
             </div>
             
             <h3 className="text-xl font-semibold text-gray-900">
-              Awesome! You've booked a task
+              {title || "Awesome! You've booked a task"}
             </h3>
             
             <div className="bg-gray-50 rounded-lg p-3 border border-gray-100 flex items-center space-x-3">
@@ -80,15 +96,15 @@ const ConfettiPopup: React.FC<ConfettiPopupProps> = ({
             </div>
             
             <p className="text-gray-600 text-sm">
-              We'll notify you once a student has confirmed your task. You can check your bookings in the Requests tab.
+              {description || "We'll notify you once a student has confirmed your task. You can check your bookings in the Requests tab."}
             </p>
             
             <div className="pt-2">
               <Button 
-                onClick={onClose}
+                onClick={handleButtonClick}
                 className="w-full bg-assist-blue hover:bg-assist-blue/90"
               >
-                Got it!
+                {buttonText}
               </Button>
             </div>
           </div>
