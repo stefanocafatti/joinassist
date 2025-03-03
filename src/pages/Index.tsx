@@ -61,9 +61,9 @@ const Index = () => {
           <TrustedCompanies />
           <Benefits />
           
-          <TaskCategories />
+          <TaskCategories onClick={handleCategoryClick} />
           <Testimonials />
-          <CTASection />
+          <CTASection onBrowseAllTasks={handleBrowseAllTasks} />
         </div>
       </main>
       

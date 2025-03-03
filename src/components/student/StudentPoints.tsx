@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -30,26 +29,24 @@ const StudentPoints: React.FC<StudentPointsProps> = ({ minimal = false }) => {
 
   if (minimal) {
     return (
-      <Card>
-        <CardHeader className="pb-2">
-          <CardTitle className="text-lg flex items-center justify-between">
-            <span className="flex items-center gap-2">
-              <Star className="h-5 w-5 text-yellow-500 fill-yellow-500" />
-              Point Balance
-            </span>
-            <span className="text-xl font-bold">{pointsData.current}</span>
-          </CardTitle>
-          <CardDescription>
-            {pointsData.nextReward - pointsData.current} points until next reward
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="pt-0">
-          <Progress value={pointsData.progress} className="h-2 mt-2" />
-          <Button variant="outline" size="sm" className="mt-4 w-full">
-            View Rewards
-          </Button>
-        </CardContent>
-      </Card>
+      <div className="bg-white p-4 rounded-lg">
+        <div className="flex items-center justify-between mb-2">
+          <span className="flex items-center gap-2">
+            <div className="bg-purple-100 p-1.5 rounded-full">
+              <Star className="h-5 w-5 text-purple-500 fill-purple-500" />
+            </div>
+            <span className="font-semibold">Point Balance</span>
+          </span>
+          <span className="text-xl font-bold text-purple-600">{pointsData.current}</span>
+        </div>
+        <p className="text-sm text-gray-500 mb-2">
+          {pointsData.nextReward - pointsData.current} points until next reward
+        </p>
+        <Progress value={pointsData.progress} className="h-2 bg-purple-100" indicatorClassName="bg-purple-500" />
+        <Button variant="outline" size="sm" className="mt-4 w-full border-purple-200 text-purple-700 hover:bg-purple-50">
+          View Rewards
+        </Button>
+      </div>
     );
   }
 
@@ -58,7 +55,7 @@ const StudentPoints: React.FC<StudentPointsProps> = ({ minimal = false }) => {
       <Card className="shadow-sm">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Star className="h-6 w-6 text-yellow-500 fill-yellow-500" />
+            <Star className="h-6 w-6 text-yellow-500" />
             Points & Rewards
           </CardTitle>
           <CardDescription>

@@ -1,10 +1,11 @@
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { UserRound, Coins, CalendarIcon, ArrowDown, BadgeCheck, BookOpen, Clock, CheckCircle, MapPin, ThumbsUp, Filter, DollarSign, Briefcase } from "lucide-react";
+import { UserRound, Coins, CalendarIcon, ArrowDown, BadgeCheck, BookOpen, Clock, CheckCircle, MapPin, ThumbsUp, Filter, DollarSign, Briefcase, Search, Sparkles } from "lucide-react";
 import MainHeader from "@/components/main-menu/MainHeader";
 import StudentBalance from "@/components/student/StudentBalance";
 import StudentBadges from "@/components/student/StudentBadges";
@@ -346,45 +347,47 @@ const StudentDashboard = () => {
       />
       
       <div className="container mx-auto px-4 py-8">
+        {/* Dashboard Header */}
         <div className="mb-8">
-          <div className="flex items-start justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2 flex items-center">
-                <span className="bg-assist-blue/10 p-2 rounded-full mr-3">
-                  <UserRound className="h-6 w-6 text-assist-blue" />
-                </span>
-                Student Dashboard
-              </h1>
-              <p className="text-gray-600">
-                Manage your tasks, earnings, and academic opportunities
-              </p>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between bg-gradient-to-r from-assist-blue to-indigo-600 rounded-2xl p-6 shadow-md text-white">
+            <div className="flex items-center">
+              <div className="bg-white/20 p-3 rounded-full mr-4">
+                <UserRound className="h-8 w-8 text-white" />
+              </div>
+              <div>
+                <h1 className="text-3xl font-bold mb-1">Student Dashboard</h1>
+                <p className="text-white/80">
+                  Manage your tasks, earnings, and academic opportunities
+                </p>
+              </div>
             </div>
-            <Badge className="bg-assist-blue text-white px-3 py-1.5 text-sm">
+            <Badge className="bg-white text-assist-blue mt-4 md:mt-0 px-4 py-2 text-sm font-medium shadow-sm">
               Student Account
             </Badge>
           </div>
         </div>
         
+        {/* Navigation Tabs */}
         <Tabs defaultValue="dashboard" onValueChange={setActiveTab} className="space-y-8">
-          <div className="bg-white rounded-xl p-4 shadow-sm">
-            <TabsList className="grid w-full grid-cols-5 gap-2">
-              <TabsTrigger value="dashboard" className="flex items-center gap-2 data-[state=active]:bg-assist-blue data-[state=active]:text-white">
+          <div className="bg-white rounded-xl p-2 shadow-md">
+            <TabsList className="grid w-full grid-cols-5 gap-2 p-1">
+              <TabsTrigger value="dashboard" className="flex items-center gap-2 py-3 data-[state=active]:bg-assist-blue data-[state=active]:text-white">
                 <UserRound className="h-4 w-4" />
                 <span className="hidden md:inline">Dashboard</span>
               </TabsTrigger>
-              <TabsTrigger value="earnings" className="flex items-center gap-2 data-[state=active]:bg-assist-blue data-[state=active]:text-white">
+              <TabsTrigger value="earnings" className="flex items-center gap-2 py-3 data-[state=active]:bg-assist-blue data-[state=active]:text-white">
                 <Coins className="h-4 w-4" />
                 <span className="hidden md:inline">Earnings</span>
               </TabsTrigger>
-              <TabsTrigger value="badges" className="flex items-center gap-2 data-[state=active]:bg-assist-blue data-[state=active]:text-white">
+              <TabsTrigger value="badges" className="flex items-center gap-2 py-3 data-[state=active]:bg-assist-blue data-[state=active]:text-white">
                 <BadgeCheck className="h-4 w-4" />
                 <span className="hidden md:inline">Badges</span>
               </TabsTrigger>
-              <TabsTrigger value="calendar" className="flex items-center gap-2 data-[state=active]:bg-assist-blue data-[state=active]:text-white">
+              <TabsTrigger value="calendar" className="flex items-center gap-2 py-3 data-[state=active]:bg-assist-blue data-[state=active]:text-white">
                 <CalendarIcon className="h-4 w-4" />
                 <span className="hidden md:inline">Calendar</span>
               </TabsTrigger>
-              <TabsTrigger value="withdrawal" className="flex items-center gap-2 data-[state=active]:bg-assist-blue data-[state=active]:text-white">
+              <TabsTrigger value="withdrawal" className="flex items-center gap-2 py-3 data-[state=active]:bg-assist-blue data-[state=active]:text-white">
                 <ArrowDown className="h-4 w-4" />
                 <span className="hidden md:inline">Withdraw</span>
               </TabsTrigger>
@@ -392,64 +395,78 @@ const StudentDashboard = () => {
           </div>
           
           <TabsContent value="dashboard" className="mt-6 space-y-8 animate-fade-in">
+            {/* Stats Cards */}
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-              <Card className="overflow-hidden border-none shadow-soft hover:shadow-md transition-shadow duration-300">
-                <CardHeader className="bg-soft-blue pb-2">
+              <Card className="overflow-hidden border-none shadow-md hover:shadow-lg transition-shadow duration-300 bg-gradient-to-br from-soft-blue to-white">
+                <CardHeader className="pb-2">
                   <CardTitle className="flex items-center text-lg text-gray-800">
-                    <Coins className="mr-2 h-5 w-5 text-assist-blue" />
+                    <div className="bg-assist-blue/10 p-2 rounded-full mr-3">
+                      <Coins className="h-5 w-5 text-assist-blue" />
+                    </div>
                     Balance
                   </CardTitle>
                   <CardDescription>Your current earnings</CardDescription>
                 </CardHeader>
-                <CardContent className="pt-6">
+                <CardContent className="pt-4">
                   <StudentBalance minimal />
                 </CardContent>
               </Card>
               
-              <Card className="overflow-hidden border-none shadow-soft hover:shadow-md transition-shadow duration-300">
-                <CardHeader className="bg-soft-purple pb-2">
+              <Card className="overflow-hidden border-none shadow-md hover:shadow-lg transition-shadow duration-300 bg-gradient-to-br from-soft-purple to-white">
+                <CardHeader className="pb-2">
                   <CardTitle className="flex items-center text-lg text-gray-800">
-                    <BadgeCheck className="mr-2 h-5 w-5 text-purple-500" />
+                    <div className="bg-purple-500/10 p-2 rounded-full mr-3">
+                      <BadgeCheck className="h-5 w-5 text-purple-500" />
+                    </div>
                     Achievements
                   </CardTitle>
                   <CardDescription>Your earned badges</CardDescription>
                 </CardHeader>
-                <CardContent className="pt-6">
+                <CardContent className="pt-4">
                   <StudentPoints minimal />
                 </CardContent>
               </Card>
               
-              <Card className="overflow-hidden border-none shadow-soft hover:shadow-md transition-shadow duration-300">
-                <CardHeader className="bg-soft-yellow pb-2">
+              <Card className="overflow-hidden border-none shadow-md hover:shadow-lg transition-shadow duration-300 bg-gradient-to-br from-soft-yellow to-white">
+                <CardHeader className="pb-2">
                   <CardTitle className="flex items-center text-lg text-gray-800">
-                    <BookOpen className="mr-2 h-5 w-5 text-yellow-600" />
+                    <div className="bg-yellow-500/10 p-2 rounded-full mr-3">
+                      <BookOpen className="h-5 w-5 text-yellow-600" />
+                    </div>
                     Learning
                   </CardTitle>
                   <CardDescription>Your skills progress</CardDescription>
                 </CardHeader>
-                <CardContent className="pt-6">
+                <CardContent className="pt-4">
                   <StudentBadges minimal />
                 </CardContent>
               </Card>
             </div>
             
-            <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-              <div className="border-b border-gray-100 bg-gray-50 px-6 py-4">
-                <h2 className="text-xl font-semibold text-gray-900">Available Tasks</h2>
-                <p className="text-sm text-gray-500">Find opportunities to earn</p>
+            {/* Available Tasks Section */}
+            <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+              <div className="border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white px-6 py-5">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <Sparkles className="h-5 w-5 text-amber-500 mr-2" />
+                    <h2 className="text-xl font-semibold text-gray-900">Available Tasks</h2>
+                  </div>
+                  <p className="text-sm text-gray-500">Find opportunities to earn</p>
+                </div>
                 
-                <div className="mt-4 grid grid-cols-1 md:grid-cols-5 gap-4">
-                  <div className="col-span-2">
+                <div className="mt-5 grid grid-cols-1 md:grid-cols-5 gap-4">
+                  <div className="md:col-span-2 relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                     <Input
                       placeholder="Search tasks..."
                       value={searchText}
                       onChange={(e) => setSearchText(e.target.value)}
-                      className="w-full"
+                      className="w-full pl-9 border-assist-blue/20 focus:border-assist-blue"
                     />
                   </div>
                   
                   <Select value={filterCategory} onValueChange={setFilterCategory}>
-                    <SelectTrigger className="w-full h-9 bg-white">
+                    <SelectTrigger className="w-full h-10 bg-white border-assist-blue/20">
                       <SelectValue placeholder="All Categories" />
                     </SelectTrigger>
                     <SelectContent>
@@ -462,7 +479,7 @@ const StudentDashboard = () => {
                   </Select>
                   
                   <Select value={filterLocation} onValueChange={setFilterLocation}>
-                    <SelectTrigger className="w-full h-9 bg-white">
+                    <SelectTrigger className="w-full h-10 bg-white border-assist-blue/20">
                       <SelectValue placeholder="All Locations" />
                     </SelectTrigger>
                     <SelectContent>
@@ -477,7 +494,7 @@ const StudentDashboard = () => {
                   <div className="flex gap-2">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="outline" className="flex-1">
+                        <Button variant="outline" className="flex-1 border-assist-blue/20">
                           <Filter className="mr-2 h-4 w-4" />
                           More Filters
                         </Button>
@@ -514,6 +531,7 @@ const StudentDashboard = () => {
                       size="icon"
                       onClick={handleClearFilters}
                       title="Clear all filters"
+                      className="border border-gray-200"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M19 6 5 20M5 6l14 14"/>
@@ -528,7 +546,7 @@ const StudentDashboard = () => {
                   <p className="text-gray-500">No tasks match your filters. Try adjusting your search criteria.</p>
                   <Button 
                     variant="outline" 
-                    className="mt-4"
+                    className="mt-4 border-assist-blue text-assist-blue"
                     onClick={handleClearFilters}
                   >
                     Clear Filters
@@ -539,19 +557,19 @@ const StudentDashboard = () => {
                   {filteredTasks.map((task, index) => (
                     <div 
                       key={index}
-                      className="rounded-xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-md transition-all cursor-pointer transform hover:-translate-y-1 hover:border-assist-blue/20"
+                      className="rounded-xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer transform hover:-translate-y-1 duration-300 hover:border-assist-blue/50 bg-white"
                       onClick={() => handleViewTaskDetails(task)}
                     >
                       <div className="h-40 overflow-hidden">
                         <img 
                           src={task.image} 
                           alt={task.title} 
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
                         />
                       </div>
-                      <div className="p-4">
+                      <div className="p-5">
                         <div className="flex justify-between items-start mb-2">
-                          <h3 className="font-medium text-gray-900">{task.title}</h3>
+                          <h3 className="font-semibold text-gray-900">{task.title}</h3>
                           <Badge className={getCategoryColor(task.category)}>
                             {task.category}
                           </Badge>
@@ -562,18 +580,18 @@ const StudentDashboard = () => {
                             <MapPin className="mr-1 h-3.5 w-3.5" />
                             {task.location}
                           </div>
-                          <span className="font-medium text-assist-blue">{task.rate}</span>
+                          <span className="font-bold text-assist-blue">{task.rate}</span>
                         </div>
-                        <div className="mt-2 mb-3">
+                        <div className="mt-3 mb-3">
                           <div className="flex flex-wrap gap-1">
                             {task.skills.map((skill, i) => (
-                              <span key={i} className="inline-block px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded-full">{skill}</span>
+                              <span key={i} className="inline-block px-2 py-0.5 text-xs bg-gray-100 text-gray-700 rounded-full">{skill}</span>
                             ))}
                           </div>
                         </div>
                         <div className="mt-3 pt-3 border-t border-gray-100">
                           <Button 
-                            className="w-full bg-assist-blue hover:bg-assist-blue/90" 
+                            className="w-full bg-assist-blue hover:bg-assist-blue/90 font-medium" 
                             size="sm"
                             onClick={(e) => handleAcceptTask(task, e)}
                           >
@@ -588,21 +606,25 @@ const StudentDashboard = () => {
               )}
             </div>
             
-            <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-              <div className="border-b border-gray-100 bg-gray-50 px-6 py-4">
-                <h2 className="text-xl font-semibold text-gray-900">Upcoming Tasks</h2>
-                <p className="text-sm text-gray-500">Your scheduled work for this week</p>
+            {/* Upcoming Tasks Section */}
+            <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+              <div className="border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white px-6 py-5">
+                <div className="flex items-center">
+                  <Clock className="h-5 w-5 text-assist-blue mr-2" />
+                  <h2 className="text-xl font-semibold text-gray-900">Upcoming Tasks</h2>
+                </div>
+                <p className="mt-1 text-sm text-gray-500 ml-7">Your scheduled work for this week</p>
               </div>
               
               <div className="divide-y divide-gray-100">
                 {upcomingTasks.map((task, index) => (
-                  <div key={index} className="p-5 hover:bg-gray-50 transition-colors duration-150">
+                  <div key={index} className="p-5 hover:bg-blue-50/30 transition-colors duration-150">
                     <div className="flex items-center justify-between mb-2">
                       <h3 className="font-medium text-gray-900">{task.title}</h3>
                       <Badge className={getCategoryColor(task.category)}>{task.category}</Badge>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                      <div className="flex flex-wrap items-center gap-4">
                         <div className="flex items-center text-sm text-gray-500">
                           <Clock className="mr-1.5 h-4 w-4" />
                           {task.date}
@@ -614,13 +636,13 @@ const StudentDashboard = () => {
                       </div>
                       <div className="flex items-center gap-3">
                         <Badge variant="outline" className={
-                          task.status === "Confirmed" ? "border-green-200 text-green-700 bg-green-50" :
-                          task.status === "Scheduled" ? "border-blue-200 text-blue-700 bg-blue-50" :
-                          "border-gray-200 text-gray-700"
+                          task.status === "Confirmed" ? "border-green-200 text-green-700 bg-green-50 font-medium" :
+                          task.status === "Scheduled" ? "border-blue-200 text-blue-700 bg-blue-50 font-medium" :
+                          "border-gray-200 text-gray-700 font-medium"
                         }>
                           {task.status}
                         </Badge>
-                        <span className="font-medium text-green-600">{task.earnings}</span>
+                        <span className="font-bold text-green-600">{task.earnings}</span>
                       </div>
                     </div>
                   </div>
@@ -628,29 +650,33 @@ const StudentDashboard = () => {
               </div>
               
               <div className="bg-gray-50 px-6 py-4 flex justify-end">
-                <Button variant="outline" className="border-assist-blue text-assist-blue hover:bg-assist-blue/5">
+                <Button variant="outline" className="border-assist-blue text-assist-blue hover:bg-assist-blue/5 font-medium">
                   View All Tasks
                 </Button>
               </div>
             </div>
             
-            <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-              <div className="border-b border-gray-100 bg-gray-50 px-6 py-4">
-                <h2 className="text-xl font-semibold text-gray-900">Recent Activity</h2>
-                <p className="text-sm text-gray-500">Your latest actions and updates</p>
+            {/* Recent Activity Section */}
+            <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+              <div className="border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white px-6 py-5">
+                <div className="flex items-center">
+                  <Sparkles className="h-5 w-5 text-amber-500 mr-2" />
+                  <h2 className="text-xl font-semibold text-gray-900">Recent Activity</h2>
+                </div>
+                <p className="mt-1 text-sm text-gray-500 ml-7">Your latest actions and updates</p>
               </div>
               
               <div className="divide-y divide-gray-100">
                 {recentActivity.map((activity, index) => (
-                  <div key={index} className="flex items-center justify-between p-5 hover:bg-gray-50 transition-colors duration-150">
+                  <div key={index} className="flex items-center justify-between p-5 hover:bg-blue-50/30 transition-colors duration-150">
                     <div>
                       <h3 className="font-medium text-gray-900">{activity.title}</h3>
                       <p className="text-sm text-gray-600">{activity.date}</p>
                     </div>
                     <Badge className={
-                      activity.type === "earning" ? "bg-green-100 text-green-800" :
-                      activity.type === "badge" ? "bg-purple-100 text-purple-800" :
-                      "bg-blue-100 text-blue-800"
+                      activity.type === "earning" ? "bg-green-100 text-green-800 font-medium" :
+                      activity.type === "badge" ? "bg-purple-100 text-purple-800 font-medium" :
+                      "bg-blue-100 text-blue-800 font-medium"
                     }>
                       {activity.amount}
                     </Badge>
