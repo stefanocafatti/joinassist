@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -736,4 +737,74 @@ const StudentDashboard = () => {
                             size="sm"
                             onClick={(e) => handleAcceptTask(task, e)}
                           >
-                            <ThumbsUp className="mr
+                            <ThumbsUp className="mr-1 h-4 w-4" /> Accept Task
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="payments">
+            <StudentBalance />
+          </TabsContent>
+          
+          <TabsContent value="badges">
+            <StudentBadges />
+          </TabsContent>
+          
+          <TabsContent value="calendar">
+            <StudentCalendar tasks={upcomingTasks} />
+          </TabsContent>
+          
+          <TabsContent value="rewards">
+            <StudentPoints />
+          </TabsContent>
+        </Tabs>
+      </div>
+      
+      {taskDetailOpen && selectedTask && (
+        <TaskDetailView 
+          isOpen={taskDetailOpen}
+          task={selectedTask}
+          onClose={() => setTaskDetailOpen(false)}
+          onTaskBooked={handleTaskBooked}
+        />
+      )}
+      
+      {confettiPopupOpen && selectedAcceptedTask && (
+        <ConfettiPopup
+          isOpen={confettiPopupOpen}
+          onClose={() => setConfettiPopupOpen(false)}
+          title="Task Accepted!"
+          description={`You've accepted ${selectedAcceptedTask.title}`}
+          confirmText="Confirm"
+          onConfirm={handleConfirmAcceptTask}
+          secondaryText="Add to Calendar"
+          onSecondaryAction={handleAddToCalendar}
+          content={
+            <div className="p-4 bg-gray-50 rounded-lg mb-4">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-medium text-gray-500">Task:</span>
+                <span className="text-sm font-medium text-gray-900">{selectedAcceptedTask.title}</span>
+              </div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-medium text-gray-500">Price:</span>
+                <span className="text-sm font-medium text-green-600">{selectedAcceptedTask.rate}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium text-gray-500">Location:</span>
+                <span className="text-sm font-medium text-gray-900">{selectedAcceptedTask.location}</span>
+              </div>
+            </div>
+          }
+        />
+      )}
+    </div>
+  );
+};
+
+export default StudentDashboard;
