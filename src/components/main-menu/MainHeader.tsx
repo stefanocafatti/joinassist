@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Bell, Coins, Mail, CheckCircle, User, History, LogOut, MessageSquare, DollarSign } from "lucide-react";
@@ -162,7 +163,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
         <div className="flex items-center gap-3">
           <Popover open={isMessagesOpen} onOpenChange={setIsMessagesOpen}>
             <PopoverTrigger asChild>
-              <Button variant="ghost" size="icon" className="relative text-neutral-gray hover:bg-gray-100">
+              <Button variant="ghost" size="icon" className="relative hover:bg-gray-100">
                 <MessageSquare className="h-5 w-5" />
                 {unreadMessagesCount > 0 && (
                   <span className="absolute -top-1 -right-1 bg-green-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
@@ -241,7 +242,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
           
           <Popover open={isNotificationsOpen} onOpenChange={setIsNotificationsOpen}>
             <PopoverTrigger asChild>
-              <Button variant="ghost" size="icon" className="relative text-neutral-gray hover:bg-gray-100">
+              <Button variant="ghost" size="icon" className="relative hover:bg-gray-100">
                 <Bell className="h-5 w-5" />
                 {unreadCount > 0 && (
                   <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
@@ -358,7 +359,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
         </div>
       </div>
       
-      <div className="flex items-center gap-3 mt-2">
+      <div className="flex items-center gap-3 mt-3">
         <Button 
           variant="ghost"
           size="sm"
