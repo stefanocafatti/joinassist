@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Bell, Coins, Mail, CheckCircle, User, History, LogOut, MessageSquare, DollarSign } from "lucide-react";
@@ -163,21 +162,21 @@ const MainHeader: React.FC<MainHeaderProps> = ({
         <Button 
           variant="ghost"
           size="sm"
-          className="flex items-center bg-assist-blue/10 text-assist-blue px-3 py-1 rounded-full hover:bg-assist-blue/20"
-          onClick={() => onSetActiveTab("rewards")}
+          className="flex items-center bg-green-500/10 text-green-600 px-3 py-1 rounded-full hover:bg-green-500/20"
+          onClick={() => onSetActiveTab("earnings")}
         >
-          <Coins className="h-4 w-4 mr-1" />
-          <span className="text-sm font-medium">{assistPoints} points</span>
+          <DollarSign className="h-4 w-4 mr-1" />
+          <span className="text-sm font-medium">{balance.toFixed(2)}</span>
         </Button>
         
         <Button 
           variant="ghost"
           size="sm"
-          className="flex items-center bg-green-500/10 text-green-600 px-3 py-1 rounded-full hover:bg-green-500/20"
-          onClick={() => onSetActiveTab("earnings")}
+          className="flex items-center bg-assist-blue/10 text-assist-blue px-3 py-1 rounded-full hover:bg-assist-blue/20"
+          onClick={() => onSetActiveTab("rewards")}
         >
-          <DollarSign className="h-4 w-4 mr-1" />
-          <span className="text-sm font-medium">${balance.toFixed(2)}</span>
+          <Coins className="h-4 w-4 mr-1" />
+          <span className="text-sm font-medium">{assistPoints} points</span>
         </Button>
         
         <Popover open={isMessagesOpen} onOpenChange={setIsMessagesOpen}>
