@@ -425,7 +425,12 @@ const StudentBalance: React.FC<StudentBalanceProps> = ({ minimal = false }) => {
                   </TooltipProvider>
                   <Button 
                     type="button"
-                    onClick={() => document.querySelectorAll('[data-value="withdraw"]')[0]?.click()}
+                    onClick={() => {
+                      const withdrawTrigger = document.querySelector('[data-value="withdraw"]');
+                      if (withdrawTrigger && withdrawTrigger instanceof HTMLElement) {
+                        withdrawTrigger.click();
+                      }
+                    }}
                     className="bg-assist-blue hover:bg-assist-blue/90"
                   >
                     Withdraw Funds
