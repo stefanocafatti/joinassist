@@ -1,3 +1,4 @@
+
 // Import needed components
 import React from "react";
 import SearchResultsSection from "./SearchResultsSection";
@@ -48,6 +49,7 @@ interface HomeTabContentProps {
   onSetActiveTab?: (tab: string) => void;
   recentSearches?: string[]; // Add this to match RecentSearchesSection props
   onSearchClick?: (search: string) => void; // Add this to match RecentSearchesSection props
+  onBrowseTasks?: () => void; // Add this new prop
 }
 
 const HomeTabContent: React.FC<HomeTabContentProps> = ({
@@ -67,7 +69,8 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
   onRequestTask,
   onSetActiveTab,
   recentSearches = [], // Default to empty array
-  onSearchClick = () => {} // Default to empty function
+  onSearchClick = () => {}, // Default to empty function
+  onBrowseTasks = () => {} // Default value for the new prop
 }) => {
   // Render based on search state
   if (searchPerformed && searchResults) {
@@ -143,6 +146,7 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
         favoriteTaskIds={favoriteTaskIds}
         onFavoriteToggle={onFavoriteToggle}
         onBookNow={onBookNow}
+        onBrowseTasks={onBrowseTasks}
       />
       
       {recentlyViewedTasks.length > 0 && (
