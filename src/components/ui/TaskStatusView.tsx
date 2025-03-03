@@ -21,7 +21,7 @@ interface TaskStatusViewProps {
     location: string;
     price: string;
     status: string;
-    provider: string;
+    provider?: string;
     additionalInfo?: string;
   } | null;
 }
