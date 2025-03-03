@@ -1,4 +1,4 @@
-<lov-code>
+
 import { 
   Trash2, 
   Car, 
@@ -49,6 +49,14 @@ const TaskCategories = ({
   const handleCategoryClick = (category: string) => {
     if (showAllTasks) {
       setSelectedCategory(category === selectedCategory ? null : category);
+    } else {
+      // When clicking from home page, navigate to all tasks with the selected category
+      navigate('/main-menu', { 
+        state: { 
+          activeTab: "allTasks", 
+          selectedCategory: category 
+        } 
+      });
     }
     console.log(`Category selected: ${category}`);
   };
@@ -711,3 +719,133 @@ const TaskCategories = ({
       location: "Remote or In-person",
       image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1000&auto=format&fit=crop"
     }
+  ];
+
+  const allTaskListings = [...taskListings, ...additionalTaskListings];
+
+  const filteredTaskListings = selectedCategory 
+    ? allTaskListings.filter(task => task.category === selectedCategory || 
+        (selectedCategory === "Transportation" && task.category === "Transportation and Moving") ||
+        (selectedCategory === "Event & Hospitality" && task.category === "Event and Hospitality") ||
+        (selectedCategory === "Fitness & Wellness" && task.category === "Fitness and Wellness") ||
+        (selectedCategory === "Academic Help" && task.category === "Academic & Professional Help"))
+    : allTaskListings;
+
+  const visibleTaskListings = filteredTaskListings.slice(0, visibleTaskCount);
+
+  const hasMoreTasks = visibleTaskCount < filteredTaskListings.length;
+
+  return (
+    <section id="all-tasks" className="py-6 bg-assist-gray/50 relative overflow-hidden">
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-assist-blue/5 rounded-full opacity-70" />
+        <div className="absolute bottom-0 left-1/4 w-64 h-64 bg-blue-100/30 rounded-full opacity-60" />
+      </div>
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {!showAllTasks ? (
+          <>
+            <div className="text-center max-w-3xl mx-auto mb-8">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Explore Task Categories
+              </h2>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {displayCategories.map((category, index) => (
+                <div key={index} onClick={() => handleCategoryClick(category.title)} className="h-full cursor-pointer">
+                  <CategoryCard
+                    icon={category.icon}
+                    title={category.title}
+                    description={category.description}
+                    tasks={category.tasks}
+                    color={category.color}
+                    emoji={category.title === "Event and Hospitality" ? "🎉" : 
+                           category.title === "Cleaning" ? "🧹" :
+                           category.title === "Transportation and Moving" ? "🚚" :
+                           category.title === "Assembly" ? "🔧" :
+                           category.title === "Academic & Professional Help" ? "📚" :
+                           category.title === "Digital Services" ? "💻" :
+                           category.title === "Fitness and Wellness" ? "💪" :
+                           category.title === "Special Tasks" ? "⭐" :
+                           category.title === "For Brands" ? "🏢" : ""}
+                    onFavoriteToggle={onFavoriteToggle}
+                    onViewTask={onViewTask}
+                    isFavorite={favoriteTaskIds.includes(category.title)}
+                  />
+                </div>
+              ))}
+            </div>
+          </>
+        ) : (
+          <>
+            <h2 className="text-3xl font-bold text-gray-900 mb-8">
+              {selectedCategory ? `${selectedCategory} Tasks` : "All Tasks"}
+            </h2>
+            
+            <div className="mb-8">
+              <div className="flex space-x-2 overflow-x-auto pb-3">
+                {categories.map((category, index) => (
+                  <div 
+                    key={index}
+                    onClick={() => handleCategoryClick(category.title)}
+                    className={`cursor-pointer flex-shrink-0 px-4 py-2 rounded-full border transition-all flex items-center space-x-2 shadow-sm ${
+                      selectedCategory === category.title 
+                        ? `bg-${category.color.split('-')[1]}-100 text-${category.color.split('-')[1]}-800 border-${category.color.split('-')[1]}-200` 
+                        : "bg-white border-gray-200 text-gray-700 hover:bg-gray-50"
+                    }`}
+                  >
+                    <category.icon className={`h-5 w-5 ${
+                      selectedCategory === category.title 
+                        ? `text-${category.color.split('-')[1]}-800` 
+                        : "text-gray-700"
+                    }`} />
+                    <span className="font-medium text-sm whitespace-nowrap">{category.title}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {visibleTaskListings.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                {visibleTaskListings.map(renderTaskCard)}
+              </div>
+            ) : (
+              <div className="text-center py-12 bg-white rounded-lg shadow-sm">
+                <h3 className="text-lg font-medium text-gray-900 mb-2">No tasks found in this category</h3>
+                <p className="text-gray-600 mb-4">Try selecting a different category</p>
+                <Button 
+                  onClick={() => setSelectedCategory(null)} 
+                  variant="outline"
+                  className="border-assist-blue text-assist-blue hover:bg-assist-blue/10"
+                >
+                  View All Tasks
+                </Button>
+              </div>
+            )}
+          </>
+        )}
+        
+        {showAllTasks && hasMoreTasks && (
+          <div className="mt-14 text-center">
+            {isLoading ? (
+              <div className="flex justify-center items-center h-14">
+                <Loader className="h-6 w-6 text-assist-blue animate-spin" />
+              </div>
+            ) : (
+              <Button 
+                size="lg" 
+                className="rounded-full bg-assist-blue hover:bg-assist-blue/90 text-white h-14 px-8 text-base"
+                onClick={handleLoadMore}
+              >
+                Load More Tasks
+              </Button>
+            )}
+          </div>
+        )}
+      </div>
+    </section>
+  );
+};
+
+export default TaskCategories;
