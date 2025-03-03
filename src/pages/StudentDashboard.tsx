@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { UserRound, Coins, CalendarIcon, ArrowDown, BadgeCheck, BookOpen, Clock, CheckCircle, MapPin, ThumbsUp } from "lucide-react";
+import { UserRound, Coins, CalendarIcon, ArrowDown, BadgeCheck, BookOpen, Clock, CheckCircle, MapPin, ThumbsUp, Filter, DollarSign, Briefcase } from "lucide-react";
 import MainHeader from "@/components/main-menu/MainHeader";
 import StudentBalance from "@/components/student/StudentBalance";
 import StudentBadges from "@/components/student/StudentBadges";
@@ -14,6 +14,15 @@ import StudentPoints from "@/components/student/StudentPoints";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import TaskDetailView from "@/components/ui/TaskDetailView";
+import { Input } from "@/components/ui/input";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const StudentDashboard = () => {
   const navigate = useNavigate();
@@ -25,6 +34,10 @@ const StudentDashboard = () => {
   const [filterCategory, setFilterCategory] = useState("all");
   const [taskDetailOpen, setTaskDetailOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<any>(null);
+  const [filterLocation, setFilterLocation] = useState("all");
+  const [filterPriceRange, setFilterPriceRange] = useState("all");
+  const [filterSkills, setFilterSkills] = useState("all");
+  const [searchText, setSearchText] = useState("");
   
   const [upcomingTasks, setUpcomingTasks] = useState([
     {
@@ -60,7 +73,9 @@ const StudentDashboard = () => {
       category: "Academic Help",
       location: "Campus Center",
       image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=2000&auto=format&fit=crop",
-      rate: "$40/hr"
+      rate: "$40/hr",
+      rateNumeric: 40,
+      skills: ["Chemistry", "Teaching"]
     },
     {
       title: "Resume Review",
@@ -68,7 +83,9 @@ const StudentDashboard = () => {
       category: "Academic Help",
       location: "Career Center",
       image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?q=80&w=2070&auto=format&fit=crop",
-      rate: "$30/hr"
+      rate: "$30/hr",
+      rateNumeric: 30,
+      skills: ["Writing", "Career Services"]
     },
     {
       title: "Mobile App Testing",
@@ -76,7 +93,9 @@ const StudentDashboard = () => {
       category: "Digital Services",
       location: "Remote",
       image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?q=80&w=1974&auto=format&fit=crop",
-      rate: "$25/hr"
+      rate: "$25/hr",
+      rateNumeric: 25,
+      skills: ["Mobile", "Testing", "UX"]
     },
     {
       title: "Graphic Design Help",
@@ -84,7 +103,9 @@ const StudentDashboard = () => {
       category: "Digital Services",
       location: "Media Lab",
       image: "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=2071&auto=format&fit=crop",
-      rate: "$35/hr"
+      rate: "$35/hr",
+      rateNumeric: 35,
+      skills: ["Design", "Social Media"]
     },
     {
       title: "Fitness Training Session",
@@ -92,7 +113,59 @@ const StudentDashboard = () => {
       category: "Fitness & Wellness",
       location: "Campus Gym",
       image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop", 
-      rate: "$40/hr"
+      rate: "$40/hr",
+      rateNumeric: 40,
+      skills: ["Fitness", "Coaching"]
+    },
+    {
+      title: "Essay Proofreading",
+      description: "Proofread and provide feedback on academic essays",
+      category: "Academic Help",
+      location: "Library",
+      image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=2000&auto=format&fit=crop",
+      rate: "$25/hr",
+      rateNumeric: 25,
+      skills: ["Writing", "Editing", "Grammar"]
+    },
+    {
+      title: "Python Programming Help",
+      description: "Assist with debugging a data analysis project",
+      category: "Digital Services",
+      location: "Computer Lab",
+      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2000&auto=format&fit=crop",
+      rate: "$45/hr",
+      rateNumeric: 45,
+      skills: ["Python", "Data Analysis", "Programming"]
+    },
+    {
+      title: "Campus Tour Guide",
+      description: "Lead campus tours for prospective students",
+      category: "Campus Services",
+      location: "Main Campus",
+      image: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2000&auto=format&fit=crop",
+      rate: "$20/hr",
+      rateNumeric: 20,
+      skills: ["Communication", "Campus Knowledge"]
+    },
+    {
+      title: "Social Media Management",
+      description: "Manage Instagram account for university club",
+      category: "Digital Services",
+      location: "Student Union",
+      image: "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?q=80&w=2000&auto=format&fit=crop",
+      rate: "$30/hr",
+      rateNumeric: 30,
+      skills: ["Social Media", "Content Creation"]
+    },
+    {
+      title: "Language Conversation Partner",
+      description: "Help international students practice conversational English",
+      category: "Academic Help",
+      location: "International Center",
+      image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2000&auto=format&fit=crop",
+      rate: "$22/hr",
+      rateNumeric: 22,
+      skills: ["Languages", "Communication"]
     }
   ]);
   
@@ -116,6 +189,16 @@ const StudentDashboard = () => {
       type: "withdrawal"
     }
   ]);
+
+  // Extract all unique locations, skills, and create price ranges
+  const locations = ["all", ...new Set(availableTasks.map(task => task.location))];
+  const skills = ["all", ...new Set(availableTasks.flatMap(task => task.skills))];
+  const priceRanges = [
+    { value: "all", label: "All Prices" },
+    { value: "0-25", label: "$0-$25" },
+    { value: "26-35", label: "$26-$35" },
+    { value: "36+", label: "$36+" }
+  ];
 
   useEffect(() => {
     const userSession = localStorage.getItem("userSession");
@@ -209,9 +292,47 @@ const StudentDashboard = () => {
     setTaskDetailOpen(false);
   };
   
-  const filteredTasks = filterCategory === 'all' 
-    ? availableTasks 
-    : availableTasks.filter(task => task.category === filterCategory);
+  const handleClearFilters = () => {
+    setFilterCategory("all");
+    setFilterLocation("all");
+    setFilterPriceRange("all");
+    setFilterSkills("all");
+    setSearchText("");
+  };
+
+  // Apply all filters
+  const filteredTasks = availableTasks.filter(task => {
+    // Filter by search text
+    if (searchText && !task.title.toLowerCase().includes(searchText.toLowerCase()) && 
+        !task.description.toLowerCase().includes(searchText.toLowerCase())) {
+      return false;
+    }
+    
+    // Filter by category
+    if (filterCategory !== 'all' && task.category !== filterCategory) {
+      return false;
+    }
+    
+    // Filter by location
+    if (filterLocation !== 'all' && task.location !== filterLocation) {
+      return false;
+    }
+    
+    // Filter by price range
+    if (filterPriceRange !== 'all') {
+      const rate = task.rateNumeric;
+      if (filterPriceRange === '0-25' && (rate < 0 || rate > 25)) return false;
+      if (filterPriceRange === '26-35' && (rate < 26 || rate > 35)) return false;
+      if (filterPriceRange === '36+' && rate < 36) return false;
+    }
+    
+    // Filter by skills
+    if (filterSkills !== 'all' && !task.skills.includes(filterSkills)) {
+      return false;
+    }
+    
+    return true;
+  });
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
@@ -313,15 +434,22 @@ const StudentDashboard = () => {
             </div>
             
             <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-              <div className="border-b border-gray-100 bg-gray-50 px-6 py-4 flex justify-between items-center flex-wrap gap-4">
-                <div>
-                  <h2 className="text-xl font-semibold text-gray-900">Available Tasks</h2>
-                  <p className="text-sm text-gray-500">Find opportunities to earn</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-gray-600 whitespace-nowrap">Filter by:</span>
+              <div className="border-b border-gray-100 bg-gray-50 px-6 py-4">
+                <h2 className="text-xl font-semibold text-gray-900">Available Tasks</h2>
+                <p className="text-sm text-gray-500">Find opportunities to earn</p>
+                
+                <div className="mt-4 grid grid-cols-1 md:grid-cols-5 gap-4">
+                  <div className="col-span-2">
+                    <Input
+                      placeholder="Search tasks..."
+                      value={searchText}
+                      onChange={(e) => setSearchText(e.target.value)}
+                      className="w-full"
+                    />
+                  </div>
+                  
                   <Select value={filterCategory} onValueChange={setFilterCategory}>
-                    <SelectTrigger className="w-[180px] h-9 bg-white">
+                    <SelectTrigger className="w-full h-9 bg-white">
                       <SelectValue placeholder="All Categories" />
                     </SelectTrigger>
                     <SelectContent>
@@ -329,54 +457,135 @@ const StudentDashboard = () => {
                       <SelectItem value="Academic Help">Academic Help</SelectItem>
                       <SelectItem value="Digital Services">Digital Services</SelectItem>
                       <SelectItem value="Fitness & Wellness">Fitness & Wellness</SelectItem>
+                      <SelectItem value="Campus Services">Campus Services</SelectItem>
                     </SelectContent>
                   </Select>
+                  
+                  <Select value={filterLocation} onValueChange={setFilterLocation}>
+                    <SelectTrigger className="w-full h-9 bg-white">
+                      <SelectValue placeholder="All Locations" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {locations.map((location) => (
+                        <SelectItem key={location} value={location}>
+                          {location === "all" ? "All Locations" : location}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  
+                  <div className="flex gap-2">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="outline" className="flex-1">
+                          <Filter className="mr-2 h-4 w-4" />
+                          More Filters
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-56">
+                        <DropdownMenuLabel>Price Range</DropdownMenuLabel>
+                        {priceRanges.map((range) => (
+                          <DropdownMenuItem 
+                            key={range.value}
+                            className={filterPriceRange === range.value ? "bg-blue-50" : ""}
+                            onClick={() => setFilterPriceRange(range.value)}
+                          >
+                            <DollarSign className="mr-2 h-4 w-4" />
+                            {range.label}
+                          </DropdownMenuItem>
+                        ))}
+                        <DropdownMenuSeparator />
+                        <DropdownMenuLabel>Skills Required</DropdownMenuLabel>
+                        {skills.map((skill) => (
+                          <DropdownMenuItem 
+                            key={skill}
+                            className={filterSkills === skill ? "bg-blue-50" : ""}
+                            onClick={() => setFilterSkills(skill)}
+                          >
+                            <Briefcase className="mr-2 h-4 w-4" />
+                            {skill === "all" ? "All Skills" : skill}
+                          </DropdownMenuItem>
+                        ))}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                    
+                    <Button 
+                      variant="ghost" 
+                      size="icon"
+                      onClick={handleClearFilters}
+                      title="Clear all filters"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M19 6 5 20M5 6l14 14"/>
+                      </svg>
+                    </Button>
+                  </div>
                 </div>
               </div>
               
-              <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredTasks.map((task, index) => (
-                  <div 
-                    key={index}
-                    className="rounded-xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-md transition-all cursor-pointer transform hover:-translate-y-1 hover:border-assist-blue/20"
-                    onClick={() => handleViewTaskDetails(task)}
+              {filteredTasks.length === 0 ? (
+                <div className="p-10 text-center">
+                  <p className="text-gray-500">No tasks match your filters. Try adjusting your search criteria.</p>
+                  <Button 
+                    variant="outline" 
+                    className="mt-4"
+                    onClick={handleClearFilters}
                   >
-                    <div className="h-40 overflow-hidden">
-                      <img 
-                        src={task.image} 
-                        alt={task.title} 
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="p-4">
-                      <div className="flex justify-between items-start mb-2">
-                        <h3 className="font-medium text-gray-900">{task.title}</h3>
-                        <Badge className={getCategoryColor(task.category)}>
-                          {task.category}
-                        </Badge>
+                    Clear Filters
+                  </Button>
+                </div>
+              ) : (
+                <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {filteredTasks.map((task, index) => (
+                    <div 
+                      key={index}
+                      className="rounded-xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-md transition-all cursor-pointer transform hover:-translate-y-1 hover:border-assist-blue/20"
+                      onClick={() => handleViewTaskDetails(task)}
+                    >
+                      <div className="h-40 overflow-hidden">
+                        <img 
+                          src={task.image} 
+                          alt={task.title} 
+                          className="w-full h-full object-cover"
+                        />
                       </div>
-                      <p className="text-gray-600 text-sm mb-3 line-clamp-2">{task.description}</p>
-                      <div className="flex justify-between items-center text-sm">
-                        <div className="flex items-center text-gray-500">
-                          <MapPin className="mr-1 h-3.5 w-3.5" />
-                          {task.location}
+                      <div className="p-4">
+                        <div className="flex justify-between items-start mb-2">
+                          <h3 className="font-medium text-gray-900">{task.title}</h3>
+                          <Badge className={getCategoryColor(task.category)}>
+                            {task.category}
+                          </Badge>
                         </div>
-                        <span className="font-medium text-assist-blue">{task.rate}</span>
-                      </div>
-                      <div className="mt-3 pt-3 border-t border-gray-100">
-                        <Button 
-                          className="w-full bg-assist-blue hover:bg-assist-blue/90" 
-                          size="sm"
-                          onClick={(e) => handleAcceptTask(task, e)}
-                        >
-                          <ThumbsUp className="mr-2 h-4 w-4" />
-                          Accept Task
-                        </Button>
+                        <p className="text-gray-600 text-sm mb-3 line-clamp-2">{task.description}</p>
+                        <div className="flex justify-between items-center text-sm">
+                          <div className="flex items-center text-gray-500">
+                            <MapPin className="mr-1 h-3.5 w-3.5" />
+                            {task.location}
+                          </div>
+                          <span className="font-medium text-assist-blue">{task.rate}</span>
+                        </div>
+                        <div className="mt-2 mb-3">
+                          <div className="flex flex-wrap gap-1">
+                            {task.skills.map((skill, i) => (
+                              <span key={i} className="inline-block px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded-full">{skill}</span>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="mt-3 pt-3 border-t border-gray-100">
+                          <Button 
+                            className="w-full bg-assist-blue hover:bg-assist-blue/90" 
+                            size="sm"
+                            onClick={(e) => handleAcceptTask(task, e)}
+                          >
+                            <ThumbsUp className="mr-2 h-4 w-4" />
+                            Accept Task
+                          </Button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
             
             <div className="bg-white rounded-xl shadow-sm overflow-hidden">
