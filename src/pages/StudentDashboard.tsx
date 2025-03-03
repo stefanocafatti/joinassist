@@ -310,7 +310,7 @@ const StudentDashboard = () => {
               <h2 className="text-xl font-semibold mb-4">My Dashboard</h2>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div className="rounded-lg bg-gradient-to-r from-blue-400/80 to-cyan-400/80 p-6 text-white">
+                <div className="rounded-lg bg-gradient-to-r from-blue-400/60 to-cyan-400/60 p-6 text-white">
                   <div className="flex justify-between mb-4">
                     <div>
                       <div className="flex items-center">
@@ -657,7 +657,7 @@ const StudentDashboard = () => {
                       </div>
                       <Button 
                         onClick={() => handleAcceptGig(gig)}
-                        className="w-full bg-green-600 hover:bg-green-700"
+                        className="w-full bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 hover:from-blue-700 hover:via-blue-600 hover:to-blue-500 text-white"
                       >
                         Accept Gig
                       </Button>

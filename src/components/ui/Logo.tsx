@@ -32,7 +32,7 @@ const Logo = ({ variant = "default", showText = true, className = "" }: LogoProp
     >
       <span className="font-display text-3xl font-black tracking-tight relative">
         <span className="relative">
-          <span className="bg-gradient-to-r from-assist-blue via-blue-500 to-blue-400 bg-clip-text text-transparent">Assist</span>
+          <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 bg-clip-text text-transparent">Assist</span>
         </span>
         {sparkle && (
           <span className="absolute -top-2 -right-4 text-yellow-400 text-xs animate-bounce">✨</span>

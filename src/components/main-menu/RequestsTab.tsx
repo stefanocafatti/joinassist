@@ -15,7 +15,7 @@ interface Request {
   location: string;
   price: string;
   status: string;
-  client: string;
+  client?: string;
   additionalInfo?: string;
   clientImage?: string;
   rating?: number;
