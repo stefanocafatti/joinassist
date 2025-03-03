@@ -15,9 +15,9 @@ interface Request {
   location: string;
   price: string;
   status: string;
-  provider: string;
+  client: string;
   additionalInfo?: string;
-  studentImage?: string;
+  clientImage?: string;
   rating?: number;
   completed?: boolean;
 }
@@ -60,49 +60,86 @@ const RequestsTab: React.FC<RequestsTabProps> = ({
     setIsTaskDetailsOpen(true);
   };
 
+  // Updated task data to reflect the student perspective (providing services)
+  const activeTaskRequests: Request[] = [
+    {
+      id: "task1",
+      title: "Math Tutoring Session",
+      date: "Today, 3:00 PM",
+      location: "University Library",
+      price: "$45",
+      status: "Confirmed",
+      client: "Jessica T.",
+      clientImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop",
+      additionalInfo: "Need help with calculus, preparing for midterm exam."
+    },
+    {
+      id: "task2",
+      title: "Computer Science Project",
+      date: "Tomorrow, 2:30 PM",
+      location: "Engineering Hall, Lab 104",
+      price: "$60",
+      status: "Pending",
+      client: "Michael R.",
+      clientImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop",
+      additionalInfo: "Need assistance with Python data visualization project."
+    },
+    {
+      id: "task3",
+      title: "Dog Walking",
+      date: "Friday, 4:00 PM",
+      location: "Westwood Apartments",
+      price: "$25",
+      status: "Confirmed",
+      client: "Lisa W.",
+      clientImage: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop",
+      additionalInfo: "Medium-sized golden retriever named Fluffy. 30 minute walk required."
+    }
+  ];
+
   // Updated completed tasks with one task that doesn't have a rating
   const completedTasks: Request[] = [
     {
       id: "c1",
-      title: "Dog Walking",
+      title: "Physics Tutoring",
       date: "April 15, 2023",
-      location: "Westwood",
-      price: "$25",
+      location: "Science Building",
+      price: "$50",
       status: "Completed",
-      provider: "Jessica T.",
-      studentImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop",
+      client: "Eric M.",
+      clientImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1000&auto=format&fit=crop",
       rating: 5,
       completed: true
     },
     {
       id: "c2",
-      title: "Grocery Delivery",
+      title: "Furniture Assembly",
       date: "March 22, 2023",
-      location: "UCLA Campus",
-      price: "$30",
+      location: "Student Housing",
+      price: "$40",
       status: "Completed",
-      provider: "Michael R.",
-      studentImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop",
+      client: "Rachel K.",
+      clientImage: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1000&auto=format&fit=crop",
       completed: true
     },
     {
       id: "c3",
-      title: "Math Tutoring",
+      title: "Essay Proofreading",
       date: "February 10, 2023",
-      location: "Library",
-      price: "$45",
+      location: "Remote",
+      price: "$35",
       status: "Completed",
-      provider: "Sam K.",
-      studentImage: "https://images.unsplash.com/photo-1639149888905-fb39731f2e6c?q=80&w=1000&auto=format&fit=crop",
+      client: "Sam K.",
+      clientImage: "https://images.unsplash.com/photo-1639149888905-fb39731f2e6c?q=80&w=1000&auto=format&fit=crop",
       rating: 5,
       completed: true
     }
   ];
 
   // Determine which tasks to display based on toggle state
-  const displayedTasks = showCompleted ? completedTasks : requests;
+  const displayedTasks = showCompleted ? completedTasks : (requests.length > 0 ? requests : activeTaskRequests);
 
-  // Handle setting a rating for a task
+  // Handle rating a client - This could be rating the experience with the client rather than the service
   const handleRate = (task: Request) => {
     setTaskToRate(task);
     setRatingValue(0);
@@ -121,7 +158,7 @@ const RequestsTab: React.FC<RequestsTabProps> = ({
     // Show a success toast
     toast({
       title: "Rating Submitted",
-      description: `You rated "${task.title}" ${rating} stars. Thank you for your feedback!`,
+      description: `You rated your experience with "${task.client}" ${rating} stars. Thank you for your feedback!`,
       duration: 3000,
     });
     
@@ -160,14 +197,14 @@ const RequestsTab: React.FC<RequestsTabProps> = ({
       <section className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-semibold text-gray-900 flex items-center">
-            <ClipboardList className="h-5 w-5 mr-2 text-assist-blue" /> Open Task Requests
+            <ClipboardList className="h-5 w-5 mr-2 text-green-600" /> My Tasks
           </h2>
         </div>
         
         <div className="mb-6 flex items-center justify-between bg-gray-50 p-3 rounded-lg">
           <div className="flex items-center gap-2">
             {notificationsEnabled ? (
-              <Bell className="h-5 w-5 text-assist-blue" />
+              <Bell className="h-5 w-5 text-green-600" />
             ) : (
               <BellOff className="h-5 w-5 text-gray-400" />
             )}
@@ -178,22 +215,22 @@ const RequestsTab: React.FC<RequestsTabProps> = ({
           <Switch 
             checked={notificationsEnabled} 
             onCheckedChange={handleToggleNotifications} 
-            className="data-[state=checked]:bg-assist-blue"
+            className="data-[state=checked]:bg-green-600"
           />
         </div>
 
         <div className="mb-6 flex items-center justify-between bg-gray-50 p-3 rounded-lg">
           <div className="flex items-center gap-2">
             <span className="text-sm font-medium">
-              {showCompleted ? "Showing completed tasks" : "Showing open tasks"}
+              {showCompleted ? "Showing completed tasks" : "Showing active tasks"}
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-sm text-gray-500">Open</span>
+            <span className="text-sm text-gray-500">Active</span>
             <Switch 
               checked={showCompleted} 
               onCheckedChange={setShowCompleted} 
-              className="data-[state=checked]:bg-assist-blue"
+              className="data-[state=checked]:bg-green-600"
             />
             <span className="text-sm text-gray-500">Completed</span>
           </div>
@@ -207,10 +244,10 @@ const RequestsTab: React.FC<RequestsTabProps> = ({
                   <th className="px-4 py-3 text-sm font-medium text-gray-600">Task</th>
                   <th className="px-4 py-3 text-sm font-medium text-gray-600">Date</th>
                   <th className="px-4 py-3 text-sm font-medium text-gray-600">Location</th>
-                  <th className="px-4 py-3 text-sm font-medium text-gray-600">Price</th>
+                  <th className="px-4 py-3 text-sm font-medium text-gray-600">Earnings</th>
                   <th className="px-4 py-3 text-sm font-medium text-gray-600">Status</th>
                   {showCompleted && (
-                    <th className="px-4 py-3 text-sm font-medium text-gray-600">Provider</th>
+                    <th className="px-4 py-3 text-sm font-medium text-gray-600">Client</th>
                   )}
                   {showCompleted && (
                     <th className="px-4 py-3 text-sm font-medium text-gray-600">Rating</th>
@@ -226,7 +263,7 @@ const RequestsTab: React.FC<RequestsTabProps> = ({
                     </td>
                     <td className="px-4 py-4 text-gray-700">{request.date}</td>
                     <td className="px-4 py-4 text-gray-700">{request.location}</td>
-                    <td className="px-4 py-4 text-gray-700">{request.price}</td>
+                    <td className="px-4 py-4 text-green-600 font-medium">{request.price}</td>
                     <td className="px-4 py-4">
                       <Badge
                         className={`
@@ -243,13 +280,13 @@ const RequestsTab: React.FC<RequestsTabProps> = ({
                       <td className="px-4 py-4">
                         <div className="flex items-center gap-2">
                           <Avatar className="h-8 w-8">
-                            {request.studentImage ? (
-                              <AvatarImage src={request.studentImage} alt={request.provider} />
+                            {request.clientImage ? (
+                              <AvatarImage src={request.clientImage} alt={request.client} />
                             ) : (
-                              <AvatarFallback>{request.provider.substring(0, 2)}</AvatarFallback>
+                              <AvatarFallback>{request.client.substring(0, 2)}</AvatarFallback>
                             )}
                           </Avatar>
-                          <span>{request.provider}</span>
+                          <span>{request.client}</span>
                         </div>
                       </td>
                     )}
@@ -263,10 +300,10 @@ const RequestsTab: React.FC<RequestsTabProps> = ({
                           <Button
                             variant="outline"
                             size="sm"
-                            className="text-assist-blue border-assist-blue hover:bg-assist-blue/10"
+                            className="text-green-600 border-green-600 hover:bg-green-50"
                             onClick={() => handleRate(request)}
                           >
-                            Rate Now
+                            Rate Client
                           </Button>
                         )}
                       </td>
@@ -275,7 +312,7 @@ const RequestsTab: React.FC<RequestsTabProps> = ({
                       <Button 
                         variant="ghost" 
                         size="sm" 
-                        className="text-assist-blue"
+                        className="text-green-600"
                         onClick={() => handleViewTaskDetails(request)}
                       >
                         View Details
@@ -289,15 +326,15 @@ const RequestsTab: React.FC<RequestsTabProps> = ({
         ) : (
           <div className="bg-gray-50 rounded-xl p-8 text-center border border-gray-200">
             <div className="max-w-md mx-auto">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">No requests submitted</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">No active tasks</h3>
               <p className="text-gray-600 mb-6">
-                You haven't submitted any task requests yet. Browse our available tasks or search for specific services.
+                You don't have any active tasks at the moment. Browse available gigs to earn money helping others.
               </p>
               <Button 
-                className="bg-assist-blue hover:bg-assist-blue/90"
+                className="bg-green-600 hover:bg-green-700"
                 onClick={onNavigateToHome}
               >
-                Browse Tasks
+                Find Available Gigs
               </Button>
             </div>
           </div>
@@ -318,7 +355,7 @@ const RequestsTab: React.FC<RequestsTabProps> = ({
           <div className="bg-white rounded-xl p-6 max-w-md w-full mx-4">
             <h3 className="text-xl font-semibold mb-4">Rate your experience</h3>
             <p className="mb-6 text-gray-600">
-              How would you rate your experience with {taskToRate.provider} for "{taskToRate.title}"?
+              How would you rate your experience working with {taskToRate.client} on "{taskToRate.title}"?
             </p>
             
             <div className="flex justify-center mb-6">
@@ -333,7 +370,7 @@ const RequestsTab: React.FC<RequestsTabProps> = ({
                 Cancel
               </Button>
               <Button
-                className="bg-assist-blue hover:bg-assist-blue/90"
+                className="bg-green-600 hover:bg-green-700"
                 disabled={ratingValue === 0}
                 onClick={() => handleSubmitRating(taskToRate, ratingValue)}
               >

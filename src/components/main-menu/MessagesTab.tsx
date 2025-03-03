@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { MessageSquare, Search, Send, MoreHorizontal, ChevronLeft } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -46,44 +47,44 @@ const MessagesTab = () => {
         avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop",
       },
       lastMessage: {
-        text: "Hello! I'll be arriving in about 15 minutes for the dog walking task.",
+        text: "I'm at the library waiting for the tutoring session. Will you be here soon?",
         time: "2 hours ago",
         isRead: false,
       },
-      taskTitle: "Dog Walking",
+      taskTitle: "Mathematics Tutoring",
       isActive: true,
       messages: [
         {
           id: "1-1",
-          text: "Hi there! Just confirming our dog walking appointment today at 3pm?",
+          text: "Hi there! Looking forward to our math tutoring session today at 3pm.",
           time: "Yesterday, 2:30 PM",
           isFromMe: false,
           isRead: true,
         },
         {
           id: "1-2",
-          text: "Yes, that works perfectly. Fluffy is excited for the walk!",
+          text: "Yes, I'll be there. I'm preparing some example problems for us to work through.",
           time: "Yesterday, 2:45 PM",
           isFromMe: true,
           isRead: true,
         },
         {
           id: "1-3",
-          text: "Great! Do you have any specific route you'd prefer I take?",
+          text: "That sounds great! I'm struggling with derivatives especially.",
           time: "Yesterday, 2:50 PM",
           isFromMe: false,
           isRead: true,
         },
         {
           id: "1-4",
-          text: "The park nearby would be perfect. About a 20 minute walk should be good.",
+          text: "Perfect, I'll focus on that and bring some good practice problems for derivatives.",
           time: "Yesterday, 3:00 PM",
           isFromMe: true,
           isRead: true,
         },
         {
           id: "1-5",
-          text: "Hello! I'll be arriving in about 15 minutes for the dog walking task.",
+          text: "I'm at the library waiting for the tutoring session. Will you be here soon?",
           time: "Today, 2:30 PM",
           isFromMe: false,
           isRead: false,
@@ -97,44 +98,44 @@ const MessagesTab = () => {
         avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop",
       },
       lastMessage: {
-        text: "I've completed the furniture assembly. Could you verify everything is as expected?",
+        text: "Thanks for helping with my CS project! The code is working perfectly now.",
         time: "Yesterday",
         isRead: true,
       },
-      taskTitle: "Furniture Assembly",
+      taskTitle: "Computer Science Assistance",
       isActive: false,
       messages: [
         {
           id: "2-1",
-          text: "Hi! I'm on my way to help with your furniture assembly.",
+          text: "Hi! I'm really stuck on this Python data visualization project.",
           time: "Monday, 9:30 AM",
           isFromMe: false,
           isRead: true,
         },
         {
           id: "2-2",
-          text: "Perfect, I'll have everything ready. Thanks!",
+          text: "I can help with that. I'm good with matplotlib and pandas. When would you like to meet?",
           time: "Monday, 9:45 AM",
           isFromMe: true,
           isRead: true,
         },
         {
           id: "2-3",
-          text: "I've arrived. I'll start with the bookshelf first if that's okay?",
+          text: "Could we meet at the computer lab tomorrow at 2pm?",
           time: "Monday, 10:15 AM",
           isFromMe: false,
           isRead: true,
         },
         {
           id: "2-4",
-          text: "That sounds great. Feel free to ask if you need anything.",
+          text: "That works for me. I'll see you there.",
           time: "Monday, 10:20 AM",
           isFromMe: true,
           isRead: true,
         },
         {
           id: "2-5",
-          text: "I've completed the furniture assembly. Could you verify everything is as expected?",
+          text: "Thanks for helping with my CS project! The code is working perfectly now.",
           time: "Yesterday, 3:45 PM",
           isFromMe: false,
           isRead: true,
@@ -148,30 +149,30 @@ const MessagesTab = () => {
         avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop",
       },
       lastMessage: {
-        text: "I have a question about the cleaning requirements for the apartment.",
+        text: "Are you available for dog walking this weekend too? Fluffy really enjoyed the walk!",
         time: "3 days ago",
         isRead: true,
       },
-      taskTitle: "Apartment Cleaning",
+      taskTitle: "Dog Walking",
       isActive: false,
       messages: [
         {
           id: "3-1",
-          text: "Hello! I'm planning to clean your apartment this Friday. Are there any specific areas you want me to focus on?",
+          text: "Hello! I'm wondering if you can walk my dog Fluffy tomorrow at 3pm?",
           time: "3 days ago, 10:00 AM",
           isFromMe: false,
           isRead: true,
         },
         {
           id: "3-2",
-          text: "Yes, please focus on the kitchen and bathrooms. They need deep cleaning.",
+          text: "Hi Lisa! Yes, I'm available tomorrow at 3pm for dog walking. How long would you like me to walk Fluffy?",
           time: "3 days ago, 10:15 AM",
           isFromMe: true,
           isRead: true,
         },
         {
           id: "3-3",
-          text: "I have a question about the cleaning requirements for the apartment. Do you have any special cleaning products you prefer I use?",
+          text: "Are you available for dog walking this weekend too? Fluffy really enjoyed the walk!",
           time: "3 days ago, 10:30 AM",
           isFromMe: false,
           isRead: true,
@@ -255,7 +256,7 @@ const MessagesTab = () => {
         selectedConversation ? "hidden md:flex" : "flex"
       )}>
         <div className="p-4 border-b border-gray-100">
-          <h2 className="text-xl font-semibold mb-4">Messages</h2>
+          <h2 className="text-xl font-semibold mb-4">Task Communications</h2>
           <div className="relative">
             <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
             <Input 
@@ -355,8 +356,8 @@ const MessagesTab = () => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem>View task details</DropdownMenuItem>
-                  <DropdownMenuItem>Report conversation</DropdownMenuItem>
-                  <DropdownMenuItem>Block user</DropdownMenuItem>
+                  <DropdownMenuItem>Mark as complete</DropdownMenuItem>
+                  <DropdownMenuItem>Request payment</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
@@ -374,13 +375,13 @@ const MessagesTab = () => {
                     <div className={cn(
                       "max-w-[80%] rounded-lg p-3",
                       message.isFromMe 
-                        ? "bg-assist-blue text-white rounded-br-none shadow-sm" 
+                        ? "bg-green-600 text-white rounded-br-none shadow-sm" 
                         : "bg-white shadow-sm border border-gray-100 rounded-bl-none"
                     )}>
                       <p className="text-sm">{message.text}</p>
                       <p className={cn(
                         "text-xs mt-1",
-                        message.isFromMe ? "text-blue-100" : "text-gray-500"
+                        message.isFromMe ? "text-green-100" : "text-gray-500"
                       )}>
                         {message.time}
                       </p>
@@ -405,7 +406,7 @@ const MessagesTab = () => {
                   }}
                 />
                 <Button 
-                  className="h-[60px] bg-assist-blue hover:bg-blue-700" 
+                  className="h-[60px] bg-green-600 hover:bg-green-700" 
                   onClick={handleSendMessage}
                   disabled={!newMessage.trim()}
                 >
@@ -413,7 +414,7 @@ const MessagesTab = () => {
                 </Button>
               </div>
               <div className="mt-2 text-xs text-gray-500 text-center">
-                <p>Sharing personal contact information is prohibited by our terms of service</p>
+                <p>Keep all task communications on the platform for both parties' protection</p>
               </div>
             </div>
           </>
@@ -422,7 +423,7 @@ const MessagesTab = () => {
             <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 max-w-md">
               <MessageSquare className="h-12 w-12 text-gray-300 mx-auto mb-4" />
               <h3 className="text-lg font-medium text-gray-700">Select a conversation</h3>
-              <p className="text-gray-500 mt-2">Choose a conversation from the list to start messaging</p>
+              <p className="text-gray-500 mt-2">Stay in touch with clients about your tasks and respond promptly to inquiries</p>
             </div>
           </div>
         )}
