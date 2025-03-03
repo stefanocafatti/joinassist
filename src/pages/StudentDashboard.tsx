@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { UserRound, Coins, CalendarIcon, BadgeCheck, Clock, MapPin, ThumbsUp, Filter, Search, X, Award, Star, Trophy, Sliders } from "lucide-react";
+import { UserRound, Coins, CalendarIcon, BadgeCheck, Clock, MapPin, ThumbsUp, Filter, Search, X, Award, Star, Trophy, Sliders, ChevronDown } from "lucide-react";
 import MainHeader from "@/components/main-menu/MainHeader";
 import StudentBalance from "@/components/student/StudentBalance";
 import StudentPoints from "@/components/student/StudentPoints";
@@ -15,6 +15,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import ConfettiPopup from "@/components/ui/ConfettiPopup";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
+import SearchHeader from "@/components/main-menu/SearchHeader";
 
 const StudentDashboard = () => {
   const navigate = useNavigate();
@@ -169,6 +170,9 @@ const StudentDashboard = () => {
     }
   ]);
   
+  const [visibleGigs, setVisibleGigs] = useState(6);
+  const totalGigs = availableGigs.length;
+  
   useEffect(() => {
     const userSession = localStorage.getItem("userSession");
     if (!userSession) {
@@ -286,6 +290,10 @@ const StudentDashboard = () => {
     setMaxPrice("");
     setSelectedLocations([]);
     setIsFilterOpen(false);
+  };
+
+  const loadMoreGigs = () => {
+    setVisibleGigs(prev => Math.min(prev + 3, totalGigs));
   };
 
   return (
@@ -417,7 +425,7 @@ const StudentDashboard = () => {
                 <h2 className="text-xl font-semibold mb-4 md:mb-0">Available Gigs</h2>
                 
                 <div className="flex flex-col md:flex-row gap-3 w-full md:w-auto">
-                  <div className="relative flex-grow md:max-w-xs">
+                  <div className="relative flex-grow md:w-80">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                     <Input 
                       placeholder="Search gigs..."
@@ -441,41 +449,50 @@ const StudentDashboard = () => {
                         variant="outline" 
                         size="icon"
                         className={cn(
-                          "border-gray-200 hover:bg-gray-50",
-                          (selectedCategories.length > 0 || selectedLocations.length > 0 || minPrice || maxPrice) &&
-                          "bg-blue-50 text-blue-600 border-blue-200"
+                          "border-gray-200 hover:bg-gray-50 relative overflow-hidden group",
+                          (selectedCategories.length > 0 || selectedLocations.length > 0 || minPrice || maxPrice) ?
+                          "bg-gradient-to-r from-blue-500/90 to-blue-400/90 text-white hover:from-blue-600/90 hover:to-blue-500/90 border-blue-300" :
+                          "before:absolute before:inset-0 before:bg-gradient-to-r before:from-blue-500/20 before:to-blue-400/20 before:opacity-0 before:transition-opacity hover:before:opacity-100"
                         )}
                       >
-                        <Filter className="h-4 w-4" />
+                        <Filter className={cn(
+                          "h-4 w-4 relative z-10",
+                          (selectedCategories.length > 0 || selectedLocations.length > 0 || minPrice || maxPrice) ? 
+                          "text-white" : "text-gray-600 group-hover:text-gray-800"
+                        )} />
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-80">
-                      <div className="space-y-4">
-                        <div className="flex items-center justify-between">
-                          <h3 className="font-medium">Filters</h3>
-                          <Button 
-                            variant="ghost" 
-                            size="sm" 
-                            onClick={resetFilters}
-                            className="h-auto px-2 py-1 text-sm text-blue-600"
-                          >
-                            Reset
-                          </Button>
+                    <PopoverContent className="w-80 p-0 overflow-hidden border border-blue-100 shadow-lg rounded-lg">
+                      <div className="bg-gradient-to-r from-blue-500 to-blue-400 text-white p-3 flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <Sliders className="h-4 w-4" />
+                          <h3 className="font-medium">Filter Options</h3>
                         </div>
-                        
+                        <Button 
+                          variant="ghost" 
+                          size="smallIcon" 
+                          onClick={resetFilters}
+                          className="h-7 w-7 text-white hover:bg-blue-600/20 hover:text-white"
+                        >
+                          <X className="h-3.5 w-3.5" />
+                        </Button>
+                      </div>
+                      
+                      <div className="p-4 space-y-4 max-h-[70vh] overflow-y-auto">
                         <div>
-                          <h4 className="text-sm font-medium mb-2">Categories</h4>
-                          <div className="space-y-2">
+                          <h4 className="text-sm font-medium mb-2 text-gray-700">Categories</h4>
+                          <div className="space-y-2 grid grid-cols-1">
                             {categories.map((category) => (
                               <div key={category} className="flex items-center gap-2">
                                 <Checkbox 
                                   id={`category-${category}`} 
                                   checked={selectedCategories.includes(category)}
                                   onCheckedChange={() => toggleCategoryFilter(category)}
+                                  className="text-blue-500 border-blue-200 data-[state=checked]:bg-blue-500"
                                 />
                                 <label 
                                   htmlFor={`category-${category}`} 
-                                  className="text-sm cursor-pointer"
+                                  className="text-sm cursor-pointer hover:text-blue-600"
                                 >
                                   {category}
                                 </label>
@@ -484,40 +501,41 @@ const StudentDashboard = () => {
                           </div>
                         </div>
                         
-                        <div>
-                          <h4 className="text-sm font-medium mb-2">Price Range ($/hr)</h4>
+                        <div className="border-t border-gray-100 pt-3">
+                          <h4 className="text-sm font-medium mb-2 text-gray-700">Price Range ($/hr)</h4>
                           <div className="flex items-center gap-2">
                             <Input 
                               type="number" 
                               placeholder="Min" 
                               value={minPrice}
                               onChange={(e) => setMinPrice(e.target.value)}
-                              className="w-20"
+                              className="w-full border-blue-200 focus-visible:ring-blue-400"
                             />
-                            <span>to</span>
+                            <span className="text-gray-400">to</span>
                             <Input 
                               type="number" 
                               placeholder="Max" 
                               value={maxPrice}
                               onChange={(e) => setMaxPrice(e.target.value)}
-                              className="w-20"
+                              className="w-full border-blue-200 focus-visible:ring-blue-400"
                             />
                           </div>
                         </div>
                         
-                        <div>
-                          <h4 className="text-sm font-medium mb-2">Locations</h4>
-                          <div className="space-y-2 max-h-40 overflow-y-auto">
+                        <div className="border-t border-gray-100 pt-3">
+                          <h4 className="text-sm font-medium mb-2 text-gray-700">Locations</h4>
+                          <div className="space-y-2 grid grid-cols-1 max-h-40 overflow-y-auto pr-1">
                             {locations.map((location) => (
                               <div key={location} className="flex items-center gap-2">
                                 <Checkbox 
                                   id={`location-${location}`} 
                                   checked={selectedLocations.includes(location)}
                                   onCheckedChange={() => toggleLocationFilter(location)}
+                                  className="text-blue-500 border-blue-200 data-[state=checked]:bg-blue-500"
                                 />
                                 <label 
                                   htmlFor={`location-${location}`} 
-                                  className="text-sm cursor-pointer"
+                                  className="text-sm cursor-pointer hover:text-blue-600"
                                 >
                                   {location}
                                 </label>
@@ -525,9 +543,20 @@ const StudentDashboard = () => {
                             ))}
                           </div>
                         </div>
-                        
+                      </div>
+                      
+                      <div className="p-3 bg-gray-50 border-t border-gray-100 flex justify-between items-center">
                         <Button 
-                          className="w-full bg-blue-600 hover:bg-blue-700"
+                          variant="ghost" 
+                          size="sm" 
+                          onClick={resetFilters}
+                          className="text-sm text-gray-500 hover:text-gray-700 hover:bg-gray-100"
+                        >
+                          Reset All
+                        </Button>
+                        <Button 
+                          className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white shadow-sm"
+                          size="sm"
                           onClick={() => setIsFilterOpen(false)}
                         >
                           Apply Filters
@@ -615,7 +644,7 @@ const StudentDashboard = () => {
               )}
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredGigs.map((gig) => (
+                {filteredGigs.slice(0, visibleGigs).map((gig) => (
                   <div key={gig.id} className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-all">
                     <div className="h-48 overflow-hidden">
                       <img 
@@ -661,6 +690,20 @@ const StudentDashboard = () => {
                   </div>
                 ))}
               </div>
+              
+              {filteredGigs.length > 0 && visibleGigs < filteredGigs.length && (
+                <div className="mt-8 text-center">
+                  <Button 
+                    onClick={loadMoreGigs}
+                    variant="outline"
+                    size="lg"
+                    className="border-blue-200 text-blue-700 hover:bg-blue-50 px-8 group"
+                  >
+                    Load More Gigs
+                    <ChevronDown className="h-4 w-4 ml-1 group-hover:animate-bounce" />
+                  </Button>
+                </div>
+              )}
               
               {filteredGigs.length === 0 && (
                 <div className="text-center py-12 bg-gray-50 rounded-lg border border-gray-200">
