@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { UserRound, Coins, CalendarIcon, ArrowDown, BadgeCheck, BookOpen, Clock, CheckCircle, MapPin, ThumbsUp, Filter, DollarSign, Briefcase, Search, Sparkles, X, SlidersHorizontal } from "lucide-react";
+import { UserRound, Coins, CalendarIcon, ArrowDown, BadgeCheck, BookOpen, Clock, CheckCircle, MapPin, ThumbsUp, Filter, DollarSign, Briefcase, Search, Sparkles, X, SlidersHorizontal, GraduationCap } from "lucide-react";
 import MainHeader from "@/components/main-menu/MainHeader";
 import StudentBalance from "@/components/student/StudentBalance";
 import StudentBadges from "@/components/student/StudentBadges";
@@ -40,6 +40,7 @@ const StudentDashboard = () => {
   const [filterSkills, setFilterSkills] = useState("all");
   const [searchText, setSearchText] = useState("");
   const [currentBalance, setCurrentBalance] = useState(345.50);
+  const [campus, setCampus] = useState("University of Technology");
 
   const [upcomingTasks, setUpcomingTasks] = useState([
     {
@@ -225,6 +226,10 @@ const StudentDashboard = () => {
       if (sessionData.firstName) {
         setUserName(sessionData.firstName);
       }
+
+      if (sessionData.campus) {
+        setCampus(sessionData.campus);
+      }
     } catch (error) {
       console.error("Error parsing user session:", error);
       navigate("/welcome", { replace: true });
@@ -352,14 +357,44 @@ const StudentDashboard = () => {
               </div>
               <div>
                 <h1 className="text-3xl font-bold mb-1">My Dashboard</h1>
-                <p className="text-white/80">
+                <p className="text-white/80 mb-2">
                   Manage your tasks, earnings, and rewards
                 </p>
+                <div className="flex items-center text-white/90 text-sm font-medium">
+                  <GraduationCap className="h-4 w-4 mr-1.5" />
+                  {campus}
+                </div>
               </div>
             </div>
-            <Badge className="bg-white text-assist-blue mt-4 md:mt-0 px-4 py-2 text-sm font-medium shadow-sm">
-              Student Account
-            </Badge>
+            <div className="flex flex-col mt-4 md:mt-0 md:items-end">
+              <Badge className="bg-white text-assist-blue px-4 py-2 text-sm font-medium shadow-sm mb-2">
+                Student Account
+              </Badge>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" className="bg-white/10 text-white border-white/20 hover:bg-white/20">
+                    <GraduationCap className="mr-2 h-4 w-4" />
+                    Campus Settings
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuLabel>Select Campus</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => setCampus("University of Technology")}>
+                    University of Technology
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setCampus("North Campus")}>
+                    North Campus
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setCampus("Downtown Campus")}>
+                    Downtown Campus
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setCampus("Medical Center Campus")}>
+                    Medical Center Campus
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </div>
         </div>
         
