@@ -1,11 +1,10 @@
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { UserRound, Coins, CalendarIcon, ArrowDown, BadgeCheck, BookOpen, Clock, CheckCircle, MapPin } from "lucide-react";
+import { UserRound, Coins, CalendarIcon, ArrowDown, BadgeCheck, BookOpen, Clock, CheckCircle, MapPin, ThumbsUp } from "lucide-react";
 import MainHeader from "@/components/main-menu/MainHeader";
 import StudentBalance from "@/components/student/StudentBalance";
 import StudentBadges from "@/components/student/StudentBadges";
@@ -119,7 +118,6 @@ const StudentDashboard = () => {
   ]);
 
   useEffect(() => {
-    // Check if user is logged in as a student
     const userSession = localStorage.getItem("userSession");
     if (!userSession) {
       navigate("/welcome", { replace: true });
@@ -127,7 +125,6 @@ const StudentDashboard = () => {
     }
 
     try {
-      // Check if the user is a student by looking for an educational email
       const sessionData = JSON.parse(userSession);
       const isStudentEmail = sessionData.email?.includes(".edu") || 
         sessionData.email?.includes("ac.uk") || 
@@ -141,7 +138,6 @@ const StudentDashboard = () => {
         navigate("/main-menu", { replace: true });
       }
       
-      // Set user name from session data
       if (sessionData.firstName) {
         setUserName(sessionData.firstName);
       }
@@ -174,6 +170,22 @@ const StudentDashboard = () => {
     setTaskDetailOpen(true);
   };
   
+  const handleAcceptTask = (task: any, e: React.MouseEvent) => {
+    e.stopPropagation();
+    
+    const newTask = {
+      title: task.title,
+      date: "Today, " + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+      status: "Pending",
+      earnings: task.rate,
+      category: task.category,
+      location: task.location
+    };
+    
+    setUpcomingTasks([...upcomingTasks, newTask]);
+    toast.success(`Successfully accepted: ${task.title}`);
+  };
+  
   const handleTaskBooked = (
     taskTitle: string, 
     date: Date, 
@@ -183,7 +195,6 @@ const StudentDashboard = () => {
     location?: string,
     additionalInfo?: string
   ) => {
-    // Add the booked task to upcoming tasks
     const newTask = {
       title: taskTitle,
       date: `${date.toLocaleDateString()}, ${time}`,
@@ -301,7 +312,6 @@ const StudentDashboard = () => {
               </Card>
             </div>
             
-            {/* Available Tasks Section */}
             <div className="bg-white rounded-xl shadow-sm overflow-hidden">
               <div className="border-b border-gray-100 bg-gray-50 px-6 py-4 flex justify-between items-center flex-wrap gap-4">
                 <div>
@@ -353,13 +363,22 @@ const StudentDashboard = () => {
                         </div>
                         <span className="font-medium text-assist-blue">{task.rate}</span>
                       </div>
+                      <div className="mt-3 pt-3 border-t border-gray-100">
+                        <Button 
+                          className="w-full bg-assist-blue hover:bg-assist-blue/90" 
+                          size="sm"
+                          onClick={(e) => handleAcceptTask(task, e)}
+                        >
+                          <ThumbsUp className="mr-2 h-4 w-4" />
+                          Accept Task
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
             
-            {/* Upcoming Tasks Section */}
             <div className="bg-white rounded-xl shadow-sm overflow-hidden">
               <div className="border-b border-gray-100 bg-gray-50 px-6 py-4">
                 <h2 className="text-xl font-semibold text-gray-900">Upcoming Tasks</h2>
@@ -406,7 +425,6 @@ const StudentDashboard = () => {
               </div>
             </div>
             
-            {/* Recent Activity Section */}
             <div className="bg-white rounded-xl shadow-sm overflow-hidden">
               <div className="border-b border-gray-100 bg-gray-50 px-6 py-4">
                 <h2 className="text-xl font-semibold text-gray-900">Recent Activity</h2>
@@ -451,7 +469,6 @@ const StudentDashboard = () => {
         </Tabs>
       </div>
       
-      {/* Task Detail Modal */}
       <TaskDetailView
         isOpen={taskDetailOpen}
         onClose={() => setTaskDetailOpen(false)}
