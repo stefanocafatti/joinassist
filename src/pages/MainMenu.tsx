@@ -37,6 +37,29 @@ const mockUser = {
   badges: [
     { id: "1", name: "Early Adopter", description: "Joined during our launch period", icon: "🏆" },
     { id: "2", name: "Task Master", description: "Completed 3 tasks", icon: "⭐" }
+  ],
+  isStudent: false,
+  studentInfo: {
+    balance: 175.50,
+    points: 230,
+    level: 2,
+    completedTasks: 5,
+    totalTasks: 8,
+    memberSince: "Apr 2023",
+    calendarSynced: false,
+    institution: "UCLA"
+  },
+  transactions: [
+    { id: "1", type: "payment", amount: 25.00, date: "May 15, 2023", status: "completed", description: "Dog Walking" },
+    { id: "2", type: "payment", amount: 45.00, date: "May 10, 2023", status: "completed", description: "Grocery Delivery" },
+    { id: "3", type: "withdrawal", amount: 50.00, date: "May 5, 2023", status: "completed", description: "Bank Transfer" },
+    { id: "4", type: "payment", amount: 35.50, date: "Apr 28, 2023", status: "completed", description: "House Cleaning" },
+    { id: "5", type: "withdrawal", amount: 30.00, date: "Apr 20, 2023", status: "completed", description: "Instant Transfer" }
+  ],
+  upcomingTasks: [
+    { id: "1", title: "Math Tutoring", date: "Tomorrow, 3:00 PM", points: 50, status: "Confirmed" },
+    { id: "2", title: "Campus Delivery", date: "May 20, 2023", points: 35, status: "Pending" },
+    { id: "3", title: "Furniture Assembly", date: "May 23, 2023", points: 75, status: "Confirmed" }
   ]
 };
 
@@ -138,6 +161,7 @@ const MainMenu = () => {
   const [isRequestConfettiOpen, setIsRequestConfettiOpen] = useState(false);
   const [requestedTaskTitle, setRequestedTaskTitle] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [isStudentView, setIsStudentView] = useState(false);
 
   useEffect(() => {
     if (location.state) {
@@ -154,6 +178,14 @@ const MainMenu = () => {
     }, 3000);
 
     return () => clearTimeout(timer);
+  }, [location.state]);
+
+  useEffect(() => {
+    if (location.state?.isStudent) {
+      setIsStudentView(true);
+      mockUser.isStudent = true;
+      setUser({...mockUser, isStudent: true});
+    }
   }, [location.state]);
 
   const addToRecentlyViewed = (task: (typeof recommendedTasks)[0]) => {
@@ -584,6 +616,12 @@ const MainMenu = () => {
           initialSelectedCategory={selectedCategory}
         />
       );
+    } else if (isStudentView && activeTab === "home") {
+      return (
+        <StudentDashboardTab 
+          user={user}
+        />
+      );
     }
     
     return (
@@ -740,6 +778,7 @@ const MainMenu = () => {
             onToggleFavoriteView={toggleFavoriteView}
             onSetActiveTab={setActiveTab}
             assistPoints={assistPoints}
+            isStudentView={isStudentView}
           />
           
           <SearchHeader 
@@ -748,7 +787,7 @@ const MainMenu = () => {
             onSearchQueryChange={setSearchQuery}
             onSearch={handleSearch}
             onSearchClick={handleRecentSearchClick}
-            isVisible={shouldShowSearchHeader()}
+            isVisible={shouldShowSearchHeader() && !isStudentView}
           />
         </header>
         
@@ -757,6 +796,7 @@ const MainMenu = () => {
           showFavorites={showFavorites}
           onTabChange={setActiveTab}
           onToggleFavoriteView={toggleFavoriteView}
+          isStudentView={isStudentView}
         />
         
         {renderContent()}
