@@ -18,6 +18,8 @@ const badgeVariants = cva(
         outline: "text-foreground",
         follow: 
           "border-transparent bg-indigo-500 text-white hover:bg-indigo-600 px-4 py-1 text-sm",
+        dashboard:
+          "border-transparent bg-white text-assist-blue px-4 py-2 text-sm font-medium shadow-sm", // New variant for dashboard
       },
     },
     defaultVariants: {
