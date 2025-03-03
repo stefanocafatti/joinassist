@@ -1,4 +1,3 @@
-
 // Import needed components
 import React from "react";
 import SearchResultsSection from "./SearchResultsSection";
@@ -7,7 +6,7 @@ import RecentSearchesSection from "./RecentSearchesSection";
 import RecommendedTasksSection from "./RecommendedTasksSection";
 import PastTasksSection from "./PastTasksSection";
 import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
+import { PlusCircle, Grid } from "lucide-react";
 
 // Define the types for task objects
 interface Task {
@@ -93,13 +92,40 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
         onToggleInterest={onToggleInterest}
       />
       
+      <section className="mb-8">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-xl font-semibold text-gray-900">Browse by Category</h2>
+          <Button 
+            variant="link" 
+            className="text-assist-blue p-0 h-auto"
+            onClick={() => onSetActiveTab && onSetActiveTab("allTasks")}
+          >
+            View All
+          </Button>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+          {["Cleaning", "Moving", "Academic", "Digital", "Fitness", "Events", "Special", "For Brands"].map((category, index) => (
+            <div 
+              key={index} 
+              className="bg-assist-gray/10 hover:bg-assist-blue/5 rounded-xl p-4 text-center cursor-pointer transition-all"
+              onClick={() => onSetActiveTab && onSetActiveTab("allTasks")}
+            >
+              <div className="flex items-center justify-center mb-2">
+                <Grid className="h-5 w-5 text-assist-blue" />
+              </div>
+              <h3 className="font-medium text-sm">{category}</h3>
+            </div>
+          ))}
+        </div>
+      </section>
+      
       <RecentSearchesSection 
         recentSearches={recentSearches}
         onSearchClick={onSearchClick}
       />
       
       <RecommendedTasksSection
-        tasks={recommendedTasks} // Change recommendedTasks to tasks to match the component interface
+        tasks={recommendedTasks}
         favoriteTaskIds={favoriteTaskIds}
         onFavoriteToggle={onFavoriteToggle}
         onBookNow={onBookNow}
