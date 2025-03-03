@@ -1,51 +1,24 @@
-<lov-code>
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { UserRound, Coins, CalendarIcon, ArrowDown, BadgeCheck, BookOpen, Clock, MapPin, ThumbsUp, Filter, DollarSign, Briefcase, Search, Sparkles, X, SlidersHorizontal, GraduationCap } from "lucide-react";
+import { UserRound, Coins, CalendarIcon, BadgeCheck, BookOpen, Clock, MapPin, ThumbsUp, Filter, Search, Sparkles, X, SlidersHorizontal } from "lucide-react";
 import MainHeader from "@/components/main-menu/MainHeader";
 import StudentBalance from "@/components/student/StudentBalance";
 import StudentBadges from "@/components/student/StudentBadges";
 import StudentCalendar from "@/components/student/StudentCalendar";
 import StudentWithdrawal from "@/components/student/StudentWithdrawal";
 import StudentPoints from "@/components/student/StudentPoints";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import TaskDetailView from "@/components/ui/TaskDetailView";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Switch } from "@/components/ui/switch";
-import RequestsTab from "@/components/main-menu/RequestsTab";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
-// Define props interface for RequestsTab
-interface RequestsTabProps {
-  requests: {
-    id: string;
-    title: string;
-    date: string;
-    location: string;
-    price: string;
-    status: string;
-    provider: string;
-    additionalInfo: string;
-  }[];
-  onNavigateToHome: () => void;
-  onToggleNotifications: (enabled: boolean) => void;
-  notificationsEnabled: boolean;
-}
-
-// Add viewMode prop to TaskDetailView
+// Define props interface for TaskDetailView
 interface TaskDetailViewProps {
   isOpen: boolean;
   task: any;
@@ -59,7 +32,6 @@ interface TaskDetailViewProps {
     location?: string,
     additionalInfo?: string
   ) => void;
-  viewMode?: "provider" | "requester";
 }
 
 const StudentDashboard = () => {
@@ -241,7 +213,6 @@ const StudentDashboard = () => {
     { value: "36+", label: "$36+" }
   ]);
 
-  // Sample requests data for RequesterTab
   const [requests, setRequests] = useState([
     {
       id: "r1",
@@ -445,27 +416,42 @@ const StudentDashboard = () => {
         </div>
         
         <Tabs defaultValue="dashboard" onValueChange={setActiveTab} className="space-y-8">
-          <div className="bg-white rounded-xl p-2 shadow-md">
-            <TabsList className="grid w-full grid-cols-5 gap-2 p-1">
-              <TabsTrigger value="dashboard" className="flex items-center gap-2 py-3 data-[state=active]:bg-assist-blue data-[state=active]:text-white">
-                <UserRound className="h-4 w-4" />
-                <span className="hidden md:inline">Dashboard</span>
+          <div className="bg-white rounded-xl p-4 shadow-md">
+            <TabsList className="flex w-full justify-between gap-1 p-1 bg-gray-100/70 rounded-lg">
+              <TabsTrigger 
+                value="dashboard" 
+                className="flex-1 flex flex-col items-center gap-1 py-3 px-2 data-[state=active]:bg-assist-blue data-[state=active]:text-white rounded-lg transition-all duration-200 hover:bg-gray-200/80"
+              >
+                <UserRound className="h-5 w-5" />
+                <span className="text-xs font-medium">Dashboard</span>
               </TabsTrigger>
-              <TabsTrigger value="earnings" className="flex items-center gap-2 py-3 data-[state=active]:bg-assist-blue data-[state=active]:text-white">
-                <Coins className="h-4 w-4" />
-                <span className="hidden md:inline">Earnings</span>
+              <TabsTrigger 
+                value="earnings" 
+                className="flex-1 flex flex-col items-center gap-1 py-3 px-2 data-[state=active]:bg-assist-blue data-[state=active]:text-white rounded-lg transition-all duration-200 hover:bg-gray-200/80"
+              >
+                <Coins className="h-5 w-5" />
+                <span className="text-xs font-medium">Earnings</span>
               </TabsTrigger>
-              <TabsTrigger value="badges" className="flex items-center gap-2 py-3 data-[state=active]:bg-assist-blue data-[state=active]:text-white">
-                <BadgeCheck className="h-4 w-4" />
-                <span className="hidden md:inline">Badges</span>
+              <TabsTrigger 
+                value="badges" 
+                className="flex-1 flex flex-col items-center gap-1 py-3 px-2 data-[state=active]:bg-assist-blue data-[state=active]:text-white rounded-lg transition-all duration-200 hover:bg-gray-200/80"
+              >
+                <BadgeCheck className="h-5 w-5" />
+                <span className="text-xs font-medium">Badges</span>
               </TabsTrigger>
-              <TabsTrigger value="calendar" className="flex items-center gap-2 py-3 data-[state=active]:bg-assist-blue data-[state=active]:text-white">
-                <CalendarIcon className="h-4 w-4" />
-                <span className="hidden md:inline">Calendar</span>
+              <TabsTrigger 
+                value="calendar" 
+                className="flex-1 flex flex-col items-center gap-1 py-3 px-2 data-[state=active]:bg-assist-blue data-[state=active]:text-white rounded-lg transition-all duration-200 hover:bg-gray-200/80"
+              >
+                <CalendarIcon className="h-5 w-5" />
+                <span className="text-xs font-medium">Calendar</span>
               </TabsTrigger>
-              <TabsTrigger value="withdrawal" className="flex items-center gap-2 py-3 data-[state=active]:bg-assist-blue data-[state=active]:text-white">
-                <ArrowDown className="h-4 w-4" />
-                <span className="hidden md:inline">Withdraw</span>
+              <TabsTrigger 
+                value="payments" 
+                className="flex-1 flex flex-col items-center gap-1 py-3 px-2 data-[state=active]:bg-assist-blue data-[state=active]:text-white rounded-lg transition-all duration-200 hover:bg-gray-200/80"
+              >
+                <Coins className="h-5 w-5" />
+                <span className="text-xs font-medium">Payments</span>
               </TabsTrigger>
             </TabsList>
           </div>
@@ -738,4 +724,62 @@ const StudentDashboard = () => {
                   <div key={index} className="p-5 hover:bg-blue-50/30 transition-colors duration-150">
                     <div className="flex items-center justify-between mb-2">
                       <h3 className="font-medium text-gray-900">{task.title}</h3>
-                      <Badge className={getCategoryColor(
+                      <Badge className={getCategoryColor(task.category)}>
+                        {task.category}
+                      </Badge>
+                    </div>
+                    <p className="text-gray-500 text-sm mb-3">{task.date}</p>
+                    <div className="flex justify-between items-center text-sm">
+                      <div className="flex items-center text-gray-500">
+                        <MapPin className="mr-1 h-3.5 w-3.5" />
+                        {task.location}
+                      </div>
+                      <span className="font-bold text-assist-blue">{task.earnings}</span>
+                    </div>
+                    <div className="mt-3 pt-3 border-t border-gray-100">
+                      <Button 
+                        className="w-full bg-assist-blue hover:bg-assist-blue/90 font-medium" 
+                        size="sm"
+                        onClick={(e) => handleAcceptTask(task, e)}
+                      >
+                        <ThumbsUp className="mr-2 h-4 w-4" />
+                        Accept Task
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="earnings" className="mt-6 space-y-4">
+            <StudentBalance />
+          </TabsContent>
+          
+          <TabsContent value="badges" className="mt-6 space-y-4">
+            <StudentBadges />
+          </TabsContent>
+          
+          <TabsContent value="calendar" className="mt-6 space-y-4">
+            <StudentCalendar />
+          </TabsContent>
+          
+          <TabsContent value="payments" className="mt-6 space-y-4">
+            <StudentWithdrawal />
+          </TabsContent>
+        </Tabs>
+      </div>
+      
+      {taskDetailOpen && selectedTask && (
+        <TaskDetailView
+          isOpen={taskDetailOpen}
+          task={selectedTask}
+          onClose={() => setTaskDetailOpen(false)}
+          onTaskBooked={handleTaskBooked}
+        />
+      )}
+    </div>
+  );
+};
+
+export default StudentDashboard;
