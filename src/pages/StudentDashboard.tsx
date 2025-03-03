@@ -1,11 +1,10 @@
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { UserRound, Coins, CalendarIcon, ArrowDown, BadgeCheck, BookOpen, Clock, CheckCircle, MapPin, ThumbsUp, Filter, DollarSign, Briefcase, Search, Sparkles } from "lucide-react";
+import { UserRound, Coins, CalendarIcon, ArrowDown, BadgeCheck, BookOpen, Clock, CheckCircle, MapPin, ThumbsUp, Filter, DollarSign, Briefcase, Search, Sparkles, X, SlidersHorizontal } from "lucide-react";
 import MainHeader from "@/components/main-menu/MainHeader";
 import StudentBalance from "@/components/student/StudentBalance";
 import StudentBadges from "@/components/student/StudentBadges";
@@ -16,6 +15,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import TaskDetailView from "@/components/ui/TaskDetailView";
 import { Input } from "@/components/ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -191,15 +191,14 @@ const StudentDashboard = () => {
     }
   ]);
 
-  // Extract all unique locations, skills, and create price ranges
-  const locations = ["all", ...new Set(availableTasks.map(task => task.location))];
-  const skills = ["all", ...new Set(availableTasks.flatMap(task => task.skills))];
-  const priceRanges = [
+  const [locations, setLocations] = useState(["all", ...new Set(availableTasks.map(task => task.location))]);
+  const [skills, setSkills] = useState(["all", ...new Set(availableTasks.flatMap(task => task.skills))]);
+  const [priceRanges, setPriceRanges] = useState([
     { value: "all", label: "All Prices" },
     { value: "0-25", label: "$0-$25" },
     { value: "26-35", label: "$26-$35" },
     { value: "36+", label: "$36+" }
-  ];
+  ]);
 
   useEffect(() => {
     const userSession = localStorage.getItem("userSession");
@@ -301,25 +300,20 @@ const StudentDashboard = () => {
     setSearchText("");
   };
 
-  // Apply all filters
   const filteredTasks = availableTasks.filter(task => {
-    // Filter by search text
     if (searchText && !task.title.toLowerCase().includes(searchText.toLowerCase()) && 
         !task.description.toLowerCase().includes(searchText.toLowerCase())) {
       return false;
     }
     
-    // Filter by category
     if (filterCategory !== 'all' && task.category !== filterCategory) {
       return false;
     }
     
-    // Filter by location
     if (filterLocation !== 'all' && task.location !== filterLocation) {
       return false;
     }
     
-    // Filter by price range
     if (filterPriceRange !== 'all') {
       const rate = task.rateNumeric;
       if (filterPriceRange === '0-25' && (rate < 0 || rate > 25)) return false;
@@ -327,7 +321,6 @@ const StudentDashboard = () => {
       if (filterPriceRange === '36+' && rate < 36) return false;
     }
     
-    // Filter by skills
     if (filterSkills !== 'all' && !task.skills.includes(filterSkills)) {
       return false;
     }
@@ -347,7 +340,6 @@ const StudentDashboard = () => {
       />
       
       <div className="container mx-auto px-4 py-8">
-        {/* Dashboard Header */}
         <div className="mb-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between bg-gradient-to-r from-assist-blue to-indigo-600 rounded-2xl p-6 shadow-md text-white">
             <div className="flex items-center">
@@ -367,7 +359,6 @@ const StudentDashboard = () => {
           </div>
         </div>
         
-        {/* Navigation Tabs */}
         <Tabs defaultValue="dashboard" onValueChange={setActiveTab} className="space-y-8">
           <div className="bg-white rounded-xl p-2 shadow-md">
             <TabsList className="grid w-full grid-cols-5 gap-2 p-1">
@@ -395,7 +386,6 @@ const StudentDashboard = () => {
           </div>
           
           <TabsContent value="dashboard" className="mt-6 space-y-8 animate-fade-in">
-            {/* Stats Cards */}
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
               <Card className="overflow-hidden border-none shadow-md hover:shadow-lg transition-shadow duration-300 bg-gradient-to-br from-soft-blue to-white">
                 <CardHeader className="pb-2">
@@ -443,7 +433,6 @@ const StudentDashboard = () => {
               </Card>
             </div>
             
-            {/* Available Tasks Section */}
             <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
               <div className="border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white px-6 py-5">
                 <div className="flex items-center justify-between">
@@ -454,8 +443,8 @@ const StudentDashboard = () => {
                   <p className="text-sm text-gray-500">Find opportunities to earn</p>
                 </div>
                 
-                <div className="mt-5 grid grid-cols-1 md:grid-cols-5 gap-4">
-                  <div className="md:col-span-2 relative">
+                <div className="mt-5 flex items-center gap-4">
+                  <div className="relative flex-1">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                     <Input
                       placeholder="Search tasks..."
@@ -465,79 +454,123 @@ const StudentDashboard = () => {
                     />
                   </div>
                   
-                  <Select value={filterCategory} onValueChange={setFilterCategory}>
-                    <SelectTrigger className="w-full h-10 bg-white border-assist-blue/20">
-                      <SelectValue placeholder="All Categories" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Categories</SelectItem>
-                      <SelectItem value="Academic Help">Academic Help</SelectItem>
-                      <SelectItem value="Digital Services">Digital Services</SelectItem>
-                      <SelectItem value="Fitness & Wellness">Fitness & Wellness</SelectItem>
-                      <SelectItem value="Campus Services">Campus Services</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  
-                  <Select value={filterLocation} onValueChange={setFilterLocation}>
-                    <SelectTrigger className="w-full h-10 bg-white border-assist-blue/20">
-                      <SelectValue placeholder="All Locations" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {locations.map((location) => (
-                        <SelectItem key={location} value={location}>
-                          {location === "all" ? "All Locations" : location}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  
-                  <div className="flex gap-2">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="outline" className="flex-1 border-assist-blue/20">
-                          <Filter className="mr-2 h-4 w-4" />
-                          More Filters
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent className="w-56">
-                        <DropdownMenuLabel>Price Range</DropdownMenuLabel>
-                        {priceRanges.map((range) => (
-                          <DropdownMenuItem 
-                            key={range.value}
-                            className={filterPriceRange === range.value ? "bg-blue-50" : ""}
-                            onClick={() => setFilterPriceRange(range.value)}
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button 
+                        className="bg-gradient-to-r from-assist-blue to-indigo-600 hover:bg-assist-blue/90 transition-all duration-300 shadow-md hover:shadow-lg"
+                      >
+                        <SlidersHorizontal className="mr-2 h-4 w-4" />
+                        Filters
+                        {(filterCategory !== 'all' || filterLocation !== 'all' || filterPriceRange !== 'all' || filterSkills !== 'all') && (
+                          <Badge className="ml-2 bg-white text-assist-blue">
+                            {(filterCategory !== 'all' ? 1 : 0) + 
+                            (filterLocation !== 'all' ? 1 : 0) + 
+                            (filterPriceRange !== 'all' ? 1 : 0) + 
+                            (filterSkills !== 'all' ? 1 : 0)}
+                          </Badge>
+                        )}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-80 p-0 border-none rounded-xl shadow-xl">
+                      <div className="p-5 bg-gradient-to-r from-assist-blue to-indigo-600 rounded-t-xl">
+                        <div className="flex items-center justify-between">
+                          <h3 className="text-lg font-semibold text-white flex items-center">
+                            <Filter className="h-5 w-5 mr-2" />
+                            Filter Tasks
+                          </h3>
+                          <Button 
+                            size="smallIcon" 
+                            variant="ghost" 
+                            className="text-white hover:bg-white/20 rounded-full"
+                            onClick={handleClearFilters}
                           >
-                            <DollarSign className="mr-2 h-4 w-4" />
-                            {range.label}
-                          </DropdownMenuItem>
-                        ))}
-                        <DropdownMenuSeparator />
-                        <DropdownMenuLabel>Skills Required</DropdownMenuLabel>
-                        {skills.map((skill) => (
-                          <DropdownMenuItem 
-                            key={skill}
-                            className={filterSkills === skill ? "bg-blue-50" : ""}
-                            onClick={() => setFilterSkills(skill)}
+                            <X className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                      
+                      <div className="p-4 space-y-4">
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium text-gray-700">Category</label>
+                          <Select value={filterCategory} onValueChange={setFilterCategory}>
+                            <SelectTrigger className="w-full bg-white border-gray-200">
+                              <SelectValue placeholder="All Categories" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="all">All Categories</SelectItem>
+                              <SelectItem value="Academic Help">Academic Help</SelectItem>
+                              <SelectItem value="Digital Services">Digital Services</SelectItem>
+                              <SelectItem value="Fitness & Wellness">Fitness & Wellness</SelectItem>
+                              <SelectItem value="Campus Services">Campus Services</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium text-gray-700">Location</label>
+                          <Select value={filterLocation} onValueChange={setFilterLocation}>
+                            <SelectTrigger className="w-full bg-white border-gray-200">
+                              <SelectValue placeholder="All Locations" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {locations.map((location) => (
+                                <SelectItem key={location} value={location}>
+                                  {location === "all" ? "All Locations" : location}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium text-gray-700">Price Range</label>
+                          <Select value={filterPriceRange} onValueChange={setFilterPriceRange}>
+                            <SelectTrigger className="w-full bg-white border-gray-200">
+                              <SelectValue placeholder="All Prices" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {priceRanges.map((range) => (
+                                <SelectItem key={range.value} value={range.value}>
+                                  {range.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium text-gray-700">Skills</label>
+                          <Select value={filterSkills} onValueChange={setFilterSkills}>
+                            <SelectTrigger className="w-full bg-white border-gray-200">
+                              <SelectValue placeholder="All Skills" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {skills.map((skill) => (
+                                <SelectItem key={skill} value={skill}>
+                                  {skill === "all" ? "All Skills" : skill}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        
+                        <div className="pt-2 flex justify-between">
+                          <Button 
+                            variant="outline" 
+                            className="border-gray-200"
+                            onClick={handleClearFilters}
                           >
-                            <Briefcase className="mr-2 h-4 w-4" />
-                            {skill === "all" ? "All Skills" : skill}
-                          </DropdownMenuItem>
-                        ))}
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                    
-                    <Button 
-                      variant="ghost" 
-                      size="icon"
-                      onClick={handleClearFilters}
-                      title="Clear all filters"
-                      className="border border-gray-200"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M19 6 5 20M5 6l14 14"/>
-                      </svg>
-                    </Button>
-                  </div>
+                            Reset
+                          </Button>
+                          <Button 
+                            className="bg-assist-blue hover:bg-assist-blue/90"
+                          >
+                            Apply Filters
+                          </Button>
+                        </div>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
                 </div>
               </div>
               
@@ -606,7 +639,6 @@ const StudentDashboard = () => {
               )}
             </div>
             
-            {/* Upcoming Tasks Section */}
             <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
               <div className="border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white px-6 py-5">
                 <div className="flex items-center">
@@ -656,7 +688,6 @@ const StudentDashboard = () => {
               </div>
             </div>
             
-            {/* Recent Activity Section */}
             <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
               <div className="border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white px-6 py-5">
                 <div className="flex items-center">
