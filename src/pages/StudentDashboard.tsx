@@ -95,7 +95,7 @@ const StudentDashboard = () => {
       description: "Test a new social media app and provide feedback",
       category: "Digital Services",
       location: "Remote",
-      image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?q=80&w=1974&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?q=80&w=2074&auto=format&fit=crop",
       rate: "$25/hr",
       rateNumeric: 25,
       skills: ["Mobile", "Testing", "UX"]
@@ -345,6 +345,7 @@ const StudentDashboard = () => {
           onSetActiveTab={handleSetActiveTab}
           assistPoints={750}
           balance={currentBalance}
+          campus={campus}
         />
       </div>
       
@@ -360,40 +361,12 @@ const StudentDashboard = () => {
                 <p className="text-white/80 mb-2">
                   Manage your tasks, earnings, and rewards
                 </p>
-                <div className="flex items-center text-white/90 text-sm font-medium">
-                  <GraduationCap className="h-4 w-4 mr-1.5" />
-                  {campus}
-                </div>
               </div>
             </div>
             <div className="flex flex-col mt-4 md:mt-0 md:items-end">
-              <Badge className="bg-white text-assist-blue px-4 py-2 text-sm font-medium shadow-sm mb-2">
+              <Badge className="bg-white text-assist-blue px-4 py-2 text-sm font-medium shadow-sm">
                 Student Account
               </Badge>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="bg-white/10 text-white border-white/20 hover:bg-white/20">
-                    <GraduationCap className="mr-2 h-4 w-4" />
-                    Campus Settings
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuLabel>Select Campus</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => setCampus("University of Technology")}>
-                    University of Technology
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setCampus("North Campus")}>
-                    North Campus
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setCampus("Downtown Campus")}>
-                    Downtown Campus
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setCampus("Medical Center Campus")}>
-                    Medical Center Campus
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
             </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Bell, Coins, Mail, CheckCircle, User, History, LogOut, MessageSquare, DollarSign } from "lucide-react";
+import { Bell, Coins, Mail, CheckCircle, User, History, LogOut, MessageSquare, DollarSign, GraduationCap } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import {
@@ -22,6 +22,7 @@ interface MainHeaderProps {
   onSetActiveTab: (tab: string) => void;
   assistPoints?: number;
   balance?: number;
+  campus?: string;
 }
 
 const MainHeader: React.FC<MainHeaderProps> = ({ 
@@ -31,7 +32,8 @@ const MainHeader: React.FC<MainHeaderProps> = ({
   onToggleFavoriteView, 
   onSetActiveTab,
   assistPoints = 0,
-  balance = 0
+  balance = 0,
+  campus
 }) => {
   const navigate = useNavigate();
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
@@ -154,11 +156,19 @@ const MainHeader: React.FC<MainHeaderProps> = ({
 
   return (
     <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6 w-full px-2">
-      <h1 className="text-2xl md:text-3xl font-bold">
-        <span className="bg-gradient-to-r from-assist-blue via-blue-500 to-blue-400 bg-clip-text text-transparent">
-          Hello, {userName}!
-        </span>
-      </h1>
+      <div className="flex flex-col">
+        <h1 className="text-2xl md:text-3xl font-bold">
+          <span className="bg-gradient-to-r from-assist-blue via-blue-500 to-blue-400 bg-clip-text text-transparent">
+            Hello, {userName}!
+          </span>
+        </h1>
+        {campus && (
+          <div className="flex items-center text-gray-600 text-sm font-medium mt-1">
+            <GraduationCap className="h-4 w-4 mr-1.5" />
+            {campus}
+          </div>
+        )}
+      </div>
       <div className="flex items-center gap-3 flex-wrap justify-end">
         <Button 
           variant="ghost"
@@ -381,3 +391,4 @@ const MainHeader: React.FC<MainHeaderProps> = ({
 };
 
 export default MainHeader;
+
