@@ -70,9 +70,9 @@ const StudentDashboard = () => {
     }
   ]);
   
-  const [availableGigs, setAvailableGigs] = useState([
+  const [availableTasks, setAvailableTasks] = useState([
     {
-      id: "gig1",
+      id: "task1",
       title: "Biology Tutoring",
       date: "Monday, 4:00 PM",
       location: "Science Building, Room 302",
@@ -83,7 +83,7 @@ const StudentDashboard = () => {
       image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      id: "gig2",
+      id: "task2",
       title: "Computer Science Project",
       date: "Wednesday, 2:30 PM",
       location: "Engineering Hall, Lab 104",
@@ -94,7 +94,7 @@ const StudentDashboard = () => {
       image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      id: "gig3",
+      id: "task3",
       title: "Math Homework Help",
       date: "Thursday, 5:00 PM",
       location: "University Center, Study Area",
@@ -105,7 +105,7 @@ const StudentDashboard = () => {
       image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      id: "gig4",
+      id: "task4",
       title: "Move Furniture",
       date: "Saturday, 11:00 AM",
       location: "Student Apartments, Building C",
@@ -116,7 +116,7 @@ const StudentDashboard = () => {
       image: "https://images.unsplash.com/photo-1534710961216-75c88202f43e?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      id: "gig5",
+      id: "task5",
       title: "Website Design Help",
       date: "Monday, 6:00 PM",
       price: "$40/hr",
@@ -127,7 +127,7 @@ const StudentDashboard = () => {
       image: "https://images.unsplash.com/photo-1547658719-da2b51169166?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      id: "gig6",
+      id: "task6",
       title: "English Essay Review",
       date: "Tuesday, 1:00 PM",
       price: "$25/hr",
@@ -170,8 +170,8 @@ const StudentDashboard = () => {
     }
   ]);
   
-  const [visibleGigs, setVisibleGigs] = useState(6);
-  const totalGigs = availableGigs.length;
+  const [visibleTasks, setVisibleTasks] = useState(6);
+  const totalTasks = availableTasks.length;
   
   useEffect(() => {
     const userSession = localStorage.getItem("userSession");
@@ -215,12 +215,12 @@ const StudentDashboard = () => {
     setActiveTab(tab);
   };
   
-  const handleAcceptGig = (gig: typeof availableGigs[0]) => {
-    setSelectedGig(gig);
+  const handleAcceptTask = (task: typeof availableTasks[0]) => {
+    setSelectedGig(task);
     setShowConfirmationDialog(true);
   };
   
-  const confirmAcceptGig = () => {
+  const confirmAcceptTask = () => {
     setShowConfirmationDialog(false);
     
     const newTask = {
@@ -235,37 +235,37 @@ const StudentDashboard = () => {
     setUpcomingTasks([...upcomingTasks, newTask]);
     
     if (selectedGig) {
-      setAvailableGigs(availableGigs.filter(gig => gig.id !== selectedGig.id));
+      setAvailableTasks(availableTasks.filter(task => task.id !== selectedGig.id));
     }
     
     setShowSuccessConfetti(true);
     
-    toast.success("Gig accepted successfully!");
+    toast.success("Task accepted successfully!");
   };
 
-  const filteredGigs = availableGigs.filter(gig => {
+  const filteredTasks = availableTasks.filter(task => {
     const matchesSearch = searchText === "" || 
-      gig.title.toLowerCase().includes(searchText.toLowerCase()) ||
-      gig.description.toLowerCase().includes(searchText.toLowerCase()) ||
-      gig.category.toLowerCase().includes(searchText.toLowerCase());
+      task.title.toLowerCase().includes(searchText.toLowerCase()) ||
+      task.description.toLowerCase().includes(searchText.toLowerCase()) ||
+      task.category.toLowerCase().includes(searchText.toLowerCase());
     
     const matchesCategory = selectedCategories.length === 0 || 
-      selectedCategories.includes(gig.category);
+      selectedCategories.includes(task.category);
     
     const minPriceValue = minPrice === "" ? 0 : parseInt(minPrice);
     const maxPriceValue = maxPrice === "" ? Infinity : parseInt(maxPrice);
-    const matchesPrice = gig.priceValue >= minPriceValue && 
-      gig.priceValue <= maxPriceValue;
+    const matchesPrice = task.priceValue >= minPriceValue && 
+      task.priceValue <= maxPriceValue;
     
     const matchesLocation = selectedLocations.length === 0 || 
-      selectedLocations.includes(gig.location);
+      selectedLocations.includes(task.location);
     
     return matchesSearch && matchesCategory && matchesPrice && matchesLocation;
   });
 
-  const categories = [...new Set(availableGigs.map(gig => gig.category))];
+  const categories = [...new Set(availableTasks.map(task => task.category))];
   
-  const locations = [...new Set(availableGigs.map(gig => gig.location))];
+  const locations = [...new Set(availableTasks.map(task => task.location))];
 
   const toggleCategoryFilter = (category: string) => {
     setSelectedCategories(prev => 
@@ -292,8 +292,8 @@ const StudentDashboard = () => {
     setIsFilterOpen(false);
   };
 
-  const loadMoreGigs = () => {
-    setVisibleGigs(prev => Math.min(prev + 3, totalGigs));
+  const loadMoreTasks = () => {
+    setVisibleTasks(prev => Math.min(prev + 3, totalTasks));
   };
 
   return (
@@ -318,19 +318,19 @@ const StudentDashboard = () => {
               <h2 className="text-xl font-semibold mb-4">My Dashboard</h2>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div className="rounded-lg bg-gradient-to-r from-blue-400/60 to-cyan-400/60 p-6 text-white">
+                <div className="rounded-lg bg-gradient-to-r from-purple-500/90 to-indigo-500/90 p-6 text-white">
                   <div className="flex justify-between mb-4">
                     <div>
                       <div className="flex items-center">
                         <CalendarIcon className="h-6 w-6 mr-2" />
                         <h3 className="text-lg font-semibold">Upcoming Tasks</h3>
                       </div>
-                      <p className="text-sm text-blue-50 mt-1">Your scheduled gigs</p>
+                      <p className="text-sm text-blue-50 mt-1">Your scheduled tasks</p>
                     </div>
                     <Button 
                       variant="outline" 
                       size="sm"
-                      className="border-white/30 text-white hover:bg-white/20 hover:text-white"
+                      className="border-white/30 text-white bg-white/10 hover:bg-white/20 hover:text-white"
                       onClick={() => setActiveTab("requests")}
                     >
                       View All
@@ -420,15 +420,15 @@ const StudentDashboard = () => {
               </div>
             </section>
             
-            <section id="available-gigs-section" className="bg-white rounded-xl shadow-md p-6 mt-8">
+            <section id="available-tasks-section" className="bg-white rounded-xl shadow-md p-6 mt-8">
               <div className="flex flex-col md:flex-row justify-between items-center mb-6">
-                <h2 className="text-xl font-semibold mb-4 md:mb-0">Available Gigs</h2>
+                <h2 className="text-xl font-semibold mb-4 md:mb-0">Available Tasks</h2>
                 
                 <div className="flex flex-col md:flex-row gap-3 w-full md:w-auto">
-                  <div className="relative flex-grow md:w-80">
+                  <div className="relative flex-grow md:w-96">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                     <Input 
-                      placeholder="Search gigs..."
+                      placeholder="Search tasks..."
                       value={searchText}
                       onChange={(e) => setSearchText(e.target.value)}
                       className="pl-10 bg-gray-50 focus-visible:ring-blue-400"
@@ -449,10 +449,10 @@ const StudentDashboard = () => {
                         variant="outline" 
                         size="icon"
                         className={cn(
-                          "border-gray-200 hover:bg-gray-50 relative overflow-hidden group",
+                          "relative overflow-hidden group",
                           (selectedCategories.length > 0 || selectedLocations.length > 0 || minPrice || maxPrice) ?
-                          "bg-gradient-to-r from-blue-500/90 to-blue-400/90 text-white hover:from-blue-600/90 hover:to-blue-500/90 border-blue-300" :
-                          "before:absolute before:inset-0 before:bg-gradient-to-r before:from-blue-500/20 before:to-blue-400/20 before:opacity-0 before:transition-opacity hover:before:opacity-100"
+                          "bg-gradient-to-r from-blue-600 to-blue-400 text-white hover:from-blue-700 hover:to-blue-500 border-blue-300" :
+                          "bg-gradient-to-r from-blue-200/50 to-blue-100/50 hover:from-blue-300/60 hover:to-blue-200/60 border-blue-200"
                         )}
                       >
                         <Filter className={cn(
@@ -463,7 +463,7 @@ const StudentDashboard = () => {
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-80 p-0 overflow-hidden border border-blue-100 shadow-lg rounded-lg">
-                      <div className="bg-gradient-to-r from-blue-500 to-blue-400 text-white p-3 flex items-center justify-between">
+                      <div className="bg-gradient-to-r from-blue-600 to-blue-400 text-white p-3 flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <Sliders className="h-4 w-4" />
                           <h3 className="font-medium">Filter Options</h3>
@@ -568,7 +568,7 @@ const StudentDashboard = () => {
                   <Button 
                     variant="outline" 
                     size="sm"
-                    className="border-blue-200 text-blue-700 hover:bg-blue-50"
+                    className="border-indigo-200 text-indigo-700 hover:bg-indigo-50"
                     onClick={() => setActiveTab("calendar")}
                   >
                     View All
@@ -644,75 +644,75 @@ const StudentDashboard = () => {
               )}
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredGigs.slice(0, visibleGigs).map((gig) => (
-                  <div key={gig.id} className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-all">
+                {filteredTasks.slice(0, visibleTasks).map((task) => (
+                  <div key={task.id} className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-all">
                     <div className="h-48 overflow-hidden">
                       <img 
-                        src={gig.image} 
-                        alt={gig.title} 
+                        src={task.image} 
+                        alt={task.title} 
                         className="w-full h-full object-cover transition-transform hover:scale-105 duration-500"
                       />
                     </div>
                     <div className="p-4">
                       <div className="flex justify-between items-start mb-2">
-                        <h3 className="font-semibold text-gray-900">{gig.title}</h3>
+                        <h3 className="font-semibold text-gray-900">{task.title}</h3>
                         <Badge className={
-                          gig.category === "Academic Help" ? "bg-yellow-100 text-yellow-800" :
-                          gig.category === "Digital Services" ? "bg-purple-100 text-purple-800" :
-                          gig.category === "Moving" ? "bg-green-100 text-green-800" :
+                          task.category === "Academic Help" ? "bg-yellow-100 text-yellow-800" :
+                          task.category === "Digital Services" ? "bg-purple-100 text-purple-800" :
+                          task.category === "Moving" ? "bg-green-100 text-green-800" :
                           "bg-blue-100 text-blue-800"
                         }>
-                          {gig.category}
+                          {task.category}
                         </Badge>
                       </div>
-                      <p className="text-sm text-gray-600 mb-3 line-clamp-2">{gig.description}</p>
+                      <p className="text-sm text-gray-600 mb-3 line-clamp-2">{task.description}</p>
                       <div className="space-y-2 mb-4">
                         <div className="flex items-center text-sm text-gray-600">
                           <CalendarIcon className="h-4 w-4 mr-2 text-gray-400" />
-                          <span>{gig.date}</span>
+                          <span>{task.date}</span>
                         </div>
                         <div className="flex items-center text-sm text-gray-600">
                           <MapPin className="h-4 w-4 mr-2 text-gray-400" />
-                          <span>{gig.location}</span>
+                          <span>{task.location}</span>
                         </div>
                         <div className="flex items-center text-sm font-medium text-green-600">
                           <Coins className="h-4 w-4 mr-2 text-green-500" />
-                          <span>{gig.price}</span>
+                          <span>{task.price}</span>
                         </div>
                       </div>
                       <Button 
-                        onClick={() => handleAcceptGig(gig)}
+                        onClick={() => handleAcceptTask(task)}
                         className="w-full bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 hover:from-blue-700 hover:via-blue-600 hover:to-blue-500 text-white"
                       >
-                        Accept Gig
+                        Accept Task
                       </Button>
                     </div>
                   </div>
                 ))}
               </div>
               
-              {filteredGigs.length > 0 && visibleGigs < filteredGigs.length && (
+              {filteredTasks.length > 0 && visibleTasks < filteredTasks.length && (
                 <div className="mt-8 text-center">
                   <Button 
-                    onClick={loadMoreGigs}
+                    onClick={loadMoreTasks}
                     variant="outline"
                     size="lg"
                     className="border-blue-200 text-blue-700 hover:bg-blue-50 px-8 group"
                   >
-                    Load More Gigs
+                    Load More Tasks
                     <ChevronDown className="h-4 w-4 ml-1 group-hover:animate-bounce" />
                   </Button>
                 </div>
               )}
               
-              {filteredGigs.length === 0 && (
+              {filteredTasks.length === 0 && (
                 <div className="text-center py-12 bg-gray-50 rounded-lg border border-gray-200">
                   <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
                     <Search className="h-8 w-8 text-gray-400" />
                   </div>
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">No matching gigs found</h3>
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">No matching tasks found</h3>
                   <p className="text-gray-500 mb-6 max-w-md mx-auto">
-                    Try adjusting your search or filters to find available gigs that match your criteria.
+                    Try adjusting your search or filters to find available tasks that match your criteria.
                   </p>
                   <Button 
                     variant="outline" 
@@ -755,8 +755,8 @@ const StudentDashboard = () => {
       {showConfirmationDialog && selectedGig && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-            <h2 className="text-xl font-semibold mb-2">Confirm Gig Acceptance</h2>
-            <p className="text-gray-600 mb-4">Are you sure you want to accept this gig?</p>
+            <h2 className="text-xl font-semibold mb-2">Confirm Task Acceptance</h2>
+            <p className="text-gray-600 mb-4">Are you sure you want to accept this task?</p>
             
             <div className="bg-gray-50 p-4 rounded-lg mb-6">
               <h3 className="font-medium">{selectedGig.title}</h3>
@@ -785,7 +785,7 @@ const StudentDashboard = () => {
               </Button>
               <Button 
                 className="bg-green-600 hover:bg-green-700"
-                onClick={confirmAcceptGig}
+                onClick={confirmAcceptTask}
               >
                 Confirm
               </Button>
@@ -797,8 +797,8 @@ const StudentDashboard = () => {
       <ConfettiPopup
         isOpen={showSuccessConfetti}
         onClose={() => setShowSuccessConfetti(false)}
-        title="Gig Accepted!"
-        description="You've successfully accepted this gig. It has been added to your upcoming tasks."
+        title="Task Accepted!"
+        description="You've successfully accepted this task. It has been added to your upcoming tasks."
         confirmText="View Calendar"
         onConfirm={() => {
           setShowSuccessConfetti(false);
