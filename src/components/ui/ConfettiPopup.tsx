@@ -45,12 +45,15 @@ const ConfettiPopup: React.FC<ConfettiPopupProps> = ({
   
   useEffect(() => {
     if (isOpen) {
+      // Start confetti immediately when the popup opens
       setShowConfetti(true);
       const timer = setTimeout(() => {
         setShowConfetti(false);
-      }, 5000); // Extended duration for more celebration
+      }, 6000); // Extended duration for more celebration
       
       return () => clearTimeout(timer);
+    } else {
+      setShowConfetti(false);
     }
   }, [isOpen]);
   
@@ -66,7 +69,7 @@ const ConfettiPopup: React.FC<ConfettiPopupProps> = ({
           width={width}
           height={height}
           recycle={false}
-          numberOfPieces={200}
+          numberOfPieces={300}
           gravity={0.15}
           colors={['#FFD700', '#FF6347', '#4169E1', '#32CD32', '#9932CC']}
           tweenDuration={8000}

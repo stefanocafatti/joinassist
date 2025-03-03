@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { 
   Dialog,
@@ -57,8 +58,8 @@ const TaskConfirmationDialog: React.FC<TaskConfirmationDialogProps> = ({
       // Keep confetti showing for a bit longer for better effect
       setTimeout(() => {
         setShowConfetti(false);
-      }, 1500);
-    }, 800);
+      }, 3000);
+    }, 500);
   };
 
   return (
@@ -68,10 +69,16 @@ const TaskConfirmationDialog: React.FC<TaskConfirmationDialogProps> = ({
           width={width}
           height={height}
           recycle={false}
-          numberOfPieces={200}
+          numberOfPieces={300}
           gravity={0.15}
           colors={['#FFD700', '#FF6347', '#4169E1', '#32CD32', '#9932CC']}
-          tweenDuration={5000}
+          tweenDuration={8000}
+          confettiSource={{
+            x: width / 2,
+            y: height / 2,
+            w: 0,
+            h: 0
+          }}
         />
       )}
       
