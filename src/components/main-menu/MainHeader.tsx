@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 interface MainHeaderProps {
   userName: string;
@@ -28,8 +30,10 @@ const MainHeader: React.FC<MainHeaderProps> = ({
   onSetActiveTab,
   assistPoints = 0
 }) => {
+  const navigate = useNavigate();
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isMessagesOpen, setIsMessagesOpen] = useState(false);
+
   const [notifications, setNotifications] = useState([
     {
       id: "1",
@@ -130,6 +134,19 @@ const MainHeader: React.FC<MainHeaderProps> = ({
           : message
       )
     );
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("userSession");
+    localStorage.removeItem("userPreferences");
+    localStorage.removeItem("assistToken");
+    
+    toast.success("Logged out successfully");
+    
+    setTimeout(() => {
+      navigate("/", { replace: true });
+      window.location.reload();
+    }, 300);
   };
 
   return (
@@ -347,7 +364,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
               <span>My Bookings</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout}>
               <LogOut className="mr-2 h-4 w-4" />
               <span>Logout</span>
             </DropdownMenuItem>
