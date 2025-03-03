@@ -1,4 +1,4 @@
-<lov-code>
+
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import CircleBlocks from "@/components/background/CircleBlocks";
@@ -765,4 +765,35 @@ const MainMenu = () => {
           task={selectedTask}
           onTaskBooked={handleBookTask}
           onFavoriteToggle={handleFavoriteToggle}
-          isFavorite={favoriteTaskIds.includes(selectedTask
+          isFavorite={favoriteTaskIds.includes(selectedTask.title)}
+        />
+      )}
+      
+      <ConfettiPopup 
+        isOpen={isConfettiOpen} 
+        onClose={() => setIsConfettiOpen(false)}
+        title={`You've Booked ${bookedTaskTitle}!`}
+        description="Your request has been submitted. You'll be notified when a provider accepts your task."
+        buttonText="View My Requests"
+        onButtonClick={() => {
+          setIsConfettiOpen(false);
+          setActiveTab("requests");
+        }}
+      />
+      
+      <TaskRequestConfetti 
+        isOpen={isRequestConfettiOpen} 
+        onClose={() => setIsRequestConfettiOpen(false)}
+        title={`Your ${requestedTaskTitle} Request is Submitted!`}
+        description="We'll notify you when providers respond to your request."
+        buttonText="View My Requests"
+        onButtonClick={() => {
+          setIsRequestConfettiOpen(false);
+          setActiveTab("requests");
+        }}
+      />
+    </div>
+  );
+};
+
+export default MainMenu;
