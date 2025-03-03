@@ -75,8 +75,8 @@ const StudentCalendar: React.FC<StudentCalendarProps> = ({ tasks = [], minimal =
           components={{
             DayContent: (props) => (
               <>
-                <div>{props.day.day}</div>
-                {renderDay(props.day.date)}
+                <div>{props.date.getDate()}</div>
+                {renderDay(props.date)}
               </>
             ),
           }}
