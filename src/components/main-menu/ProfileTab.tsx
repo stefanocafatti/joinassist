@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -98,8 +99,21 @@ const ProfileTab: React.FC<ProfileTabProps> = ({ user, onUpdateUserName, onUpdat
   };
   
   const handleLogout = () => {
+    // Clear any user session data from localStorage
+    localStorage.removeItem("userSession");
+    localStorage.removeItem("userPreferences");
+    localStorage.removeItem("assistToken");
+    
+    // Show success message
     toast.success("Logged out successfully");
-    navigate("/");
+    
+    // Force a delay to ensure the toast is visible before navigation
+    setTimeout(() => {
+      // Navigate to the home page
+      navigate("/", { replace: true });
+      // Force a page refresh to clear any in-memory state
+      window.location.reload();
+    }, 300);
   };
   
   return (
