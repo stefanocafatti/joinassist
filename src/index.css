@@ -5,7 +5,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 0 0% 98%;
     --foreground: 222.2 84% 4.9%;
 
     --muted: 210 40% 96.1%;
@@ -98,5 +98,9 @@
   /* Utility for shadow with blue tint */
   .shadow-soft {
     box-shadow: 0 4px 14px rgba(0, 114, 245, 0.15);
+  }
+  
+  .bg-soft-gradient {
+    background: linear-gradient(to bottom, #f8f9fa, #f1f2f5);
   }
 }
