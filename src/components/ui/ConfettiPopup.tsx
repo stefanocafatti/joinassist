@@ -42,16 +42,29 @@ const ConfettiPopup: React.FC<ConfettiPopupProps> = ({
 }) => {
   const { width, height } = useWindowSize();
   const [showConfetti, setShowConfetti] = useState(false);
+  const [confettiPieces, setConfettiPieces] = useState(200);
   
   useEffect(() => {
     if (isOpen) {
-      // Start confetti immediately when the popup opens
+      // Start confetti with a burst effect
       setShowConfetti(true);
-      const timer = setTimeout(() => {
-        setShowConfetti(false);
-      }, 6000); // Extended duration for more celebration
+      setConfettiPieces(800); // Start with more confetti
       
-      return () => clearTimeout(timer);
+      // After initial burst, reduce confetti
+      const burstTimer = setTimeout(() => {
+        setConfettiPieces(200);
+      }, 1500);
+      
+      // Stop confetti after a longer duration
+      const stopTimer = setTimeout(() => {
+        setShowConfetti(false);
+      }, 8000); // Extended duration for more celebration
+      
+      return () => {
+        clearTimeout(burstTimer);
+        clearTimeout(stopTimer);
+        setShowConfetti(false);
+      };
     } else {
       setShowConfetti(false);
     }
@@ -68,10 +81,11 @@ const ConfettiPopup: React.FC<ConfettiPopupProps> = ({
         <Confetti
           width={width}
           height={height}
-          recycle={false}
-          numberOfPieces={500}
-          gravity={0.15}
-          colors={['#FFD700', '#FF6347', '#4169E1', '#32CD32', '#9932CC', '#FF8C00', '#00BFFF']}
+          recycle={true}
+          numberOfPieces={confettiPieces}
+          gravity={0.1}
+          wind={0.02}
+          colors={['#FFD700', '#FF6347', '#4169E1', '#32CD32', '#9932CC', '#FF8C00', '#00BFFF', '#FF1493', '#FFFF00', '#8A2BE2']}
           tweenDuration={8000}
           confettiSource={{
             x: width / 2,
@@ -83,21 +97,21 @@ const ConfettiPopup: React.FC<ConfettiPopupProps> = ({
       )}
       
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="sm:max-w-[400px] bg-white rounded-lg p-0 overflow-hidden">
+        <DialogContent className="sm:max-w-[400px] bg-white rounded-lg p-0 overflow-hidden shadow-2xl animate-enter">
           <div className="p-6">
             <DialogHeader className="pb-2">
-              <DialogTitle className="text-2xl font-bold text-center">{title}</DialogTitle>
+              <DialogTitle className="text-2xl font-bold text-center animate-fade-in">{title}</DialogTitle>
             </DialogHeader>
             
             <div className="mt-2 text-center">
               {description && (
-                <p className="text-gray-600 mb-4">{description}</p>
+                <p className="text-gray-600 mb-4 animate-fade-in">{description}</p>
               )}
               
               {content && content}
               
               {taskTitle && !content && (
-                <div className="bg-gray-50 p-6 rounded-lg mb-4 mt-4 text-left">
+                <div className="bg-gray-50 p-6 rounded-lg mb-4 mt-4 text-left shadow-inner animate-fade-in">
                   <div className="flex items-center justify-between mb-3">
                     <span className="text-gray-600 font-medium">Task:</span>
                     <span className="font-semibold text-gray-900">{taskTitle}</span>
@@ -119,14 +133,14 @@ const ConfettiPopup: React.FC<ConfettiPopupProps> = ({
                 <Button 
                   variant="outline" 
                   onClick={onSecondaryAction} 
-                  className="w-full sm:w-auto border-gray-300"
+                  className="w-full sm:w-auto border-gray-300 hover:bg-gray-100 transition-all duration-200"
                 >
                   {secondaryText}
                 </Button>
               )}
               
               <Button 
-                className="bg-assist-blue hover:bg-assist-blue/90 w-full sm:w-auto" 
+                className="bg-assist-blue hover:bg-assist-blue/90 w-full sm:w-auto shadow-md hover:shadow-lg transition-all duration-200" 
                 onClick={finalOnConfirm}
               >
                 {finalConfirmText}

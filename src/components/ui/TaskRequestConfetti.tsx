@@ -27,6 +27,7 @@ const TaskRequestConfetti: React.FC<TaskRequestConfettiProps> = ({
 }) => {
   const { width, height } = useWindowSize();
   const [showConfetti, setShowConfetti] = useState(false);
+  const [confettiPieces, setConfettiPieces] = useState(200);
   const [particles, setParticles] = useState<Array<{
     left: number;
     top: number;
@@ -37,24 +38,39 @@ const TaskRequestConfetti: React.FC<TaskRequestConfettiProps> = ({
 
   useEffect(() => {
     if (isOpen) {
-      // Generate confetti particles when popup opens
-      const colors = ['#FF5252', '#FFD740', '#64FFDA', '#448AFF', '#B388FF', '#FFAB40'];
-      const newParticles = Array.from({ length: 100 }, (_, i) => ({
+      // Generate enhanced confetti particles with more variety
+      const colors = [
+        '#FF5252', '#FFD740', '#64FFDA', '#448AFF', '#B388FF', '#FFAB40', 
+        '#FF1493', '#00BFFF', '#7CFC00', '#9932CC', '#FF4500'
+      ];
+      const newParticles = Array.from({ length: 150 }, (_, i) => ({
         left: Math.random() * 100,
         top: Math.random() * 100,
-        size: Math.random() * 10 + 5,
+        size: Math.random() * 12 + 5, // Slightly bigger particles
         color: colors[Math.floor(Math.random() * colors.length)],
-        delay: Math.random() * 0.5
+        delay: Math.random() * 0.7 // Longer delays for more varied animation
       }));
       setParticles(newParticles);
       
-      // Start confetti animation
+      // Start confetti animation with a big burst
       setShowConfetti(true);
+      setConfettiPieces(800);
+      
+      // After initial burst, reduce confetti
+      const burstTimer = setTimeout(() => {
+        setConfettiPieces(300);
+      }, 1500);
+      
+      // Stop confetti after an extended duration
       const timer = setTimeout(() => {
         setShowConfetti(false);
-      }, 6000); // Extended duration
+      }, 8000); // Extended duration for more celebration
       
-      return () => clearTimeout(timer);
+      return () => {
+        clearTimeout(timer);
+        clearTimeout(burstTimer);
+        setShowConfetti(false);
+      };
     } else {
       setShowConfetti(false);
     }
@@ -74,10 +90,11 @@ const TaskRequestConfetti: React.FC<TaskRequestConfettiProps> = ({
         <Confetti
           width={width}
           height={height}
-          recycle={false}
-          numberOfPieces={500}
-          gravity={0.15}
-          colors={['#FF5252', '#FFD740', '#64FFDA', '#448AFF', '#B388FF', '#FFAB40']}
+          recycle={true}
+          numberOfPieces={confettiPieces}
+          gravity={0.1}
+          wind={0.02}
+          colors={['#FF5252', '#FFD740', '#64FFDA', '#448AFF', '#B388FF', '#FFAB40', '#FF1493', '#00BFFF', '#7CFC00', '#9932CC', '#FF4500']}
           confettiSource={{
             x: width / 2,
             y: height / 3,
@@ -88,7 +105,7 @@ const TaskRequestConfetti: React.FC<TaskRequestConfettiProps> = ({
       )}
     
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="sm:max-w-[425px] rounded-lg bg-white">
+        <DialogContent className="sm:max-w-[425px] rounded-lg bg-white shadow-2xl animate-enter">
           <div className="relative overflow-hidden px-6 py-10">
             {/* CSS Confetti animation */}
             <div className="absolute inset-0 pointer-events-none">
@@ -104,36 +121,37 @@ const TaskRequestConfetti: React.FC<TaskRequestConfettiProps> = ({
                     backgroundColor: particle.color,
                     borderRadius: '50%',
                     opacity: 0,
-                    animation: `fall 3s ease-out forwards ${particle.delay}s`,
+                    animation: `fall 5s ease-out forwards ${particle.delay}s`,
+                    zIndex: 10,
                   }}
                 />
               ))}
             </div>
             
-            <div className="text-center space-y-5">
-              <div className="mx-auto bg-purple-100 p-3 rounded-full w-16 h-16 flex items-center justify-center">
+            <div className="text-center space-y-5 relative z-20">
+              <div className="mx-auto bg-purple-100 p-3 rounded-full w-16 h-16 flex items-center justify-center animate-bounce">
                 <PartyPopper className="h-10 w-10 text-purple-600" />
               </div>
               
-              <h3 className="text-xl font-semibold text-gray-900">
+              <h3 className="text-xl font-semibold text-gray-900 animate-fade-in">
                 {title || "Great! You've submitted a task request"}
               </h3>
               
-              <div className="bg-gray-50 rounded-lg p-3 border border-gray-100 flex items-center space-x-3">
+              <div className="bg-gray-50 rounded-lg p-3 border border-gray-100 flex items-center space-x-3 shadow-inner animate-fade-in">
                 <CheckCircle className="h-5 w-5 text-purple-500 flex-shrink-0" />
                 <p className="text-gray-700 text-sm">
                   <span className="font-medium text-gray-900">{taskTitle}</span> has been requested
                 </p>
               </div>
               
-              <p className="text-gray-600 text-sm">
+              <p className="text-gray-600 text-sm animate-fade-in">
                 {description || "We'll notify providers in your area about your task. You can check the status in the Requests tab."}
               </p>
               
               <div className="pt-2">
                 <Button 
                   onClick={handleButtonClick}
-                  className="w-full bg-assist-blue hover:bg-assist-blue/90"
+                  className="w-full bg-assist-blue hover:bg-assist-blue/90 shadow-md hover:shadow-lg transition-all duration-200"
                 >
                   {buttonText}
                 </Button>
