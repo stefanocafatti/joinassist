@@ -21,6 +21,7 @@ const SearchHeader: React.FC<SearchHeaderProps> = ({
 }) => {
   const [isInputFocused, setIsInputFocused] = useState(false);
   const searchContainerRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
   
   // Close the dropdown when clicking outside
   useEffect(() => {
@@ -34,9 +35,26 @@ const SearchHeader: React.FC<SearchHeaderProps> = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Handle clicking on a recent search
+  const handleRecentSearchClick = (search: string) => {
+    onSearchQueryChange(search);
+    setIsInputFocused(false);
+    
+    // Manually trigger the search after a short delay to ensure the query is updated
+    setTimeout(() => {
+      if (formRef.current) {
+        const fakeEvent = new Event('submit', { cancelable: true }) as unknown as React.FormEvent;
+        onSearch(fakeEvent);
+      } else {
+        // Fallback if form ref isn't available
+        onSearchClick(search);
+      }
+    }, 10);
+  };
+
   return (
     <div ref={searchContainerRef} className="mb-8 relative">
-      <form onSubmit={onSearch}>
+      <form ref={formRef} onSubmit={onSearch}>
         <div className="relative flex items-center">
           <Input 
             type="text" 
@@ -72,10 +90,7 @@ const SearchHeader: React.FC<SearchHeaderProps> = ({
               <div 
                 key={index} 
                 className="px-3 py-2 hover:bg-gray-50 cursor-pointer flex items-center"
-                onClick={() => {
-                  onSearchClick(search);
-                  setIsInputFocused(false);
-                }}
+                onClick={() => handleRecentSearchClick(search)}
               >
                 <Search className="h-4 w-4 text-gray-400 mr-2" />
                 <span className="text-gray-800">{search}</span>
