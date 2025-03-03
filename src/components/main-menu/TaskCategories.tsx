@@ -1,4 +1,3 @@
-
 import { 
   Trash2, 
   Car, 
@@ -79,7 +78,6 @@ const TaskCategories = ({
     setAllTasksLoaded(false);
   }, [selectedCategory]);
 
-  // Updated category colors to match tag colors from SearchResultsSection
   const categories = [
     {
       icon: Trash2,
@@ -246,9 +244,7 @@ const TaskCategories = ({
     ? [...categories, ...additionalCategories]
     : categories;
 
-  // Comprehensive task listings based on the provided categories
   const taskListings = [
-    // Cleaning Tasks
     {
       title: "Wash my Car",
       category: "Cleaning",
@@ -285,7 +281,6 @@ const TaskCategories = ({
       image: "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?q=80&w=1000&auto=format&fit=crop"
     },
     
-    // Transportation and Moving Tasks
     {
       title: "Moving Assistance",
       category: "Transportation and Moving",
@@ -308,7 +303,6 @@ const TaskCategories = ({
       image: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=1000&auto=format&fit=crop"
     },
     
-    // Assembly Tasks
     {
       title: "Assemble my Bed Frame",
       category: "Assembly",
@@ -331,7 +325,6 @@ const TaskCategories = ({
       image: "/lovable-uploads/36f389d4-c8c6-40a8-9cc4-2ed5306d7dd5.png"
     },
     
-    // Academic & Professional Help Tasks
     {
       title: "Writing Essays",
       category: "Academic & Professional Help",
@@ -354,7 +347,6 @@ const TaskCategories = ({
       image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1000&auto=format&fit=crop"
     },
     
-    // Digital Services Tasks
     {
       title: "Code a Website",
       category: "Digital Services",
@@ -377,7 +369,6 @@ const TaskCategories = ({
       image: "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=1000&auto=format&fit=crop"
     },
     
-    // Fitness and Wellness Tasks
     {
       title: "Meal Prep",
       category: "Fitness and Wellness",
@@ -400,7 +391,6 @@ const TaskCategories = ({
       image: "https://images.unsplash.com/photo-1599447421416-3414500d18a5?q=80&w=1000&auto=format&fit=crop"
     },
     
-    // Event and Hospitality Tasks
     {
       title: "Event Setup/Decoration",
       category: "Event and Hospitality",
@@ -423,7 +413,6 @@ const TaskCategories = ({
       image: "https://images.unsplash.com/photo-1528495612343-9ca9f41856c4?q=80&w=1000&auto=format&fit=crop"
     },
     
-    // Special Tasks
     {
       title: "Do my Laundry",
       category: "Special Tasks",
@@ -446,7 +435,6 @@ const TaskCategories = ({
       image: "https://images.unsplash.com/photo-1543168256-418811576931?q=80&w=1000&auto=format&fit=crop"
     },
     
-    // For Brands Tasks
     {
       title: "Content Creation for Ads",
       category: "For Brands",
@@ -471,7 +459,6 @@ const TaskCategories = ({
   ];
 
   const additionalTaskListings = [
-    // More Cleaning Tasks
     {
       title: "Deep Clean Apartment",
       category: "Cleaning",
@@ -494,7 +481,6 @@ const TaskCategories = ({
       image: "https://images.unsplash.com/photo-1596461010414-7da839c5498d?q=80&w=1000&auto=format&fit=crop"
     },
     
-    // More Transportation Tasks
     {
       title: "Pick me up from Location",
       category: "Transportation and Moving",
@@ -517,7 +503,6 @@ const TaskCategories = ({
       image: "https://images.unsplash.com/photo-1586769852836-bc069f19e1be?q=80&w=1000&auto=format&fit=crop"
     },
     
-    // More Assembly Tasks
     {
       title: "Install a Shelf",
       category: "Assembly",
@@ -533,7 +518,6 @@ const TaskCategories = ({
       image: "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?q=80&w=1000&auto=format&fit=crop"
     },
     
-    // More Academic Tasks
     {
       title: "SAT/ACT Prep",
       category: "Academic & Professional Help",
@@ -556,7 +540,6 @@ const TaskCategories = ({
       image: "https://images.unsplash.com/photo-1507209550472-5908c9176456?q=80&w=1000&auto=format&fit=crop"
     },
     
-    // More Digital Services
     {
       title: "Fix my Bugs",
       category: "Digital Services",
@@ -579,7 +562,6 @@ const TaskCategories = ({
       image: "https://images.unsplash.com/photo-1611162616475-46b635cb6868?q=80&w=1000&auto=format&fit=crop"
     },
     
-    // More Fitness Tasks
     {
       title: "Home Workout Plans",
       category: "Fitness and Wellness",
@@ -595,7 +577,6 @@ const TaskCategories = ({
       image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=1000&auto=format&fit=crop"
     },
     
-    // More Event Tasks
     {
       title: "Photographers for Events",
       category: "Event and Hospitality",
@@ -611,7 +592,6 @@ const TaskCategories = ({
       image: "https://images.unsplash.com/photo-1570782118771-d0681a67e73a?q=80&w=1000&auto=format&fit=crop"
     },
     
-    // More Special Tasks
     {
       title: "Help me Pack for a Trip",
       category: "Special Tasks",
@@ -634,7 +614,6 @@ const TaskCategories = ({
       image: "https://images.unsplash.com/photo-1484186139897-d5fc6b908812?q=80&w=1000&auto=format&fit=crop"
     },
     
-    // More For Brands Tasks
     {
       title: "Social Media Management",
       category: "For Brands",
@@ -775,8 +754,8 @@ const TaskCategories = ({
               {selectedCategory ? `${selectedCategory} Tasks` : "All Tasks"}
             </h2>
             
-            <div className="mb-8 overflow-x-auto">
-              <div className="flex space-x-2 pb-4">
+            <div className="mb-8">
+              <div className="flex space-x-2">
                 {categories.map((category, index) => (
                   <div 
                     key={index}

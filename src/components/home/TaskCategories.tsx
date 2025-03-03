@@ -487,8 +487,8 @@ const TaskCategories = ({
               {selectedCategory ? `${selectedCategory} Tasks` : "All Tasks"}
             </h2>
             
-            <div className="mb-8 overflow-x-auto">
-              <div className="flex space-x-2 pb-4">
+            <div className="mb-8">
+              <div className="flex space-x-2">
                 {categories.map((category, index) => (
                   <div 
                     key={index}
