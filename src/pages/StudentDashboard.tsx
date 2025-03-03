@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -94,7 +95,7 @@ const StudentDashboard = () => {
       description: "Test a new social media app and provide feedback",
       category: "Digital Services",
       location: "Remote",
-      image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?q=80&w=2074&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?q=80&w=1974&auto=format&fit=crop",
       rate: "$25/hr",
       rateNumeric: 25,
       skills: ["Mobile", "Testing", "UX"]
@@ -330,7 +331,7 @@ const StudentDashboard = () => {
   });
 
   return (
-    <div className="min-h-screen bg-soft-gradient">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
       <MainHeader 
         userName={userName}
         profileImage={profileImage}
@@ -362,7 +363,7 @@ const StudentDashboard = () => {
         </div>
         
         <Tabs defaultValue="dashboard" onValueChange={setActiveTab} className="space-y-8">
-          <div className="bg-white/70 backdrop-blur-sm rounded-xl p-2 shadow-md">
+          <div className="bg-white rounded-xl p-2 shadow-md">
             <TabsList className="grid w-full grid-cols-5 gap-3 p-1.5">
               <TabsTrigger value="dashboard" className="flex items-center justify-center gap-2 py-3 px-4 font-medium data-[state=active]:bg-blue-500 data-[state=active]:text-white whitespace-nowrap">
                 <UserRound className="h-4 w-4" />
@@ -435,7 +436,7 @@ const StudentDashboard = () => {
               </Card>
             </div>
             
-            <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-md overflow-hidden border border-gray-100">
+            <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
               <div className="border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white px-6 py-5">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
@@ -641,7 +642,7 @@ const StudentDashboard = () => {
               )}
             </div>
             
-            <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-md overflow-hidden border border-gray-100">
+            <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
               <div className="border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white px-6 py-5">
                 <div className="flex items-center">
                   <Clock className="h-5 w-5 text-assist-blue mr-2" />
@@ -690,7 +691,7 @@ const StudentDashboard = () => {
               </div>
             </div>
             
-            <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-md overflow-hidden border border-gray-100">
+            <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
               <div className="border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white px-6 py-5">
                 <div className="flex items-center">
                   <Sparkles className="h-5 w-5 text-amber-500 mr-2" />
@@ -728,25 +729,25 @@ const StudentDashboard = () => {
           </TabsContent>
           
           <TabsContent value="earnings">
-            <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-md">
+            <div className="bg-white rounded-xl p-6 shadow-md">
               <StudentBalance />
             </div>
           </TabsContent>
           
           <TabsContent value="badges">
-            <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-md">
+            <div className="bg-white rounded-xl p-6 shadow-md">
               <StudentBadges />
             </div>
           </TabsContent>
           
           <TabsContent value="calendar">
-            <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-md">
+            <div className="bg-white rounded-xl p-6 shadow-md">
               <StudentCalendar />
             </div>
           </TabsContent>
           
           <TabsContent value="withdrawal">
-            <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-md">
+            <div className="bg-white rounded-xl p-6 shadow-md">
               <StudentWithdrawal />
             </div>
           </TabsContent>
