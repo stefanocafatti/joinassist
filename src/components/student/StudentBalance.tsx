@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,9 +9,12 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { Coins, ArrowUpRight, DollarSign, ArrowDown, CreditCard, Clock, Zap, Info, CheckCircle, HelpCircle } from "lucide-react";
+import { Coins, ArrowUpRight, DollarSign, ArrowDown, CreditCard, Clock, Zap, Info, CheckCircle, HelpCircle, Calendar } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import { addDays } from "date-fns";
 
 interface StudentBalanceProps {
   minimal?: boolean;
@@ -31,10 +35,12 @@ const StudentBalance: React.FC<StudentBalanceProps> = ({ minimal = false }) => {
     ]
   };
 
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   const [withdrawalAmount, setWithdrawalAmount] = useState("");
   const [withdrawalMethod, setWithdrawalMethod] = useState("bank");
   const [expeditedOption, setExpeditedOption] = useState(false);
   const [processingStep, setProcessingStep] = useState(0);
+  const [calendarOpen, setCalendarOpen] = useState(false);
   
   const withdrawalMethods = [
     { id: "bank", name: "Bank Account", processingTime: "1-3 business days", fee: "Free" },
@@ -99,6 +105,19 @@ const StudentBalance: React.FC<StudentBalanceProps> = ({ minimal = false }) => {
     const amount = parseFloat(withdrawalAmount) || 0;
     return Math.max(0.99, amount * 0.01).toFixed(2);
   };
+  
+  // Find transactions for the selected date
+  const getTransactionsForDate = (date: Date | undefined) => {
+    if (!date) return [];
+    
+    const dateString = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    return balanceData.transactions.filter(transaction => {
+      // Simple matching, in a real app would use proper date handling
+      return transaction.date.includes(dateString.split(',')[0]);
+    });
+  };
+  
+  const selectedDateTransactions = getTransactionsForDate(selectedDate);
   
   const renderWithdrawalForm = () => {
     return (
@@ -337,7 +356,7 @@ const StudentBalance: React.FC<StudentBalanceProps> = ({ minimal = false }) => {
             
             <TabsContent value="overview" className="space-y-6">
               <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-                <div className="rounded-lg bg-gradient-to-r from-assist-blue to-indigo-600 p-6 text-white">
+                <div className="md:col-span-2 rounded-lg bg-gradient-to-r from-assist-blue to-indigo-600 p-6 text-white">
                   <h3 className="text-sm font-medium opacity-80">Current Balance</h3>
                   <div className="mt-2 flex items-baseline">
                     <DollarSign className="h-6 w-6" />
@@ -346,32 +365,70 @@ const StudentBalance: React.FC<StudentBalanceProps> = ({ minimal = false }) => {
                   <p className="mt-2 text-sm opacity-80">
                     ${balanceData.pending.toFixed(2)} pending approval
                   </p>
-                </div>
-                
-                <div className="rounded-lg bg-white p-6 shadow-sm border border-gray-100">
-                  <h3 className="text-sm font-medium text-gray-500">Lifetime Earnings</h3>
-                  <div className="mt-2 flex items-baseline">
-                    <DollarSign className="h-5 w-5 text-gray-400" />
-                    <span className="text-2xl font-bold text-gray-900">{balanceData.lifetime.toFixed(2)}</span>
-                  </div>
-                  <div className="mt-2 flex items-center text-sm text-green-600">
-                    <ArrowUpRight className="mr-1 h-3 w-3" />
-                    <span>12% from last month</span>
-                  </div>
-                </div>
-                
-                <div className="rounded-lg bg-white p-6 shadow-sm border border-gray-100">
-                  <h3 className="text-sm font-medium text-gray-500">Monthly Goal</h3>
-                  <div className="mt-2 flex items-baseline">
-                    <DollarSign className="h-5 w-5 text-gray-400" />
-                    <span className="text-2xl font-bold text-gray-900">{balanceData.monthlyGoal.toFixed(2)}</span>
-                  </div>
-                  <div className="mt-2 space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span>Progress</span>
-                      <span>{balanceData.progress}%</span>
+                  <div className="mt-4 flex items-center justify-between">
+                    <div>
+                      <h4 className="text-sm font-medium opacity-80">Lifetime Earnings</h4>
+                      <div className="flex items-baseline mt-1">
+                        <DollarSign className="h-4 w-4 opacity-80" />
+                        <span className="text-xl font-bold">{balanceData.lifetime.toFixed(2)}</span>
+                      </div>
                     </div>
-                    <Progress value={balanceData.progress} className="h-2" />
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => {
+                        const withdrawTrigger = document.querySelector('[data-value="withdraw"]');
+                        if (withdrawTrigger && withdrawTrigger instanceof HTMLElement) {
+                          withdrawTrigger.click();
+                        }
+                      }}
+                      className="border-white/30 text-white hover:bg-white/20 hover:text-white"
+                    >
+                      <ArrowDown className="mr-2 h-4 w-4" />
+                      Withdraw Funds
+                    </Button>
+                  </div>
+                </div>
+                
+                <div 
+                  className="rounded-lg bg-blue-50 border border-blue-100 p-4 cursor-pointer transition-all hover:shadow-md"
+                  onClick={() => setCalendarOpen(true)}
+                >
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-sm font-medium text-blue-700 flex items-center">
+                      <Calendar className="h-4 w-4 mr-1.5" />
+                      Calendar
+                    </h3>
+                    <Button variant="ghost" size="sm" className="h-7 px-2 text-blue-700 hover:bg-blue-100">
+                      View
+                    </Button>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <div className="text-center py-2 border-b border-blue-100">
+                      <p className="text-sm font-medium text-blue-900">
+                        {selectedDate?.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                      </p>
+                    </div>
+                    
+                    {selectedDateTransactions.length > 0 ? (
+                      <div className="space-y-2 max-h-32 overflow-y-auto">
+                        {selectedDateTransactions.map((transaction) => (
+                          <div key={transaction.id} className="bg-white rounded p-2 text-xs shadow-sm border border-blue-50">
+                            <div className="flex justify-between">
+                              <span className="font-medium">{transaction.description}</span>
+                              <span className={transaction.type === 'credit' ? 'text-green-600' : 'text-red-600'}>
+                                {transaction.type === 'credit' ? '+' : '-'}${transaction.amount.toFixed(2)}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-center py-3">
+                        <p className="text-xs text-gray-500">No transactions on this date</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -513,6 +570,55 @@ const StudentBalance: React.FC<StudentBalanceProps> = ({ minimal = false }) => {
           </Tabs>
         </CardContent>
       </Card>
+      
+      {/* Calendar Dialog */}
+      <Dialog open={calendarOpen} onOpenChange={setCalendarOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Financial Calendar</DialogTitle>
+            <DialogDescription>
+              View your earnings and transactions by date.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="py-4">
+            <CalendarComponent
+              mode="single"
+              selected={selectedDate}
+              onSelect={setSelectedDate}
+              initialFocus
+              className="mx-auto border rounded-md"
+            />
+            
+            <div className="mt-4">
+              <h4 className="font-medium mb-2">
+                Transactions on {selectedDate?.toLocaleDateString('en-US', { 
+                  month: 'long', day: 'numeric', year: 'numeric' 
+                })}
+              </h4>
+              
+              {selectedDateTransactions.length > 0 ? (
+                <div className="space-y-2 max-h-48 overflow-y-auto">
+                  {selectedDateTransactions.map((transaction) => (
+                    <div key={transaction.id} className="bg-gray-50 rounded p-3 text-sm">
+                      <div className="flex justify-between">
+                        <span className="font-medium">{transaction.description}</span>
+                        <span className={transaction.type === 'credit' ? 'text-green-600' : 'text-red-600'}>
+                          {transaction.type === 'credit' ? '+' : '-'}${transaction.amount.toFixed(2)}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-4 bg-gray-50 rounded">
+                  <p className="text-sm text-gray-500">No transactions on this date</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
