@@ -10,6 +10,7 @@ interface CategoryCardProps {
   description: string;
   tasks: string[];
   color?: string;
+  emoji?: string;
   onFavoriteToggle?: (taskTitle: string) => void;
   onViewTask?: (taskTitle: string) => void;
   isFavorite?: boolean;
@@ -21,6 +22,7 @@ const CategoryCard = ({
   description,
   tasks,
   color = "bg-blue-50",
+  emoji = "✨",
   onFavoriteToggle,
   onViewTask,
   isFavorite = false,
@@ -54,7 +56,7 @@ const CategoryCard = ({
       <div className="p-6 flex flex-col h-full">
         <div className="flex items-center gap-4 mb-4">
           <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-sm">
-            <Icon size={26} className={cn("text-gray-700", getTextColor(color))} />
+            <div className="text-xl">{emoji}</div>
           </div>
           <div className="flex-1">
             <h3 className="font-semibold text-gray-900 line-clamp-1">{title}</h3>

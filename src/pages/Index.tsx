@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Grid } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/home/Hero";
@@ -46,6 +46,18 @@ const Index = () => {
     navigate("/main-menu", { state: { activeTab: "allTasks" } });
   };
 
+  // Category emojis for the homepage
+  const categories = [
+    { name: "Cleaning", emoji: "🧹" },
+    { name: "Transportation & Moving", emoji: "🚚" },
+    { name: "Assembly", emoji: "🔧" },
+    { name: "Academic Help", emoji: "📚" },
+    { name: "Digital Services", emoji: "💻" },
+    { name: "Fitness & Wellness", emoji: "💪" },
+    { name: "Event Planning", emoji: "🎉" },
+    { name: "Special Tasks", emoji: "⭐" }
+  ];
+
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden">
       <CircleBlocks />
@@ -73,17 +85,16 @@ const Index = () => {
                 </Button>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {["Cleaning", "Transportation & Moving", "Assembly", "Academic Help", 
-                  "Digital Services", "Fitness & Wellness", "Event Planning", "Special Tasks"].map((category, index) => (
+                {categories.map((category, index) => (
                   <div 
                     key={index} 
-                    className="bg-assist-gray/10 hover:bg-assist-blue/5 rounded-xl p-4 text-center cursor-pointer transition-all"
+                    className="bg-assist-gray/10 hover:bg-assist-blue/5 rounded-xl p-4 text-center cursor-pointer transition-all hover:shadow-md hover:-translate-y-1"
                     onClick={handleBrowseAllTasks}
                   >
-                    <div className="h-12 w-12 bg-assist-blue/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                      <Grid className="h-6 w-6 text-assist-blue" />
+                    <div className="h-14 w-14 bg-white rounded-full flex items-center justify-center mx-auto mb-3 shadow-sm">
+                      <span className="text-2xl">{category.emoji}</span>
                     </div>
-                    <h3 className="font-medium text-gray-900">{category}</h3>
+                    <h3 className="font-medium text-gray-900">{category.name}</h3>
                   </div>
                 ))}
               </div>

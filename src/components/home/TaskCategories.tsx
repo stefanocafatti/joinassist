@@ -1,4 +1,3 @@
-
 import { 
   Trash2, 
   Car, 
@@ -65,7 +64,6 @@ const TaskCategories = ({
     }
   };
 
-  // Updated category colors to match tag colors from SearchResultsSection
   const categories = [
     {
       icon: Trash2,
@@ -78,7 +76,8 @@ const TaskCategories = ({
         "✨ Deep Clean Apartment",
         "🗑️ Post Event Clean Up"
       ],
-      color: "bg-sky-50"  // Matches tag color
+      color: "bg-sky-50",
+      emoji: "🧹"
     },
     {
       icon: Car,
@@ -91,7 +90,8 @@ const TaskCategories = ({
         "📬 Drop or Pick up a Package",
         "🚲 Bike/Scooter Delivery"
       ],
-      color: "bg-indigo-50"  // Matches tag color
+      color: "bg-indigo-50",
+      emoji: "🚚"
     },
     {
       icon: Package,
@@ -104,7 +104,8 @@ const TaskCategories = ({
         "🔧 Install a Shelf",
         "🖥️ Assemble Office Desk"
       ],
-      color: "bg-purple-50"  // Matches tag color
+      color: "bg-purple-50",
+      emoji: "🔧"
     },
     {
       icon: BookOpen,
@@ -117,7 +118,8 @@ const TaskCategories = ({
         "📖 Proofread my Paper",
         "👨‍🏫 Study Buddy/Tutor"
       ],
-      color: "bg-yellow-50"  // Matches tag color
+      color: "bg-yellow-50",
+      emoji: "📚"
     },
     {
       icon: Code,
@@ -130,7 +132,8 @@ const TaskCategories = ({
         "🐞 Fix my Bugs",
         "📱 Social Media Content"
       ],
-      color: "bg-red-50"  // Matches tag color
+      color: "bg-red-50",
+      emoji: "💻"
     },
     {
       icon: Dumbbell,
@@ -143,7 +146,8 @@ const TaskCategories = ({
         "🏋️ Home Workout Plans",
         "🍎 Nutrition Counseling"
       ],
-      color: "bg-emerald-50"  // Matches tag color
+      color: "bg-emerald-50",
+      emoji: "💪"
     },
     {
       icon: PartyPopper,
@@ -156,7 +160,8 @@ const TaskCategories = ({
         "📸 Photographers for Events",
         "🎉 Party Coordinator"
       ],
-      color: "bg-pink-50"  // Matches tag color
+      color: "bg-pink-50",
+      emoji: "🎉"
     },
     {
       icon: Star,
@@ -169,7 +174,8 @@ const TaskCategories = ({
         "🧳 Help me Pack for a Trip",
         "👔 Organize my Closet"
       ],
-      color: "bg-orange-50"  // Matches tag color
+      color: "bg-orange-50",
+      emoji: "⭐"
     },
     {
       icon: Briefcase,
@@ -182,7 +188,8 @@ const TaskCategories = ({
         "📈 Market Research",
         "🧪 Product Testing"
       ],
-      color: "bg-blue-50"  // Matches tag color
+      color: "bg-blue-50",
+      emoji: "🏢"
     }
   ];
 
@@ -198,7 +205,8 @@ const TaskCategories = ({
         "🧹 Gutter Cleaning",
         "🪴 Gardening and Lawn Care"
       ],
-      color: "bg-cyan-50"
+      color: "bg-cyan-50",
+      emoji: "🏠"
     },
     {
       icon: Car,
@@ -211,7 +219,8 @@ const TaskCategories = ({
         "🔧 Help with Tire Change",
         "🔋 Jump Start Battery"
       ],
-      color: "bg-lime-50"
+      color: "bg-lime-50",
+      emoji: "🚗"
     },
     {
       icon: Package,
@@ -224,7 +233,8 @@ const TaskCategories = ({
         "📨 Mail Collection",
         "🏦 Bank Deposit Run"
       ],
-      color: "bg-amber-50"
+      color: "bg-amber-50",
+      emoji: "📦"
     }
   ];
 
@@ -373,7 +383,6 @@ const TaskCategories = ({
 
   const allTaskListings = [...taskListings, ...additionalTaskListings];
 
-  // Function to get the proper category background and text colors
   const getCategoryButtonColors = (category: string) => {
     const categoryColorMap: {[key: string]: string} = {
       "Cleaning": selectedCategory === category 
@@ -519,6 +528,7 @@ const TaskCategories = ({
                     description={category.description}
                     tasks={category.tasks}
                     color={category.color}
+                    emoji={category.emoji}
                     onFavoriteToggle={onFavoriteToggle}
                     onViewTask={onViewTask}
                     isFavorite={favoriteTaskIds.includes(category.title)}

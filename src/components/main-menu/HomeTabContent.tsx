@@ -6,7 +6,7 @@ import RecentSearchesSection from "./RecentSearchesSection";
 import RecommendedTasksSection from "./RecommendedTasksSection";
 import PastTasksSection from "./PastTasksSection";
 import { Button } from "@/components/ui/button";
-import { PlusCircle, Grid } from "lucide-react";
+import { PlusCircle } from "lucide-react";
 
 // Define the types for task objects
 interface Task {
@@ -84,6 +84,18 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
     );
   }
 
+  // Category emojis for the Browse by Category section
+  const categoryEmojis = {
+    "Cleaning": "🧹",
+    "Moving": "🚚",
+    "Academic": "📚",
+    "Digital": "💻",
+    "Fitness": "💪",
+    "Events": "🎉",
+    "Special": "✨",
+    "For Brands": "🏢"
+  };
+
   return (
     <div className="space-y-8">
       <InterestsSection
@@ -104,14 +116,16 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
           </Button>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-          {["Cleaning", "Moving", "Academic", "Digital", "Fitness", "Events", "Special", "For Brands"].map((category, index) => (
+          {Object.entries(categoryEmojis).map(([category, emoji], index) => (
             <div 
               key={index} 
-              className="bg-assist-gray/10 hover:bg-assist-blue/5 rounded-xl p-4 text-center cursor-pointer transition-all"
+              className="bg-assist-gray/10 hover:bg-assist-blue/5 rounded-xl p-4 text-center cursor-pointer transition-all hover:shadow-md hover:-translate-y-1"
               onClick={() => onSetActiveTab && onSetActiveTab("allTasks")}
             >
-              <div className="flex items-center justify-center mb-2">
-                <Grid className="h-5 w-5 text-assist-blue" />
+              <div className="flex items-center justify-center mb-3">
+                <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm mb-1">
+                  <span className="text-2xl">{emoji}</span>
+                </div>
               </div>
               <h3 className="font-medium text-sm">{category}</h3>
             </div>
