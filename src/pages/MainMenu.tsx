@@ -414,15 +414,14 @@ const MainMenu = () => {
     setIsTaskDetailOpen(false);
     setIsCustomTaskModalOpen(false);
     
-    // Show confetti for booked tasks
-    setBookedTaskTitle(taskTitle);
-    setIsConfettiOpen(true);
-    
-    // If this is a custom task request, show the request confetti instead
     if (taskTitle === "Custom Task" || !selectedTask) {
       setRequestedTaskTitle(taskTitle);
       setIsRequestConfettiOpen(true);
       setIsConfettiOpen(false);
+    } else {
+      setBookedTaskTitle(taskTitle);
+      setIsConfettiOpen(true);
+      setIsRequestConfettiOpen(false);
     }
     
     setActiveTab("requests");
@@ -447,13 +446,11 @@ const MainMenu = () => {
   const getFavoriteListings = () => {
     console.log("Fetching favorite listings, favoriteTaskIds:", favoriteTaskIds);
     
-    // Combine all task listings from all sources
     const allTasksLists = [
       recommendedTasks,
       ...(searchResults ? [searchResults] : []),
     ];
     
-    // Add task listings from the other arrays if they exist
     if (taskListings && taskListings.length > 0) {
       allTasksLists.push(taskListings);
     }
@@ -462,10 +459,8 @@ const MainMenu = () => {
       allTasksLists.push(additionalTaskListings);
     }
     
-    // Flatten all task arrays into a single array
     const allTasks = allTasksLists.flat();
     
-    // Filter out duplicates based on title
     const uniqueTasks = allTasks.reduce((acc, current) => {
       if (!acc.find(item => item.title === current.title)) {
         acc.push(current);
@@ -473,7 +468,6 @@ const MainMenu = () => {
       return acc;
     }, [] as typeof recommendedTasks);
     
-    // Filter to only include favorited tasks
     const favoriteTasks = uniqueTasks.filter(task => {
       const isFavorite = favoriteTaskIds.includes(task.title);
       return isFavorite;
@@ -735,14 +729,12 @@ const MainMenu = () => {
         isCustomTask={true}
       />
       
-      {/* Confetti popup for successfully booked tasks */}
       <ConfettiPopup 
         isOpen={isConfettiOpen}
         onClose={() => setIsConfettiOpen(false)}
         taskTitle={bookedTaskTitle}
       />
       
-      {/* Confetti popup for task requests */}
       <TaskRequestConfetti
         isOpen={isRequestConfettiOpen}
         onClose={() => setIsRequestConfettiOpen(false)}
