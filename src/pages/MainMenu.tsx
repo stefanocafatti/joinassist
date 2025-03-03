@@ -8,7 +8,6 @@ import { useToast } from "@/hooks/use-toast";
 import ConfettiPopup from "@/components/ui/ConfettiPopup";
 import TaskRequestConfetti from "@/components/ui/TaskRequestConfetti";
 
-// Import refactored components
 import WelcomeOverlay from "@/components/main-menu/WelcomeOverlay";
 import MainHeader from "@/components/main-menu/MainHeader";
 import SearchHeader from "@/components/main-menu/SearchHeader";
@@ -49,7 +48,6 @@ const interestTags = [
   { id: "work", label: "Professional Help", icon: <Briefcase className="h-4 w-4 mr-1" /> },
 ];
 
-// Updated tasks without price and priceType
 const recommendedTasks = [
   {
     title: "Dog Walking",
@@ -142,7 +140,6 @@ const MainMenu = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   useEffect(() => {
-    // Process navigation state if coming from another page
     if (location.state) {
       if (location.state.activeTab) {
         setActiveTab(location.state.activeTab);

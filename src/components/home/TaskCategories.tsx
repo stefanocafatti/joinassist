@@ -1,3 +1,4 @@
+
 import { 
   Trash2, 
   Car, 
@@ -22,22 +23,32 @@ interface TaskCategoriesProps {
   favoriteTaskIds?: string[];
   onFavoriteToggle?: (taskTitle: string) => void;
   onViewTask?: (taskTitle: string) => void;
+  initialSelectedCategory?: string | null;
 }
 
 const TaskCategories = ({ 
   showAllTasks = false, 
   favoriteTaskIds = [], 
   onFavoriteToggle,
-  onViewTask
+  onViewTask,
+  initialSelectedCategory = null
 }: TaskCategoriesProps) => {
   const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(initialSelectedCategory);
   const [visibleTaskCount, setVisibleTaskCount] = useState<number>(9);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleCategoryClick = (category: string) => {
     if (showAllTasks) {
       setSelectedCategory(category === selectedCategory ? null : category);
+    } else {
+      // When clicking from home page, navigate to all tasks with the selected category
+      navigate('/main-menu', { 
+        state: { 
+          activeTab: "allTasks", 
+          selectedCategory: category 
+        } 
+      });
     }
     console.log(`Category selected: ${category}`);
   };
@@ -496,7 +507,10 @@ const TaskCategories = ({
 
   const filteredTaskListings = selectedCategory 
     ? allTaskListings.filter(task => task.category === selectedCategory || 
-        (selectedCategory === "Transportation" && task.category === "Transportation"))
+        (selectedCategory === "Transportation" && task.category === "Transportation and Moving") ||
+        (selectedCategory === "Event & Hospitality" && task.category === "Event and Hospitality") ||
+        (selectedCategory === "Fitness & Wellness" && task.category === "Fitness and Wellness") ||
+        (selectedCategory === "Academic Help" && task.category === "Academic & Professional Help"))
     : allTaskListings;
 
   const visibleTaskListings = filteredTaskListings.slice(0, visibleTaskCount);

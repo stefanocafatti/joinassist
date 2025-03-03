@@ -35,6 +35,9 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
 }) => {
   // This function is already matching the required color scheme
   const getCategoryColor = (category: string) => {
+    // Normalize category names to handle variations
+    const normalizedCategory = getNormalizedCategoryName(category);
+    
     const categoryColorMap: {[key: string]: string} = {
       "Cleaning": "bg-sky-100 text-sky-800",
       "Transportation": "bg-indigo-100 text-indigo-800",
@@ -54,7 +57,23 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
       "Home": "bg-lime-100 text-lime-800",
     };
     
-    return categoryColorMap[category] || "bg-gray-100 text-gray-800";
+    return categoryColorMap[normalizedCategory] || "bg-gray-100 text-gray-800";
+  };
+  
+  // Normalize category names to handle variations
+  const getNormalizedCategoryName = (category: string): string => {
+    const categoryMap: {[key: string]: string} = {
+      "Event & Hospitality": "Event and Hospitality",
+      "Event and Hospitality": "Event and Hospitality",
+      "Fitness & Wellness": "Fitness and Wellness",
+      "Fitness and Wellness": "Fitness and Wellness",
+      "Academic Help": "Academic & Professional Help",
+      "Academic & Professional Help": "Academic & Professional Help",
+      "Transportation": "Transportation and Moving",
+      "Transportation and Moving": "Transportation and Moving"
+    };
+    
+    return categoryMap[category] || category;
   };
   
   const getTaskImage = (task: Task) => {
