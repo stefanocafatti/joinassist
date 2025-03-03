@@ -1,7 +1,6 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Heart, Bell, Coins, Store, Mail, CheckCircle, User, History, CreditCard, Settings, LogOut, MessageSquare, MoreHorizontal } from "lucide-react";
+import { Heart, Bell, Coins, Store, Mail, CheckCircle, User, History, CreditCard, Settings, LogOut, MessageSquare, ChevronRight } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import {
@@ -344,35 +343,27 @@ const MainHeader: React.FC<MainHeaderProps> = ({
               <User className="mr-2 h-4 w-4" />
               <span>Profile</span>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <History className="mr-2 h-4 w-4" />
-              <span>My Bookings</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <CreditCard className="mr-2 h-4 w-4" />
-              <span>Payment Methods</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={onToggleFavoriteView}>
-              <Heart className="mr-2 h-4 w-4" />
-              <span>Saved Tasks</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => onSetActiveTab("rewards")}>
-              <Store className="mr-2 h-4 w-4" />
-              <span>Redeem Points</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => onSetActiveTab("messages")}>
-              <MessageSquare className="mr-2 h-4 w-4" />
-              <span>Messages</span>
-            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <Settings className="mr-2 h-4 w-4" />
               <span>Settings</span>
+              <DropdownMenu>
+                <DropdownMenuTrigger className="ml-auto">
+                  <ChevronRight className="h-4 w-4" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56" align="end" side="right">
+                  <DropdownMenuItem>
+                    <History className="mr-2 h-4 w-4" />
+                    <span>My Bookings</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <CreditCard className="mr-2 h-4 w-4" />
+                    <span>Payment Methods</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <MoreHorizontal className="mr-2 h-4 w-4" />
-              <span>More Options</span>
-            </DropdownMenuItem>
+            <DropdownMenuSeparator />
             <DropdownMenuItem>
               <LogOut className="mr-2 h-4 w-4" />
               <span>Logout</span>
