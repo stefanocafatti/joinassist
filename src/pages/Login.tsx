@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,6 +16,10 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Get the intended destination if redirected from a protected route
+  const from = location.state?.from?.pathname || "/main-menu";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,6 +30,9 @@ const Login = () => {
       setIsLoading(false);
       
       if (email && password) {
+        // Set authentication in localStorage
+        localStorage.setItem("userSession", JSON.stringify({ email }));
+        
         toast({
           title: "Login successful",
           description: "You have been logged in successfully!",
@@ -37,8 +44,8 @@ const Login = () => {
           localStorage.setItem("userEmail", email);
         }
         
-        // Navigate to main menu after successful login
-        navigate("/main-menu");
+        // Navigate to main menu or the originally intended destination after successful login
+        navigate(from, { replace: true });
       } else {
         toast({
           title: "Login failed",

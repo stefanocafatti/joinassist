@@ -144,7 +144,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
     toast.success("Logged out successfully");
     
     setTimeout(() => {
-      navigate("/", { replace: true });
+      navigate("/welcome", { replace: true });
       window.location.reload();
     }, 300);
   };

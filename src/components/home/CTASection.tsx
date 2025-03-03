@@ -1,12 +1,27 @@
 
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const CTASection = () => {
   const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  
+  useEffect(() => {
+    const checkAuth = () => {
+      const hasSession = localStorage.getItem("userSession") !== null;
+      setIsAuthenticated(hasSession);
+    };
+    
+    checkAuth();
+  }, []);
 
   const handleBookTask = () => {
-    navigate("/register");
+    if (isAuthenticated) {
+      navigate("/main-menu");
+    } else {
+      navigate("/login");
+    }
   };
 
   return (
@@ -36,7 +51,7 @@ const CTASection = () => {
             className="rounded-full bg-white text-assist-blue hover:bg-white/90 h-14 px-8 text-base font-semibold shadow-soft"
             onClick={handleBookTask}
           >
-            Book Your Task
+            {isAuthenticated ? "Book Your Task" : "Login to Book Tasks"}
           </Button>
         </div>
         
