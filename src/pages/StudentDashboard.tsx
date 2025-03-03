@@ -330,18 +330,20 @@ const StudentDashboard = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
-      <MainHeader 
-        userName={userName}
-        profileImage={profileImage}
-        showFavorites={showFavorites}
-        onToggleFavoriteView={handleToggleFavoriteView}
-        onSetActiveTab={handleSetActiveTab}
-        assistPoints={750} // Default student points
-        balance={currentBalance} // Pass the current balance
-      />
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 pb-8">
+      <div className="pt-4 px-4">
+        <MainHeader 
+          userName={userName}
+          profileImage={profileImage}
+          showFavorites={showFavorites}
+          onToggleFavoriteView={handleToggleFavoriteView}
+          onSetActiveTab={handleSetActiveTab}
+          assistPoints={750}
+          balance={currentBalance}
+        />
+      </div>
       
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-4">
         <div className="mb-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between bg-gradient-to-r from-assist-blue to-indigo-600 rounded-2xl p-6 shadow-md text-white">
             <div className="flex items-center">
