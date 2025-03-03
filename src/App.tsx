@@ -11,6 +11,7 @@ import Register from "./pages/Register";
 import MainMenu from "./pages/MainMenu";
 import NotFound from "./pages/NotFound";
 import Messages from "./pages/Messages";
+import StudentDashboard from "./pages/StudentDashboard";
 
 const queryClient = new QueryClient();
 
@@ -65,6 +66,11 @@ const App = () => {
             <Route path="/messages" element={
               <ProtectedRoute>
                 <Messages />
+              </ProtectedRoute>
+            } />
+            <Route path="/student-dashboard" element={
+              <ProtectedRoute>
+                <StudentDashboard />
               </ProtectedRoute>
             } />
             

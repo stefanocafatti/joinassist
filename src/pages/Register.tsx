@@ -83,12 +83,24 @@ const Register = () => {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
+      // Store a user session in localStorage with the isStudent flag
+      const userSession = {
+        id: `user-${Date.now()}`,
+        email: formData.email,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        isStudent: isStudentRegistration,
+      };
+      
+      localStorage.setItem("userSession", JSON.stringify(userSession));
+      
       if (isStudentRegistration) {
         toast.success("Student account created successfully!");
+        navigate("/student-dashboard");
       } else {
         toast.success("Account created successfully!");  
+        navigate("/main-menu");
       }
-      navigate("/main-menu");
     } catch (error) {
       toast.error("Registration failed. Please try again.");
       console.error("Registration error:", error);
