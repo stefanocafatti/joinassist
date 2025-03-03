@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -229,14 +228,14 @@ const StudentDashboard = () => {
               <h2 className="text-xl font-semibold mb-4">My Dashboard</h2>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div className="rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 p-6 text-white">
+                <div className="rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 p-6 text-white">
                   <div className="flex justify-between mb-4">
                     <div>
                       <div className="flex items-center">
                         <CalendarIcon className="h-6 w-6 mr-2" />
                         <h3 className="text-lg font-semibold">Upcoming Tasks</h3>
                       </div>
-                      <p className="text-sm text-purple-200 mt-1">Your scheduled gigs</p>
+                      <p className="text-sm text-blue-200 mt-1">Your scheduled gigs</p>
                     </div>
                     <Button 
                       variant="outline" 
@@ -255,7 +254,7 @@ const StudentDashboard = () => {
                           <h4 className="font-medium">{task.title}</h4>
                           <span className="text-green-300 font-medium">{task.earnings}</span>
                         </div>
-                        <div className="flex items-center text-sm text-purple-200 mt-1">
+                        <div className="flex items-center text-sm text-blue-200 mt-1">
                           <CalendarIcon className="h-3 w-3 mr-1" />
                           <span>{task.date}</span>
                           <span className="mx-2">•</span>
@@ -297,8 +296,8 @@ const StudentDashboard = () => {
                       <p className="text-sm text-gray-600">Tasks Completed</p>
                       <p className="text-xl font-bold text-gray-900">8</p>
                     </div>
-                    <div className="bg-purple-50 rounded-lg p-3 text-center">
-                      <div className="text-purple-500 mb-1">
+                    <div className="bg-cyan-50 rounded-lg p-3 text-center">
+                      <div className="text-cyan-500 mb-1">
                         <Star className="h-5 w-5 mx-auto fill-yellow-500" />
                       </div>
                       <p className="text-sm text-gray-600">Average Rating</p>
@@ -328,7 +327,7 @@ const StudentDashboard = () => {
                 <Button 
                   variant="outline" 
                   onClick={() => setActiveTab("points")}
-                  className="border-purple-200 text-purple-700 hover:bg-purple-50"
+                  className="border-blue-200 text-blue-700 hover:bg-blue-50"
                 >
                   View All Achievements
                 </Button>
