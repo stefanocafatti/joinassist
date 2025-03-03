@@ -1,11 +1,10 @@
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { UserRound, Coins, CalendarIcon, BadgeCheck, Clock, MapPin, ThumbsUp, Filter, Search, X } from "lucide-react";
+import { UserRound, Coins, CalendarIcon, BadgeCheck, Clock, MapPin, ThumbsUp, Filter, Search, X, Award, Star, Trophy } from "lucide-react";
 import MainHeader from "@/components/main-menu/MainHeader";
 import StudentBalance from "@/components/student/StudentBalance";
 import StudentPoints from "@/components/student/StudentPoints";
@@ -102,6 +101,37 @@ const StudentDashboard = () => {
     }
   ]);
 
+  const [badges, setBadges] = useState([
+    {
+      id: "badge1",
+      name: "Quick Responder",
+      description: "Responded to 10 requests within 1 hour",
+      icon: <BadgeCheck className="h-6 w-6 text-green-500" />,
+      color: "bg-green-100"
+    },
+    {
+      id: "badge2",
+      name: "Math Tutor",
+      description: "Completed 5 math tutoring sessions",
+      icon: <Award className="h-6 w-6 text-purple-500" />,
+      color: "bg-purple-100"
+    },
+    {
+      id: "badge3",
+      name: "5-Star Helper",
+      description: "Received 5 five-star ratings",
+      icon: <Star className="h-6 w-6 text-yellow-500 fill-yellow-500" />,
+      color: "bg-yellow-100"
+    },
+    {
+      id: "badge4",
+      name: "Top Earner",
+      description: "Earned over $200 in a month",
+      icon: <Trophy className="h-6 w-6 text-blue-500" />,
+      color: "bg-blue-100"
+    }
+  ]);
+  
   useEffect(() => {
     const userSession = localStorage.getItem("userSession");
     if (!userSession) {
@@ -285,6 +315,103 @@ const StudentDashboard = () => {
                 </CardContent>
               </Card>
             </div>
+            
+            {/* Achievements Grid Section */}
+            <section className="bg-white rounded-xl shadow-md p-6 mt-8">
+              <h2 className="text-xl font-semibold mb-4">Your Achievements</h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                {/* Points Card */}
+                <div className="rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 p-6 text-white">
+                  <div className="flex items-center mb-4">
+                    <Coins className="h-6 w-6 mr-2" />
+                    <h3 className="text-lg font-semibold">Total Points</h3>
+                  </div>
+                  <div className="flex items-baseline">
+                    <span className="text-4xl font-bold">750</span>
+                    <span className="ml-2 text-purple-200">points</span>
+                  </div>
+                  <div className="mt-4 space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span>Next Reward: 1000 points</span>
+                      <span>75%</span>
+                    </div>
+                    <div className="bg-white/20 h-2 rounded-full overflow-hidden">
+                      <div className="bg-white h-2 rounded-full" style={{ width: '75%' }}></div>
+                    </div>
+                  </div>
+                  <Button 
+                    variant="outline" 
+                    className="mt-4 border-white text-white hover:bg-white/20 hover:text-white w-full"
+                    onClick={() => setActiveTab("points")}
+                  >
+                    View Rewards
+                  </Button>
+                </div>
+                
+                {/* Stats Card */}
+                <div className="rounded-lg border border-gray-200 p-6">
+                  <h3 className="text-lg font-semibold mb-4">Your Stats</h3>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-blue-50 rounded-lg p-3 text-center">
+                      <div className="text-blue-500 mb-1">
+                        <CalendarIcon className="h-5 w-5 mx-auto" />
+                      </div>
+                      <p className="text-sm text-gray-600">Tasks Completed</p>
+                      <p className="text-xl font-bold text-gray-900">8</p>
+                    </div>
+                    <div className="bg-green-50 rounded-lg p-3 text-center">
+                      <div className="text-green-500 mb-1">
+                        <Star className="h-5 w-5 mx-auto fill-green-500" />
+                      </div>
+                      <p className="text-sm text-gray-600">Average Rating</p>
+                      <p className="text-xl font-bold text-gray-900">4.8</p>
+                    </div>
+                    <div className="bg-yellow-50 rounded-lg p-3 text-center">
+                      <div className="text-yellow-500 mb-1">
+                        <Trophy className="h-5 w-5 mx-auto" />
+                      </div>
+                      <p className="text-sm text-gray-600">Achievements</p>
+                      <p className="text-xl font-bold text-gray-900">{badges.length}</p>
+                    </div>
+                    <div className="bg-purple-50 rounded-lg p-3 text-center">
+                      <div className="text-purple-500 mb-1">
+                        <Coins className="h-5 w-5 mx-auto" />
+                      </div>
+                      <p className="text-sm text-gray-600">Total Earned</p>
+                      <p className="text-xl font-bold text-gray-900">$345</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Badges Grid */}
+              <h3 className="font-semibold text-lg mb-3">Earned Badges</h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {badges.map((badge) => (
+                  <div 
+                    key={badge.id} 
+                    className={`${badge.color} rounded-lg p-4 text-center transition-transform hover:scale-105`}
+                  >
+                    <div className="flex justify-center mb-2">
+                      {badge.icon}
+                    </div>
+                    <h4 className="font-medium text-gray-900">{badge.name}</h4>
+                    <p className="text-xs text-gray-600 mt-1">{badge.description}</p>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="mt-6 text-center">
+                <Button 
+                  variant="outline" 
+                  onClick={() => setActiveTab("points")}
+                  className="border-purple-200 text-purple-700 hover:bg-purple-50"
+                >
+                  View All Achievements
+                </Button>
+              </div>
+            </section>
             
             {/* Available Gigs Section */}
             <section id="available-gigs-section" className="bg-white rounded-xl shadow-md p-6 mt-8">
