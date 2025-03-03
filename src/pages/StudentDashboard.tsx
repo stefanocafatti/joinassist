@@ -17,6 +17,9 @@ const StudentDashboard = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("dashboard");
   const [isStudent, setIsStudent] = useState(false);
+  const [userName, setUserName] = useState("Student");
+  const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [showFavorites, setShowFavorites] = useState(false);
 
   useEffect(() => {
     // Check if user is logged in as a student
@@ -40,15 +43,35 @@ const StudentDashboard = () => {
         toast.error("This page is only accessible to student accounts");
         navigate("/main-menu", { replace: true });
       }
+      
+      // Set user name from session data
+      if (sessionData.firstName) {
+        setUserName(sessionData.firstName);
+      }
     } catch (error) {
       console.error("Error parsing user session:", error);
       navigate("/welcome", { replace: true });
     }
   }, [navigate]);
 
+  const handleToggleFavoriteView = () => {
+    setShowFavorites(!showFavorites);
+  };
+
+  const handleSetActiveTab = (tab: string) => {
+    setActiveTab(tab);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
-      <MainHeader />
+      <MainHeader 
+        userName={userName}
+        profileImage={profileImage}
+        showFavorites={showFavorites}
+        onToggleFavoriteView={handleToggleFavoriteView}
+        onSetActiveTab={handleSetActiveTab}
+        assistPoints={750} // Default student points
+      />
       
       <div className="container mx-auto px-4 py-6">
         <div className="mb-6">
