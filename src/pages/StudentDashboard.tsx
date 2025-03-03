@@ -351,9 +351,9 @@ const StudentDashboard = () => {
                 <UserRound className="h-8 w-8 text-white" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold mb-1">Student Dashboard</h1>
+                <h1 className="text-3xl font-bold mb-1">My Dashboard</h1>
                 <p className="text-white/80">
-                  Manage your tasks, earnings, and academic opportunities
+                  Manage your tasks, earnings, and rewards
                 </p>
               </div>
             </div>
