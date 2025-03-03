@@ -1,6 +1,7 @@
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Heart, Bell, Coins, Mail, CheckCircle, User, History, LogOut, MessageSquare } from "lucide-react";
+import { Bell, Coins, Mail, CheckCircle, User, History, LogOut, MessageSquare, DollarSign } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import {
@@ -20,6 +21,7 @@ interface MainHeaderProps {
   onToggleFavoriteView: () => void;
   onSetActiveTab: (tab: string) => void;
   assistPoints?: number;
+  balance?: number;
 }
 
 const MainHeader: React.FC<MainHeaderProps> = ({ 
@@ -28,7 +30,8 @@ const MainHeader: React.FC<MainHeaderProps> = ({
   showFavorites, 
   onToggleFavoriteView, 
   onSetActiveTab,
-  assistPoints = 0
+  assistPoints = 0,
+  balance = 0
 }) => {
   const navigate = useNavigate();
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
@@ -166,13 +169,15 @@ const MainHeader: React.FC<MainHeaderProps> = ({
           <Coins className="h-4 w-4 mr-1" />
           <span className="text-sm font-medium">{assistPoints} points</span>
         </Button>
+        
         <Button 
-          variant="ghost" 
-          size="icon"
-          onClick={onToggleFavoriteView}
-          className={showFavorites ? 'text-red-500' : ''}
+          variant="ghost"
+          size="sm"
+          className="flex items-center bg-green-500/10 text-green-600 px-3 py-1 rounded-full hover:bg-green-500/20"
+          onClick={() => onSetActiveTab("earnings")}
         >
-          <Heart className={`h-5 w-5 ${showFavorites ? 'fill-red-500' : ''}`} />
+          <DollarSign className="h-4 w-4 mr-1" />
+          <span className="text-sm font-medium">${balance.toFixed(2)}</span>
         </Button>
         
         <Popover open={isMessagesOpen} onOpenChange={setIsMessagesOpen}>

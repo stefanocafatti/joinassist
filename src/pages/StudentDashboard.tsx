@@ -39,7 +39,8 @@ const StudentDashboard = () => {
   const [filterPriceRange, setFilterPriceRange] = useState("all");
   const [filterSkills, setFilterSkills] = useState("all");
   const [searchText, setSearchText] = useState("");
-  
+  const [currentBalance, setCurrentBalance] = useState(345.50);
+
   const [upcomingTasks, setUpcomingTasks] = useState([
     {
       title: "Mathematics Tutoring",
@@ -337,6 +338,7 @@ const StudentDashboard = () => {
         onToggleFavoriteView={handleToggleFavoriteView}
         onSetActiveTab={handleSetActiveTab}
         assistPoints={750} // Default student points
+        balance={currentBalance} // Pass the current balance
       />
       
       <div className="container mx-auto px-4 py-8">
