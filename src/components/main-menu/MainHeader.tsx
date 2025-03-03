@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Bell, Coins, Mail, CheckCircle, User, History, LogOut, MessageSquare, DollarSign } from "lucide-react";
@@ -177,7 +176,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
           onClick={() => onSetActiveTab("earnings")}
         >
           <DollarSign className="h-4 w-4 mr-1" />
-          <span className="text-sm font-medium">${balance.toFixed(2)}</span>
+          <span className="text-sm font-medium">{balance.toFixed(2)}</span>
         </Button>
         
         <Popover open={isMessagesOpen} onOpenChange={setIsMessagesOpen}>
