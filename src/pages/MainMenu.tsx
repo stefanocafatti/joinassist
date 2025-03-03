@@ -521,7 +521,7 @@ const MainMenu = () => {
 
   const handleHideFavoritesSection = () => {
     setShowFavorites(false);
-    setActiveTab("allTasks");
+    setActiveTab("home");
   };
 
   const handleClearSearchResults = () => {
@@ -535,6 +535,11 @@ const MainMenu = () => {
     
     const fakeEvent = { preventDefault: () => {} } as React.FormEvent;
     handleSearch(fakeEvent);
+  };
+
+  const navigateToTasksSection = () => {
+    setActiveTab("allTasks");
+    setShowFavorites(false);
   };
 
   const renderContent = () => {
@@ -566,6 +571,7 @@ const MainMenu = () => {
           onFavoriteToggle={handleFavoriteToggle}
           onBookNow={handleBookNow}
           onHideSection={handleHideFavoritesSection}
+          onNavigateToTasks={navigateToTasksSection}
         />
       );
     } else if (activeTab === "allTasks") {
@@ -599,6 +605,7 @@ const MainMenu = () => {
         onSetActiveTab={setActiveTab}
         recentSearches={user.recentSearches}
         onSearchClick={handleRecentSearchClick}
+        onBrowseTasks={navigateToTasksSection}
       />
     );
   };

@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -21,6 +20,7 @@ interface FavoritesSectionProps {
   onFavoriteToggle: (taskTitle: string) => void;
   onBookNow: (taskTitle: string) => void;
   onHideSection: () => void;
+  onNavigateToTasks: () => void;
 }
 
 const FavoritesSection: React.FC<FavoritesSectionProps> = ({ 
@@ -28,7 +28,8 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({
   favoriteTaskIds, 
   onFavoriteToggle, 
   onBookNow, 
-  onHideSection 
+  onHideSection,
+  onNavigateToTasks
 }) => {
   const { toast } = useToast();
   
@@ -143,10 +144,7 @@ const FavoritesSection: React.FC<FavoritesSectionProps> = ({
             </p>
             <Button 
               className="bg-assist-blue hover:bg-assist-blue/90"
-              onClick={() => {
-                onHideSection();
-                // This function needs to be updated in MainMenu.tsx to set activeTab to "allTasks"
-              }}
+              onClick={onNavigateToTasks}
             >
               Browse Tasks
             </Button>

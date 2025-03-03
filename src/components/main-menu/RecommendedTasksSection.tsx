@@ -20,6 +20,7 @@ interface RecommendedTasksSectionProps {
   onFavoriteToggle: (taskTitle: string) => void;
   onBookNow: (taskTitle: string) => void;
   sectionTitle?: string;
+  onBrowseTasks?: () => void;
 }
 
 const RecommendedTasksSection: React.FC<RecommendedTasksSectionProps> = ({ 
@@ -27,7 +28,8 @@ const RecommendedTasksSection: React.FC<RecommendedTasksSectionProps> = ({
   favoriteTaskIds, 
   onFavoriteToggle, 
   onBookNow,
-  sectionTitle = "Recommended Tasks"
+  sectionTitle = "Recommended Tasks",
+  onBrowseTasks
 }) => {
   const navigate = useNavigate();
   
@@ -46,7 +48,19 @@ const RecommendedTasksSection: React.FC<RecommendedTasksSectionProps> = ({
 
   return (
     <section className="my-8">
-      <h2 className="text-xl font-semibold text-gray-900 mb-4">{sectionTitle}</h2>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-semibold text-gray-900">{sectionTitle}</h2>
+        {onBrowseTasks && (
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={onBrowseTasks}
+            className="text-assist-blue hover:text-assist-blue/90 border-assist-blue/20 hover:border-assist-blue/30"
+          >
+            Browse All Tasks
+          </Button>
+        )}
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {tasks.map((task, index) => (
           <div 
