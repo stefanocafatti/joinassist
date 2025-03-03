@@ -316,16 +316,14 @@ const StudentDashboard = () => {
               </Card>
             </div>
             
-            {/* Achievements Grid Section */}
             <section className="bg-white rounded-xl shadow-md p-6 mt-8">
-              <h2 className="text-xl font-semibold mb-4">Your Achievements</h2>
+              <h2 className="text-xl font-semibold mb-4">My Dashboard</h2>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                {/* Points Card */}
                 <div className="rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 p-6 text-white">
                   <div className="flex items-center mb-4">
-                    <Coins className="h-6 w-6 mr-2" />
-                    <h3 className="text-lg font-semibold">Total Points</h3>
+                    <CalendarIcon className="h-6 w-6 mr-2" />
+                    <h3 className="text-lg font-semibold">Upcoming Tasks</h3>
                   </div>
                   <div className="flex items-baseline">
                     <span className="text-4xl font-bold">750</span>
@@ -349,9 +347,8 @@ const StudentDashboard = () => {
                   </Button>
                 </div>
                 
-                {/* Stats Card */}
                 <div className="rounded-lg border border-gray-200 p-6">
-                  <h3 className="text-lg font-semibold mb-4">Your Stats</h3>
+                  <h3 className="text-lg font-semibold mb-4">Balance</h3>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="bg-blue-50 rounded-lg p-3 text-center">
                       <div className="text-blue-500 mb-1">
@@ -385,8 +382,7 @@ const StudentDashboard = () => {
                 </div>
               </div>
               
-              {/* Badges Grid */}
-              <h3 className="font-semibold text-lg mb-3">Earned Badges</h3>
+              <h3 className="font-semibold text-lg mb-3">Badges and Points</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {badges.map((badge) => (
                   <div 
@@ -413,7 +409,6 @@ const StudentDashboard = () => {
               </div>
             </section>
             
-            {/* Available Gigs Section */}
             <section id="available-gigs-section" className="bg-white rounded-xl shadow-md p-6 mt-8">
               <h2 className="text-xl font-semibold mb-4">Available Gigs</h2>
               <div className="space-y-4">
@@ -462,7 +457,6 @@ const StudentDashboard = () => {
         </Tabs>
       </div>
       
-      {/* Confirmation Dialog */}
       {showConfirmationDialog && selectedGig && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
@@ -505,7 +499,6 @@ const StudentDashboard = () => {
         </div>
       )}
       
-      {/* Success Confetti Popup */}
       <ConfettiPopup
         isOpen={showSuccessConfetti}
         onClose={() => setShowSuccessConfetti(false)}
