@@ -206,6 +206,8 @@ const MainMenu = () => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("Search triggered with query:", searchQuery);
+    
     if (searchQuery.trim()) {
       setSearchPerformed(true);
       
@@ -215,7 +217,29 @@ const MainMenu = () => {
         task.category.toLowerCase().includes(searchQuery.toLowerCase())
       );
       
-      setSearchResults(results);
+      const additionalResults = taskListings.filter(task => 
+        task.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        task.description.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        task.category.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      
+      const allResults = [...results];
+      additionalResults.forEach(task => {
+        if (!allResults.some(t => t.title === task.title)) {
+          allResults.push(task);
+        }
+      });
+      
+      setSearchResults(allResults);
+      
+      setActiveTab("home");
+      
+      if (!user.recentSearches.includes(searchQuery)) {
+        setUser(prevUser => ({
+          ...prevUser,
+          recentSearches: [searchQuery, ...prevUser.recentSearches].slice(0, 5)
+        }));
+      }
     }
   };
 
@@ -508,7 +532,9 @@ const MainMenu = () => {
 
   const handleRecentSearchClick = (search: string) => {
     setSearchQuery(search);
-    handleSearch(new Event('submit') as any);
+    
+    const fakeEvent = { preventDefault: () => {} } as React.FormEvent;
+    handleSearch(fakeEvent);
   };
 
   const renderContent = () => {

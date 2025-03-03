@@ -54,11 +54,19 @@ const SearchHeader: React.FC<SearchHeaderProps> = ({
     }, 10);
   };
 
+  // Handle form submission - this ensures Enter key works
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      onSearch(e);
+    }
+  };
+
   if (!isVisible) return null;
 
   return (
     <div ref={searchContainerRef} className="mb-8 relative">
-      <form ref={formRef} onSubmit={onSearch}>
+      <form ref={formRef} onSubmit={handleSubmit}>
         <div className="relative flex items-center">
           <Input 
             type="text" 
