@@ -369,22 +369,18 @@ const StudentDashboard = () => {
                         <Trophy className="h-5 w-5 mx-auto" />
                       </div>
                       <p className="text-sm text-gray-600">All-time Earnings</p>
-                      <p className="text-xl font-bold text-gray-900">$345.00</p>
+                      <p className="text-xl font-bold text-gray-900">$1,270.80</p>
                     </div>
-                    <div className="bg-yellow-50 rounded-lg p-3 text-center">
-                      <div className="text-yellow-500 mb-1">
-                        <CalendarIcon className="h-5 w-5 mx-auto" />
-                      </div>
-                      <p className="text-sm text-gray-600">Tasks Completed</p>
-                      <p className="text-xl font-bold text-gray-900">8</p>
-                    </div>
-                    <div className="bg-cyan-50 rounded-lg p-3 text-center">
-                      <div className="text-cyan-500 mb-1">
-                        <Star className="h-5 w-5 mx-auto fill-yellow-500" />
-                      </div>
-                      <p className="text-sm text-gray-600">Average Rating</p>
-                      <p className="text-xl font-bold text-gray-900">4.8</p>
-                    </div>
+                  </div>
+                  <div className="mt-4">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="w-full"
+                      onClick={() => setActiveTab("balance")}
+                    >
+                      Manage Funds
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -684,6 +680,30 @@ const StudentDashboard = () => {
                   </Button>
                 </div>
               )}
+            </section>
+          </TabsContent>
+          <TabsContent value="requests">
+            <section className="bg-white rounded-xl shadow-md p-6 mt-8">
+              <h2 className="text-xl font-semibold mb-4">My Requests</h2>
+              <p>This is where the student requests will go</p>
+            </section>
+          </TabsContent>
+          <TabsContent value="balance">
+            <section className="bg-white rounded-xl shadow-md p-6 mt-8">
+              <h2 className="text-xl font-semibold mb-4">My Balance</h2>
+              <StudentBalance />
+            </section>
+          </TabsContent>
+          <TabsContent value="points">
+            <section className="bg-white rounded-xl shadow-md p-6 mt-8">
+              <h2 className="text-xl font-semibold mb-4">My Points</h2>
+              <StudentPoints />
+            </section>
+          </TabsContent>
+          <TabsContent value="calendar">
+            <section className="bg-white rounded-xl shadow-md p-6 mt-8">
+              <h2 className="text-xl font-semibold mb-4">My Calendar</h2>
+              <StudentCalendar tasks={upcomingTasks} />
             </section>
           </TabsContent>
         </Tabs>

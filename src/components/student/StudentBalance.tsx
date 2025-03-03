@@ -15,6 +15,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { addDays } from "date-fns";
+import StudentCalendar from "./StudentCalendar";
 
 interface StudentBalanceProps {
   minimal?: boolean;
@@ -390,46 +391,22 @@ const StudentBalance: React.FC<StudentBalanceProps> = ({ minimal = false }) => {
                   </div>
                 </div>
                 
-                <div 
-                  className="rounded-lg bg-blue-50 border border-blue-100 p-4 cursor-pointer transition-all hover:shadow-md"
-                  onClick={() => setCalendarOpen(true)}
-                >
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-sm font-medium text-blue-700 flex items-center">
-                      <Calendar className="h-4 w-4 mr-1.5" />
-                      Calendar
-                    </h3>
-                    <Button variant="ghost" size="sm" className="h-7 px-2 text-blue-700 hover:bg-blue-100">
-                      View
-                    </Button>
+                <div className="rounded-lg bg-white p-4 shadow-sm border border-gray-100">
+                  <h3 className="text-sm font-medium mb-3 flex items-center gap-2">
+                    <Calendar className="h-4 w-4 text-blue-500" /> 
+                    Calendar
+                  </h3>
+                  <div className="h-40">
+                    <StudentCalendar minimal={true} />
                   </div>
-                  
-                  <div className="space-y-2">
-                    <div className="text-center py-2 border-b border-blue-100">
-                      <p className="text-sm font-medium text-blue-900">
-                        {selectedDate?.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-                      </p>
-                    </div>
-                    
-                    {selectedDateTransactions.length > 0 ? (
-                      <div className="space-y-2 max-h-32 overflow-y-auto">
-                        {selectedDateTransactions.map((transaction) => (
-                          <div key={transaction.id} className="bg-white rounded p-2 text-xs shadow-sm border border-blue-50">
-                            <div className="flex justify-between">
-                              <span className="font-medium">{transaction.description}</span>
-                              <span className={transaction.type === 'credit' ? 'text-green-600' : 'text-red-600'}>
-                                {transaction.type === 'credit' ? '+' : '-'}${transaction.amount.toFixed(2)}
-                              </span>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="text-center py-3">
-                        <p className="text-xs text-gray-500">No transactions on this date</p>
-                      </div>
-                    )}
-                  </div>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="mt-3 w-full"
+                    onClick={() => setCalendarOpen(true)}
+                  >
+                    View Full Calendar
+                  </Button>
                 </div>
               </div>
               
