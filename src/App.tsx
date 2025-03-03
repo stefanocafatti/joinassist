@@ -28,14 +28,54 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
+// Student route component
+const StudentRoute = ({ children }: { children: React.ReactNode }) => {
+  const location = useLocation();
+  const userSession = localStorage.getItem("userSession");
+  const isAuthenticated = userSession !== null;
+  let isStudent = false;
+  
+  if (userSession) {
+    try {
+      const sessionData = JSON.parse(userSession);
+      isStudent = sessionData.isStudent === true;
+    } catch (error) {
+      console.error("Error parsing user session:", error);
+    }
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/welcome" state={{ from: location }} replace />;
+  }
+  
+  if (!isStudent) {
+    return <Navigate to="/main-menu" replace />;
+  }
+
+  return <>{children}</>;
+};
+
 const App = () => {
-  // Check if user is authenticated
+  // Check if user is authenticated and if they are a student
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const [isStudent, setIsStudent] = useState<boolean>(false);
 
   useEffect(() => {
     const checkAuth = () => {
-      const hasSession = localStorage.getItem("userSession") !== null;
-      setIsAuthenticated(hasSession);
+      const userSession = localStorage.getItem("userSession");
+      if (userSession) {
+        setIsAuthenticated(true);
+        try {
+          const sessionData = JSON.parse(userSession);
+          setIsStudent(sessionData.isStudent === true);
+        } catch (error) {
+          console.error("Error parsing user session:", error);
+          setIsStudent(false);
+        }
+      } else {
+        setIsAuthenticated(false);
+        setIsStudent(false);
+      }
     };
 
     checkAuth();
@@ -69,14 +109,18 @@ const App = () => {
               </ProtectedRoute>
             } />
             <Route path="/student-dashboard" element={
-              <ProtectedRoute>
+              <StudentRoute>
                 <StudentDashboard />
-              </ProtectedRoute>
+              </StudentRoute>
             } />
             
             {/* Home route redirection based on auth state */}
             <Route path="/" element={
-              isAuthenticated ? <Navigate to="/main-menu" replace /> : <Navigate to="/welcome" replace />
+              isAuthenticated 
+                ? isStudent 
+                  ? <Navigate to="/student-dashboard" replace /> 
+                  : <Navigate to="/main-menu" replace />
+                : <Navigate to="/welcome" replace />
             } />
             
             {/* Catch-all route */}

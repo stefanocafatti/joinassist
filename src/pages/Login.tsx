@@ -30,8 +30,17 @@ const Login = () => {
       setIsLoading(false);
       
       if (email && password) {
-        // Set authentication in localStorage
-        localStorage.setItem("userSession", JSON.stringify({ email }));
+        // Check if email is a student email (for demo purposes)
+        const isStudentEmail = email.includes(".edu") || 
+          email.includes("ac.uk") || 
+          email.includes("edu.au");
+        
+        // Set authentication in localStorage with isStudent flag
+        localStorage.setItem("userSession", JSON.stringify({ 
+          email,
+          isStudent: isStudentEmail,
+          firstName: email.split('@')[0] // Extract name from email for demo
+        }));
         
         toast({
           title: "Login successful",
@@ -44,8 +53,13 @@ const Login = () => {
           localStorage.setItem("userEmail", email);
         }
         
-        // Navigate to main menu or the originally intended destination after successful login
-        navigate(from, { replace: true });
+        // Navigate to appropriate dashboard based on user type
+        if (isStudentEmail) {
+          navigate("/student-dashboard", { replace: true });
+        } else {
+          // Navigate to main menu or the originally intended destination
+          navigate(from, { replace: true });
+        }
       } else {
         toast({
           title: "Login failed",

@@ -6,11 +6,25 @@ import { useEffect, useState } from "react";
 const CTASection = () => {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isStudent, setIsStudent] = useState(false);
   
   useEffect(() => {
     const checkAuth = () => {
-      const hasSession = localStorage.getItem("userSession") !== null;
-      setIsAuthenticated(hasSession);
+      const userSession = localStorage.getItem("userSession");
+      if (userSession) {
+        setIsAuthenticated(true);
+        
+        // Check if the user is a student
+        try {
+          const sessionData = JSON.parse(userSession);
+          setIsStudent(sessionData.isStudent === true);
+        } catch (error) {
+          console.error("Error parsing user session:", error);
+        }
+      } else {
+        setIsAuthenticated(false);
+        setIsStudent(false);
+      }
     };
     
     checkAuth();
@@ -18,7 +32,11 @@ const CTASection = () => {
 
   const handleBookTask = () => {
     if (isAuthenticated) {
-      navigate("/main-menu");
+      if (isStudent) {
+        navigate("/student-dashboard");
+      } else {
+        navigate("/main-menu");
+      }
     } else {
       navigate("/login");
     }
