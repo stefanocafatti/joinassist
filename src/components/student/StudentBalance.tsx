@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,21 +8,21 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { Coins, ArrowUpRight, DollarSign, ArrowDown, CreditCard, Clock, Zap, Info, CheckCircle } from "lucide-react";
+import { Coins, ArrowUpRight, DollarSign, ArrowDown, CreditCard, Clock, Zap, Info, CheckCircle, HelpCircle } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface StudentBalanceProps {
   minimal?: boolean;
 }
 
 const StudentBalance: React.FC<StudentBalanceProps> = ({ minimal = false }) => {
-  // In a real app, this would be fetched from an API
   const balanceData = {
     current: 345.50,
     pending: 75.00,
     lifetime: 1270.80,
     monthlyGoal: 500,
-    progress: 69, // percentage towards monthly goal
+    progress: 69,
     transactions: [
       { id: 1, date: "Mar 15, 2023", description: "Math Tutoring", amount: 45.00, type: "credit" },
       { id: 2, date: "Mar 05, 2023", description: "Withdrawal", amount: 120.00, type: "debit" },
@@ -83,10 +82,8 @@ const StudentBalance: React.FC<StudentBalanceProps> = ({ minimal = false }) => {
       return;
     }
     
-    // Start the withdrawal process simulation
     setProcessingStep(1);
     
-    // Simulate processing
     setTimeout(() => {
       setProcessingStep(2);
       
@@ -108,7 +105,30 @@ const StudentBalance: React.FC<StudentBalanceProps> = ({ minimal = false }) => {
       <form onSubmit={handleWithdrawalSubmit}>
         <div className="space-y-6">
           <div className="space-y-4">
-            <Label htmlFor="withdrawal-amount">Amount to withdraw</Label>
+            <div className="flex items-center gap-2">
+              <Label htmlFor="withdrawal-amount">Amount to withdraw</Label>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button variant="ghost" size="smallIcon" className="rounded-full" type="button">
+                      <HelpCircle className="h-4 w-4 text-gray-500" />
+                      <span className="sr-only">Withdrawal Information</span>
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-xs p-4">
+                    <div className="space-y-2">
+                      <h4 className="font-semibold">Withdrawal Information</h4>
+                      <ul className="text-sm space-y-1">
+                        <li>• Minimum withdrawal: $10.00</li>
+                        <li>• Processing time: 1-3 business days</li>
+                        <li>• Expedited option: Available for 1% fee (min $0.99)</li>
+                        <li>• Monthly limit: $1,000.00</li>
+                      </ul>
+                    </div>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
             <div className="relative">
               <DollarSign className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
               <Input
@@ -130,7 +150,31 @@ const StudentBalance: React.FC<StudentBalanceProps> = ({ minimal = false }) => {
           <Separator />
           
           <div className="space-y-4">
-            <Label>Select withdrawal method</Label>
+            <div className="flex items-center gap-2">
+              <Label>Select withdrawal method</Label>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button variant="ghost" size="smallIcon" className="rounded-full" type="button">
+                      <HelpCircle className="h-4 w-4 text-gray-500" />
+                      <span className="sr-only">Payment Methods Info</span>
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-xs p-4">
+                    <div className="space-y-2">
+                      <h4 className="font-semibold">Payment Methods</h4>
+                      <ul className="text-sm space-y-1">
+                        <li>• Bank Transfer: 1-3 business days, no fee</li>
+                        <li>• PayPal: 1-2 business days, no fee</li>
+                        <li>• Venmo: 1-2 business days, no fee</li>
+                        <li>• Cash App: 1-2 business days, no fee</li>
+                      </ul>
+                      <p className="text-xs text-gray-500 mt-2">You can update your payment methods in Payment Settings.</p>
+                    </div>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
             <RadioGroup value={withdrawalMethod} onValueChange={setWithdrawalMethod}>
               {withdrawalMethods.map((method) => (
                 <div
@@ -358,8 +402,30 @@ const StudentBalance: React.FC<StudentBalanceProps> = ({ minimal = false }) => {
                     <ArrowDown className="h-5 w-5 text-assist-blue" />
                     Withdrawal Options
                   </h3>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button variant="ghost" size="smallIcon" className="rounded-full mr-2">
+                          <HelpCircle className="h-5 w-5 text-gray-500" />
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-xs p-4">
+                        <div className="space-y-2">
+                          <h4 className="font-semibold">Withdrawal Information</h4>
+                          <ul className="text-sm space-y-1">
+                            <li>• Minimum withdrawal: $10.00</li>
+                            <li>• Processing time: 1-3 business days</li>
+                            <li>• Expedited option: Available for 1% fee</li>
+                            <li>• Monthly limit: $1,000.00</li>
+                            <li>• Withdrawal methods: Bank, PayPal, Venmo, Cash App</li>
+                          </ul>
+                        </div>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                   <Button 
-                    onClick={() => document.querySelector('[data-state="inactive"][value="withdraw"]')?.click()}
+                    type="button"
+                    onClick={() => document.querySelectorAll('[data-value="withdraw"]')[0]?.click()}
                     className="bg-assist-blue hover:bg-assist-blue/90"
                   >
                     Withdraw Funds
@@ -387,7 +453,24 @@ const StudentBalance: React.FC<StudentBalanceProps> = ({ minimal = false }) => {
                 
                 <div className="md:col-span-2">
                   <div className="rounded-lg bg-white p-6 shadow-sm border border-gray-100">
-                    <h3 className="text-lg font-medium">Withdrawal Information</h3>
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-lg font-medium">Withdrawal Information</h3>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button variant="ghost" size="smallIcon" className="rounded-full">
+                              <HelpCircle className="h-4 w-4 text-gray-500" />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent className="max-w-xs p-4">
+                            <div className="space-y-2">
+                              <h4 className="font-semibold">Need More Help?</h4>
+                              <p className="text-sm">Contact support at support@example.com for assistance with withdrawals.</p>
+                            </div>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    </div>
                     <Separator className="my-3" />
                     
                     <div className="space-y-4 text-sm">
