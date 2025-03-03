@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { format } from "date-fns";
 import { 
@@ -29,6 +28,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Badge } from "@/components/ui/badge";
+import ConfettiPopup from "./ConfettiPopup";
 
 interface Task {
   title: string;
@@ -122,6 +122,10 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
   const [customDescription, setCustomDescription] = useState<string>("");
   const [customCategory, setCustomCategory] = useState<string>("Special Tasks");
   
+  // Confetti popup state
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [bookedTaskTitle, setBookedTaskTitle] = useState("");
+  
   // Get the company defined price for this task category
   const taskPrice = isCustomTask 
     ? companyDefinedPrices[customCategory] || companyDefinedPrices["default"] 
@@ -147,6 +151,10 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
       return;
     }
     
+    // Show confetti and store task title
+    setBookedTaskTitle(finalTitle);
+    setShowConfetti(true);
+    
     onTaskBooked(
       finalTitle,
       date,
@@ -156,6 +164,11 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
       finalLocation,
       additionalInfo
     );
+  };
+  
+  const handleConfettiClose = () => {
+    setShowConfetti(false);
+    onClose();
   };
 
   const getTaskImage = (taskTitle: string) => {
@@ -194,181 +207,190 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[550px] max-h-[90vh] overflow-y-auto bg-white">
-        <DialogHeader>
-          <DialogTitle className="text-xl">
-            {isCustomTask ? "Request Custom Task" : task?.title}
-          </DialogTitle>
-        </DialogHeader>
-        
-        <div className="mt-4">
-          {!isCustomTask ? (
-            // Standard task view with image
-            <div 
-              className="h-44 mb-6 rounded-lg bg-cover bg-center"
-              style={{ backgroundImage: `url(${getTaskImage(task?.title || "")})` }}
-            />
-          ) : (
-            // Custom task view with form for title and description
-            <div className="space-y-4 mb-6">
-              <div className="space-y-2">
-                <Label htmlFor="custom-title">Task Title</Label>
-                <Input 
-                  id="custom-title"
-                  placeholder="Enter task title"
-                  value={customTitle}
-                  onChange={(e) => setCustomTitle(e.target.value)}
-                  required
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="custom-category">Task Category</Label>
-                <Select value={customCategory} onValueChange={setCustomCategory}>
-                  <SelectTrigger id="custom-category">
-                    <SelectValue placeholder="Select Category" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-white">
-                    {availableCategories.map((category) => (
-                      <SelectItem key={category} value={category}>
-                        {category}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="custom-description">Task Description</Label>
-                <Textarea 
-                  id="custom-description"
-                  placeholder="Describe what you need help with..."
-                  value={customDescription}
-                  onChange={(e) => setCustomDescription(e.target.value)}
-                  rows={3}
-                  required
-                />
-              </div>
-            </div>
-          )}
+    <>
+      <Dialog open={isOpen} onOpenChange={onClose}>
+        <DialogContent className="sm:max-w-[550px] max-h-[90vh] overflow-y-auto bg-white">
+          <DialogHeader>
+            <DialogTitle className="text-xl">
+              {isCustomTask ? "Request Custom Task" : task?.title}
+            </DialogTitle>
+          </DialogHeader>
           
-          {!isCustomTask && task && (
-            <div className="mb-6">
-              <div className="flex justify-between items-start mb-2">
-                <h3 className="text-lg font-semibold">About this task</h3>
-                <Badge className={cn(getCategoryColor(task.category))}>{task.category}</Badge>
-              </div>
-              <p className="text-gray-600">{task.description}</p>
-            </div>
-          )}
-          
-          <form onSubmit={handleSubmit}>
-            <div className="space-y-6">
-              {/* Date and Time Selection */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="mt-4">
+            {!isCustomTask ? (
+              // Standard task view with image
+              <div 
+                className="h-44 mb-6 rounded-lg bg-cover bg-center"
+                style={{ backgroundImage: `url(${getTaskImage(task?.title || "")})` }}
+              />
+            ) : (
+              // Custom task view with form for title and description
+              <div className="space-y-4 mb-6">
                 <div className="space-y-2">
-                  <Label htmlFor="date" className="flex items-center gap-2">
-                    <CalendarIcon className="h-4 w-4" /> Select Date
-                  </Label>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className="w-full justify-start text-left font-normal"
-                        id="date"
-                        type="button"
-                      >
-                        {date ? format(date, "PPP") : <span>Pick a date</span>}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0 bg-white z-[100]" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={date}
-                        onSelect={setDate}
-                        initialFocus
-                        disabled={(date) => date < new Date()}
-                      />
-                    </PopoverContent>
-                  </Popover>
+                  <Label htmlFor="custom-title">Task Title</Label>
+                  <Input 
+                    id="custom-title"
+                    placeholder="Enter task title"
+                    value={customTitle}
+                    onChange={(e) => setCustomTitle(e.target.value)}
+                    required
+                  />
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="time" className="flex items-center gap-2">
-                    <Clock className="h-4 w-4" /> Select Time
-                  </Label>
-                  <Select value={time} onValueChange={setTime}>
-                    <SelectTrigger id="time">
-                      <SelectValue placeholder="Select Time" />
+                  <Label htmlFor="custom-category">Task Category</Label>
+                  <Select value={customCategory} onValueChange={setCustomCategory}>
+                    <SelectTrigger id="custom-category">
+                      <SelectValue placeholder="Select Category" />
                     </SelectTrigger>
                     <SelectContent className="bg-white">
-                      {times.map((t) => (
-                        <SelectItem key={t} value={t}>
-                          {t}
+                      {availableCategories.map((category) => (
+                        <SelectItem key={category} value={category}>
+                          {category}
                         </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
                 </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="custom-description">Task Description</Label>
+                  <Textarea 
+                    id="custom-description"
+                    placeholder="Describe what you need help with..."
+                    value={customDescription}
+                    onChange={(e) => setCustomDescription(e.target.value)}
+                    rows={3}
+                    required
+                  />
+                </div>
               </div>
-              
-              {/* Price Section - Company defined price */}
-              <div className="space-y-3">
-                <Label className="flex items-center gap-2">
-                  Price Information
-                </Label>
-                <div className="p-4 rounded-md bg-gray-50 border border-gray-200">
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-900 font-medium">Company Rate:</span>
-                    <span className="text-lg font-semibold text-assist-blue">${taskPrice}/hr</span>
+            )}
+            
+            {!isCustomTask && task && (
+              <div className="mb-6">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="text-lg font-semibold">About this task</h3>
+                  <Badge className={cn(getCategoryColor(task.category))}>{task.category}</Badge>
+                </div>
+                <p className="text-gray-600">{task.description}</p>
+              </div>
+            )}
+            
+            <form onSubmit={handleSubmit}>
+              <div className="space-y-6">
+                {/* Date and Time Selection */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="date" className="flex items-center gap-2">
+                      <CalendarIcon className="h-4 w-4" /> Select Date
+                    </Label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className="w-full justify-start text-left font-normal"
+                          id="date"
+                          type="button"
+                        >
+                          {date ? format(date, "PPP") : <span>Pick a date</span>}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0 bg-white z-[100]" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={date}
+                          onSelect={setDate}
+                          initialFocus
+                          disabled={(date) => date < new Date()}
+                        />
+                      </PopoverContent>
+                    </Popover>
                   </div>
-                  <p className="text-xs text-gray-500 mt-1">
-                    This is our standard rate for {isCustomTask ? customCategory.toLowerCase() : (task ? task.category.toLowerCase() : "special")} tasks.
-                  </p>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="time" className="flex items-center gap-2">
+                      <Clock className="h-4 w-4" /> Select Time
+                    </Label>
+                    <Select value={time} onValueChange={setTime}>
+                      <SelectTrigger id="time">
+                        <SelectValue placeholder="Select Time" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-white">
+                        {times.map((t) => (
+                          <SelectItem key={t} value={t}>
+                            {t}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                
+                {/* Price Section - Company defined price */}
+                <div className="space-y-3">
+                  <Label className="flex items-center gap-2">
+                    Price Information
+                  </Label>
+                  <div className="p-4 rounded-md bg-gray-50 border border-gray-200">
+                    <div className="flex items-center justify-between">
+                      <span className="text-gray-900 font-medium">Company Rate:</span>
+                      <span className="text-lg font-semibold text-assist-blue">${taskPrice}/hr</span>
+                    </div>
+                    <p className="text-xs text-gray-500 mt-1">
+                      This is our standard rate for {isCustomTask ? customCategory.toLowerCase() : (task ? task.category.toLowerCase() : "special")} tasks.
+                    </p>
+                  </div>
+                </div>
+                
+                {/* Location */}
+                <div className="space-y-2">
+                  <Label htmlFor="location" className="flex items-center gap-2">
+                    <MapPin className="h-4 w-4" /> Location
+                  </Label>
+                  <Input
+                    id="location"
+                    placeholder="Enter location"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                  />
+                </div>
+                
+                {/* Additional Information */}
+                <div className="space-y-2">
+                  <Label htmlFor="additionalInfo" className="flex items-center gap-2">
+                    <Info className="h-4 w-4" /> Additional Notes
+                  </Label>
+                  <Textarea
+                    id="additionalInfo"
+                    placeholder="Any special requests or details about the task..."
+                    value={additionalInfo}
+                    onChange={(e) => setAdditionalInfo(e.target.value)}
+                    rows={3}
+                  />
                 </div>
               </div>
               
-              {/* Location */}
-              <div className="space-y-2">
-                <Label htmlFor="location" className="flex items-center gap-2">
-                  <MapPin className="h-4 w-4" /> Location
-                </Label>
-                <Input
-                  id="location"
-                  placeholder="Enter location"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                />
-              </div>
-              
-              {/* Additional Information */}
-              <div className="space-y-2">
-                <Label htmlFor="additionalInfo" className="flex items-center gap-2">
-                  <Info className="h-4 w-4" /> Additional Notes
-                </Label>
-                <Textarea
-                  id="additionalInfo"
-                  placeholder="Any special requests or details about the task..."
-                  value={additionalInfo}
-                  onChange={(e) => setAdditionalInfo(e.target.value)}
-                  rows={3}
-                />
-              </div>
-            </div>
-            
-            <DialogFooter className="mt-6">
-              <Button variant="outline" type="button" onClick={onClose}>
-                Cancel
-              </Button>
-              <Button type="submit" className="bg-assist-blue hover:bg-assist-blue/90">
-                {isCustomTask ? "Submit Request" : "Book Now"}
-              </Button>
-            </DialogFooter>
-          </form>
-        </div>
-      </DialogContent>
-    </Dialog>
+              <DialogFooter className="mt-6">
+                <Button variant="outline" type="button" onClick={onClose}>
+                  Cancel
+                </Button>
+                <Button type="submit" className="bg-assist-blue hover:bg-assist-blue/90">
+                  {isCustomTask ? "Submit Request" : "Book Now"}
+                </Button>
+              </DialogFooter>
+            </form>
+          </div>
+        </DialogContent>
+      </Dialog>
+      
+      {/* Confetti Popup */}
+      <ConfettiPopup 
+        isOpen={showConfetti} 
+        onClose={handleConfettiClose}
+        taskTitle={bookedTaskTitle}
+      />
+    </>
   );
 };
 

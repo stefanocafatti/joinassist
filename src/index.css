@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -9,20 +8,23 @@
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
 
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 210 100% 40%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+
+    --primary: 222.2 47.4% 11.2%;
     --primary-foreground: 210 40% 98%;
 
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
 
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
@@ -30,52 +32,26 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --ring: 215 20.2% 65.1%;
 
-    --radius: 0.75rem;
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-    
-    --soft-blue: 214 90% 95%;
-    --soft-green: 120 100% 95%;
-    --soft-yellow: 48 100% 95%;
-    --soft-pink: 340 100% 95%;
-    --soft-orange: 30 100% 95%;
-    --soft-purple: 270 100% 95%;
-    
-    --assist-blue: 210 100% 40%;
-    --assist-gray: 220 13% 91%;
-
-    --tab-home-bg: 226 100% 97%;
-    --tab-home-text: 226 100% 50%;
-    --tab-requests-bg: 142 76% 97%;
-    --tab-requests-text: 142 76% 42%;
-    --tab-favorites-bg: 330 100% 97%;
-    --tab-favorites-text: 330 80% 50%;
-    --tab-store-bg: 45 100% 97%;
-    --tab-store-text: 38 92% 50%;
-    --tab-profile-bg: 210 100% 97%;
-    --tab-profile-text: 210 100% 50%;
+    --radius: 0.5rem;
   }
 
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
 
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
 
     --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
@@ -83,26 +59,13 @@
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 85.7% 97.3%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --ring: 217.2 32.6% 17.5%;
   }
 }
 
@@ -110,213 +73,30 @@
   * {
     @apply border-border;
   }
-
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground;
   }
 }
 
-@layer components {
-  .section-container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24;
-  }
-  
-  .glass-card {
-    @apply bg-white/80 backdrop-blur-sm border border-white/20 shadow-card rounded-2xl;
-  }
-  
-  .glassmorphism {
-    @apply bg-white/60 backdrop-blur-md border border-white/30 shadow-soft;
-  }
-  
-  .highlight-chip {
-    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-assist-blue/10 text-assist-blue;
-  }
-  
-  .task-link {
-    @apply relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-assist-blue after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left;
-  }
-  
-  .hover-scale {
-    @apply transition-transform duration-300 hover:scale-[1.02];
-  }
-  
-  /* Task category cards */
-  .category-card {
-    @apply h-full flex flex-col overflow-hidden rounded-xl transition-all duration-300;
-  }
-  
-  .category-task-item {
-    @apply bg-white p-2.5 rounded-lg shadow-sm text-sm text-gray-700 truncate;
-  }
-  
-  /* Slideshow animation classes */
-  .slide-enter {
-    @apply opacity-0 translate-x-full;
-  }
-  
-  .slide-enter-active {
-    @apply opacity-100 translate-x-0 transition-all duration-500;
-  }
-  
-  .slide-exit {
-    @apply opacity-100 translate-x-0;
-  }
-  
-  .slide-exit-active {
-    @apply opacity-0 -translate-x-full transition-all duration-500;
-  }
-}
-
-/* For smooth scrolling */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Add custom styles for image loading effect */
-.image-loading {
-  filter: blur(10px);
-  transition: filter 0.5s ease-out;
-}
-
-.image-loaded {
-  filter: blur(0);
-}
-
-/* Add keyframes for the slideshow indicator animation */
-@keyframes slide-indicator {
+/* Custom animation for confetti */
+@keyframes fall {
   0% {
-    width: 10px;
-  }
-  100% {
-    width: 24px;
-  }
-}
-
-/* Animation for the slideshow controls */
-@keyframes fade-in-controls {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
+    transform: translateY(0) rotate(0deg);
     opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.slideshow-control {
-  animation: fade-in-controls 0.3s ease-out forwards;
-}
-
-/* Animation for floating elements */
-@keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
   }
   100% {
-    transform: translateY(0px);
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
   }
 }
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
+.animate-fall {
+  animation: fall 3s ease-out forwards;
 }
 
-/* Staggered animation delay for indicators */
-.indicator-delay-1 {
-  animation-delay: 0.1s;
-}
-.indicator-delay-2 {
-  animation-delay: 0.2s;
-}
-.indicator-delay-3 {
-  animation-delay: 0.3s;
-}
-.indicator-delay-4 {
-  animation-delay: 0.4s;
-}
-.indicator-delay-5 {
-  animation-delay: 0.5s;
-}
-
-/* Custom animation for image slideshow */
-.fade-in-animation {
-  opacity: 1;
-  animation: fadeIn 0.5s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0.7; }
-  to { opacity: 1; }
-}
-
-/* Line clamp utilities for text containment */
-.line-clamp-1 {
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.line-clamp-3 {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* Navigation tab styles */
-.nav-tab {
-  @apply relative flex items-center justify-center px-6 py-3 transition-all duration-300;
-}
-  
-.nav-tab-home {
-  @apply hover:bg-indigo-50/50 hover:text-indigo-600;
-}
-  
-.nav-tab-home.active {
-  @apply bg-indigo-50 text-indigo-600 font-medium;
-}
-  
-.nav-tab-requests {
-  @apply hover:bg-emerald-50/50 hover:text-emerald-600;
-}
-  
-.nav-tab-requests.active {
-  @apply bg-emerald-50 text-emerald-600 font-medium;
-}
-  
-.nav-tab-favorites {
-  @apply hover:bg-pink-50/50 hover:text-pink-600;
-}
-  
-.nav-tab-favorites.active {
-  @apply bg-pink-50 text-pink-600 font-medium;
-}
-  
-.nav-tab-store {
-  @apply hover:bg-amber-50/50 hover:text-amber-600;
-}
-  
-.nav-tab-store.active {
-  @apply bg-amber-50 text-amber-600 font-medium;
-}
-  
-.nav-tab-profile {
-  @apply hover:bg-blue-50/50 hover:text-blue-600;
-}
-  
-.nav-tab-profile.active {
-  @apply bg-blue-50 text-blue-600 font-medium;
+@layer utilities {
+  /* Utility for shadow with blue tint */
+  .shadow-soft {
+    box-shadow: 0 4px 14px rgba(0, 114, 245, 0.15);
+  }
 }
