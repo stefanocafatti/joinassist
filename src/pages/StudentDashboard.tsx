@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -48,7 +49,6 @@ const StudentDashboard = () => {
   const [searchText, setSearchText] = useState("");
   const [currentBalance, setCurrentBalance] = useState(345.50);
   const [campus, setCampus] = useState("University of Technology");
-  const [viewMode, setViewMode] = useState<"provider" | "requester">("provider");
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
 
   const [upcomingTasks, setUpcomingTasks] = useState([
@@ -721,4 +721,58 @@ const StudentDashboard = () => {
                 {upcomingTasks.map((task, index) => (
                   <div key={index} className="p-5 hover:bg-blue-50/30 transition-colors duration-150">
                     <div className="flex items-center justify-between mb-2">
-                      <h3 className="font-medium text-gray-9
+                      <h3 className="font-medium text-gray-900">{task.title}</h3>
+                      <Badge className={`${task.status === "Scheduled" ? "bg-green-100 text-green-800" : task.status === "Pending" ? "bg-yellow-100 text-yellow-800" : "bg-blue-100 text-blue-800"}`}>
+                        {task.status}
+                      </Badge>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <div className="flex items-center text-gray-500">
+                        <Clock className="mr-1 h-3.5 w-3.5" />
+                        {task.date}
+                      </div>
+                      <div className="flex items-center text-gray-500">
+                        <MapPin className="mr-1 h-3.5 w-3.5" />
+                        {task.location}
+                      </div>
+                      <div className="font-bold text-assist-blue">
+                        {task.earnings}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="payments" className="space-y-6">
+            <StudentBalance />
+          </TabsContent>
+          
+          <TabsContent value="badges" className="space-y-6">
+            <StudentBadges />
+          </TabsContent>
+          
+          <TabsContent value="calendar" className="space-y-6">
+            <StudentCalendar />
+          </TabsContent>
+          
+          <TabsContent value="rewards" className="space-y-6">
+            <StudentPoints />
+          </TabsContent>
+        </Tabs>
+      </div>
+      
+      {taskDetailOpen && selectedTask && (
+        <TaskDetailView
+          isOpen={taskDetailOpen}
+          task={selectedTask}
+          onClose={() => setTaskDetailOpen(false)}
+          onTaskBooked={handleTaskBooked}
+        />
+      )}
+    </div>
+  );
+};
+
+export default StudentDashboard;
