@@ -1,3 +1,4 @@
+
 import React from "react";
 import { 
   Dialog,
@@ -85,7 +86,7 @@ const TaskStatusView: React.FC<TaskStatusViewProps> = ({
               </div>
               <div>
                 <p className="text-sm text-gray-500">Price</p>
-                <p className="font-medium">{task.price}</p>
+                <p className="font-medium">{task.price.replace('$', '')}</p>
               </div>
             </div>
             
