@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { UserRound, Coins, CalendarIcon, BadgeCheck, BookOpen, Clock, MapPin, ThumbsUp, Filter, Search, Sparkles, X, SlidersHorizontal, DollarSign } from "lucide-react";
+import { UserRound, Coins, CalendarIcon, BadgeCheck, BookOpen, Clock, MapPin, ThumbsUp, Filter, Search, Sparkles, X, SlidersHorizontal, DollarSign, CheckCircle, AlertCircle } from "lucide-react";
 import MainHeader from "@/components/main-menu/MainHeader";
 import StudentBalance from "@/components/student/StudentBalance";
 import StudentBadges from "@/components/student/StudentBadges";
@@ -551,6 +551,67 @@ const StudentDashboard = () => {
                   <StudentBadges minimal />
                 </CardContent>
               </Card>
+            </div>
+            
+            <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+              <div className="border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white px-6 py-5">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <Clock className="h-5 w-5 text-assist-blue mr-2" />
+                    <h2 className="text-xl font-semibold text-gray-900">Active Tasks</h2>
+                  </div>
+                  <p className="text-sm text-gray-500">Your upcoming appointments</p>
+                </div>
+              </div>
+              
+              <div className="p-6">
+                {upcomingTasks.length === 0 ? (
+                  <div className="text-center py-8">
+                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 mb-4">
+                      <Calendar className="h-8 w-8 text-gray-400" />
+                    </div>
+                    <h3 className="text-lg font-medium text-gray-700">No active tasks</h3>
+                    <p className="text-gray-500 mt-2">You don't have any upcoming tasks scheduled</p>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {upcomingTasks.map((task, index) => (
+                      <div key={index} className="flex items-center justify-between p-4 rounded-lg border border-gray-100 hover:border-assist-blue/50 hover:shadow-md transition-all duration-200">
+                        <div className="flex items-center space-x-4">
+                          <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 
+                            ${task.status === "Confirmed" ? "bg-green-100" : 
+                            task.status === "Pending" ? "bg-yellow-100" : "bg-blue-100"}`}>
+                            {task.status === "Confirmed" ? 
+                              <CheckCircle className="h-5 w-5 text-green-600" /> : 
+                              task.status === "Pending" ? 
+                              <Clock className="h-5 w-5 text-yellow-600" /> : 
+                              <AlertCircle className="h-5 w-5 text-blue-600" />
+                            }
+                          </div>
+                          <div>
+                            <h3 className="font-medium text-gray-900">{task.title}</h3>
+                            <div className="flex items-center text-sm text-gray-500">
+                              <Clock className="h-3.5 w-3.5 mr-1" /> {task.date}
+                              <span className="mx-2">•</span>
+                              <MapPin className="h-3.5 w-3.5 mr-1" /> {task.location}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center">
+                          <Badge className={
+                            task.status === "Confirmed" ? "bg-green-100 text-green-800" :
+                            task.status === "Pending" ? "bg-yellow-100 text-yellow-800" :
+                            "bg-blue-100 text-blue-800"
+                          }>
+                            {task.status}
+                          </Badge>
+                          <span className="ml-4 font-medium text-green-600">{task.earnings}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
             
             <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
