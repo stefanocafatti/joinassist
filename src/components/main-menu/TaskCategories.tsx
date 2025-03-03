@@ -1,3 +1,4 @@
+<lov-code>
 import { 
   Trash2, 
   Car, 
@@ -23,19 +24,27 @@ interface TaskCategoriesProps {
   favoriteTaskIds?: string[];
   onFavoriteToggle?: (taskTitle: string) => void;
   onViewTask?: (taskTitle: string) => void;
+  initialSelectedCategory?: string | null;
 }
 
 const TaskCategories = ({ 
   showAllTasks = false, 
   favoriteTaskIds = [], 
   onFavoriteToggle,
-  onViewTask
+  onViewTask,
+  initialSelectedCategory = null
 }: TaskCategoriesProps) => {
   const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(initialSelectedCategory);
   const [visibleTaskCount, setVisibleTaskCount] = useState<number>(9);
   const [isLoading, setIsLoading] = useState(false);
   const [allTasksLoaded, setAllTasksLoaded] = useState(false);
+
+  useEffect(() => {
+    if (initialSelectedCategory && initialSelectedCategory !== selectedCategory) {
+      setSelectedCategory(initialSelectedCategory);
+    }
+  }, [initialSelectedCategory]);
 
   const handleCategoryClick = (category: string) => {
     if (showAllTasks) {
@@ -243,6 +252,80 @@ const TaskCategories = ({
   const displayCategories = showAllTasks 
     ? [...categories, ...additionalCategories]
     : categories;
+
+  const getCategoryColor = (category: string) => {
+    const categoryColorMap: {[key: string]: string} = {
+      "Cleaning": "bg-sky-100 text-sky-800",
+      "Transportation": "bg-indigo-100 text-indigo-800",
+      "Transportation and Moving": "bg-indigo-100 text-indigo-800",
+      "Delivery": "bg-teal-100 text-teal-800",
+      "Assembly": "bg-purple-100 text-purple-800",
+      "Academic & Professional Help": "bg-yellow-100 text-yellow-800",
+      "Academic Help": "bg-yellow-100 text-yellow-800",
+      "Digital Services": "bg-red-100 text-red-800",
+      "Fitness and Wellness": "bg-emerald-100 text-emerald-800",
+      "Fitness & Wellness": "bg-emerald-100 text-emerald-800",
+      "Event and Hospitality": "bg-pink-100 text-pink-800",
+      "Event & Hospitality": "bg-pink-100 text-pink-800",
+      "Special Tasks": "bg-orange-100 text-orange-800",
+      "For Brands": "bg-blue-100 text-blue-800",
+    };
+    
+    return categoryColorMap[category] || "bg-gray-100 text-gray-800";
+  };
+
+  const renderTaskCard = (task: any, index: number) => (
+    <motion.div 
+      key={index}
+      layout
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 cursor-pointer relative"
+      onClick={() => handleViewTask(task.title)}
+    >
+      <div className="relative">
+        <div 
+          className="h-40 bg-cover bg-center" 
+          style={{ backgroundImage: `url(${task.image})` }}
+        />
+        <button 
+          className="absolute top-3 right-3 z-10"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleLocalFavoriteToggle(task.title);
+          }}
+          aria-label={favoriteTaskIds.includes(task.title) ? "Remove from favorites" : "Add to favorites"}
+        >
+          <Heart 
+            className={`h-5 w-5 ${favoriteTaskIds.includes(task.title) ? 'fill-red-500 text-red-500' : 'text-white'}`} 
+          />
+        </button>
+      </div>
+      <div className="p-4">
+        <div className="flex justify-between items-start mb-2">
+          <h3 className="font-semibold text-gray-900">{task.title}</h3>
+          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getCategoryColor(task.category)}`}>
+            {task.category}
+          </span>
+        </div>
+        <p className="text-sm text-gray-600 mb-2">{task.description}</p>
+        <div className="flex items-center justify-end">
+          <Button 
+            size="sm" 
+            className="bg-assist-blue hover:bg-assist-blue/90 w-full"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleViewTask(task.title);
+            }}
+          >
+            <Eye className="h-4 w-4 mr-1" /> View Task
+          </Button>
+        </div>
+      </div>
+    </motion.div>
+  );
 
   const taskListings = [
     {
@@ -628,193 +711,3 @@ const TaskCategories = ({
       location: "Remote or In-person",
       image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1000&auto=format&fit=crop"
     }
-  ];
-
-  const allTaskListings = [...taskListings, ...additionalTaskListings];
-
-  const getCategoryColor = (category: string) => {
-    const categoryColorMap: {[key: string]: string} = {
-      "Cleaning": "bg-sky-100 text-sky-800",
-      "Transportation": "bg-indigo-100 text-indigo-800",
-      "Transportation and Moving": "bg-indigo-100 text-indigo-800",
-      "Delivery": "bg-teal-100 text-teal-800",
-      "Assembly": "bg-purple-100 text-purple-800",
-      "Academic & Professional Help": "bg-yellow-100 text-yellow-800",
-      "Academic Help": "bg-yellow-100 text-yellow-800",
-      "Digital Services": "bg-red-100 text-red-800",
-      "Fitness and Wellness": "bg-emerald-100 text-emerald-800",
-      "Fitness & Wellness": "bg-emerald-100 text-emerald-800",
-      "Event and Hospitality": "bg-pink-100 text-pink-800",
-      "Event & Hospitality": "bg-pink-100 text-pink-800",
-      "Special Tasks": "bg-orange-100 text-orange-800",
-      "For Brands": "bg-blue-100 text-blue-800",
-    };
-    
-    return categoryColorMap[category] || "bg-gray-100 text-gray-800";
-  };
-
-  const renderTaskCard = (task: any, index: number) => (
-    <motion.div 
-      key={index}
-      layout
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ duration: 0.4, ease: "easeOut" }}
-      className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 cursor-pointer relative"
-      onClick={() => handleViewTask(task.title)}
-    >
-      <div className="relative">
-        <div 
-          className="h-40 bg-cover bg-center" 
-          style={{ backgroundImage: `url(${task.image})` }}
-        />
-        <button 
-          className="absolute top-3 right-3 z-10"
-          onClick={(e) => {
-            e.stopPropagation();
-            handleLocalFavoriteToggle(task.title);
-          }}
-          aria-label={favoriteTaskIds.includes(task.title) ? "Remove from favorites" : "Add to favorites"}
-        >
-          <Heart 
-            className={`h-5 w-5 ${favoriteTaskIds.includes(task.title) ? 'fill-red-500 text-red-500' : 'text-white'}`} 
-          />
-        </button>
-      </div>
-      <div className="p-4">
-        <div className="flex justify-between items-start mb-2">
-          <h3 className="font-semibold text-gray-900">{task.title}</h3>
-          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getCategoryColor(task.category)}`}>
-            {task.category}
-          </span>
-        </div>
-        <p className="text-sm text-gray-600 mb-2">{task.description}</p>
-        <div className="flex items-center justify-end">
-          <Button 
-            size="sm" 
-            className="bg-assist-blue hover:bg-assist-blue/90 w-full"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleViewTask(task.title);
-            }}
-          >
-            <Eye className="h-4 w-4 mr-1" /> View Task
-          </Button>
-        </div>
-      </div>
-    </motion.div>
-  );
-
-  const filteredTaskListings = selectedCategory 
-    ? allTaskListings.filter(task => task.category === selectedCategory || 
-        (selectedCategory === "Transportation and Moving" && task.category === "Transportation"))
-    : allTaskListings;
-
-  const visibleTaskListings = filteredTaskListings.slice(0, visibleTaskCount);
-
-  const hasMoreTasks = visibleTaskCount < filteredTaskListings.length;
-
-  return (
-    <section id="all-tasks" className="py-6 bg-assist-gray/50 relative overflow-hidden">
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-assist-blue/5 rounded-full opacity-70" />
-        <div className="absolute bottom-0 left-1/4 w-64 h-64 bg-blue-100/30 rounded-full opacity-60" />
-      </div>
-      
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {!showAllTasks ? (
-          <>
-            <div className="text-center max-w-3xl mx-auto mb-8">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Explore Task Categories
-              </h2>
-            </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {displayCategories.map((category, index) => (
-                <div key={index} onClick={() => handleCategoryClick(category.title)} className="h-full cursor-pointer">
-                  <CategoryCard
-                    icon={category.icon}
-                    title={category.title}
-                    description={category.description}
-                    tasks={category.tasks}
-                    color={category.color}
-                    onFavoriteToggle={onFavoriteToggle}
-                    onViewTask={onViewTask}
-                    isFavorite={favoriteTaskIds.includes(category.title)}
-                  />
-                </div>
-              ))}
-            </div>
-          </>
-        ) : (
-          <>
-            <h2 className="text-3xl font-bold text-gray-900 mb-8">
-              {selectedCategory ? `${selectedCategory} Tasks` : "All Tasks"}
-            </h2>
-            
-            <div className="mb-8">
-              <div className="flex space-x-2">
-                {categories.map((category, index) => (
-                  <div 
-                    key={index}
-                    onClick={() => handleCategoryClick(category.title)}
-                    className={`cursor-pointer flex-shrink-0 px-4 py-2 rounded-full border transition-all flex items-center space-x-2 ${
-                      selectedCategory === category.title 
-                        ? "bg-assist-blue text-white border-assist-blue shadow-md" 
-                        : "bg-white border-gray-200 shadow-sm hover:shadow-md text-gray-700"
-                    }`}
-                  >
-                    <category.icon className={`h-5 w-5 ${selectedCategory === category.title ? "text-white" : "text-gray-700"}`} />
-                    <span className="font-medium text-sm">{category.title}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            {visibleTaskListings.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                <AnimatePresence>
-                  {visibleTaskListings.map(renderTaskCard)}
-                </AnimatePresence>
-              </div>
-            ) : (
-              <div className="text-center py-12 bg-white rounded-lg shadow-sm">
-                <h3 className="text-lg font-medium text-gray-900 mb-2">No tasks found in this category</h3>
-                <p className="text-gray-600 mb-4">Try selecting a different category</p>
-                <Button 
-                  onClick={() => setSelectedCategory(null)} 
-                  variant="outline"
-                  className="border-assist-blue text-assist-blue hover:bg-assist-blue/10"
-                >
-                  View All Tasks
-                </Button>
-              </div>
-            )}
-          </>
-        )}
-        
-        {showAllTasks && hasMoreTasks && (
-          <div className="mt-14 text-center">
-            {isLoading ? (
-              <div className="flex justify-center items-center h-14">
-                <Loader className="h-6 w-6 text-assist-blue animate-spin" />
-              </div>
-            ) : (
-              <Button 
-                size="lg" 
-                className="rounded-full bg-assist-blue hover:bg-assist-blue/90 text-white h-14 px-8 text-base"
-                onClick={handleLoadMore}
-              >
-                Load More Tasks
-              </Button>
-            )}
-          </div>
-        )}
-      </div>
-    </section>
-  );
-};
-
-export default TaskCategories;

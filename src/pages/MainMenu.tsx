@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import CircleBlocks from "@/components/background/CircleBlocks";
 import { PawPrint, Car, Home, Package, Briefcase } from "lucide-react";
 import TaskDetailView from "@/components/ui/TaskDetailView";
@@ -115,6 +115,7 @@ const mockSubmittedRequests = [
 
 const MainMenu = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState("");
   const [userInterests, setUserInterests] = useState<string[]>([]);
@@ -138,14 +139,25 @@ const MainMenu = () => {
   const [bookedTaskTitle, setBookedTaskTitle] = useState("");
   const [isRequestConfettiOpen, setIsRequestConfettiOpen] = useState(false);
   const [requestedTaskTitle, setRequestedTaskTitle] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   useEffect(() => {
+    // Process navigation state if coming from another page
+    if (location.state) {
+      if (location.state.activeTab) {
+        setActiveTab(location.state.activeTab);
+      }
+      if (location.state.selectedCategory) {
+        setSelectedCategory(location.state.selectedCategory);
+      }
+    }
+    
     const timer = setTimeout(() => {
       setShowWelcome(false);
     }, 3000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [location.state]);
 
   const addToRecentlyViewed = (task: (typeof recommendedTasks)[0]) => {
     setRecentlyViewedTasks(prev => {
@@ -538,6 +550,7 @@ const MainMenu = () => {
           favoriteTaskIds={favoriteTaskIds}
           onFavoriteToggle={handleFavoriteToggle}
           onViewTask={handleBookNow}
+          initialSelectedCategory={selectedCategory}
         />
       );
     }

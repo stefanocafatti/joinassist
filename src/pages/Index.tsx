@@ -45,6 +45,10 @@ const Index = () => {
   const handleBrowseAllTasks = () => {
     navigate("/main-menu", { state: { activeTab: "allTasks" } });
   };
+  
+  const handleCategoryClick = (categoryName: string) => {
+    navigate("/main-menu", { state: { activeTab: "allTasks", selectedCategory: categoryName } });
+  };
 
   // Category emojis for the homepage
   const categories = [
@@ -89,7 +93,7 @@ const Index = () => {
                   <div 
                     key={index} 
                     className="bg-assist-gray/10 hover:bg-assist-blue/5 rounded-xl p-4 text-center cursor-pointer transition-all hover:shadow-md hover:-translate-y-1"
-                    onClick={handleBrowseAllTasks}
+                    onClick={() => handleCategoryClick(category.name)}
                   >
                     <div className="h-14 w-14 bg-white rounded-full flex items-center justify-center mx-auto mb-3 shadow-sm">
                       <span className="text-2xl">{category.emoji}</span>
