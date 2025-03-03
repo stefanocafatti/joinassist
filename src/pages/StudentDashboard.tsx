@@ -115,7 +115,7 @@ const StudentDashboard = () => {
       title: "Graphic Design Help",
       description: "Create social media graphics for student organization",
       category: "Digital Services",
-      location: "Media Lab",
+      location: "Downtown Design Studio",
       image: "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=2071&auto=format&fit=crop",
       rate: "$35/hr",
       rateNumeric: 35,
@@ -125,7 +125,7 @@ const StudentDashboard = () => {
       title: "Fitness Training Session",
       description: "Lead a small group fitness session for beginners",
       category: "Fitness & Wellness",
-      location: "Campus Gym",
+      location: "City Park",
       image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop", 
       rate: "$40/hr",
       rateNumeric: 40,
@@ -135,7 +135,7 @@ const StudentDashboard = () => {
       title: "Essay Proofreading",
       description: "Proofread and provide feedback on academic essays",
       category: "Academic Help",
-      location: "Library",
+      location: "Public Library",
       image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=2000&auto=format&fit=crop",
       rate: "$25/hr",
       rateNumeric: 25,
@@ -145,7 +145,7 @@ const StudentDashboard = () => {
       title: "Python Programming Help",
       description: "Assist with debugging a data analysis project",
       category: "Digital Services",
-      location: "Computer Lab",
+      location: "Tech Incubator",
       image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2000&auto=format&fit=crop",
       rate: "$45/hr",
       rateNumeric: 45,
@@ -165,7 +165,7 @@ const StudentDashboard = () => {
       title: "Social Media Management",
       description: "Manage Instagram account for university club",
       category: "Digital Services",
-      location: "Student Union",
+      location: "Coffee Shop",
       image: "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?q=80&w=2000&auto=format&fit=crop",
       rate: "$30/hr",
       rateNumeric: 30,
@@ -175,7 +175,7 @@ const StudentDashboard = () => {
       title: "Language Conversation Partner",
       description: "Help international students practice conversational English",
       category: "Academic Help",
-      location: "International Center",
+      location: "Community Center",
       image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2000&auto=format&fit=crop",
       rate: "$22/hr",
       rateNumeric: 22,
@@ -204,7 +204,25 @@ const StudentDashboard = () => {
     }
   ]);
 
-  const [locations, setLocations] = useState(["all", ...new Set(availableTasks.map(task => task.location))]);
+  const [locations, setLocations] = useState([
+    "all", 
+    "Remote", 
+    "Campus Center", 
+    "Career Center", 
+    "Downtown Design Studio", 
+    "City Park", 
+    "Public Library", 
+    "Tech Incubator", 
+    "Main Campus", 
+    "Coffee Shop", 
+    "Community Center",
+    "Home Office",
+    "Co-working Space",
+    "Residential Area",
+    "Shopping Mall",
+    "Business District"
+  ]);
+
   const [skills, setSkills] = useState(["all", ...new Set(availableTasks.flatMap(task => task.skills))]);
   const [priceRanges, setPriceRanges] = useState([
     { value: "all", label: "All Prices" },
@@ -718,99 +736,4 @@ const StudentDashboard = () => {
                             size="sm"
                             onClick={(e) => handleAcceptTask(task, e)}
                           >
-                            <ThumbsUp className="mr-2 h-4 w-4" />
-                            Accept Task
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-            
-            <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
-              <div className="border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white px-6 py-5">
-                <div className="flex items-center">
-                  <Clock className="h-5 w-5 text-assist-blue mr-2" />
-                  <h2 className="text-xl font-semibold text-gray-900">Upcoming Tasks</h2>
-                </div>
-                <p className="mt-1 text-sm text-gray-500 ml-7">Your scheduled work for this week</p>
-              </div>
-              
-              <div className="divide-y divide-gray-100">
-                {upcomingTasks.map((task, index) => (
-                  <div key={index} className="p-5 hover:bg-blue-50/30 transition-colors duration-150">
-                    <div className="flex items-center justify-between mb-2">
-                      <h3 className="font-medium text-gray-900">{task.title}</h3>
-                      <Badge className={`${task.status === "Scheduled" ? "bg-green-100 text-green-800" : task.status === "Pending" ? "bg-yellow-100 text-yellow-800" : "bg-blue-100 text-blue-800"}`}>
-                        {task.status}
-                      </Badge>
-                    </div>
-                    <div className="flex items-center justify-between text-sm">
-                      <div className="flex items-center text-gray-500">
-                        <Clock className="mr-1 h-3.5 w-3.5" />
-                        {task.date}
-                      </div>
-                      <div className="flex items-center text-gray-500">
-                        <MapPin className="mr-1 h-3.5 w-3.5" />
-                        {task.location}
-                      </div>
-                      <div className="font-bold text-assist-blue">
-                        {task.earnings}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="payments" className="space-y-6">
-            <StudentBalance />
-          </TabsContent>
-          
-          <TabsContent value="badges" className="space-y-6">
-            <StudentBadges />
-          </TabsContent>
-          
-          <TabsContent value="calendar" className="space-y-6">
-            <StudentCalendar />
-          </TabsContent>
-          
-          <TabsContent value="rewards" className="space-y-6">
-            <StudentPoints />
-          </TabsContent>
-        </Tabs>
-      </div>
-      
-      {taskDetailOpen && selectedTask && (
-        <TaskDetailView
-          isOpen={taskDetailOpen}
-          task={selectedTask}
-          onClose={() => setTaskDetailOpen(false)}
-          onTaskBooked={handleTaskBooked}
-        />
-      )}
-      
-      {confettiPopupOpen && selectedAcceptedTask && (
-        <ConfettiPopup
-          isOpen={confettiPopupOpen}
-          onClose={() => setConfettiPopupOpen(false)}
-          taskTitle={selectedAcceptedTask.title}
-          title="Awesome! You've accepted a task"
-          description="You can check your upcoming tasks in the Dashboard tab."
-          buttonText="Got it!"
-          onButtonClick={handleConfirmAcceptTask}
-          showAddToCalendarButton={true}
-          onAddToCalendar={handleAddToCalendar}
-          location={selectedAcceptedTask.location}
-          date={new Date().toLocaleDateString() + ', ' + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
-          earnings={selectedAcceptedTask.rate}
-        />
-      )}
-    </div>
-  );
-};
-
-export default StudentDashboard;
+                            <ThumbsUp className="mr

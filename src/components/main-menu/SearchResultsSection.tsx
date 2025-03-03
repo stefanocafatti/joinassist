@@ -1,7 +1,8 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Search, X } from "lucide-react";
+import { Search, X, MapPin, DollarSign } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 interface SearchResultsSectionProps {
   searchQuery: string;
@@ -67,8 +68,13 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
                   {task.title}
                 </h3>
                 <p className="text-gray-500 text-sm mb-2">{task.description}</p>
+                <div className="flex flex-wrap gap-2 mb-3">
+                  <Badge variant="outline" className="flex items-center gap-1 bg-gray-50">
+                    <MapPin className="h-3 w-3 text-gray-500" />
+                    {task.location}
+                  </Badge>
+                </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-xs text-gray-500">{task.location}</span>
                   <button
                     className="text-red-500"
                     onClick={(e) => {

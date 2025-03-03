@@ -1,8 +1,9 @@
 
 import React from "react";
-import { LucideIcon, Heart, Eye } from "lucide-react";
+import { LucideIcon, Heart, Eye, MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 interface CategoryCardProps {
   icon: LucideIcon;
