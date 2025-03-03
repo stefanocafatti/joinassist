@@ -83,6 +83,7 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
         onBookNow={onBookNow}
         onClearResults={onClearResults}
         onRequestTask={onRequestTask}
+        onBrowseTasks={onBrowseTasks}
       />
     );
   }

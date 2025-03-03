@@ -1,3 +1,4 @@
+<lov-code>
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import CircleBlocks from "@/components/background/CircleBlocks";
@@ -765,32 +766,4 @@ const MainMenu = () => {
       {selectedTask && (
         <TaskDetailView 
           isOpen={isTaskDetailOpen}
-          onClose={() => setIsTaskDetailOpen(false)}
-          onTaskBooked={handleBookTask}
-          task={selectedTask}
-        />
-      )}
-
-      <TaskDetailView
-        isOpen={isCustomTaskModalOpen}
-        onClose={() => setIsCustomTaskModalOpen(false)}
-        onTaskBooked={handleBookTask}
-        isCustomTask={true}
-      />
-      
-      <ConfettiPopup 
-        isOpen={isConfettiOpen}
-        onClose={() => setIsConfettiOpen(false)}
-        taskTitle={bookedTaskTitle}
-      />
-      
-      <TaskRequestConfetti
-        isOpen={isRequestConfettiOpen}
-        onClose={() => setIsRequestConfettiOpen(false)}
-        taskTitle={requestedTaskTitle}
-      />
-    </div>
-  );
-};
-
-export default MainMenu;
+          onClose={() => setIsTaskDetailOpen
