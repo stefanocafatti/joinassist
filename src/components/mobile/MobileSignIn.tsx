@@ -1,6 +1,6 @@
 
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import MobileLayout from "./MobileLayout";
 import { 
   Form,
@@ -15,18 +15,10 @@ import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { 
-  Mail, 
-  Lock, 
-  Eye, 
-  EyeOff, 
-  User, 
-  ArrowRight, 
-  LogIn, 
-  UserPlus 
-} from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, User, ArrowRight, LogIn, UserPlus } from "lucide-react";
 import { toast } from "sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Logo from "../ui/Logo";
 
 // Define validation schema for login form
 const loginSchema = z.object({
@@ -46,8 +38,23 @@ type SignupFormValues = z.infer<typeof signupSchema>;
 
 const MobileSignIn = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [fadeIn, setFadeIn] = useState(false);
+  
+  // Check if navigating from loading screen
+  const fromLoading = location.state?.fromLoading || false;
+  
+  // Handle fade-in animation
+  useEffect(() => {
+    // Small delay to ensure transition works
+    const timer = setTimeout(() => {
+      setFadeIn(true);
+    }, 50);
+    
+    return () => clearTimeout(timer);
+  }, []);
   
   // Initialize login form
   const loginForm = useForm<LoginFormValues>({
@@ -81,7 +88,7 @@ const MobileSignIn = () => {
       localStorage.setItem("user", JSON.stringify({ email: values.email, loggedIn: true }));
       
       // Navigate to home page
-      navigate("/mobile");
+      navigate("/mobile/home");
     }, 1500);
   };
   
@@ -102,244 +109,241 @@ const MobileSignIn = () => {
       }));
       
       // Navigate to home page
-      navigate("/mobile");
+      navigate("/mobile/home");
     }, 1500);
   };
 
   return (
-    <MobileLayout
-      showBackButton={true}
-      onBack={() => navigate("/mobile")}
-      showLogo={true}
-      showHeader={true}
-      title=""
-      contentClassName="flex flex-col justify-start items-center"
-    >
-      <div className="w-full max-w-md px-4 pt-6 pb-16">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome to Assist</h1>
-          <p className="text-gray-600">Sign in or create an account to continue</p>
-        </div>
+    <div className={`min-h-screen bg-white overflow-hidden transition-opacity duration-500 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}>
+      <div className="flex flex-col items-center justify-start pt-10 pb-6 px-6">
+        <Logo className="mb-8" />
         
-        <Tabs defaultValue="login" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-8">
-            <TabsTrigger value="login" className="text-base py-3">
-              <LogIn size={18} className="mr-2" />
-              Login
-            </TabsTrigger>
-            <TabsTrigger value="signup" className="text-base py-3">
-              <UserPlus size={18} className="mr-2" />
-              Sign Up
-            </TabsTrigger>
-          </TabsList>
+        <div className="w-full max-w-md">
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome to Assist</h1>
+            <p className="text-gray-600">Sign in or create an account to continue</p>
+          </div>
           
-          <TabsContent value="login" className="space-y-4">
-            <Form {...loginForm}>
-              <form onSubmit={loginForm.handleSubmit(onLoginSubmit)} className="space-y-6">
-                <FormField
-                  control={loginForm.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-base">Email</FormLabel>
-                      <div className="relative">
-                        <FormControl>
-                          <Input 
-                            placeholder="your@email.com" 
-                            type="email" 
-                            className="pl-10" 
-                            {...field} 
-                          />
-                        </FormControl>
-                        <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                      </div>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={loginForm.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-base">Password</FormLabel>
-                      <div className="relative">
-                        <FormControl>
-                          <Input 
-                            placeholder="••••••••" 
-                            type={showPassword ? "text" : "password"} 
-                            className="pl-10 pr-10" 
-                            {...field} 
-                          />
-                        </FormControl>
-                        <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                        <button 
-                          type="button"
-                          className="absolute right-3 top-3 text-gray-400"
-                          onClick={() => setShowPassword(!showPassword)}
-                        >
-                          {showPassword ? (
-                            <EyeOff className="h-5 w-5" />
-                          ) : (
-                            <Eye className="h-5 w-5" />
-                          )}
-                        </button>
-                      </div>
-                      <FormMessage />
-                      <div className="text-right mt-2">
-                        <button
-                          type="button"
-                          className="text-sm text-assist-blue font-medium"
-                          onClick={() => navigate("/mobile/forgot-password")}
-                        >
-                          Forgot password?
-                        </button>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-                
-                <Button 
-                  type="submit" 
-                  className="w-full bg-assist-blue hover:bg-assist-blue/90 text-lg py-6 h-14"
-                  disabled={isLoading}
-                >
-                  {isLoading ? (
-                    <span className="flex items-center justify-center">
-                      <span className="mr-2">Logging in</span>
-                      <span className="animate-pulse">...</span>
-                    </span>
-                  ) : (
-                    <span className="flex items-center justify-center">
-                      Login
-                      <ArrowRight className="ml-2 h-5 w-5" />
-                    </span>
-                  )}
-                </Button>
-              </form>
-            </Form>
-          </TabsContent>
+          <Tabs defaultValue="login" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 mb-8 rounded-xl">
+              <TabsTrigger value="login" className="rounded-xl py-3 text-base">
+                <LogIn size={18} className="mr-2" />
+                Login
+              </TabsTrigger>
+              <TabsTrigger value="signup" className="rounded-xl py-3 text-base">
+                <UserPlus size={18} className="mr-2" />
+                Sign Up
+              </TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="login" className="space-y-4">
+              <Form {...loginForm}>
+                <form onSubmit={loginForm.handleSubmit(onLoginSubmit)} className="space-y-6">
+                  <FormField
+                    control={loginForm.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-base font-medium">Email</FormLabel>
+                        <div className="relative">
+                          <FormControl>
+                            <Input 
+                              placeholder="your@email.com" 
+                              type="email" 
+                              className="pl-10 py-6 text-base" 
+                              {...field} 
+                            />
+                          </FormControl>
+                          <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={loginForm.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <div className="flex items-center justify-between">
+                          <FormLabel className="text-base font-medium">Password</FormLabel>
+                          <button
+                            type="button"
+                            className="text-sm text-assist-blue font-medium"
+                            onClick={() => navigate("/mobile/forgot-password")}
+                          >
+                            Forgot?
+                          </button>
+                        </div>
+                        <div className="relative">
+                          <FormControl>
+                            <Input 
+                              placeholder="••••••••" 
+                              type={showPassword ? "text" : "password"} 
+                              className="pl-10 pr-10 py-6 text-base" 
+                              {...field} 
+                            />
+                          </FormControl>
+                          <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                          <button 
+                            type="button"
+                            className="absolute right-3 top-3 text-gray-400"
+                            onClick={() => setShowPassword(!showPassword)}
+                          >
+                            {showPassword ? (
+                              <EyeOff className="h-5 w-5" />
+                            ) : (
+                              <Eye className="h-5 w-5" />
+                            )}
+                          </button>
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <Button 
+                    type="submit" 
+                    className="w-full bg-assist-blue hover:bg-assist-blue/90 text-lg py-6 h-14 rounded-xl"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <span className="flex items-center justify-center">
+                        <span className="mr-2">Logging in</span>
+                        <span className="animate-pulse">...</span>
+                      </span>
+                    ) : (
+                      <span className="flex items-center justify-center">
+                        Login
+                        <ArrowRight className="ml-2 h-5 w-5" />
+                      </span>
+                    )}
+                  </Button>
+                </form>
+              </Form>
+            </TabsContent>
+            
+            <TabsContent value="signup" className="space-y-4">
+              <Form {...signupForm}>
+                <form onSubmit={signupForm.handleSubmit(onSignupSubmit)} className="space-y-6">
+                  <FormField
+                    control={signupForm.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-base font-medium">Full Name</FormLabel>
+                        <div className="relative">
+                          <FormControl>
+                            <Input 
+                              placeholder="John Doe" 
+                              className="pl-10 py-6 text-base" 
+                              {...field} 
+                            />
+                          </FormControl>
+                          <User className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={signupForm.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-base font-medium">Email</FormLabel>
+                        <div className="relative">
+                          <FormControl>
+                            <Input 
+                              placeholder="your@email.com" 
+                              type="email" 
+                              className="pl-10 py-6 text-base" 
+                              {...field} 
+                            />
+                          </FormControl>
+                          <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={signupForm.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-base font-medium">Password</FormLabel>
+                        <div className="relative">
+                          <FormControl>
+                            <Input 
+                              placeholder="••••••••" 
+                              type={showPassword ? "text" : "password"} 
+                              className="pl-10 pr-10 py-6 text-base" 
+                              {...field} 
+                            />
+                          </FormControl>
+                          <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                          <button 
+                            type="button"
+                            className="absolute right-3 top-3 text-gray-400"
+                            onClick={() => setShowPassword(!showPassword)}
+                          >
+                            {showPassword ? (
+                              <EyeOff className="h-5 w-5" />
+                            ) : (
+                              <Eye className="h-5 w-5" />
+                            )}
+                          </button>
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <Button 
+                    type="submit" 
+                    className="w-full bg-assist-blue hover:bg-assist-blue/90 text-lg py-6 h-14 rounded-xl"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <span className="flex items-center justify-center">
+                        <span className="mr-2">Creating account</span>
+                        <span className="animate-pulse">...</span>
+                      </span>
+                    ) : (
+                      <span className="flex items-center justify-center">
+                        Create Account
+                        <ArrowRight className="ml-2 h-5 w-5" />
+                      </span>
+                    )}
+                  </Button>
+                </form>
+              </Form>
+            </TabsContent>
+          </Tabs>
           
-          <TabsContent value="signup" className="space-y-4">
-            <Form {...signupForm}>
-              <form onSubmit={signupForm.handleSubmit(onSignupSubmit)} className="space-y-6">
-                <FormField
-                  control={signupForm.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-base">Full Name</FormLabel>
-                      <div className="relative">
-                        <FormControl>
-                          <Input 
-                            placeholder="John Doe" 
-                            className="pl-10" 
-                            {...field} 
-                          />
-                        </FormControl>
-                        <User className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                      </div>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={signupForm.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-base">Email</FormLabel>
-                      <div className="relative">
-                        <FormControl>
-                          <Input 
-                            placeholder="your@email.com" 
-                            type="email" 
-                            className="pl-10" 
-                            {...field} 
-                          />
-                        </FormControl>
-                        <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                      </div>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={signupForm.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-base">Password</FormLabel>
-                      <div className="relative">
-                        <FormControl>
-                          <Input 
-                            placeholder="••••••••" 
-                            type={showPassword ? "text" : "password"} 
-                            className="pl-10 pr-10" 
-                            {...field} 
-                          />
-                        </FormControl>
-                        <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                        <button 
-                          type="button"
-                          className="absolute right-3 top-3 text-gray-400"
-                          onClick={() => setShowPassword(!showPassword)}
-                        >
-                          {showPassword ? (
-                            <EyeOff className="h-5 w-5" />
-                          ) : (
-                            <Eye className="h-5 w-5" />
-                          )}
-                        </button>
-                      </div>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <Button 
-                  type="submit" 
-                  className="w-full bg-assist-blue hover:bg-assist-blue/90 text-lg py-6 h-14"
-                  disabled={isLoading}
-                >
-                  {isLoading ? (
-                    <span className="flex items-center justify-center">
-                      <span className="mr-2">Creating account</span>
-                      <span className="animate-pulse">...</span>
-                    </span>
-                  ) : (
-                    <span className="flex items-center justify-center">
-                      Create Account
-                      <ArrowRight className="ml-2 h-5 w-5" />
-                    </span>
-                  )}
-                </Button>
-              </form>
-            </Form>
-          </TabsContent>
-        </Tabs>
-        
-        <div className="mt-12 text-center text-gray-500 text-sm">
-          By continuing, you agree to our{" "}
-          <button 
-            className="text-assist-blue font-medium"
-            onClick={() => navigate("/mobile/terms")}
-          >
-            Terms of Service
-          </button>{" "}
-          and{" "}
-          <button 
-            className="text-assist-blue font-medium"
-            onClick={() => navigate("/mobile/privacy")}
-          >
-            Privacy Policy
-          </button>
+          <div className="mt-10 text-center text-gray-500 text-sm">
+            By continuing, you agree to our{" "}
+            <button 
+              className="text-assist-blue font-medium"
+              onClick={() => navigate("/mobile/terms")}
+            >
+              Terms of Service
+            </button>{" "}
+            and{" "}
+            <button 
+              className="text-assist-blue font-medium"
+              onClick={() => navigate("/mobile/privacy")}
+            >
+              Privacy Policy
+            </button>
+          </div>
         </div>
       </div>
-    </MobileLayout>
+    </div>
   );
 };
 

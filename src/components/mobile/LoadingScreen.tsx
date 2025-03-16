@@ -8,13 +8,20 @@ const LoadingScreen = () => {
   const [animationComplete, setAnimationComplete] = useState(false);
 
   useEffect(() => {
-    // Show loading animation for 2.5 seconds then navigate to sign-in
-    const timer = setTimeout(() => {
+    // First animate the logo
+    const logoTimer = setTimeout(() => {
       setAnimationComplete(true);
-      navigate('/mobile/sign-in');
+    }, 2000);
+
+    // Then navigate after the fade-out animation
+    const navigationTimer = setTimeout(() => {
+      navigate('/mobile/sign-in', { state: { fromLoading: true } });
     }, 2500);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(logoTimer);
+      clearTimeout(navigationTimer);
+    };
   }, [navigate]);
 
   return (
