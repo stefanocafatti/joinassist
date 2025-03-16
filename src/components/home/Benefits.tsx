@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { CheckCircle2, DollarSign, Heart, Clock, UserCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -25,7 +26,7 @@ const Benefits = () => {
           description: "Let Assist handle the matching process so you can get help quickly and reliably."
         }
       ],
-      cta: "Book a Task"
+      cta: "View Tasks"
     }
   };
 
@@ -43,7 +44,7 @@ const Benefits = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-4xl mx-auto mb-8">
           <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
-            <span className="bg-gradient-to-r from-assist-blue to-blue-400 bg-clip-text text-transparent">Assist</span>
+            <span className="bg-gradient-to-r from-assist-blue to-blue-400 bg-clip-text text-transparent">Benefits of Assist</span>
           </h2>
           <p className="text-xl text-gray-600 mb-6">
             Our platform creates opportunities for students while solving everyday challenges for busy people
