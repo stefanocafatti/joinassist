@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import CustomerApp from "./pages/CustomerApp";
 import MobileHome from "./components/mobile/MobileHome";
+import MobileSignIn from "./components/mobile/MobileSignIn";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => {
             
             {/* Mobile App Routes */}
             <Route path="/mobile" element={<MobileHome />} />
+            <Route path="/mobile/sign-in" element={<MobileSignIn />} />
             <Route path="/mobile/search" element={<MobileHome />} />
             <Route path="/mobile/new-task" element={<MobileHome />} />
             <Route path="/mobile/notifications" element={<MobileHome />} />
