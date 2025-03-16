@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import CustomerApp from "./pages/CustomerApp";
 import MobileHome from "./components/mobile/MobileHome";
 import MobileSignIn from "./components/mobile/MobileSignIn";
+import LoadingScreen from "./components/mobile/LoadingScreen";
 
 const queryClient = new QueryClient();
 
@@ -26,7 +27,8 @@ const App = () => {
             <Route path="/customer-app" element={<CustomerApp />} />
             
             {/* Mobile App Routes */}
-            <Route path="/mobile" element={<MobileHome />} />
+            <Route path="/mobile" element={<LoadingScreen />} />
+            <Route path="/mobile/home" element={<MobileHome />} />
             <Route path="/mobile/sign-in" element={<MobileSignIn />} />
             <Route path="/mobile/search" element={<MobileHome />} />
             <Route path="/mobile/new-task" element={<MobileHome />} />
