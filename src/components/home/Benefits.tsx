@@ -1,51 +1,22 @@
-import { useState } from "react";
-import { CheckCircle2, GraduationCap, DollarSign, Heart, Clock, UserCheck } from "lucide-react";
+
+import { useState, useEffect } from "react";
+import { CheckCircle2, DollarSign, Heart, Clock, UserCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 
 const Benefits = () => {
-  const [activeView, setActiveView] = useState<"students" | "requesters">("students");
   const navigate = useNavigate();
 
   const handleRegularSignup = () => {
     navigate("/register");
   };
 
-  const handleStudentSignup = () => {
-    navigate("/register", { state: { isStudent: true } });
-  };
-
   const benefitsData = {
-    students: {
-      icon: GraduationCap,
-      color: "bg-soft-blue text-assist-blue",
-      buttonColor: "bg-assist-blue hover:bg-assist-blue/90",
-      title: "For Students",
-      benefits: [
-        {
-          icon: Clock,
-          title: "Work on Your Schedule",
-          description: "Choose tasks that fit your availability, making it easy to balance work and studies."
-        },
-        {
-          icon: DollarSign,
-          title: "Earn While You Learn",
-          description: "Use your skills to complete tasks and earn extra income while in college."
-        },
-        {
-          icon: Heart,
-          title: "Gain Real-World Experience",
-          description: "Build your resume and develop valuable skills by assisting with a variety of tasks."
-        }
-      ],
-      cta: "Sign Up as a Student"
-    },
     requesters: {
       icon: CheckCircle2,
       color: "bg-soft-green text-green-600",
       buttonColor: "bg-green-600 hover:bg-green-600/90",
-      title: "For Task Requesters",
+      title: "Benefits of Assist",
       benefits: [
         {
           icon: Clock,
@@ -63,11 +34,13 @@ const Benefits = () => {
           description: "Let Assist handle the matching process so you can get help quickly and reliably."
         }
       ],
-      cta: "Post Your First Task"
+      cta: "Download Our App"
     }
   };
 
-  const currentData = benefitsData[activeView];
+  const handleGetApp = () => {
+    navigate("/customer-app");
+  };
 
   return (
     <section id="benefits" className="py-16 bg-gradient-to-b from-blue-50/30 to-white relative overflow-hidden">
@@ -84,55 +57,24 @@ const Benefits = () => {
           <p className="text-xl text-gray-600 mb-6">
             Our platform creates opportunities for students while solving everyday challenges for busy people
           </p>
-          
-          <div className="inline-flex bg-gray-100 p-1.5 rounded-full shadow-sm mb-6">
-            <button
-              onClick={() => setActiveView("students")}
-              className={cn(
-                "py-2.5 px-6 rounded-full text-sm font-medium transition-all duration-200",
-                activeView === "students"
-                  ? "bg-assist-blue text-white shadow-sm"
-                  : "text-gray-700 hover:text-gray-900"
-              )}
-            >
-              <div className="flex items-center gap-2">
-                <GraduationCap size={18} />
-                <span>For Students</span>
-              </div>
-            </button>
-            <button
-              onClick={() => setActiveView("requesters")}
-              className={cn(
-                "py-2.5 px-6 rounded-full text-sm font-medium transition-all duration-200",
-                activeView === "requesters"
-                  ? "bg-green-600 text-white shadow-sm"
-                  : "text-gray-700 hover:text-gray-900"
-              )}
-            >
-              <div className="flex items-center gap-2">
-                <CheckCircle2 size={18} />
-                <span>For Task Requesters</span>
-              </div>
-            </button>
-          </div>
         </div>
 
         <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-md overflow-hidden transition-all duration-300">
           <div className="p-6 md:p-8">
             <div className="flex items-center gap-4 mb-8">
-              <div className={`w-14 h-14 rounded-full flex items-center justify-center ${currentData.color}`}>
-                <currentData.icon size={28} />
+              <div className={`w-14 h-14 rounded-full flex items-center justify-center ${benefitsData.requesters.color}`}>
+                <benefitsData.requesters.icon size={28} />
               </div>
-              <h3 className="text-3xl font-bold text-gray-900">{currentData.title}</h3>
+              <h3 className="text-3xl font-bold text-gray-900">{benefitsData.requesters.title}</h3>
             </div>
             
             <div className="grid md:grid-cols-3 gap-6">
-              {currentData.benefits.map((benefit, idx) => (
+              {benefitsData.requesters.benefits.map((benefit, idx) => (
                 <div 
                   key={idx} 
                   className="bg-white rounded-xl p-5 shadow-sm transition-all duration-300 hover:shadow-md hover:translate-y-[-2px]"
                 >
-                  <div className={`w-12 h-12 rounded-full mb-3 flex items-center justify-center ${currentData.color}`}>
+                  <div className={`w-12 h-12 rounded-full mb-3 flex items-center justify-center ${benefitsData.requesters.color}`}>
                     <benefit.icon size={24} />
                   </div>
                   <h4 className="text-xl font-semibold text-gray-800 mb-2">{benefit.title}</h4>
@@ -144,10 +86,10 @@ const Benefits = () => {
             <div className="mt-8 text-center">
               <Button 
                 size="lg"
-                className={`rounded-full ${currentData.buttonColor} text-white px-8 py-6 h-14 text-base font-medium shadow-sm hover:translate-y-[-2px] transition-all`}
-                onClick={activeView === "students" ? handleStudentSignup : handleRegularSignup}
+                className={`rounded-full ${benefitsData.requesters.buttonColor} text-white px-8 py-6 h-14 text-base font-medium shadow-sm hover:translate-y-[-2px] transition-all`}
+                onClick={handleGetApp}
               >
-                {currentData.cta}
+                {benefitsData.requesters.cta}
               </Button>
             </div>
           </div>
