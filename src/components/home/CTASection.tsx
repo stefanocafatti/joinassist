@@ -31,7 +31,7 @@ const CTASection = () => {
               className="rounded-full bg-white text-assist-blue hover:bg-white/90 h-14 px-8 text-base font-semibold shadow-soft"
               onClick={handleGetApp}
             >
-              Book a Task
+              Download Assist
             </Button>
           </div>
         </div>
