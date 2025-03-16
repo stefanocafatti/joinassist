@@ -33,7 +33,7 @@ const CTASection = () => {
               onClick={handleGetApp}
             >
               <Download size={18} className="mr-2" />
-              Download App
+              Book a Task
             </Button>
           </div>
         </div>

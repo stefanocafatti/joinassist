@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { CheckCircle2, DollarSign, Heart, Clock, UserCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -26,7 +25,7 @@ const Benefits = () => {
           description: "Let Assist handle the matching process so you can get help quickly and reliably."
         }
       ],
-      cta: "Download Our App"
+      cta: "Book a Task"
     }
   };
 
