@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Download } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Logo from "../ui/Logo";
 import { Button } from "../ui/button";
 
@@ -45,7 +45,6 @@ const Navbar = () => {
               <Button 
                 className="rounded-xl bg-gradient-to-r from-assist-blue to-indigo-600 hover:from-assist-blue/90 hover:to-indigo-600/90 text-white font-medium shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
               >
-                <Download size={16} className="mr-2" />
                 Download App
               </Button>
             </Link>
@@ -70,7 +69,6 @@ const Navbar = () => {
                 <Button 
                   className="w-full rounded-xl bg-gradient-to-r from-assist-blue to-indigo-600 hover:from-assist-blue/90 hover:to-indigo-600/90 text-white font-medium shadow-md hover:shadow-lg transition-all duration-300"
                 >
-                  <Download size={16} className="mr-2" />
                   Download App
                 </Button>
               </Link>
