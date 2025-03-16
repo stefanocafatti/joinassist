@@ -1,7 +1,6 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Star, Sparkles, Download } from "lucide-react";
+import { ChevronRight, Star, Sparkles } from "lucide-react";
 import ImageSlideshow from "@/components/ui/ImageSlideshow";
 import { useNavigate } from "react-router-dom";
 
@@ -60,7 +59,7 @@ const Hero = () => {
   };
   
   const handleGetApp = () => {
-    navigate("/customer-app");
+    window.location.href = "https://www.apple.com/app-store/";
   };
 
   useEffect(() => {
@@ -137,8 +136,7 @@ const Hero = () => {
                 className="rounded-full bg-assist-blue hover:bg-assist-blue/90 text-white h-14 px-8 text-base font-medium shadow-soft hover:shadow-md hover:translate-y-[-2px] transition-all"
                 onClick={handleGetApp}
               >
-                <Download size={18} className="mr-2" />
-                Download App
+                Book a Task
               </Button>
             </div>
           </div>

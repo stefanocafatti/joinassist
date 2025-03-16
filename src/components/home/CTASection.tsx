@@ -1,6 +1,4 @@
-
 import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
 
 const CTASection = () => {
   const handleGetApp = () => {
@@ -32,7 +30,6 @@ const CTASection = () => {
               className="rounded-full bg-white text-assist-blue hover:bg-white/90 h-14 px-8 text-base font-semibold shadow-soft"
               onClick={handleGetApp}
             >
-              <Download size={18} className="mr-2" />
               Book a Task
             </Button>
           </div>
