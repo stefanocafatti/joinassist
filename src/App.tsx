@@ -18,11 +18,9 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <Routes>
+            <Route path="/" element={<Index />} />
             <Route path="/welcome" element={<Index />} />
             <Route path="/customer-app" element={<CustomerApp />} />
-            
-            {/* Home route redirects to welcome */}
-            <Route path="/" element={<Navigate to="/welcome" replace />} />
             
             {/* Redirect old auth routes to download page */}
             <Route path="/login" element={<Navigate to="/customer-app" replace />} />
