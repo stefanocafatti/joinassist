@@ -17,10 +17,10 @@ const CustomerApp = () => {
           <div className="flex flex-col lg:flex-row items-center gap-12 py-16">
             <div className="w-full lg:w-1/2 order-2 lg:order-1">
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                Download the Assist Customer App
+                Download the Assist App
               </h1>
               <p className="text-xl text-gray-600 mb-8">
-                Get help with any task, big or small. Our customer app connects you with verified college students ready to assist you.
+                Get help with any task, big or small. Our app connects you with verified college students ready to assist you.
               </p>
               
               <div className="space-y-6">
@@ -41,10 +41,6 @@ const CustomerApp = () => {
                     </div>
                   </Button>
                 </div>
-                
-                <p className="text-sm text-gray-500">
-                  Need student help instead? <Link to="/student-app" className="text-assist-blue font-medium">Download our student app</Link>.
-                </p>
               </div>
             </div>
             
@@ -53,7 +49,7 @@ const CustomerApp = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-[3rem] blur-2xl transform rotate-6"></div>
                 <img 
                   src="/lovable-uploads/bd897653-6f63-4864-8ffa-5b7838340cd4.png" 
-                  alt="Assist Customer App on smartphone" 
+                  alt="Assist App on smartphone" 
                   className="relative z-10 w-full max-w-xs mx-auto"
                 />
               </div>
@@ -61,7 +57,7 @@ const CustomerApp = () => {
           </div>
           
           <div className="py-16">
-            <h2 className="text-3xl font-bold text-center mb-12">Why download our customer app?</h2>
+            <h2 className="text-3xl font-bold text-center mb-12">Why download our app?</h2>
             
             <div className="grid md:grid-cols-3 gap-8">
               <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">

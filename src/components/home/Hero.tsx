@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Star, Sparkles, Download } from "lucide-react";
@@ -58,7 +59,7 @@ const Hero = () => {
     }
   };
   
-  const handleCustomerApp = () => {
+  const handleGetApp = () => {
     navigate("/customer-app");
   };
 
@@ -134,7 +135,7 @@ const Hero = () => {
               <Button 
                 size="lg" 
                 className="rounded-full bg-assist-blue hover:bg-assist-blue/90 text-white h-14 px-8 text-base font-medium shadow-soft hover:shadow-md hover:translate-y-[-2px] transition-all"
-                onClick={handleCustomerApp}
+                onClick={handleGetApp}
               >
                 <Download size={18} className="mr-2" />
                 Download App

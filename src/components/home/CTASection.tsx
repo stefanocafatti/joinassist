@@ -6,7 +6,7 @@ import { Download } from "lucide-react";
 const CTASection = () => {
   const navigate = useNavigate();
   
-  const handleCustomerApp = () => {
+  const handleGetApp = () => {
     navigate("/customer-app");
   };
 
@@ -33,7 +33,7 @@ const CTASection = () => {
             <Button 
               size="lg" 
               className="rounded-full bg-white text-assist-blue hover:bg-white/90 h-14 px-8 text-base font-semibold shadow-soft"
-              onClick={handleCustomerApp}
+              onClick={handleGetApp}
             >
               <Download size={18} className="mr-2" />
               Download App
