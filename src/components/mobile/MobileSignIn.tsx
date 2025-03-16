@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import MobileLayout from "./MobileLayout";
 import { 
   Form,
   FormControl,
@@ -15,9 +14,8 @@ import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { Mail, Lock, Eye, EyeOff, User, ArrowRight, LogIn, UserPlus } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, User, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Logo from "../ui/Logo";
 
 // Define validation schema for login form
@@ -42,6 +40,7 @@ const MobileSignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [fadeIn, setFadeIn] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
   
   // Check if navigating from loading screen
   const fromLoading = location.state?.fromLoading || false;
@@ -119,24 +118,8 @@ const MobileSignIn = () => {
         <Logo className="mb-8" />
         
         <div className="w-full max-w-md">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome to Assist</h1>
-            <p className="text-gray-600">Sign in or create an account to continue</p>
-          </div>
-          
-          <Tabs defaultValue="login" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-8 rounded-xl">
-              <TabsTrigger value="login" className="rounded-xl py-3 text-base">
-                <LogIn size={18} className="mr-2" />
-                Login
-              </TabsTrigger>
-              <TabsTrigger value="signup" className="rounded-xl py-3 text-base">
-                <UserPlus size={18} className="mr-2" />
-                Sign Up
-              </TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="login" className="space-y-4">
+          {!isSignUp ? (
+            <>
               <Form {...loginForm}>
                 <form onSubmit={loginForm.handleSubmit(onLoginSubmit)} className="space-y-6">
                   <FormField
@@ -222,9 +205,21 @@ const MobileSignIn = () => {
                   </Button>
                 </form>
               </Form>
-            </TabsContent>
-            
-            <TabsContent value="signup" className="space-y-4">
+
+              <div className="mt-8 text-center">
+                <p className="text-gray-600 mb-4">Don't have an account?</p>
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  className="w-full border-assist-blue text-assist-blue hover:bg-assist-blue/10 text-lg py-6 h-14 rounded-xl"
+                  onClick={() => setIsSignUp(true)}
+                >
+                  Sign Up
+                </Button>
+              </div>
+            </>
+          ) : (
+            <>
               <Form {...signupForm}>
                 <form onSubmit={signupForm.handleSubmit(onSignupSubmit)} className="space-y-6">
                   <FormField
@@ -322,8 +317,20 @@ const MobileSignIn = () => {
                   </Button>
                 </form>
               </Form>
-            </TabsContent>
-          </Tabs>
+
+              <div className="mt-8 text-center">
+                <p className="text-gray-600 mb-4">Already have an account?</p>
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  className="w-full border-assist-blue text-assist-blue hover:bg-assist-blue/10 text-lg py-6 h-14 rounded-xl"
+                  onClick={() => setIsSignUp(false)}
+                >
+                  Login
+                </Button>
+              </div>
+            </>
+          )}
           
           <div className="mt-10 text-center text-gray-500 text-sm">
             By continuing, you agree to our{" "}
