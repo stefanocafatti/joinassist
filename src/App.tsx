@@ -7,7 +7,6 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import CustomerApp from "./pages/CustomerApp";
-import StudentApp from "./pages/StudentApp";
 
 const queryClient = new QueryClient();
 
@@ -21,18 +20,18 @@ const App = () => {
           <Routes>
             <Route path="/welcome" element={<Index />} />
             <Route path="/customer-app" element={<CustomerApp />} />
-            <Route path="/student-app" element={<StudentApp />} />
             
             {/* Home route redirects to welcome */}
             <Route path="/" element={<Navigate to="/welcome" replace />} />
             
-            {/* Redirect old auth routes to download pages */}
+            {/* Redirect old auth routes to download page */}
             <Route path="/login" element={<Navigate to="/customer-app" replace />} />
-            <Route path="/register" element={<Navigate to="/student-app" replace />} />
+            <Route path="/register" element={<Navigate to="/customer-app" replace />} />
+            <Route path="/student-app" element={<Navigate to="/customer-app" replace />} />
             
-            {/* Redirect old dashboard routes to download pages */}
+            {/* Redirect old dashboard routes to download page */}
             <Route path="/main-menu" element={<Navigate to="/customer-app" replace />} />
-            <Route path="/student-dashboard" element={<Navigate to="/student-app" replace />} />
+            <Route path="/student-dashboard" element={<Navigate to="/customer-app" replace />} />
             <Route path="/messages" element={<Navigate to="/customer-app" replace />} />
             
             {/* Catch-all route */}

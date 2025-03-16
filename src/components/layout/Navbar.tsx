@@ -43,19 +43,10 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-4">
             <Link to="/customer-app">
               <Button 
-                variant="outline" 
-                className="rounded-xl border-assist-blue text-assist-blue hover:bg-assist-blue/10 hover:text-assist-blue"
-              >
-                <Download size={16} className="mr-2" />
-                Customer App
-              </Button>
-            </Link>
-            <Link to="/student-app">
-              <Button 
                 className="rounded-xl bg-gradient-to-r from-assist-blue to-indigo-600 hover:from-assist-blue/90 hover:to-indigo-600/90 text-white font-medium shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
               >
                 <Download size={16} className="mr-2" />
-                Student App
+                Download App
               </Button>
             </Link>
           </div>
@@ -77,19 +68,10 @@ const Navbar = () => {
             <div className="pt-3 flex flex-col space-y-2">
               <Link to="/customer-app">
                 <Button 
-                  variant="outline" 
-                  className="w-full rounded-xl border-assist-blue text-assist-blue hover:bg-assist-blue/10 hover:text-assist-blue"
-                >
-                  <Download size={16} className="mr-2" />
-                  Customer App
-                </Button>
-              </Link>
-              <Link to="/student-app">
-                <Button 
                   className="w-full rounded-xl bg-gradient-to-r from-assist-blue to-indigo-600 hover:from-assist-blue/90 hover:to-indigo-600/90 text-white font-medium shadow-md hover:shadow-lg transition-all duration-300"
                 >
                   <Download size={16} className="mr-2" />
-                  Student App
+                  Download App
                 </Button>
               </Link>
             </div>

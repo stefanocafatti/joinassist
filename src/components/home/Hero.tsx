@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Star, Sparkles, Download } from "lucide-react";
@@ -14,7 +13,7 @@ const Hero = () => {
   
   const tasks = [
     "Washing my Car",
-    "Cleaning my Garage",
+    "Cleaning my Garage", 
     "Moving into my Dorm",
     "Moving out of my Dorm",
     "Assembling IKEA Furniture",
@@ -61,10 +60,6 @@ const Hero = () => {
   
   const handleCustomerApp = () => {
     navigate("/customer-app");
-  };
-
-  const handleStudentApp = () => {
-    navigate("/student-app");
   };
 
   useEffect(() => {
@@ -132,7 +127,7 @@ const Hero = () => {
             </h1>
             
             <p className="text-lg md:text-xl text-gray-600 animate-slide-in max-w-lg" style={{ animationDelay: "0.3s" }}>
-              Connect with vetted college students for a wide range of tasks. Download our apps to get started – one for customers looking for help, and one for students offering their services.
+              Connect with vetted college students for a wide range of tasks. Download our app to get started and find the perfect student for your needs.
             </p>
             
             <div className="flex flex-wrap gap-4 pt-5 pb-4 animate-slide-in" style={{ animationDelay: "0.4s" }}>
@@ -142,16 +137,7 @@ const Hero = () => {
                 onClick={handleCustomerApp}
               >
                 <Download size={18} className="mr-2" />
-                Download Customer App
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="rounded-full border-assist-blue text-assist-blue hover:bg-assist-blue/10 hover:text-assist-blue h-14 px-8 text-base"
-                onClick={handleStudentApp}
-              >
-                <Download size={18} className="mr-2" />
-                Download Student App
+                Download App
               </Button>
             </div>
           </div>

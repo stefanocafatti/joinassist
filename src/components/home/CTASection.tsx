@@ -10,10 +10,6 @@ const CTASection = () => {
     navigate("/customer-app");
   };
 
-  const handleStudentApp = () => {
-    navigate("/student-app");
-  };
-
   return (
     <section className="py-20 md:py-28 bg-gradient-to-r from-assist-blue/95 to-assist-blue/80 text-white relative overflow-hidden">
       {/* Background decoration */}
@@ -30,8 +26,7 @@ const CTASection = () => {
             Ready to transform the way you get things done?
           </h2>
           <p className="text-white/90 text-lg md:text-xl max-w-2xl mx-auto mb-8">
-            Download our apps today - one for customers who need tasks completed, 
-            and one for students looking to earn. Connect with the right people at the right time.
+            Download our app today and connect with verified college students who are ready to help you complete your tasks efficiently.
           </p>
           
           <div className="flex flex-col sm:flex-row justify-center gap-4 mb-16">
@@ -41,16 +36,7 @@ const CTASection = () => {
               onClick={handleCustomerApp}
             >
               <Download size={18} className="mr-2" />
-              Download Customer App
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="rounded-full border-white text-white hover:bg-white/10 hover:text-white h-14 px-8 text-base font-semibold"
-              onClick={handleStudentApp}
-            >
-              <Download size={18} className="mr-2" />
-              Download Student App
+              Download App
             </Button>
           </div>
         </div>
