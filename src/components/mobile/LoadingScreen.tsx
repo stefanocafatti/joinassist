@@ -20,10 +20,7 @@ const LoadingScreen = () => {
   return (
     <div className="fixed inset-0 bg-assist-blue flex flex-col items-center justify-center h-screen w-screen">
       <div className={`transition-all duration-1000 ${animationComplete ? 'scale-150 opacity-0' : 'scale-100 opacity-100'}`}>
-        <div className="relative">
-          <Logo variant="white" showText={true} className="scale-150" />
-          <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-white/60 via-white/80 to-white animate-pulse" />
-        </div>
+        <Logo variant="white" showText={true} className="scale-150" />
       </div>
     </div>
   );
