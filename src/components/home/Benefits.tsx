@@ -2,21 +2,13 @@
 import { useState, useEffect } from "react";
 import { CheckCircle2, DollarSign, Heart, Clock, UserCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
 
 const Benefits = () => {
-  const navigate = useNavigate();
-
-  const handleRegularSignup = () => {
-    navigate("/register");
-  };
-
   const benefitsData = {
     requesters: {
       icon: CheckCircle2,
       color: "bg-soft-green text-green-600",
       buttonColor: "bg-green-600 hover:bg-green-600/90",
-      title: "Benefits of Assist",
       benefits: [
         {
           icon: Clock,
@@ -39,7 +31,7 @@ const Benefits = () => {
   };
 
   const handleGetApp = () => {
-    navigate("/customer-app");
+    window.location.href = "https://www.apple.com/app-store/";
   };
 
   return (
@@ -52,7 +44,7 @@ const Benefits = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-4xl mx-auto mb-8">
           <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
-            Benefits of <span className="bg-gradient-to-r from-assist-blue to-blue-400 bg-clip-text text-transparent">Assist</span>
+            <span className="bg-gradient-to-r from-assist-blue to-blue-400 bg-clip-text text-transparent">Assist</span>
           </h2>
           <p className="text-xl text-gray-600 mb-6">
             Our platform creates opportunities for students while solving everyday challenges for busy people
@@ -61,13 +53,6 @@ const Benefits = () => {
 
         <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-md overflow-hidden transition-all duration-300">
           <div className="p-6 md:p-8">
-            <div className="flex items-center gap-4 mb-8">
-              <div className={`w-14 h-14 rounded-full flex items-center justify-center ${benefitsData.requesters.color}`}>
-                <benefitsData.requesters.icon size={28} />
-              </div>
-              <h3 className="text-3xl font-bold text-gray-900">{benefitsData.requesters.title}</h3>
-            </div>
-            
             <div className="grid md:grid-cols-3 gap-6">
               {benefitsData.requesters.benefits.map((benefit, idx) => (
                 <div 

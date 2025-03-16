@@ -1,13 +1,10 @@
 
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
 import { Download } from "lucide-react";
 
 const CTASection = () => {
-  const navigate = useNavigate();
-  
   const handleGetApp = () => {
-    navigate("/customer-app");
+    window.location.href = "https://www.apple.com/app-store/";
   };
 
   return (

@@ -4,9 +4,22 @@ import { Apple, ShoppingBag } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import CircleBlocks from "@/components/background/CircleBlocks";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 const CustomerApp = () => {
+  useEffect(() => {
+    // Redirect directly to App Store
+    window.location.href = "https://www.apple.com/app-store/";
+  }, []);
+
+  const handleAppStoreClick = () => {
+    window.location.href = "https://www.apple.com/app-store/";
+  };
+  
+  const handleGooglePlayClick = () => {
+    window.location.href = "https://play.google.com/store";
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <CircleBlocks />
@@ -25,7 +38,11 @@ const CustomerApp = () => {
               
               <div className="space-y-6">
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Button size="lg" className="rounded-xl bg-black text-white hover:bg-black/90 h-16">
+                  <Button 
+                    size="lg" 
+                    className="rounded-xl bg-black text-white hover:bg-black/90 h-16"
+                    onClick={handleAppStoreClick}
+                  >
                     <Apple className="h-6 w-6 mr-2" />
                     <div className="flex flex-col items-start">
                       <span className="text-xs">Download on the</span>
@@ -33,7 +50,11 @@ const CustomerApp = () => {
                     </div>
                   </Button>
                   
-                  <Button size="lg" className="rounded-xl bg-black text-white hover:bg-black/90 h-16">
+                  <Button 
+                    size="lg" 
+                    className="rounded-xl bg-black text-white hover:bg-black/90 h-16"
+                    onClick={handleGooglePlayClick}
+                  >
                     <ShoppingBag className="h-6 w-6 mr-2" />
                     <div className="flex flex-col items-start">
                       <span className="text-xs">GET IT ON</span>
