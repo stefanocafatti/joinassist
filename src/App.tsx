@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import CustomerApp from "./pages/CustomerApp";
+import MobileHome from "./components/mobile/MobileHome";
 
 const queryClient = new QueryClient();
 
@@ -18,9 +19,17 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <Routes>
+            {/* Website Routes */}
             <Route path="/" element={<Index />} />
             <Route path="/welcome" element={<Index />} />
             <Route path="/customer-app" element={<CustomerApp />} />
+            
+            {/* Mobile App Routes */}
+            <Route path="/mobile" element={<MobileHome />} />
+            <Route path="/mobile/search" element={<MobileHome />} />
+            <Route path="/mobile/new-task" element={<MobileHome />} />
+            <Route path="/mobile/notifications" element={<MobileHome />} />
+            <Route path="/mobile/profile" element={<MobileHome />} />
             
             {/* Redirect old auth routes to download page */}
             <Route path="/login" element={<Navigate to="/customer-app" replace />} />
