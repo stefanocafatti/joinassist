@@ -118,7 +118,7 @@ const MobileSignIn = () => {
         <Logo className="mb-6" />
         
         <div className="text-center mb-8">
-          <p className="text-gray-600 text-lg italic">Your personal assistant for everyday tasks</p>
+          <p className="text-gray-600 text-lg">Your Tasks, Our Students, More Time</p>
         </div>
         
         <div className="w-full max-w-md">
