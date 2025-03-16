@@ -40,12 +40,8 @@ const Index = () => {
     };
   }, []);
 
-  const handleBrowseAllTasks = () => {
-    navigate("/main-menu", { state: { activeTab: "allTasks" } });
-  };
-  
   const handleCategoryClick = (categoryName: string) => {
-    navigate("/main-menu", { state: { activeTab: "allTasks", selectedCategory: categoryName } });
+    navigate("/customer-app");
   };
 
   return (

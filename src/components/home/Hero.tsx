@@ -1,7 +1,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Star, Sparkles } from "lucide-react";
+import { ChevronRight, Star, Sparkles, Download } from "lucide-react";
 import ImageSlideshow from "@/components/ui/ImageSlideshow";
 import { useNavigate } from "react-router-dom";
 
@@ -59,12 +59,12 @@ const Hero = () => {
     }
   };
   
-  const handleBookTask = () => {
-    navigate("/register");
+  const handleCustomerApp = () => {
+    navigate("/customer-app");
   };
 
-  const handleJoinAsStudent = () => {
-    navigate("/register", { state: { isStudent: true } });
+  const handleStudentApp = () => {
+    navigate("/student-app");
   };
 
   useEffect(() => {
@@ -132,24 +132,26 @@ const Hero = () => {
             </h1>
             
             <p className="text-lg md:text-xl text-gray-600 animate-slide-in max-w-lg" style={{ animationDelay: "0.3s" }}>
-              Connect with vetted college students for a wide range of tasks. From moving and cleaning to running errands, Assist makes getting things done simple.
+              Connect with vetted college students for a wide range of tasks. Download our apps to get started – one for customers looking for help, and one for students offering their services.
             </p>
             
             <div className="flex flex-wrap gap-4 pt-5 pb-4 animate-slide-in" style={{ animationDelay: "0.4s" }}>
               <Button 
                 size="lg" 
                 className="rounded-full bg-assist-blue hover:bg-assist-blue/90 text-white h-14 px-8 text-base font-medium shadow-soft hover:shadow-md hover:translate-y-[-2px] transition-all"
-                onClick={handleBookTask}
+                onClick={handleCustomerApp}
               >
-                Book Your Task
+                <Download size={18} className="mr-2" />
+                Download Customer App
               </Button>
               <Button 
                 size="lg" 
                 variant="outline" 
                 className="rounded-full border-assist-blue text-assist-blue hover:bg-assist-blue/10 hover:text-assist-blue h-14 px-8 text-base"
-                onClick={handleJoinAsStudent}
+                onClick={handleStudentApp}
               >
-                Join Assist as a Student <ChevronRight size={16} />
+                <Download size={18} className="mr-2" />
+                Download Student App
               </Button>
             </div>
           </div>

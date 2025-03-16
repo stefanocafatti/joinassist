@@ -1,7 +1,7 @@
 
-import { useState, useEffect, useRef } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Menu, X, Download } from "lucide-react";
 import Logo from "../ui/Logo";
 import { Button } from "../ui/button";
 
@@ -9,7 +9,6 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,10 +26,6 @@ const Navbar = () => {
     };
   }, []);
 
-  const isActive = (path: string) => {
-    return location.pathname === path;
-  };
-
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
@@ -46,19 +41,21 @@ const Navbar = () => {
           <div className="flex-grow"></div>
 
           <div className="hidden md:flex items-center space-x-4">
-            <Link to="/login">
+            <Link to="/customer-app">
               <Button 
                 variant="outline" 
                 className="rounded-xl border-assist-blue text-assist-blue hover:bg-assist-blue/10 hover:text-assist-blue"
               >
-                Login
+                <Download size={16} className="mr-2" />
+                Customer App
               </Button>
             </Link>
-            <Link to="/register">
+            <Link to="/student-app">
               <Button 
                 className="rounded-xl bg-gradient-to-r from-assist-blue to-indigo-600 hover:from-assist-blue/90 hover:to-indigo-600/90 text-white font-medium shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
               >
-                Get Started
+                <Download size={16} className="mr-2" />
+                Student App
               </Button>
             </Link>
           </div>
@@ -78,19 +75,21 @@ const Navbar = () => {
         <div className="md:hidden bg-white shadow-lg animate-slide-in">
           <div className="px-4 pt-2 pb-6 space-y-2">
             <div className="pt-3 flex flex-col space-y-2">
-              <Link to="/login">
+              <Link to="/customer-app">
                 <Button 
                   variant="outline" 
                   className="w-full rounded-xl border-assist-blue text-assist-blue hover:bg-assist-blue/10 hover:text-assist-blue"
                 >
-                  Login
+                  <Download size={16} className="mr-2" />
+                  Customer App
                 </Button>
               </Link>
-              <Link to="/register">
+              <Link to="/student-app">
                 <Button 
                   className="w-full rounded-xl bg-gradient-to-r from-assist-blue to-indigo-600 hover:from-assist-blue/90 hover:to-indigo-600/90 text-white font-medium shadow-md hover:shadow-lg transition-all duration-300"
                 >
-                  Get Started
+                  <Download size={16} className="mr-2" />
+                  Student App
                 </Button>
               </Link>
             </div>

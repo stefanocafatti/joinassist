@@ -1,45 +1,17 @@
 
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Download } from "lucide-react";
 
 const CTASection = () => {
   const navigate = useNavigate();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isStudent, setIsStudent] = useState(false);
   
-  useEffect(() => {
-    const checkAuth = () => {
-      const userSession = localStorage.getItem("userSession");
-      if (userSession) {
-        setIsAuthenticated(true);
-        
-        // Check if the user is a student
-        try {
-          const sessionData = JSON.parse(userSession);
-          setIsStudent(sessionData.isStudent === true);
-        } catch (error) {
-          console.error("Error parsing user session:", error);
-        }
-      } else {
-        setIsAuthenticated(false);
-        setIsStudent(false);
-      }
-    };
-    
-    checkAuth();
-  }, []);
+  const handleCustomerApp = () => {
+    navigate("/customer-app");
+  };
 
-  const handleBookTask = () => {
-    if (isAuthenticated) {
-      if (isStudent) {
-        navigate("/student-dashboard");
-      } else {
-        navigate("/main-menu");
-      }
-    } else {
-      navigate("/login");
-    }
+  const handleStudentApp = () => {
+    navigate("/student-app");
   };
 
   return (
@@ -57,20 +29,30 @@ const CTASection = () => {
           <h2 className="text-3xl md:text-5xl font-bold mb-8 leading-tight">
             Ready to transform the way you get things done?
           </h2>
-          <p className="text-white/90 text-lg md:text-xl max-w-2xl mx-auto mb-2">
-            Whether you're a student looking to earn or someone who needs tasks completed, 
-            Assist connects you with the right people at the right time
+          <p className="text-white/90 text-lg md:text-xl max-w-2xl mx-auto mb-8">
+            Download our apps today - one for customers who need tasks completed, 
+            and one for students looking to earn. Connect with the right people at the right time.
           </p>
-        </div>
-        
-        <div className="flex justify-center mb-20">
-          <Button 
-            size="lg" 
-            className="rounded-full bg-white text-assist-blue hover:bg-white/90 h-14 px-8 text-base font-semibold shadow-soft"
-            onClick={handleBookTask}
-          >
-            {isAuthenticated ? "Book Your Task" : "Login to Book Tasks"}
-          </Button>
+          
+          <div className="flex flex-col sm:flex-row justify-center gap-4 mb-16">
+            <Button 
+              size="lg" 
+              className="rounded-full bg-white text-assist-blue hover:bg-white/90 h-14 px-8 text-base font-semibold shadow-soft"
+              onClick={handleCustomerApp}
+            >
+              <Download size={18} className="mr-2" />
+              Download Customer App
+            </Button>
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="rounded-full border-white text-white hover:bg-white/10 hover:text-white h-14 px-8 text-base font-semibold"
+              onClick={handleStudentApp}
+            >
+              <Download size={18} className="mr-2" />
+              Download Student App
+            </Button>
+          </div>
         </div>
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10 pt-6">
