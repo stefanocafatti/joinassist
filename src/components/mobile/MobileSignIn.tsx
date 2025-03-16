@@ -115,7 +115,11 @@ const MobileSignIn = () => {
   return (
     <div className={`min-h-screen bg-white overflow-hidden transition-opacity duration-500 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}>
       <div className="flex flex-col items-center justify-start pt-10 pb-6 px-6">
-        <Logo className="mb-8" />
+        <Logo className="mb-6" />
+        
+        <div className="text-center mb-8">
+          <p className="text-gray-600 text-lg italic">Your personal assistant for everyday tasks</p>
+        </div>
         
         <div className="w-full max-w-md">
           {!isSignUp ? (
