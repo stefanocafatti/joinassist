@@ -1,7 +1,6 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, MapPin, Check, X, Navigation, ArrowLeft } from "lucide-react";
+import { Search, MapPin, Check, X, Navigation, ArrowLeft, Sparkles } from "lucide-react";
 import {
   Popover,
   PopoverContent,
@@ -12,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge";
 
 interface HomeHeaderProps {
   userName: string;
@@ -147,7 +147,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
 
   return (
     <>
-      <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-assist-blue/10 to-soft-purple/30 -z-10"></div>
+      <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-assist-blue/15 to-soft-purple/40 -z-10"></div>
       
       <header className="p-4 bg-transparent">
         <div className="fixed top-0 left-0 right-0 z-20 bg-white">
@@ -155,18 +155,18 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
             <Popover open={isOpen} onOpenChange={setIsOpen}>
               <PopoverTrigger asChild>
                 <div className="flex items-center text-gray-600 text-sm cursor-pointer">
-                  <MapPin className="h-4 w-4 mr-1 text-assist-blue/70" />
+                  <MapPin className="h-4 w-4 mr-1 text-assist-blue" />
                   <span>{location}</span>
                 </div>
               </PopoverTrigger>
-              <PopoverContent className="w-72 p-4">
+              <PopoverContent className="w-72 p-4 border-2 border-soft-purple/40 animate-fade-in">
                 <div className="space-y-3">
                   <h4 className="font-medium text-sm">Edit your location</h4>
                   <Input 
                     placeholder="Enter your location" 
                     value={editLocation} 
                     onChange={(e) => setEditLocation(e.target.value)}
-                    className="h-9"
+                    className="h-9 focus:border-soft-purple focus:ring-soft-purple/30"
                     onFocus={() => setEditLocation(location)}
                   />
                   
@@ -177,6 +177,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
                         checked={useDeviceLocation}
                         onCheckedChange={setUseDeviceLocation}
                         disabled={isGettingLocation}
+                        className="data-[state=checked]:bg-assist-blue"
                       />
                       <label 
                         htmlFor="use-device-location" 
@@ -191,7 +192,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
                       size="smallIcon"
                       onClick={getCurrentLocation}
                       disabled={isGettingLocation}
-                      className="h-7 w-7"
+                      className="h-7 w-7 hover:bg-soft-blue/40 hover:border-assist-blue/40"
                     >
                       <Navigation className="h-3.5 w-3.5 text-assist-blue" />
                     </Button>
@@ -208,7 +209,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
                       variant="outline" 
                       size="sm" 
                       onClick={() => setIsOpen(false)}
-                      className="h-8 px-3 text-xs"
+                      className="h-8 px-3 text-xs hover:bg-soft-pink/30 hover:text-pink-700 hover:border-pink-200"
                     >
                       <X className="h-3.5 w-3.5 mr-1" />
                       Cancel
@@ -227,7 +228,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
             </Popover>
             
             <button 
-              className="flex items-center justify-center h-8 w-8 text-assist-blue"
+              className="flex items-center justify-center h-8 w-8 text-assist-blue bg-soft-blue/40 rounded-full hover:bg-soft-blue/70 transition-colors"
               onClick={() => setSearchQuery(" ")}
             >
               <Search className="h-4 w-4" />
@@ -236,28 +237,43 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
           <Separator className="w-full h-[1px] bg-gray-200/70" />
         </div>
         
-        <div className="pt-14 pb-1 px-1"> {/* Reduced top padding to bring content higher */}
+        <div className="pt-14 pb-1 px-1">
           {!searchQuery && (
-            <div className="mb-3 text-left"> {/* Changed from text-center to text-left */}
-              <h1 className="text-2xl font-bold text-gray-900">Hello, {userName}!</h1>
-              <p className="text-gray-600 text-sm font-medium mt-0.5">Find skilled students for your tasks</p>
+            <div className="mb-3 text-left">
+              <div className="flex items-center gap-2">
+                <h1 className="text-2xl font-bold text-gray-900">
+                  Hello, <span className="text-transparent bg-clip-text bg-gradient-to-r from-assist-blue to-soft-purple">{userName}!</span>
+                </h1>
+                <Sparkles className="h-5 w-5 text-amber-500 animate-pulse" />
+              </div>
+              <div className="flex items-center gap-2 mt-0.5">
+                <p className="text-gray-600 text-sm font-medium">Find skilled students for your tasks</p>
+                <Badge className="bg-gradient-to-r from-soft-pink to-soft-purple text-[10px] py-0 px-2 h-4">NEW</Badge>
+              </div>
             </div>
           )}
           
           {!searchQuery && (
-            <div className="relative mb-2"> {/* Removed max-w-md and mx-auto to align with left text */}
+            <div className="relative mb-2">
               <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
                 <Search className="h-5 w-5 text-assist-blue" />
               </div>
               <input
                 type="text"
                 placeholder="How can we assist you today"
-                className="w-full h-12 pl-11 pr-4 bg-transparent rounded-xl border-2 border-assist-blue/20 
+                className="w-full h-12 pl-11 pr-4 bg-white/80 rounded-xl border-2 border-assist-blue/20 
                           focus:outline-none focus:ring-2 focus:ring-assist-blue/30 focus:border-assist-blue 
                           shadow-sm hover:border-assist-blue/40 hover:shadow 
                           transition-all duration-200 text-gray-800 placeholder:text-gray-600"
                 onClick={() => navigate('/mobile/search')}
               />
+              <div className="absolute top-0 right-0 h-full flex items-center pr-3">
+                <div className="flex space-x-1">
+                  <span className="h-2 w-2 rounded-full bg-soft-pink animate-pulse"></span>
+                  <span className="h-2 w-2 rounded-full bg-soft-blue animate-pulse delay-100"></span>
+                  <span className="h-2 w-2 rounded-full bg-soft-purple animate-pulse delay-200"></span>
+                </div>
+              </div>
             </div>
           )}
         </div>
@@ -268,7 +284,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
           <div className="flex items-center gap-2 mb-6">
             <button 
               onClick={() => setSearchQuery("")}
-              className="text-gray-600"
+              className="text-gray-600 bg-soft-blue/30 p-2 rounded-full hover:bg-soft-blue/50 transition-colors"
             >
               <ArrowLeft className="h-5 w-5" />
             </button>
@@ -295,10 +311,10 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
             {categories.map((category, index) => (
               <div 
                 key={index}
-                className="flex items-center bg-white p-3 rounded-xl shadow-sm border border-gray-100"
+                className="flex items-center bg-white p-3 rounded-xl shadow-sm border border-gray-100 hover:shadow-md hover:border-assist-blue/20 transition-all duration-200 transform hover:scale-[1.02]"
                 onClick={() => navigate(`/mobile/category/${category.name.toLowerCase().replace(/\s+/g, '-')}`)}
               >
-                <div className={`w-12 h-12 ${category.color} rounded-lg flex items-center justify-center mr-3`}>
+                <div className={`w-12 h-12 ${category.color} rounded-lg flex items-center justify-center mr-3 shadow-sm`}>
                   <span className="text-xl">{category.icon}</span>
                 </div>
                 <span className="text-sm font-medium text-gray-800">{category.name}</span>
