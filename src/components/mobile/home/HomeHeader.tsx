@@ -156,10 +156,10 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
   return (
     <>
       {/* Full-page gradient background */}
-      <div className="fixed top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-assist-blue/10 to-soft-purple/30 -z-10"></div>
+      <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-assist-blue/10 to-soft-purple/30 -z-10"></div>
       
-      {/* Fixed header - Updated to be fixed when scrolling */}
-      <header className="fixed top-0 left-0 right-0 z-10 p-4 bg-white/80 backdrop-blur-sm">
+      {/* Header content container */}
+      <header className="p-4 bg-white/80 backdrop-blur-sm">
         {/* Header content container */}
         <div className="flex items-center justify-between">
           {/* Location and greeting section */}
@@ -240,7 +240,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
             <h1 className="text-2xl font-bold text-gray-900">Hello, {userName}!</h1>
           </div>
           
-          {/* Search button - Made blue and leveled with location */}
+          {/* Search button */}
           <button 
             className="flex items-center justify-center h-10 w-10 rounded-full bg-white shadow-sm border border-gray-100 transition-colors hover:bg-gray-50"
             onClick={() => setSearchQuery(" ")} // Set with a space to trigger search mode
@@ -253,23 +253,21 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
           <p className="text-gray-600 text-sm font-medium mt-1 mb-3">Find skilled students for your tasks</p>
         )}
         
-        {/* Search bar in non-search mode */}
+        {/* Search bar in non-search mode - Modified to remove the weird light effect */}
         {!searchQuery && (
-          <div className="relative mb-4 group">
+          <div className="relative mb-4">
             <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
-              <Search className="h-5 w-5 text-assist-blue transition-colors duration-200" />
+              <Search className="h-5 w-5 text-assist-blue" />
             </div>
             <input
               type="text"
               placeholder="How can we assist you today"
               className="w-full h-12 pl-11 pr-4 bg-white rounded-xl border-2 border-assist-blue/20 
                         focus:outline-none focus:ring-2 focus:ring-assist-blue/30 focus:border-assist-blue 
-                        shadow-sm group-hover:border-assist-blue/40 group-hover:shadow 
+                        shadow-sm hover:border-assist-blue/40 hover:shadow 
                         transition-all duration-200 text-gray-800 placeholder:text-gray-400"
               onClick={() => navigate('/mobile/search')}
             />
-            <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-assist-blue/60 to-soft-purple/60 
-                          scale-x-0 group-hover:scale-x-100 rounded-b-xl transition-transform duration-300 origin-left"></div>
           </div>
         )}
       </header>
@@ -321,9 +319,6 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
           </div>
         </div>
       )}
-      
-      {/* Adjusted padding to push content below the fixed header */}
-      {!searchQuery && <div className="pt-36"></div>}
     </>
   );
 };
