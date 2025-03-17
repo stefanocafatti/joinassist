@@ -75,17 +75,26 @@ const MobileHome = () => {
     }
   ];
 
+  // Use the route to check if we're on search page
+  const isSearchPage = window.location.pathname.includes('/mobile/search');
+
   return (
     <>
-      {/* Using showHeader={false} because we're handling the header in HomeHeader component */}
-      <MobileLayout showHeader={false} contentClassName="pb-20">
+      {/* Using a standard MobileLayout with no special contentClassName */}
+      <MobileLayout showHeader={false} contentClassName={isSearchPage ? "pb-20" : ""}>
         <div className="space-y-6">
           <HomeHeader userName="Sarah" />
-          <PastTasksSection pastTasks={pastTasks} />
-          <FavoritesSection favoritedTasks={favoritedTasks} />
-          <CategoriesSection categories={categories} />
-          <PopularTasksSection popularTasks={popularTasks} />
-          <UpcomingSection />
+          
+          {/* Only show other sections if not on search page */}
+          {!isSearchPage && (
+            <>
+              <PastTasksSection pastTasks={pastTasks} />
+              <FavoritesSection favoritedTasks={favoritedTasks} />
+              <CategoriesSection categories={categories} />
+              <PopularTasksSection popularTasks={popularTasks} />
+              <UpcomingSection />
+            </>
+          )}
         </div>
       </MobileLayout>
       <BottomNavigation />

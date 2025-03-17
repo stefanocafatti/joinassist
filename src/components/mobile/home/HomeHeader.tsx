@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, MapPin, Check, X, Navigation, ArrowLeft } from "lucide-react";
@@ -155,11 +156,11 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
 
   return (
     <>
-      {/* Fixed full-page gradient background */}
-      <div className="fixed top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-assist-blue/10 to-soft-purple/30 -z-10"></div>
+      {/* Gradient background - not fixed anymore */}
+      <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-assist-blue/10 to-soft-purple/30 -z-10"></div>
       
-      {/* Search Header - Fixed position with stronger attachment to background */}
-      <div className="fixed top-0 left-0 right-0 z-30">
+      {/* Search Header - Regular position (not fixed) */}
+      <div className="z-10">
         <header className="p-4 bg-white/95 shadow-sm backdrop-blur-sm">
           {searchQuery ? (
             // When search is active
@@ -304,7 +305,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
       
       {/* Categories Grid - Show ONLY when in search mode */}
       {searchQuery && (
-        <div className="fixed top-[4.5rem] left-0 right-0 bottom-0 pt-4 px-4 pb-20 bg-white/95 backdrop-blur-sm overflow-y-auto z-20">
+        <div className="pt-2 px-4 pb-20 overflow-y-auto">
           <div className="grid grid-cols-2 gap-4 mt-2">
             {categories.map((category, index) => (
               <div 
@@ -322,8 +323,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
         </div>
       )}
       
-      {/* Adjusted padding to account for the fixed header */}
-      {!searchQuery && <div className="pt-36"></div>}
+      {/* No extra padding needed since the header is not fixed */}
     </>
   );
 };
