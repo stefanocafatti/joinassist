@@ -38,37 +38,36 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
               <span>{location}</span>
             </div>
           </div>
-          <DrawerTrigger asChild>
-            <button className="flex items-center justify-center h-10 w-10 rounded-full bg-white shadow-sm border border-gray-100 transition-colors hover:bg-gray-50">
-              <Menu className="h-5 w-5 text-assist-blue/70" />
-            </button>
-          </DrawerTrigger>
+          <Drawer>
+            <DrawerTrigger asChild>
+              <button className="flex items-center justify-center h-10 w-10 rounded-full bg-white shadow-sm border border-gray-100 transition-colors hover:bg-gray-50">
+                <Menu className="h-5 w-5 text-assist-blue/70" />
+              </button>
+            </DrawerTrigger>
+            
+            <DrawerContent className="px-4 py-6 max-h-[85vh]">
+              <div className="mb-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Browse by Category</h3>
+                <p className="text-gray-500 text-sm">Select a category to find tasks</p>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                {categories.map((category, index) => (
+                  <div 
+                    key={index}
+                    className={`${category.color} rounded-xl flex items-center p-4 shadow-sm hover:shadow transition-all duration-200 cursor-pointer`}
+                    onClick={() => navigate(`/mobile/category/${category.name.toLowerCase()}`)}
+                  >
+                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center mr-3 shadow-sm">
+                      <span className="text-xl">{category.icon}</span>
+                    </div>
+                    <span className="font-medium text-gray-800">{category.name}</span>
+                  </div>
+                ))}
+              </div>
+            </DrawerContent>
+          </Drawer>
         </div>
         <p className="text-gray-600 text-sm font-medium mt-1">Find skilled students for your tasks</p>
-        
-        {/* Categories Drawer */}
-        <Drawer>
-          <DrawerContent className="px-4 py-6 max-h-[85vh]">
-            <div className="mb-4">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Browse by Category</h3>
-              <p className="text-gray-500 text-sm">Select a category to find tasks</p>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              {categories.map((category, index) => (
-                <div 
-                  key={index}
-                  className={`${category.color} rounded-xl flex items-center p-4 shadow-sm hover:shadow transition-all duration-200 cursor-pointer`}
-                  onClick={() => navigate(`/mobile/category/${category.name.toLowerCase()}`)}
-                >
-                  <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center mr-3 shadow-sm">
-                    <span className="text-xl">{category.icon}</span>
-                  </div>
-                  <span className="font-medium text-gray-800">{category.name}</span>
-                </div>
-              ))}
-            </div>
-          </DrawerContent>
-        </Drawer>
       </header>
       
       {/* Added padding to push content below the fixed header */}
