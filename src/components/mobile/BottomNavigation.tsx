@@ -1,7 +1,8 @@
 
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Home, Search, Bell, User, Plus } from "lucide-react";
+import { Home, Search, Plus, Bell, User } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const BottomNavigation = () => {
   const navigate = useNavigate();
@@ -22,14 +23,14 @@ const BottomNavigation = () => {
     },
     { 
       icon: Plus, 
-      label: "New Task", 
+      label: "", 
       path: "/mobile/new-task", 
       active: location.pathname === "/mobile/new-task",
       isPrimary: true
     },
     { 
       icon: Bell, 
-      label: "Notifications", 
+      label: "Alerts", 
       path: "/mobile/notifications", 
       active: location.pathname === "/mobile/notifications" 
     },
@@ -42,24 +43,39 @@ const BottomNavigation = () => {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-10 shadow-lg">
-      <div className="grid grid-cols-5 h-16">
+    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-10 shadow-md">
+      <div className="flex justify-around h-16">
         {navItems.map((item, index) => (
           <button
             key={index}
-            className={`flex flex-col items-center justify-center transition-colors duration-200 ${
-              item.active ? "text-assist-blue" : "text-gray-500 hover:text-gray-700"
-            } ${item.isPrimary ? "relative" : ""}`}
+            className={cn(
+              "flex flex-col items-center justify-center w-full transition-colors duration-200",
+              item.isPrimary ? "relative" : "",
+              item.active && !item.isPrimary ? "text-assist-blue" : "text-gray-500"
+            )}
             onClick={() => navigate(item.path)}
+            aria-label={item.label || "New Task"}
           >
             {item.isPrimary ? (
-              <div className="absolute -top-6 bg-assist-blue text-white p-3 rounded-full shadow-lg hover:bg-assist-blue/90 transition-colors">
-                <item.icon size={22} />
+              <div className="absolute -top-6 bg-assist-blue text-white p-3.5 rounded-full shadow-lg hover:bg-blue-600 transition-all duration-200 transform hover:scale-105">
+                <item.icon size={24} strokeWidth={2.5} />
               </div>
             ) : (
-              <item.icon size={20} className={item.active ? "text-assist-blue" : "text-gray-500"} />
+              <>
+                <item.icon 
+                  size={22} 
+                  className={cn(
+                    item.active ? "text-assist-blue" : "text-gray-500"
+                  )} 
+                />
+                <span className={cn(
+                  "text-xs mt-1",
+                  item.active ? "font-medium" : ""
+                )}>
+                  {item.label}
+                </span>
+              </>
             )}
-            <span className={`text-xs mt-1 ${item.active ? "font-medium" : ""}`}>{item.label}</span>
           </button>
         ))}
       </div>

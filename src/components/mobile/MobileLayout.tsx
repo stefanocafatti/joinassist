@@ -2,6 +2,7 @@
 import React, { ReactNode } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import Logo from "@/components/ui/Logo";
+import { cn } from "@/lib/utils";
 
 interface MobileLayoutProps {
   children: ReactNode;
@@ -31,7 +32,7 @@ const MobileLayout = ({
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       {showHeader && (
-        <header className={`sticky top-0 z-10 bg-white shadow-sm p-4 ${headerClassName}`}>
+        <header className={cn("sticky top-0 z-10 bg-white shadow-sm p-4", headerClassName)}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               {showBackButton && (
@@ -54,8 +55,8 @@ const MobileLayout = ({
         </header>
       )}
       
-      <main className={`flex-1 overflow-auto ${contentClassName}`}>
-        <div className={isMobile ? "container px-4 py-4" : "container px-6 py-6"}>
+      <main className={cn("flex-1 overflow-auto", contentClassName)}>
+        <div className={isMobile ? "px-5 py-6" : "container px-6 py-6"}>
           {children}
         </div>
       </main>
