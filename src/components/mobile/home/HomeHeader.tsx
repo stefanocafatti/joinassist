@@ -149,112 +149,116 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
       <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-assist-blue/10 to-soft-purple/30 -z-10"></div>
       
       <header className="p-4 bg-transparent backdrop-blur-sm">
-        <div className="flex items-center justify-between mb-3">
-          <Popover open={isOpen} onOpenChange={setIsOpen}>
-            <PopoverTrigger asChild>
-              <div className="flex items-center text-gray-600 text-sm cursor-pointer">
-                <MapPin className="h-4 w-4 mr-1 text-assist-blue/70" />
-                <span>{location}</span>
-              </div>
-            </PopoverTrigger>
-            <PopoverContent className="w-72 p-4">
-              <div className="space-y-3">
-                <h4 className="font-medium text-sm">Edit your location</h4>
-                <Input 
-                  placeholder="Enter your location" 
-                  value={editLocation} 
-                  onChange={(e) => setEditLocation(e.target.value)}
-                  className="h-9"
-                  onFocus={() => setEditLocation(location)}
-                />
-                
-                <div className="flex items-center justify-between pt-2 pb-1">
-                  <div className="flex items-center gap-2">
-                    <Switch 
-                      id="use-device-location" 
-                      checked={useDeviceLocation}
-                      onCheckedChange={setUseDeviceLocation}
+        <div className="fixed top-0 left-0 right-0 z-20 bg-white/90 backdrop-blur-sm shadow-sm">
+          <div className="flex items-center justify-between p-4">
+            <Popover open={isOpen} onOpenChange={setIsOpen}>
+              <PopoverTrigger asChild>
+                <div className="flex items-center text-gray-600 text-sm cursor-pointer">
+                  <MapPin className="h-4 w-4 mr-1 text-assist-blue/70" />
+                  <span>{location}</span>
+                </div>
+              </PopoverTrigger>
+              <PopoverContent className="w-72 p-4">
+                <div className="space-y-3">
+                  <h4 className="font-medium text-sm">Edit your location</h4>
+                  <Input 
+                    placeholder="Enter your location" 
+                    value={editLocation} 
+                    onChange={(e) => setEditLocation(e.target.value)}
+                    className="h-9"
+                    onFocus={() => setEditLocation(location)}
+                  />
+                  
+                  <div className="flex items-center justify-between pt-2 pb-1">
+                    <div className="flex items-center gap-2">
+                      <Switch 
+                        id="use-device-location" 
+                        checked={useDeviceLocation}
+                        onCheckedChange={setUseDeviceLocation}
+                        disabled={isGettingLocation}
+                      />
+                      <label 
+                        htmlFor="use-device-location" 
+                        className="text-sm text-gray-700 cursor-pointer"
+                      >
+                        Use device location
+                      </label>
+                    </div>
+                    
+                    <Button
+                      variant="outline"
+                      size="smallIcon"
+                      onClick={getCurrentLocation}
                       disabled={isGettingLocation}
-                    />
-                    <label 
-                      htmlFor="use-device-location" 
-                      className="text-sm text-gray-700 cursor-pointer"
+                      className="h-7 w-7"
                     >
-                      Use device location
-                    </label>
+                      <Navigation className="h-3.5 w-3.5 text-assist-blue" />
+                    </Button>
                   </div>
                   
-                  <Button
-                    variant="outline"
-                    size="smallIcon"
-                    onClick={getCurrentLocation}
-                    disabled={isGettingLocation}
-                    className="h-7 w-7"
-                  >
-                    <Navigation className="h-3.5 w-3.5 text-assist-blue" />
-                  </Button>
+                  {isGettingLocation && (
+                    <p className="text-xs text-gray-500 animate-pulse">
+                      Getting your location...
+                    </p>
+                  )}
+                  
+                  <div className="flex justify-end space-x-2 mt-3">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={() => setIsOpen(false)}
+                      className="h-8 px-3 text-xs"
+                    >
+                      <X className="h-3.5 w-3.5 mr-1" />
+                      Cancel
+                    </Button>
+                    <Button 
+                      onClick={handleEditLocation}
+                      size="sm"
+                      className="h-8 px-3 text-xs bg-assist-blue hover:bg-assist-blue/90"
+                    >
+                      <Check className="h-3.5 w-3.5 mr-1" />
+                      Save
+                    </Button>
+                  </div>
                 </div>
-                
-                {isGettingLocation && (
-                  <p className="text-xs text-gray-500 animate-pulse">
-                    Getting your location...
-                  </p>
-                )}
-                
-                <div className="flex justify-end space-x-2 mt-3">
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    onClick={() => setIsOpen(false)}
-                    className="h-8 px-3 text-xs"
-                  >
-                    <X className="h-3.5 w-3.5 mr-1" />
-                    Cancel
-                  </Button>
-                  <Button 
-                    onClick={handleEditLocation}
-                    size="sm"
-                    className="h-8 px-3 text-xs bg-assist-blue hover:bg-assist-blue/90"
-                  >
-                    <Check className="h-3.5 w-3.5 mr-1" />
-                    Save
-                  </Button>
-                </div>
-              </div>
-            </PopoverContent>
-          </Popover>
-          
-          <button 
-            className="flex items-center justify-center h-8 w-8 transition-colors hover:bg-white/10"
-            onClick={() => setSearchQuery(" ")}
-          >
-            <Search className="h-4 w-4 text-assist-blue" />
-          </button>
+              </PopoverContent>
+            </Popover>
+            
+            <button 
+              className="flex items-center justify-center h-8 w-8 transition-colors hover:bg-white/10"
+              onClick={() => setSearchQuery(" ")}
+            >
+              <Search className="h-4 w-4 text-assist-blue" />
+            </button>
+          </div>
         </div>
         
-        {!searchQuery && (
-          <div className="mb-3">
-            <h1 className="text-2xl font-bold text-gray-900">Hello, {userName}!</h1>
-            <p className="text-gray-600 text-sm font-medium mt-1">Find skilled students for your tasks</p>
-          </div>
-        )}
-        
-        {!searchQuery && (
-          <div className="relative mb-4">
-            <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
-              <Search className="h-5 w-5 text-assist-blue" />
+        <div className="pt-16"> {/* Add padding to account for the fixed header */}
+          {!searchQuery && (
+            <div className="mb-3">
+              <h1 className="text-2xl font-bold text-gray-900">Hello, {userName}!</h1>
+              <p className="text-gray-600 text-sm font-medium mt-1">Find skilled students for your tasks</p>
             </div>
-            <input
-              type="text"
-              placeholder="How can we assist you today"
-              className="w-full h-12 pl-11 pr-4 bg-transparent rounded-xl border-2 border-assist-blue/20 
-                        focus:outline-none focus:ring-2 focus:ring-assist-blue/30 focus:border-assist-blue 
-                        shadow-sm hover:border-assist-blue/40 hover:shadow 
-                        transition-all duration-200 text-gray-800 placeholder:text-gray-600"
-              onClick={() => navigate('/mobile/search')}
-            />
-          </div>
-        )}
+          )}
+          
+          {!searchQuery && (
+            <div className="relative mb-4">
+              <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
+                <Search className="h-5 w-5 text-assist-blue" />
+              </div>
+              <input
+                type="text"
+                placeholder="How can we assist you today"
+                className="w-full h-12 pl-11 pr-4 bg-transparent rounded-xl border-2 border-assist-blue/20 
+                          focus:outline-none focus:ring-2 focus:ring-assist-blue/30 focus:border-assist-blue 
+                          shadow-sm hover:border-assist-blue/40 hover:shadow 
+                          transition-all duration-200 text-gray-800 placeholder:text-gray-600"
+                onClick={() => navigate('/mobile/search')}
+              />
+            </div>
+          )}
+        </div>
       </header>
       
       {searchQuery && (
