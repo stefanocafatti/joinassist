@@ -225,7 +225,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
           </Popover>
           
           <button 
-            className="flex items-center justify-center h-8 w-8 rounded-full bg-transparent border border-gray-200 transition-colors hover:bg-white/20"
+            className="flex items-center justify-center h-8 w-8 transition-colors hover:bg-white/10"
             onClick={() => setSearchQuery(" ")}
           >
             <Search className="h-4 w-4 text-assist-blue" />
