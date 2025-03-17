@@ -1,3 +1,4 @@
+
 import React from "react";
 import MobileLayout from "./MobileLayout";
 import BottomNavigation from "./BottomNavigation";
@@ -79,7 +80,8 @@ const MobileHome = () => {
 
   return (
     <>
-      <MobileLayout showHeader={false}>
+      {/* Using a standard MobileLayout with no special contentClassName */}
+      <MobileLayout showHeader={false} contentClassName={isSearchPage ? "pb-20" : ""}>
         <div className="space-y-6">
           <HomeHeader userName="Sarah" />
           

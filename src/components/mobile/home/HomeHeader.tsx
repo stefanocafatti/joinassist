@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, MapPin, Check, X, Navigation, ArrowLeft } from "lucide-react";
@@ -155,8 +156,8 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
 
   return (
     <>
-      {/* Gradient background for the header section only */}
-      <div className="absolute top-0 left-0 right-0 h-48 bg-gradient-to-b from-assist-blue/10 to-soft-purple/30 -z-10"></div>
+      {/* Gradient background - not fixed anymore */}
+      <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-assist-blue/10 to-soft-purple/30 -z-10"></div>
       
       {/* Search Header - Regular position (not fixed) */}
       <div className="z-10">
@@ -321,6 +322,8 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
           </div>
         </div>
       )}
+      
+      {/* No extra padding needed since the header is not fixed */}
     </>
   );
 };
