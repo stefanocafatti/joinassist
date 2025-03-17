@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Switch } from "@/components/ui/switch";
+import { Separator } from "@/components/ui/separator";
 
 interface HomeHeaderProps {
   userName: string;
@@ -148,8 +149,8 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
     <>
       <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-assist-blue/10 to-soft-purple/30 -z-10"></div>
       
-      <header className="p-4 bg-transparent backdrop-blur-sm">
-        <div className="fixed top-0 left-0 right-0 z-20 bg-white/90 backdrop-blur-sm shadow-sm">
+      <header className="p-4 bg-transparent">
+        <div className="fixed top-0 left-0 right-0 z-20 bg-transparent backdrop-blur-sm">
           <div className="flex items-center justify-between p-4">
             <Popover open={isOpen} onOpenChange={setIsOpen}>
               <PopoverTrigger asChild>
@@ -226,12 +227,13 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
             </Popover>
             
             <button 
-              className="flex items-center justify-center h-8 w-8 transition-colors hover:bg-white/10"
+              className="flex items-center justify-center h-8 w-8 text-assist-blue"
               onClick={() => setSearchQuery(" ")}
             >
-              <Search className="h-4 w-4 text-assist-blue" />
+              <Search className="h-4 w-4" />
             </button>
           </div>
+          <Separator className="w-full h-[1px] bg-gray-200/70" />
         </div>
         
         <div className="pt-16"> {/* Add padding to account for the fixed header */}
