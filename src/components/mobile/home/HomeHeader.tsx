@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, MapPin, Check, X, Navigation, ArrowLeft } from "lucide-react";
@@ -25,7 +24,6 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
   const [isGettingLocation, setIsGettingLocation] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Categories data - using original categories
   const categories = [
     { name: "Help Moving", icon: "📦", color: "bg-soft-blue" },
     { name: "Furniture Assembly", icon: "🪑", color: "bg-soft-green" },
@@ -52,7 +50,6 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         try {
-          // Use reverse geocoding to get address from coordinates
           const response = await fetch(
             `https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.coords.latitude}&lon=${position.coords.longitude}&zoom=18&addressdetails=1`
           );
@@ -61,14 +58,11 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
           
           const data = await response.json();
           
-          // Format the location with more precise details
           let locationText = "";
           
           if (data.address) {
-            // Use a more detailed address format with neighborhood if available
             const address = data.address;
             
-            // Start with the most specific location info
             if (address.neighbourhood) {
               locationText = address.neighbourhood;
             } else if (address.suburb) {
@@ -81,7 +75,6 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
               locationText = address.aeroway;
             }
             
-            // Add city/town info
             if (address.city) {
               locationText += locationText ? `, ${address.city}` : address.city;
             } else if (address.town) {
@@ -90,7 +83,6 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
               locationText += locationText ? `, ${address.village}` : address.village;
             }
             
-            // Add state/province if available
             if (address.state) {
               if (address.state_code) {
                 locationText += locationText ? `, ${address.state_code}` : address.state_code;
@@ -100,7 +92,6 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
             }
           }
           
-          // If we couldn't parse a good location name, use the display_name (truncated)
           if (!locationText && data.display_name) {
             locationText = data.display_name.split(',').slice(0, 3).join(', ');
           }
@@ -123,7 +114,6 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
         setIsGettingLocation(false);
         console.error("Geolocation error:", error);
         
-        // Provide specific error messages for different error codes
         switch(error.code) {
           case error.PERMISSION_DENIED:
             toast.error("Location access denied. Please enable location services for this site.");
@@ -141,7 +131,6 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
     );
   };
 
-  // Effect to get location when switch is toggled on
   useEffect(() => {
     if (useDeviceLocation) {
       getCurrentLocation();
@@ -156,105 +145,99 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
 
   return (
     <>
-      {/* Full-page gradient background */}
       <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-assist-blue/10 to-soft-purple/30 -z-10"></div>
       
-      {/* Header content container - Changed from white to transparent background */}
       <header className="p-4 bg-transparent backdrop-blur-sm">
-        {/* Header content container */}
-        <div className="flex items-center justify-between">
-          {/* Location and greeting section */}
-          <div>
-            <Popover open={isOpen} onOpenChange={setIsOpen}>
-              <PopoverTrigger asChild>
-                <div className="flex items-center text-gray-600 text-sm cursor-pointer">
-                  <MapPin className="h-3.5 w-3.5 mr-1 text-assist-blue/70" />
-                  <span>{location}</span>
-                </div>
-              </PopoverTrigger>
-              <PopoverContent className="w-72 p-4">
-                <div className="space-y-3">
-                  <h4 className="font-medium text-sm">Edit your location</h4>
-                  <Input 
-                    placeholder="Enter your location" 
-                    value={editLocation} 
-                    onChange={(e) => setEditLocation(e.target.value)}
-                    className="h-9"
-                    onFocus={() => setEditLocation(location)}
-                  />
-                  
-                  <div className="flex items-center justify-between pt-2 pb-1">
-                    <div className="flex items-center gap-2">
-                      <Switch 
-                        id="use-device-location" 
-                        checked={useDeviceLocation}
-                        onCheckedChange={setUseDeviceLocation}
-                        disabled={isGettingLocation}
-                      />
-                      <label 
-                        htmlFor="use-device-location" 
-                        className="text-sm text-gray-700 cursor-pointer"
-                      >
-                        Use device location
-                      </label>
-                    </div>
-                    
-                    <Button
-                      variant="outline"
-                      size="smallIcon"
-                      onClick={getCurrentLocation}
+        <div className="flex items-center justify-between mb-3">
+          <Popover open={isOpen} onOpenChange={setIsOpen}>
+            <PopoverTrigger asChild>
+              <div className="flex items-center text-gray-600 text-sm cursor-pointer">
+                <MapPin className="h-3.5 w-3.5 mr-1 text-assist-blue/70" />
+                <span>{location}</span>
+              </div>
+            </PopoverTrigger>
+            <PopoverContent className="w-72 p-4">
+              <div className="space-y-3">
+                <h4 className="font-medium text-sm">Edit your location</h4>
+                <Input 
+                  placeholder="Enter your location" 
+                  value={editLocation} 
+                  onChange={(e) => setEditLocation(e.target.value)}
+                  className="h-9"
+                  onFocus={() => setEditLocation(location)}
+                />
+                
+                <div className="flex items-center justify-between pt-2 pb-1">
+                  <div className="flex items-center gap-2">
+                    <Switch 
+                      id="use-device-location" 
+                      checked={useDeviceLocation}
+                      onCheckedChange={setUseDeviceLocation}
                       disabled={isGettingLocation}
-                      className="h-7 w-7"
+                    />
+                    <label 
+                      htmlFor="use-device-location" 
+                      className="text-sm text-gray-700 cursor-pointer"
                     >
-                      <Navigation className="h-3.5 w-3.5 text-assist-blue" />
-                    </Button>
+                      Use device location
+                    </label>
                   </div>
                   
-                  {isGettingLocation && (
-                    <p className="text-xs text-gray-500 animate-pulse">
-                      Getting your location...
-                    </p>
-                  )}
-                  
-                  <div className="flex justify-end space-x-2 mt-3">
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      onClick={() => setIsOpen(false)}
-                      className="h-8 px-3 text-xs"
-                    >
-                      <X className="h-3.5 w-3.5 mr-1" />
-                      Cancel
-                    </Button>
-                    <Button 
-                      onClick={handleEditLocation}
-                      size="sm"
-                      className="h-8 px-3 text-xs bg-assist-blue hover:bg-assist-blue/90"
-                    >
-                      <Check className="h-3.5 w-3.5 mr-1" />
-                      Save
-                    </Button>
-                  </div>
+                  <Button
+                    variant="outline"
+                    size="smallIcon"
+                    onClick={getCurrentLocation}
+                    disabled={isGettingLocation}
+                    className="h-7 w-7"
+                  >
+                    <Navigation className="h-3.5 w-3.5 text-assist-blue" />
+                  </Button>
                 </div>
-              </PopoverContent>
-            </Popover>
-            <h1 className="text-2xl font-bold text-gray-900">Hello, {userName}!</h1>
-          </div>
+                
+                {isGettingLocation && (
+                  <p className="text-xs text-gray-500 animate-pulse">
+                    Getting your location...
+                  </p>
+                )}
+                
+                <div className="flex justify-end space-x-2 mt-3">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => setIsOpen(false)}
+                    className="h-8 px-3 text-xs"
+                  >
+                    <X className="h-3.5 w-3.5 mr-1" />
+                    Cancel
+                  </Button>
+                  <Button 
+                    onClick={handleEditLocation}
+                    size="sm"
+                    className="h-8 px-3 text-xs bg-assist-blue hover:bg-assist-blue/90"
+                  >
+                    <Check className="h-3.5 w-3.5 mr-1" />
+                    Save
+                  </Button>
+                </div>
+              </div>
+            </PopoverContent>
+          </Popover>
           
-          {/* Search button - Updated with transparent background */}
           <button 
             className="flex items-center justify-center h-10 w-10 rounded-full bg-white/50 shadow-sm border border-gray-100 transition-colors hover:bg-white/70"
-            onClick={() => setSearchQuery(" ")} // Set with a space to trigger search mode
+            onClick={() => setSearchQuery(" ")}
           >
             <Search className="h-5 w-5 text-assist-blue" />
           </button>
         </div>
         
         {!searchQuery && (
-          <p className="text-gray-600 text-sm font-medium mt-1 mb-3">Find skilled students for your tasks</p>
+          <div className="mb-3">
+            <h1 className="text-2xl font-bold text-gray-900">Hello, {userName}!</h1>
+            <p className="text-gray-600 text-sm font-medium mt-1">Find skilled students for your tasks</p>
+          </div>
         )}
         
-        {/* Search bar in non-search mode - Updated with transparent background */}
         {!searchQuery && (
           <div className="relative mb-4">
             <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
@@ -273,10 +256,8 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
         )}
       </header>
       
-      {/* Search mode with updated layout - Only show categories */}
       {searchQuery && (
         <div className="fixed top-16 left-0 right-0 bottom-0 overflow-auto bg-white z-[5] px-4 pt-4">
-          {/* Search bar in search mode */}
           <div className="flex items-center gap-2 mb-6">
             <button 
               onClick={() => setSearchQuery("")}
@@ -303,7 +284,6 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
             </div>
           </div>
           
-          {/* Categories Grid - Only show categories in search mode */}
           <div className="grid grid-cols-2 gap-4 pb-20">
             {categories.map((category, index) => (
               <div 
