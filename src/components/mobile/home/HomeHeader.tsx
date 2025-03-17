@@ -236,16 +236,16 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
           <Separator className="w-full h-[1px] bg-gray-200/70" />
         </div>
         
-        <div className="pt-12"> {/* Reduced padding to move content even closer to header */}
+        <div className="pt-16 pb-1"> {/* Adjusted padding to bring content higher */}
           {!searchQuery && (
-            <div className="mb-0"> {/* Removed margin to eliminate space */}
+            <div className="mb-3 text-center"> {/* Centered text and added margin */}
               <h1 className="text-2xl font-bold text-gray-900">Hello, {userName}!</h1>
               <p className="text-gray-600 text-sm font-medium mt-0.5">Find skilled students for your tasks</p>
             </div>
           )}
           
           {!searchQuery && (
-            <div className="relative mb-2"> {/* Reduced margin below search */}
+            <div className="relative mb-2 max-w-md mx-auto"> {/* Centered search bar */}
               <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
                 <Search className="h-5 w-5 text-assist-blue" />
               </div>
