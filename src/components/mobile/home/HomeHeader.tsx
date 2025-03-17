@@ -1,7 +1,7 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, MapPin, Menu, Check, X } from "lucide-react";
+import { Search, MapPin, Menu, Check, X, Navigation } from "lucide-react";
 import { 
   Drawer,
   DrawerContent,
@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { Switch } from "@/components/ui/switch";
 
 interface HomeHeaderProps {
   userName: string;
@@ -24,6 +26,8 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
   const [location, setLocation] = useState("Los Angeles, CA");
   const [editLocation, setEditLocation] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [useDeviceLocation, setUseDeviceLocation] = useState(false);
+  const [isGettingLocation, setIsGettingLocation] = useState(false);
 
   // Categories data
   const categories = [
@@ -42,6 +46,91 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
     setIsOpen(false);
   };
 
+  const getCurrentLocation = () => {
+    if (!navigator.geolocation) {
+      toast.error("Geolocation is not supported by your browser");
+      return;
+    }
+
+    setIsGettingLocation(true);
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        try {
+          // Use reverse geocoding to get address from coordinates
+          const response = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.coords.latitude}&lon=${position.coords.longitude}&zoom=18&addressdetails=1`
+          );
+          
+          if (!response.ok) throw new Error("Failed to fetch location data");
+          
+          const data = await response.json();
+          
+          // Format the location based on available data
+          let locationText = "";
+          
+          if (data.address) {
+            const address = data.address;
+            if (address.city) {
+              locationText = address.city;
+            } else if (address.town) {
+              locationText = address.town;
+            } else if (address.village) {
+              locationText = address.village;
+            }
+            
+            if (address.state) {
+              locationText += locationText ? `, ${address.state}` : address.state;
+            }
+          }
+          
+          // If we couldn't parse a good location name, use the display_name (truncated)
+          if (!locationText && data.display_name) {
+            locationText = data.display_name.split(',').slice(0, 2).join(', ');
+          }
+          
+          if (locationText) {
+            setLocation(locationText);
+            setEditLocation(locationText);
+            toast.success("Location updated based on your device");
+          } else {
+            throw new Error("Could not determine your location name");
+          }
+        } catch (error) {
+          console.error("Error getting location:", error);
+          toast.error("Could not retrieve your location. Please enter it manually.");
+        } finally {
+          setIsGettingLocation(false);
+        }
+      },
+      (error) => {
+        setIsGettingLocation(false);
+        console.error("Geolocation error:", error);
+        
+        // Provide specific error messages for different error codes
+        switch(error.code) {
+          case error.PERMISSION_DENIED:
+            toast.error("Location access denied. Please enable location services for this site.");
+            break;
+          case error.POSITION_UNAVAILABLE:
+            toast.error("Location information is unavailable.");
+            break;
+          case error.TIMEOUT:
+            toast.error("Location request timed out.");
+            break;
+          default:
+            toast.error("An unknown error occurred while retrieving location.");
+        }
+      }
+    );
+  };
+
+  // Effect to get location when switch is toggled on
+  useEffect(() => {
+    if (useDeviceLocation) {
+      getCurrentLocation();
+    }
+  }, [useDeviceLocation]);
+
   return (
     <>
       {/* Header Section with full-width gradient background */}
@@ -56,7 +145,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
                 </div>
               </PopoverTrigger>
               <PopoverContent className="w-72 p-4">
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <h4 className="font-medium text-sm">Edit your location</h4>
                   <Input 
                     placeholder="Enter your location" 
@@ -65,6 +154,40 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
                     className="h-9"
                     onFocus={() => setEditLocation(location)}
                   />
+                  
+                  <div className="flex items-center justify-between pt-2 pb-1">
+                    <div className="flex items-center gap-2">
+                      <Switch 
+                        id="use-device-location" 
+                        checked={useDeviceLocation}
+                        onCheckedChange={setUseDeviceLocation}
+                        disabled={isGettingLocation}
+                      />
+                      <label 
+                        htmlFor="use-device-location" 
+                        className="text-sm text-gray-700 cursor-pointer"
+                      >
+                        Use device location
+                      </label>
+                    </div>
+                    
+                    <Button
+                      variant="outline"
+                      size="smallIcon"
+                      onClick={getCurrentLocation}
+                      disabled={isGettingLocation}
+                      className="h-7 w-7"
+                    >
+                      <Navigation className="h-3.5 w-3.5 text-assist-blue" />
+                    </Button>
+                  </div>
+                  
+                  {isGettingLocation && (
+                    <p className="text-xs text-gray-500 animate-pulse">
+                      Getting your location...
+                    </p>
+                  )}
+                  
                   <div className="flex justify-end space-x-2 mt-3">
                     <Button 
                       variant="outline" 
