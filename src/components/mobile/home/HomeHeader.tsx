@@ -150,7 +150,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
       <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-assist-blue/10 to-soft-purple/30 -z-10"></div>
       
       <header className="p-4 bg-transparent">
-        <div className="fixed top-0 left-0 right-0 z-20 bg-transparent backdrop-blur-sm">
+        <div className="fixed top-0 left-0 right-0 z-20 bg-white">
           <div className="flex items-center justify-between p-4">
             <Popover open={isOpen} onOpenChange={setIsOpen}>
               <PopoverTrigger asChild>
@@ -236,9 +236,9 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
           <Separator className="w-full h-[1px] bg-gray-200/70" />
         </div>
         
-        <div className="pt-16"> {/* Add padding to account for the fixed header */}
+        <div className="pt-14"> {/* Reduced padding to move content up */}
           {!searchQuery && (
-            <div className="mb-3">
+            <div className="mb-1"> {/* Reduced margin to bring the text closer to the line */}
               <h1 className="text-2xl font-bold text-gray-900">Hello, {userName}!</h1>
               <p className="text-gray-600 text-sm font-medium mt-1">Find skilled students for your tasks</p>
             </div>
