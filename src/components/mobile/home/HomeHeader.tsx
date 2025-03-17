@@ -65,27 +65,48 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
           
           const data = await response.json();
           
-          // Format the location based on available data
+          // Format the location with more precise details
           let locationText = "";
           
           if (data.address) {
+            // Use a more detailed address format with neighborhood if available
             const address = data.address;
-            if (address.city) {
-              locationText = address.city;
-            } else if (address.town) {
-              locationText = address.town;
-            } else if (address.village) {
-              locationText = address.village;
+            
+            // Start with the most specific location info
+            if (address.neighbourhood) {
+              locationText = address.neighbourhood;
+            } else if (address.suburb) {
+              locationText = address.suburb;
+            } else if (address.district) {
+              locationText = address.district;
+            } else if (address.city_district) {
+              locationText = address.city_district;
+            } else if (address.aeroway) {
+              locationText = address.aeroway;
             }
             
+            // Add city/town info
+            if (address.city) {
+              locationText += locationText ? `, ${address.city}` : address.city;
+            } else if (address.town) {
+              locationText += locationText ? `, ${address.town}` : address.town;
+            } else if (address.village) {
+              locationText += locationText ? `, ${address.village}` : address.village;
+            }
+            
+            // Add state/province if available
             if (address.state) {
-              locationText += locationText ? `, ${address.state}` : address.state;
+              if (address.state_code) {
+                locationText += locationText ? `, ${address.state_code}` : address.state_code;
+              } else {
+                locationText += locationText ? `, ${address.state}` : address.state;
+              }
             }
           }
           
           // If we couldn't parse a good location name, use the display_name (truncated)
           if (!locationText && data.display_name) {
-            locationText = data.display_name.split(',').slice(0, 2).join(', ');
+            locationText = data.display_name.split(',').slice(0, 3).join(', ');
           }
           
           if (locationText) {
