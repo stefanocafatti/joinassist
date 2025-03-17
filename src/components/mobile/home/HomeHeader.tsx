@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, MapPin, Check, X, Navigation, ArrowLeft } from "lucide-react";
@@ -268,7 +269,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
         {!searchQuery && (
           <div className="relative mb-4 group">
             <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
-              <Search className="h-5 w-5 text-assist-blue/60 group-hover:text-assist-blue transition-colors duration-200" />
+              <Search className="h-5 w-5 text-assist-blue group-hover:text-assist-blue transition-colors duration-200" />
             </div>
             <input
               type="text"
