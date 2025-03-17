@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, MapPin, Check, X, Navigation, ArrowLeft } from "lucide-react";
@@ -152,7 +153,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
           <Popover open={isOpen} onOpenChange={setIsOpen}>
             <PopoverTrigger asChild>
               <div className="flex items-center text-gray-600 text-sm cursor-pointer">
-                <MapPin className="h-3.5 w-3.5 mr-1 text-assist-blue/70" />
+                <MapPin className="h-4 w-4 mr-1 text-assist-blue/70" />
                 <span>{location}</span>
               </div>
             </PopoverTrigger>
@@ -224,10 +225,10 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
           </Popover>
           
           <button 
-            className="flex items-center justify-center h-10 w-10 rounded-full bg-white/50 shadow-sm border border-gray-100 transition-colors hover:bg-white/70"
+            className="flex items-center justify-center h-8 w-8 rounded-full bg-transparent border border-gray-200 transition-colors hover:bg-white/20"
             onClick={() => setSearchQuery(" ")}
           >
-            <Search className="h-5 w-5 text-assist-blue" />
+            <Search className="h-4 w-4 text-assist-blue" />
           </button>
         </div>
         
@@ -246,7 +247,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
             <input
               type="text"
               placeholder="How can we assist you today"
-              className="w-full h-12 pl-11 pr-4 bg-white/50 rounded-xl border-2 border-assist-blue/20 
+              className="w-full h-12 pl-11 pr-4 bg-transparent rounded-xl border-2 border-assist-blue/20 
                         focus:outline-none focus:ring-2 focus:ring-assist-blue/30 focus:border-assist-blue 
                         shadow-sm hover:border-assist-blue/40 hover:shadow 
                         transition-all duration-200 text-gray-800 placeholder:text-gray-600"
