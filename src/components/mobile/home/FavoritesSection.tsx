@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Heart, ChevronRight } from "lucide-react";
@@ -19,8 +18,8 @@ const FavoritesSection = ({ favoritedTasks }: FavoritesSectionProps) => {
   const navigate = useNavigate();
 
   return (
-    <section className="mb-2">
-      <div className="flex items-center justify-between mb-4">
+    <section className="mb-1">
+      <div className="flex items-center justify-between mb-2">
         <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-1">
           <Heart size={18} className="text-red-500" />
           Favorites
@@ -37,7 +36,7 @@ const FavoritesSection = ({ favoritedTasks }: FavoritesSectionProps) => {
       </div>
       
       {favoritedTasks.length > 0 ? (
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-2">
           {favoritedTasks.map((task, index) => (
             <Card key={index} className="overflow-hidden border-gray-100 shadow-sm hover:shadow transition-all">
               <CardContent className="p-0">

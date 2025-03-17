@@ -78,7 +78,7 @@ const MobileHome = () => {
   return (
     <>
       <MobileLayout showHeader={false} contentClassName="pb-20 pt-0">
-        <div className="space-y-6">
+        <div className="space-y-3"> {/* Reduced vertical spacing between sections */}
           <HomeHeader userName="Sarah" />
           <PastTasksSection pastTasks={pastTasks} />
           <FavoritesSection favoritedTasks={favoritedTasks} />

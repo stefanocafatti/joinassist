@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { History, Repeat, ChevronRight } from "lucide-react";
@@ -20,8 +19,8 @@ const PastTasksSection = ({ pastTasks }: PastTasksSectionProps) => {
   const navigate = useNavigate();
 
   return (
-    <section className="mb-2">
-      <div className="flex items-center justify-between mb-4">
+    <section className="mb-1">
+      <div className="flex items-center justify-between mb-2">
         <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-1">
           <History size={18} className="text-assist-blue" />
           Past Tasks
@@ -38,7 +37,7 @@ const PastTasksSection = ({ pastTasks }: PastTasksSectionProps) => {
       </div>
       
       {pastTasks.length > 0 ? (
-        <div className="space-y-3">
+        <div className="space-y-2">
           {pastTasks.map((task, index) => (
             <Card key={index} className="overflow-hidden border-gray-100 shadow-sm hover:shadow transition-all">
               <CardContent className="p-0">
