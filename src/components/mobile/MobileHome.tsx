@@ -10,7 +10,7 @@ import PopularTasksSection from "./home/PopularTasksSection";
 import UpcomingSection from "./home/UpcomingSection";
 
 const MobileHome = () => {
-  // Using original categories data
+  // Updated categories data to match the image
   const categories = [
     { name: "Help Moving", icon: "📦", color: "bg-soft-blue" },
     { name: "Furniture Assembly", icon: "🪑", color: "bg-soft-green" },
