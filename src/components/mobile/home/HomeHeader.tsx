@@ -25,7 +25,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
         </div>
         <input
           type="text"
-          placeholder="Type in what you need help with today"
+          placeholder="Try &quot;help moving&quot; or &quot;need a ride&quot;"
           className="w-full h-12 pl-11 pr-4 bg-white rounded-xl border-2 border-assist-blue/20 
                     focus:outline-none focus:ring-2 focus:ring-assist-blue/30 focus:border-assist-blue 
                     shadow-sm group-hover:border-assist-blue/40 group-hover:shadow 

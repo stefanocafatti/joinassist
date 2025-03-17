@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Search, X, Clock, ArrowRight } from "lucide-react";
@@ -25,7 +24,6 @@ const SearchHeader: React.FC<SearchHeaderProps> = ({
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   
-  // Close the dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
@@ -37,24 +35,20 @@ const SearchHeader: React.FC<SearchHeaderProps> = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Handle clicking on a recent search
   const handleRecentSearchClick = (search: string) => {
     onSearchQueryChange(search);
     setIsInputFocused(false);
     
-    // Manually trigger the search after a short delay to ensure the query is updated
     setTimeout(() => {
       if (formRef.current) {
         const fakeEvent = new Event('submit', { cancelable: true }) as unknown as React.FormEvent;
         onSearch(fakeEvent);
       } else {
-        // Fallback if form ref isn't available
         onSearchClick(search);
       }
     }, 10);
   };
 
-  // Handle form submission - this ensures Enter key works
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
@@ -73,7 +67,7 @@ const SearchHeader: React.FC<SearchHeaderProps> = ({
           </div>
           <Input 
             type="text" 
-            placeholder="What do you need help with today?"
+            placeholder="Try &quot;help moving&quot; or &quot;need a ride&quot;"
             value={searchQuery}
             onChange={(e) => onSearchQueryChange(e.target.value)}
             onFocus={() => setIsInputFocused(true)}
