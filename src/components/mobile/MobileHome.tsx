@@ -10,7 +10,7 @@ import PopularTasksSection from "./home/PopularTasksSection";
 import UpcomingSection from "./home/UpcomingSection";
 
 const MobileHome = () => {
-  // Categories data
+  // Categories data to match the original data
   const categories = [
     { name: "Help Moving", icon: "📦", color: "bg-soft-blue" },
     { name: "Furniture Assembly", icon: "🪑", color: "bg-soft-green" },
@@ -77,8 +77,7 @@ const MobileHome = () => {
 
   return (
     <>
-      {/* Using showHeader={false} because we're handling the header in HomeHeader component */}
-      <MobileLayout showHeader={false} contentClassName="pb-20">
+      <MobileLayout showHeader={false} contentClassName="pb-20 pt-0">
         <div className="space-y-6">
           <HomeHeader userName="Sarah" />
           <PastTasksSection pastTasks={pastTasks} />

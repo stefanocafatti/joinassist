@@ -24,7 +24,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
   const [isGettingLocation, setIsGettingLocation] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Categories data - using the original categories
+  // Categories data - using original categories
   const categories = [
     { name: "Help Moving", icon: "📦", color: "bg-soft-blue" },
     { name: "Furniture Assembly", icon: "🪑", color: "bg-soft-green" },
@@ -158,11 +158,127 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
       {/* Full-page gradient background */}
       <div className="fixed top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-assist-blue/10 to-soft-purple/30 -z-10"></div>
       
-      {/* Search Header - Fixed position */}
-      <header className="fixed top-0 left-0 right-0 z-30 p-4 bg-gradient-to-b from-white/95 to-white/90 backdrop-blur-sm">
-        {searchQuery ? (
-          // When search is active
-          <div className="flex items-center gap-2">
+      {/* Fixed header - Updated to be fixed when scrolling */}
+      <header className="fixed top-0 left-0 right-0 z-10 p-4 bg-white/80 backdrop-blur-sm">
+        {/* Header content container */}
+        <div className="flex items-center justify-between">
+          {/* Location and greeting section */}
+          <div>
+            <Popover open={isOpen} onOpenChange={setIsOpen}>
+              <PopoverTrigger asChild>
+                <div className="flex items-center text-gray-600 text-sm cursor-pointer">
+                  <MapPin className="h-3.5 w-3.5 mr-1 text-assist-blue/70" />
+                  <span>{location}</span>
+                </div>
+              </PopoverTrigger>
+              <PopoverContent className="w-72 p-4">
+                <div className="space-y-3">
+                  <h4 className="font-medium text-sm">Edit your location</h4>
+                  <Input 
+                    placeholder="Enter your location" 
+                    value={editLocation} 
+                    onChange={(e) => setEditLocation(e.target.value)}
+                    className="h-9"
+                    onFocus={() => setEditLocation(location)}
+                  />
+                  
+                  <div className="flex items-center justify-between pt-2 pb-1">
+                    <div className="flex items-center gap-2">
+                      <Switch 
+                        id="use-device-location" 
+                        checked={useDeviceLocation}
+                        onCheckedChange={setUseDeviceLocation}
+                        disabled={isGettingLocation}
+                      />
+                      <label 
+                        htmlFor="use-device-location" 
+                        className="text-sm text-gray-700 cursor-pointer"
+                      >
+                        Use device location
+                      </label>
+                    </div>
+                    
+                    <Button
+                      variant="outline"
+                      size="smallIcon"
+                      onClick={getCurrentLocation}
+                      disabled={isGettingLocation}
+                      className="h-7 w-7"
+                    >
+                      <Navigation className="h-3.5 w-3.5 text-assist-blue" />
+                    </Button>
+                  </div>
+                  
+                  {isGettingLocation && (
+                    <p className="text-xs text-gray-500 animate-pulse">
+                      Getting your location...
+                    </p>
+                  )}
+                  
+                  <div className="flex justify-end space-x-2 mt-3">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={() => setIsOpen(false)}
+                      className="h-8 px-3 text-xs"
+                    >
+                      <X className="h-3.5 w-3.5 mr-1" />
+                      Cancel
+                    </Button>
+                    <Button 
+                      onClick={handleEditLocation}
+                      size="sm"
+                      className="h-8 px-3 text-xs bg-assist-blue hover:bg-assist-blue/90"
+                    >
+                      <Check className="h-3.5 w-3.5 mr-1" />
+                      Save
+                    </Button>
+                  </div>
+                </div>
+              </PopoverContent>
+            </Popover>
+            <h1 className="text-2xl font-bold text-gray-900">Hello, {userName}!</h1>
+          </div>
+          
+          {/* Search button - Made blue and leveled with location */}
+          <button 
+            className="flex items-center justify-center h-10 w-10 rounded-full bg-white shadow-sm border border-gray-100 transition-colors hover:bg-gray-50"
+            onClick={() => setSearchQuery(" ")} // Set with a space to trigger search mode
+          >
+            <Search className="h-5 w-5 text-assist-blue" />
+          </button>
+        </div>
+        
+        {!searchQuery && (
+          <p className="text-gray-600 text-sm font-medium mt-1 mb-3">Find skilled students for your tasks</p>
+        )}
+        
+        {/* Search bar in non-search mode */}
+        {!searchQuery && (
+          <div className="relative mb-4 group">
+            <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
+              <Search className="h-5 w-5 text-assist-blue transition-colors duration-200" />
+            </div>
+            <input
+              type="text"
+              placeholder="How can we assist you today"
+              className="w-full h-12 pl-11 pr-4 bg-white rounded-xl border-2 border-assist-blue/20 
+                        focus:outline-none focus:ring-2 focus:ring-assist-blue/30 focus:border-assist-blue 
+                        shadow-sm group-hover:border-assist-blue/40 group-hover:shadow 
+                        transition-all duration-200 text-gray-800 placeholder:text-gray-400"
+              onClick={() => navigate('/mobile/search')}
+            />
+            <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-assist-blue/60 to-soft-purple/60 
+                          scale-x-0 group-hover:scale-x-100 rounded-b-xl transition-transform duration-300 origin-left"></div>
+          </div>
+        )}
+      </header>
+      
+      {/* Search mode with updated layout - Only show categories */}
+      {searchQuery && (
+        <div className="fixed top-16 left-0 right-0 bottom-0 overflow-auto bg-white z-[5] px-4 pt-4">
+          {/* Search bar in search mode */}
+          <div className="flex items-center gap-2 mb-6">
             <button 
               onClick={() => setSearchQuery("")}
               className="text-gray-600"
@@ -177,7 +293,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="How can we assist you today?"
+                placeholder="How can we assist you today"
                 className="w-full h-10 pl-10 pr-4 bg-white rounded-full border border-gray-200
                           focus:outline-none focus:ring-1 focus:ring-assist-blue focus:border-assist-blue
                           shadow-sm text-gray-800"
@@ -187,123 +303,9 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
               />
             </div>
           </div>
-        ) : (
-          // Default view (location and search icon)
-          <div className="flex justify-between items-center">
-            <div>
-              <Popover open={isOpen} onOpenChange={setIsOpen}>
-                <PopoverTrigger asChild>
-                  <div className="flex items-center text-gray-600 text-sm cursor-pointer">
-                    <MapPin className="h-3.5 w-3.5 mr-1 text-assist-blue/70" />
-                    <span>{location}</span>
-                  </div>
-                </PopoverTrigger>
-                <PopoverContent className="w-72 p-4">
-                  <div className="space-y-3">
-                    <h4 className="font-medium text-sm">Edit your location</h4>
-                    <Input 
-                      placeholder="Enter your location" 
-                      value={editLocation} 
-                      onChange={(e) => setEditLocation(e.target.value)}
-                      className="h-9"
-                      onFocus={() => setEditLocation(location)}
-                    />
-                    
-                    <div className="flex items-center justify-between pt-2 pb-1">
-                      <div className="flex items-center gap-2">
-                        <Switch 
-                          id="use-device-location" 
-                          checked={useDeviceLocation}
-                          onCheckedChange={setUseDeviceLocation}
-                          disabled={isGettingLocation}
-                        />
-                        <label 
-                          htmlFor="use-device-location" 
-                          className="text-sm text-gray-700 cursor-pointer"
-                        >
-                          Use device location
-                        </label>
-                      </div>
-                      
-                      <Button
-                        variant="outline"
-                        size="smallIcon"
-                        onClick={getCurrentLocation}
-                        disabled={isGettingLocation}
-                        className="h-7 w-7"
-                      >
-                        <Navigation className="h-3.5 w-3.5 text-assist-blue" />
-                      </Button>
-                    </div>
-                    
-                    {isGettingLocation && (
-                      <p className="text-xs text-gray-500 animate-pulse">
-                        Getting your location...
-                      </p>
-                    )}
-                    
-                    <div className="flex justify-end space-x-2 mt-3">
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
-                        onClick={() => setIsOpen(false)}
-                        className="h-8 px-3 text-xs"
-                      >
-                        <X className="h-3.5 w-3.5 mr-1" />
-                        Cancel
-                      </Button>
-                      <Button 
-                        onClick={handleEditLocation}
-                        size="sm"
-                        className="h-8 px-3 text-xs bg-assist-blue hover:bg-assist-blue/90"
-                      >
-                        <Check className="h-3.5 w-3.5 mr-1" />
-                        Save
-                      </Button>
-                    </div>
-                  </div>
-                </PopoverContent>
-              </Popover>
-              <h1 className="text-2xl font-bold text-gray-900">Hello, {userName}!</h1>
-            </div>
-            <button 
-              className="flex items-center justify-center h-10 w-10 rounded-full bg-white shadow-sm border border-gray-100 transition-colors hover:bg-gray-50"
-              onClick={() => setSearchQuery(" ")} // Set with a space to trigger search mode
-            >
-              <Search className="h-5 w-5 text-assist-blue" />
-            </button>
-          </div>
-        )}
-        
-        {!searchQuery && (
-          <p className="text-gray-600 text-sm font-medium mt-1 mb-3">Find skilled students for your tasks</p>
-        )}
-        
-        {/* Only show search bar in the main view if not in search mode */}
-        {!searchQuery && (
-          <div className="relative mb-2 group">
-            <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
-              <Search className="h-5 w-5 text-assist-blue transition-colors duration-200" />
-            </div>
-            <input
-              type="text"
-              placeholder="How can we assist you today?"
-              className="w-full h-12 pl-11 pr-4 bg-white rounded-xl border-2 border-assist-blue/20 
-                        focus:outline-none focus:ring-2 focus:ring-assist-blue/30 focus:border-assist-blue 
-                        shadow-sm group-hover:border-assist-blue/40 group-hover:shadow 
-                        transition-all duration-200 text-gray-800 placeholder:text-gray-400"
-              onClick={() => setSearchQuery(" ")}
-            />
-            <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-assist-blue/60 to-soft-purple/60 
-                          scale-x-0 group-hover:scale-x-100 rounded-b-xl transition-transform duration-300 origin-left"></div>
-          </div>
-        )}
-      </header>
-      
-      {/* Categories Grid - Show ONLY when in search mode */}
-      {searchQuery && (
-        <div className="fixed top-[4.5rem] left-0 right-0 bottom-0 pt-4 px-4 pb-20 bg-white/95 backdrop-blur-sm overflow-y-auto z-20">
-          <div className="grid grid-cols-2 gap-4 mt-2">
+          
+          {/* Categories Grid - Only show categories in search mode */}
+          <div className="grid grid-cols-2 gap-4 pb-20">
             {categories.map((category, index) => (
               <div 
                 key={index}
@@ -320,7 +322,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
         </div>
       )}
       
-      {/* Adjusted padding to account for the fixed header when not in search mode */}
+      {/* Adjusted padding to push content below the fixed header */}
       {!searchQuery && <div className="pt-36"></div>}
     </>
   );
