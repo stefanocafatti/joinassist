@@ -10,14 +10,14 @@ import PopularTasksSection from "./home/PopularTasksSection";
 import UpcomingSection from "./home/UpcomingSection";
 
 const MobileHome = () => {
-  // Categories data
+  // Updated categories data to match the image
   const categories = [
-    { name: "Cleaning", icon: "🧹", color: "bg-soft-blue" },
-    { name: "Delivery", icon: "🚚", color: "bg-soft-green" },
-    { name: "Errands", icon: "🏃", color: "bg-soft-yellow" },
-    { name: "Moving", icon: "📦", color: "bg-soft-purple" },
-    { name: "Research", icon: "🔍", color: "bg-soft-pink" },
-    { name: "Tutoring", icon: "📚", color: "bg-soft-orange" },
+    { name: "Help Moving", icon: "📦", color: "bg-soft-blue" },
+    { name: "Furniture Assembly", icon: "🪑", color: "bg-soft-green" },
+    { name: "General Mounting", icon: "🔨", color: "bg-soft-yellow" },
+    { name: "Cleaning", icon: "🧹", color: "bg-soft-purple" },
+    { name: "TV Mounting", icon: "📺", color: "bg-soft-pink" },
+    { name: "Heavy Lifting", icon: "💪", color: "bg-soft-orange" }
   ];
 
   // Past orders data
@@ -60,18 +60,18 @@ const MobileHome = () => {
       image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      title: "Grocery Shopping & Delivery",
-      description: "Students shop and deliver groceries to your door",
-      price: "From $15/hr",
-      category: "Delivery",
-      image: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1000&auto=format&fit=crop"
+      title: "Furniture Assembly",
+      description: "Students help with assembling your furniture",
+      price: "From $30/hr",
+      category: "Furniture",
+      image: "https://images.unsplash.com/photo-1581078426770-6d336e5de7bf?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      title: "Academic Tutoring",
-      description: "One-on-one tutoring in various subjects",
-      price: "From $20/hr",
-      category: "Academic",
-      image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=1000&auto=format&fit=crop"
+      title: "Help Moving",
+      description: "Assistance with moving and packing your belongings",
+      price: "From $35/hr",
+      category: "Moving",
+      image: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1000&auto=format&fit=crop"
     }
   ];
 
