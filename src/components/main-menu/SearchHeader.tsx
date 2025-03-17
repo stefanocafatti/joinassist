@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { Input } from "@/components/ui/input";
-import { Search, X } from "lucide-react";
+import { Search, X, Clock, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface SearchHeaderProps {
@@ -66,54 +66,69 @@ const SearchHeader: React.FC<SearchHeaderProps> = ({
 
   return (
     <div ref={searchContainerRef} className="mb-8 relative">
-      <form ref={formRef} onSubmit={handleSubmit}>
+      <form ref={formRef} onSubmit={handleSubmit} className="group">
         <div className="relative flex items-center">
+          <div className="absolute left-4 flex items-center pointer-events-none">
+            <Search className="h-5 w-5 text-assist-blue/70 group-hover:text-assist-blue transition-colors duration-200" />
+          </div>
           <Input 
             type="text" 
             placeholder="What do you need help with today?"
             value={searchQuery}
             onChange={(e) => onSearchQueryChange(e.target.value)}
             onFocus={() => setIsInputFocused(true)}
-            className="pr-12 h-14 rounded-full border-2 border-assist-blue/30 shadow-sm bg-white focus:border-assist-blue focus:ring-2 focus:ring-assist-blue/20 text-base placeholder:text-assist-blue/60"
+            className="pl-12 pr-12 h-14 rounded-full border-2 border-assist-blue/30 shadow-sm 
+                      bg-white focus:border-assist-blue/70 focus:ring-2 focus:ring-assist-blue/20 
+                      text-base placeholder:text-gray-400 group-hover:border-assist-blue/50 
+                      group-hover:shadow transition-all duration-200"
           />
           {searchQuery && (
             <button 
               type="button" 
               onClick={() => onSearchQueryChange("")}
-              className="absolute right-12 text-gray-400 hover:text-gray-600 transition-colors"
+              className="absolute right-12 text-gray-400 hover:text-gray-600 hover:bg-gray-100 
+                        p-1 rounded-full transition-colors"
             >
               <X className="h-4 w-4" />
             </button>
           )}
           <button 
             type="submit" 
-            className="absolute right-4 text-assist-blue hover:text-assist-blue/80 transition-colors"
+            className="absolute right-4 text-assist-blue hover:text-white bg-white hover:bg-assist-blue 
+                      p-2 rounded-full transition-all duration-200 border border-assist-blue/20
+                      hover:border-assist-blue shadow-sm hover:shadow"
           >
-            <Search className="h-5 w-5" />
+            <ArrowRight className="h-4 w-4" />
           </button>
         </div>
+        <div className="absolute bottom-0 left-5 right-5 h-0.5 bg-gradient-to-r from-assist-blue/50 to-soft-purple/70 
+                      scale-x-0 group-hover:scale-x-100 rounded-full transition-transform duration-300 origin-left"></div>
       </form>
       
       {isInputFocused && recentSearches.length > 0 && !searchQuery && (
-        <div className="absolute z-10 mt-2 w-full bg-white rounded-xl shadow-lg border border-gray-200 py-2 animate-in fade-in-50 duration-100">
-          <h3 className="px-3 py-1 text-sm font-medium text-gray-500">Recent Searches</h3>
+        <div className="absolute z-10 mt-2 w-full bg-white rounded-xl shadow-lg border border-gray-200 py-2 
+                       animate-in fade-in-50 duration-100 overflow-hidden">
+          <h3 className="px-4 py-2 text-sm font-medium text-gray-500 flex items-center">
+            <Clock className="h-3.5 w-3.5 mr-1.5 text-gray-400" />
+            Recent Searches
+          </h3>
           <div className="max-h-48 overflow-y-auto">
             {recentSearches.map((search, index) => (
               <div 
                 key={index} 
-                className="px-3 py-2 hover:bg-gray-50 cursor-pointer flex items-center"
+                className="px-4 py-2.5 hover:bg-gray-50 cursor-pointer flex items-center"
                 onClick={() => handleRecentSearchClick(search)}
               >
-                <Search className="h-4 w-4 text-gray-400 mr-2" />
+                <Search className="h-4 w-4 text-gray-400 mr-2.5" />
                 <span className="text-gray-800">{search}</span>
               </div>
             ))}
           </div>
-          <div className="px-3 pt-1 pb-2 border-t border-gray-100 mt-1">
+          <div className="px-3 pt-1 pb-2 border-t border-gray-100 mt-1 flex justify-end">
             <Button 
               variant="ghost" 
               size="sm" 
-              className="text-xs text-gray-500 hover:text-gray-700"
+              className="text-xs text-gray-500 hover:text-gray-700 hover:bg-gray-50"
               onClick={() => setIsInputFocused(false)}
             >
               Close
