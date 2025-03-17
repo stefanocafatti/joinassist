@@ -1,12 +1,19 @@
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, MapPin, Menu } from "lucide-react";
+import { Search, MapPin, Menu, Check, X } from "lucide-react";
 import { 
   Drawer,
   DrawerContent,
   DrawerTrigger
 } from "@/components/ui/drawer";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 interface HomeHeaderProps {
   userName: string;
@@ -14,7 +21,9 @@ interface HomeHeaderProps {
 
 const HomeHeader = ({ userName }: HomeHeaderProps) => {
   const navigate = useNavigate();
-  const [location] = useState("Los Angeles, CA");
+  const [location, setLocation] = useState("Los Angeles, CA");
+  const [editLocation, setEditLocation] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
   // Categories data
   const categories = [
@@ -26,17 +35,59 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
     { name: "Tutoring", icon: "📚", color: "bg-soft-orange" },
   ];
 
+  const handleEditLocation = () => {
+    if (editLocation.trim()) {
+      setLocation(editLocation);
+    }
+    setIsOpen(false);
+  };
+
   return (
     <>
       {/* Header Section with full-width gradient background */}
       <header className="fixed top-0 left-0 right-0 z-10 bg-gradient-to-r from-assist-blue/10 to-soft-purple/30 p-4 shadow-sm">
         <div className="flex justify-between items-center">
           <div>
+            <Popover open={isOpen} onOpenChange={setIsOpen}>
+              <PopoverTrigger asChild>
+                <div className="flex items-center text-gray-600 text-sm mb-1 cursor-pointer">
+                  <MapPin className="h-3.5 w-3.5 mr-1 text-assist-blue/70" />
+                  <span>{location}</span>
+                </div>
+              </PopoverTrigger>
+              <PopoverContent className="w-72 p-4">
+                <div className="space-y-2">
+                  <h4 className="font-medium text-sm">Edit your location</h4>
+                  <Input 
+                    placeholder="Enter your location" 
+                    value={editLocation} 
+                    onChange={(e) => setEditLocation(e.target.value)}
+                    className="h-9"
+                    onFocus={() => setEditLocation(location)}
+                  />
+                  <div className="flex justify-end space-x-2 mt-3">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={() => setIsOpen(false)}
+                      className="h-8 px-3 text-xs"
+                    >
+                      <X className="h-3.5 w-3.5 mr-1" />
+                      Cancel
+                    </Button>
+                    <Button 
+                      onClick={handleEditLocation}
+                      size="sm"
+                      className="h-8 px-3 text-xs bg-assist-blue hover:bg-assist-blue/90"
+                    >
+                      <Check className="h-3.5 w-3.5 mr-1" />
+                      Save
+                    </Button>
+                  </div>
+                </div>
+              </PopoverContent>
+            </Popover>
             <h1 className="text-2xl font-bold text-gray-900">Hello, {userName}!</h1>
-            <div className="flex items-center mt-1 text-gray-600 text-sm">
-              <MapPin className="h-3.5 w-3.5 mr-1 text-assist-blue/70" />
-              <span>{location}</span>
-            </div>
           </div>
           <Drawer>
             <DrawerTrigger asChild>
