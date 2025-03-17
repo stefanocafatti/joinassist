@@ -3,7 +3,7 @@ import React from "react";
 import MobileLayout from "./MobileLayout";
 import BottomNavigation from "./BottomNavigation";
 import { Button } from "@/components/ui/button";
-import { Search, ChevronRight, Clipboard, Plus, Clock } from "lucide-react";
+import { Search, ChevronRight, Clipboard, Plus, Clock, Bell } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const MobileHome = () => {
@@ -26,18 +26,32 @@ const MobileHome = () => {
   return (
     <>
       <MobileLayout 
-        showBackButton={false} 
-        headerAction={
-          <Button variant="ghost" size="smallIcon" onClick={() => navigate('/mobile/settings')}>
-            <Search />
-          </Button>
-        }
+        showBackButton={false}
+        showHeader={true}
+        showLogo={false}
+        headerClassName="pb-0"
       >
         <div className="space-y-6 pb-20">
           {/* Welcome Section */}
-          <section className="mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-1">Welcome back!</h2>
-            <p className="text-gray-600">What can we help you with today?</p>
+          <section className="mb-4">
+            <h2 className="text-2xl font-bold text-gray-900 mb-3">Welcome back!</h2>
+            
+            {/* Search Bar */}
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Type in what you need help with today"
+                className="w-full h-12 pl-4 pr-12 bg-gray-100 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-assist-blue/30 focus:border-assist-blue"
+              />
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500"
+                onClick={() => navigate('/mobile/search')}
+              >
+                <Search size={20} />
+              </Button>
+            </div>
           </section>
           
           {/* Quick Action */}
@@ -66,14 +80,16 @@ const MobileHome = () => {
                 <ChevronRight size={16} />
               </Button>
             </div>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-3 gap-4">
               {categories.map((category, index) => (
                 <div 
                   key={index}
-                  className={`${category.color} p-4 rounded-xl flex flex-col items-center justify-center aspect-square shadow-sm hover:shadow-md transition-shadow cursor-pointer`}
+                  className={`${category.color} p-4 rounded-xl flex flex-col items-center justify-center shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer`}
                   onClick={() => navigate(`/mobile/category/${category.name.toLowerCase()}`)}
                 >
-                  <span className="text-2xl mb-2">{category.icon}</span>
+                  <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center mb-2 shadow-sm">
+                    <span className="text-2xl">{category.icon}</span>
+                  </div>
                   <span className="text-sm font-medium text-gray-800">{category.name}</span>
                 </div>
               ))}
@@ -95,7 +111,7 @@ const MobileHome = () => {
                 {recentTasks.map((task) => (
                   <div 
                     key={task.id}
-                    className="bg-white rounded-lg p-4 border border-gray-100 shadow-sm"
+                    className="bg-white rounded-lg p-4 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-200"
                     onClick={() => navigate(`/mobile/task/${task.id}`)}
                   >
                     <div className="flex items-start justify-between">

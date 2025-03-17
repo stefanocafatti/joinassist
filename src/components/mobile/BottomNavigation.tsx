@@ -42,24 +42,24 @@ const BottomNavigation = () => {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-10">
+    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-10 shadow-lg">
       <div className="grid grid-cols-5 h-16">
         {navItems.map((item, index) => (
           <button
             key={index}
-            className={`flex flex-col items-center justify-center ${
-              item.active ? "text-assist-blue" : "text-gray-500"
+            className={`flex flex-col items-center justify-center transition-colors duration-200 ${
+              item.active ? "text-assist-blue" : "text-gray-500 hover:text-gray-700"
             } ${item.isPrimary ? "relative" : ""}`}
             onClick={() => navigate(item.path)}
           >
             {item.isPrimary ? (
-              <div className="absolute -top-6 bg-assist-blue text-white p-3 rounded-full shadow-lg">
-                <item.icon size={20} />
+              <div className="absolute -top-6 bg-assist-blue text-white p-3 rounded-full shadow-lg hover:bg-assist-blue/90 transition-colors">
+                <item.icon size={22} />
               </div>
             ) : (
-              <item.icon size={20} />
+              <item.icon size={20} className={item.active ? "text-assist-blue" : "text-gray-500"} />
             )}
-            <span className="text-xs mt-1">{item.label}</span>
+            <span className={`text-xs mt-1 ${item.active ? "font-medium" : ""}`}>{item.label}</span>
           </button>
         ))}
       </div>
