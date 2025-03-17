@@ -1,9 +1,8 @@
-
 import React from "react";
 import MobileLayout from "./MobileLayout";
 import BottomNavigation from "./BottomNavigation";
 import { Button } from "@/components/ui/button";
-import { Search, ChevronRight, Calendar, Clock, MapPin, Plus, Sparkles, History, Heart, Star, Repeat } from "lucide-react";
+import { Search, ChevronRight, Calendar, Clock, MapPin, Plus, History, Heart, Star, Repeat } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -80,11 +79,7 @@ const MobileHome = () => {
         <div className="space-y-6">
           {/* Header Section with gradient background */}
           <header className="mb-3 bg-gradient-to-r from-assist-blue/10 to-soft-purple/30 p-4 -mx-5 rounded-b-3xl shadow-sm">
-            <div className="inline-flex items-center gap-1 py-1 px-3 rounded-full bg-white text-assist-blue text-xs font-medium mb-2 shadow-sm">
-              <Sparkles size={12} className="text-amber-500" />
-              <span>2,000+ Students Ready</span>
-            </div>
-            <h1 className="text-2xl font-bold text-gray-900">Hello, there!</h1>
+            <h1 className="text-2xl font-bold text-gray-900">Hello, Sarah!</h1>
             <p className="text-gray-600 text-sm font-medium">Find skilled students for your tasks</p>
           </header>
           
@@ -265,7 +260,7 @@ const MobileHome = () => {
                       <h3 className="font-medium text-gray-900">{task.title}</h3>
                       <p className="text-xs text-gray-500 mb-2">{task.description}</p>
                       <div className="flex items-center text-sm">
-                        <span className={`bg-${task.category.toLowerCase() === 'cleaning' ? 'assist-blue' : task.category.toLowerCase() === 'delivery' ? 'green-500' : 'amber-500'}/10 text-${task.category.toLowerCase() === 'cleaning' ? 'assist-blue' : task.category.toLowerCase() === 'delivery' ? 'green-600' : 'amber-600'} px-2 py-0.5 rounded text-xs font-medium`}>{task.price}</span>
+                        <span className={`bg-${task.category.toLowerCase() === 'cleaning' ? 'assist-blue' : task.category.toLowerCase() === 'delivery' ? 'green-500' : 'amber-500}/10 text-${task.category.toLowerCase() === 'cleaning' ? 'assist-blue' : task.category.toLowerCase() === 'delivery' ? 'green-600' : 'amber-600'} px-2 py-0.5 rounded text-xs font-medium`}>{task.price}</span>
                         <ChevronRight size={16} className="ml-auto text-gray-400 group-hover:text-assist-blue transition-colors" />
                       </div>
                     </div>
