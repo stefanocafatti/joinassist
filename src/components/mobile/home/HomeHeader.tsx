@@ -154,8 +154,11 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
 
   return (
     <>
-      {/* Header Section with full-width gradient background */}
-      <header className="fixed top-0 left-0 right-0 z-10 bg-gradient-to-r from-assist-blue/10 to-soft-purple/30 p-4 shadow-sm">
+      {/* Full-page gradient background */}
+      <div className="fixed top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-assist-blue/10 to-soft-purple/30 -z-10"></div>
+      
+      {/* Header Section */}
+      <header className="fixed top-0 left-0 right-0 z-10 p-4">
         <div className="flex justify-between items-center">
           <div>
             <Popover open={isOpen} onOpenChange={setIsOpen}>
@@ -262,29 +265,29 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
             </DrawerContent>
           </Drawer>
         </div>
-        <p className="text-gray-600 text-sm font-medium mt-1">Find skilled students for your tasks</p>
+        <p className="text-gray-600 text-sm font-medium mt-1 mb-3">Find skilled students for your tasks</p>
+        
+        {/* Enhanced Search Bar - moved closer to the title */}
+        <div className="relative mb-4 group">
+          <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
+            <Search className="h-5 w-5 text-assist-blue/60 group-hover:text-assist-blue transition-colors duration-200" />
+          </div>
+          <input
+            type="text"
+            placeholder="Try &quot;help moving&quot; or &quot;need a ride&quot;"
+            className="w-full h-12 pl-11 pr-4 bg-white rounded-xl border-2 border-assist-blue/20 
+                      focus:outline-none focus:ring-2 focus:ring-assist-blue/30 focus:border-assist-blue 
+                      shadow-sm group-hover:border-assist-blue/40 group-hover:shadow 
+                      transition-all duration-200 text-gray-800 placeholder:text-gray-400"
+            onClick={() => navigate('/mobile/search')}
+          />
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-assist-blue/60 to-soft-purple/60 
+                        scale-x-0 group-hover:scale-x-100 rounded-b-xl transition-transform duration-300 origin-left"></div>
+        </div>
       </header>
       
-      {/* Added padding to push content below the fixed header */}
-      <div className="pt-32"></div>
-      
-      {/* Enhanced Search Bar with animation and better styling */}
-      <div className="relative mb-4 group">
-        <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
-          <Search className="h-5 w-5 text-assist-blue/60 group-hover:text-assist-blue transition-colors duration-200" />
-        </div>
-        <input
-          type="text"
-          placeholder="Try &quot;help moving&quot; or &quot;need a ride&quot;"
-          className="w-full h-12 pl-11 pr-4 bg-white rounded-xl border-2 border-assist-blue/20 
-                    focus:outline-none focus:ring-2 focus:ring-assist-blue/30 focus:border-assist-blue 
-                    shadow-sm group-hover:border-assist-blue/40 group-hover:shadow 
-                    transition-all duration-200 text-gray-800 placeholder:text-gray-400"
-          onClick={() => navigate('/mobile/search')}
-        />
-        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-assist-blue/60 to-soft-purple/60 
-                       scale-x-0 group-hover:scale-x-100 rounded-b-xl transition-transform duration-300 origin-left"></div>
-      </div>
+      {/* Adjusted padding to push content below the fixed header */}
+      <div className="pt-36"></div>
     </>
   );
 };
