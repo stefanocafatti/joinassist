@@ -1,7 +1,7 @@
 
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Home, Search, Plus, Bell, User } from "lucide-react";
+import { Home, ClipboardList, MessageSquare, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const BottomNavigation = () => {
@@ -16,23 +16,16 @@ const BottomNavigation = () => {
       active: location.pathname === "/mobile" 
     },
     { 
-      icon: Search, 
-      label: "Search", 
-      path: "/mobile/search", 
-      active: location.pathname === "/mobile/search" 
+      icon: ClipboardList, 
+      label: "My Tasks", 
+      path: "/mobile/my-tasks", 
+      active: location.pathname === "/mobile/my-tasks" 
     },
     { 
-      icon: Plus, 
-      label: "", 
-      path: "/mobile/new-task", 
-      active: location.pathname === "/mobile/new-task",
-      isPrimary: true
-    },
-    { 
-      icon: Bell, 
-      label: "Alerts", 
-      path: "/mobile/notifications", 
-      active: location.pathname === "/mobile/notifications" 
+      icon: MessageSquare, 
+      label: "Messages", 
+      path: "/mobile/messages", 
+      active: location.pathname === "/mobile/messages" 
     },
     { 
       icon: User, 
@@ -50,32 +43,23 @@ const BottomNavigation = () => {
             key={index}
             className={cn(
               "flex flex-col items-center justify-center w-full transition-colors duration-200",
-              item.isPrimary ? "relative" : "",
-              item.active && !item.isPrimary ? "text-assist-blue" : "text-gray-500"
+              item.active ? "text-assist-blue" : "text-gray-500"
             )}
             onClick={() => navigate(item.path)}
-            aria-label={item.label || "New Task"}
+            aria-label={item.label}
           >
-            {item.isPrimary ? (
-              <div className="absolute -top-6 bg-assist-blue text-white p-3.5 rounded-full shadow-lg hover:bg-blue-600 transition-all duration-200 transform hover:scale-105">
-                <item.icon size={24} strokeWidth={2.5} />
-              </div>
-            ) : (
-              <>
-                <item.icon 
-                  size={22} 
-                  className={cn(
-                    item.active ? "text-assist-blue" : "text-gray-500"
-                  )} 
-                />
-                <span className={cn(
-                  "text-xs mt-1",
-                  item.active ? "font-medium" : ""
-                )}>
-                  {item.label}
-                </span>
-              </>
-            )}
+            <item.icon 
+              size={22} 
+              className={cn(
+                item.active ? "text-assist-blue" : "text-gray-500"
+              )} 
+            />
+            <span className={cn(
+              "text-xs mt-1",
+              item.active ? "font-medium" : ""
+            )}>
+              {item.label}
+            </span>
           </button>
         ))}
       </div>
