@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, MapPin, Check, X, Navigation, ArrowLeft } from "lucide-react";
@@ -282,7 +283,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="How can we assist you today"
+                placeholder="Try 'moving help' or 'math tutoring'"
                 className="w-full h-10 pl-10 pr-4 bg-white rounded-full border border-gray-200
                           focus:outline-none focus:ring-1 focus:ring-assist-blue focus:border-assist-blue
                           shadow-sm text-gray-800"
