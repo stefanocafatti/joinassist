@@ -41,14 +41,18 @@ const MobileTasks = () => {
           <ClipboardCheck className="h-10 w-10 text-blue-500" />
         )}
       </div>
-      <h3 className="text-xl font-semibold text-gray-800 mb-2">No Tasks</h3>
+      <h3 className="text-xl font-semibold text-gray-800 mb-2">
+        {isScheduled ? "No Active Tasks" : "No Tasks"}
+      </h3>
       <p className="text-gray-500 mb-6 max-w-xs px-6">
         {message}
       </p>
-      <Button className={isScheduled ? "bg-green-500 hover:bg-green-600" : "bg-assist-blue hover:bg-assist-blue/90"}>
-        <PlusCircle className="mr-2 h-4 w-4" />
-        Book a Task
-      </Button>
+      {!isScheduled && (
+        <Button className="bg-assist-blue hover:bg-assist-blue/90">
+          <PlusCircle className="mr-2 h-4 w-4" />
+          Book a Task
+        </Button>
+      )}
     </div>
   );
 
