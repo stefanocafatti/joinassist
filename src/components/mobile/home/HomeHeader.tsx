@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, MapPin, Check, X, Navigation, ArrowLeft, Sparkles } from "lucide-react";
+import { Search, MapPin, Check, X, Navigation, ArrowLeft } from "lucide-react";
 import {
   Popover,
   PopoverContent,
@@ -11,7 +11,6 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
 
 interface HomeHeaderProps {
   userName: string;
@@ -240,16 +239,10 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
         <div className="pt-14 pb-1 px-1">
           {!searchQuery && (
             <div className="mb-3 text-left">
-              <div className="flex items-center gap-2">
-                <h1 className="text-2xl font-bold text-gray-900">
-                  Hello, <span className="text-transparent bg-clip-text bg-gradient-to-r from-assist-blue to-soft-purple">{userName}!</span>
-                </h1>
-                <Sparkles className="h-5 w-5 text-amber-500 animate-pulse" />
-              </div>
-              <div className="flex items-center gap-2 mt-0.5">
-                <p className="text-gray-600 text-sm font-medium">Find skilled students for your tasks</p>
-                <Badge className="bg-gradient-to-r from-soft-pink to-soft-purple text-[10px] py-0 px-2 h-4">NEW</Badge>
-              </div>
+              <h1 className="text-2xl font-bold text-gray-900">
+                Hello, {userName}!
+              </h1>
+              <p className="text-gray-600 text-sm font-medium mt-0.5">Find skilled students for your tasks</p>
             </div>
           )}
           
@@ -267,13 +260,6 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
                           transition-all duration-200 text-gray-800 placeholder:text-gray-600"
                 onClick={() => navigate('/mobile/search')}
               />
-              <div className="absolute top-0 right-0 h-full flex items-center pr-3">
-                <div className="flex space-x-1">
-                  <span className="h-2 w-2 rounded-full bg-soft-pink animate-pulse"></span>
-                  <span className="h-2 w-2 rounded-full bg-soft-blue animate-pulse delay-100"></span>
-                  <span className="h-2 w-2 rounded-full bg-soft-purple animate-pulse delay-200"></span>
-                </div>
-              </div>
             </div>
           )}
         </div>
