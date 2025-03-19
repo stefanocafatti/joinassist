@@ -13,7 +13,7 @@ const BottomNavigation = () => {
       icon: Home, 
       label: "Home", 
       path: "/mobile", 
-      active: location.pathname === "/mobile" 
+      active: location.pathname === "/mobile" || location.pathname === "/mobile/home" 
     },
     { 
       icon: ClipboardList, 
