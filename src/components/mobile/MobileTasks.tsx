@@ -12,8 +12,7 @@ import {
   Check, 
   Calendar, 
   DollarSign,
-  UserRound,
-  Package
+  UserRound
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -32,29 +31,71 @@ const MobileTasks = () => {
     setShowTaskDetails(true);
   };
 
-  const renderEmptyState = (message: string, isScheduled: boolean) => (
-    <div className="flex flex-col items-center justify-center py-16 text-center bg-white rounded-lg shadow-sm mx-1 mt-4">
-      <div className={`rounded-full p-5 mb-4 ${isScheduled ? 'bg-green-100' : 'bg-blue-100'}`}>
-        {isScheduled ? (
-          <Package className="h-10 w-10 text-green-500" />
-        ) : (
-          <ClipboardCheck className="h-10 w-10 text-blue-500" />
-        )}
+  const renderScheduledEmptyState = () => (
+    <div className="flex flex-col items-center justify-center py-16 text-center h-[70vh]">
+      <div className="mb-6">
+        <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g>
+            <circle cx="60" cy="60" r="55" stroke="#90EE90" strokeWidth="5" fill="#F2FCE2" />
+            <rect x="85" y="45" width="30" height="40" rx="2" fill="#F2FCE2" stroke="#90EE90" strokeWidth="2" />
+            <line x1="60" y1="30" x2="60" y2="62" stroke="#90EE90" strokeWidth="4" strokeLinecap="round" />
+            <line x1="60" y1="60" x2="80" y2="60" stroke="#90EE90" strokeWidth="4" strokeLinecap="round" />
+            <text x="35" y="20" fill="#90EE90" fontSize="12">1</text>
+            <text x="80" y="25" fill="#90EE90" fontSize="12">2</text>
+            <text x="93" y="50" fill="#90EE90" fontSize="12">3</text>
+            
+            <line x1="95" y1="60" x2="105" y2="60" stroke="#90EE90" strokeWidth="2" strokeLinecap="round" />
+            <line x1="95" y1="70" x2="105" y2="70" stroke="#90EE90" strokeWidth="2" strokeLinecap="round" />
+            <line x1="95" y1="80" x2="105" y2="80" stroke="#90EE90" strokeWidth="2" strokeLinecap="round" />
+            
+            <circle cx="92" cy="60" r="3" fill="#90EE90" />
+            <circle cx="92" cy="70" r="3" fill="#90EE90" />
+            <rect x="89" y="77" width="6" height="6" stroke="#90EE90" strokeWidth="2" fill="none" />
+          </g>
+        </svg>
       </div>
-      <h3 className="text-xl font-semibold text-gray-800 mb-2">No Tasks</h3>
-      <p className="text-gray-500 mb-6 max-w-xs px-6">
-        {message}
+      <h3 className="text-2xl font-bold text-gray-800 mb-3">No Current Tasks</h3>
+      <p className="text-gray-500 max-w-xs mx-auto">
+        Let us help you get the job done.
+        <br />Book a task and see it here.
       </p>
-      <Button className={isScheduled ? "bg-green-500 hover:bg-green-600" : "bg-assist-blue hover:bg-assist-blue/90"}>
-        <PlusCircle className="mr-2 h-4 w-4" />
-        Book a Task
-      </Button>
+    </div>
+  );
+
+  const renderCompletedEmptyState = () => (
+    <div className="flex flex-col items-center justify-center py-16 text-center h-[70vh]">
+      <div className="mb-6">
+        <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g>
+            <circle cx="60" cy="60" r="55" stroke="#90EE90" strokeWidth="5" fill="#F2FCE2" />
+            <rect x="85" y="45" width="30" height="40" rx="2" fill="#F2FCE2" stroke="#90EE90" strokeWidth="2" />
+            <line x1="60" y1="30" x2="60" y2="62" stroke="#90EE90" strokeWidth="4" strokeLinecap="round" />
+            <line x1="60" y1="60" x2="80" y2="60" stroke="#90EE90" strokeWidth="4" strokeLinecap="round" />
+            <text x="35" y="20" fill="#90EE90" fontSize="12">1</text>
+            <text x="80" y="25" fill="#90EE90" fontSize="12">2</text>
+            <text x="93" y="50" fill="#90EE90" fontSize="12">3</text>
+            
+            <line x1="95" y1="60" x2="105" y2="60" stroke="#90EE90" strokeWidth="2" strokeLinecap="round" />
+            <line x1="95" y1="70" x2="105" y2="70" stroke="#90EE90" strokeWidth="2" strokeLinecap="round" />
+            <line x1="95" y1="80" x2="105" y2="80" stroke="#90EE90" strokeWidth="2" strokeLinecap="round" />
+            
+            <circle cx="92" cy="60" r="3" fill="#90EE90" />
+            <circle cx="92" cy="70" r="3" fill="#90EE90" />
+            <rect x="89" y="77" width="6" height="6" stroke="#90EE90" strokeWidth="2" fill="none" />
+          </g>
+        </svg>
+      </div>
+      <h3 className="text-2xl font-bold text-gray-800 mb-3">Book a task today.</h3>
+      <p className="text-gray-500 max-w-xs mx-auto">
+        Once the task is done, you'll see it here.
+        <br />No Completed Tasks
+      </p>
     </div>
   );
 
   const renderScheduledTaskList = (tasks: any[]) => {
     if (tasks.length === 0) {
-      return renderEmptyState("Let us help you get things done. Book your first task and see it here.", true);
+      return renderScheduledEmptyState();
     }
 
     return tasks.map((task) => (
@@ -111,7 +152,7 @@ const MobileTasks = () => {
 
   const renderCompletedTaskList = (tasks: any[]) => {
     if (tasks.length === 0) {
-      return renderEmptyState("You haven't completed any tasks yet. Completed tasks will appear here.", false);
+      return renderCompletedEmptyState();
     }
 
     return tasks.map((task) => (
@@ -165,33 +206,33 @@ const MobileTasks = () => {
   return (
     <>
       <MobileLayout 
-        title="My Tasks" 
+        title="Tasks" 
         showHeader={true}
         showLogo={false}
-        headerClassName="bg-gradient-to-r from-blue-400 via-assist-blue/90 to-blue-500 text-center text-white"
-        contentClassName="pb-20"
+        headerClassName="bg-white text-center text-gray-800 border-b"
+        contentClassName="pb-20 bg-gray-50"
       >
         <Tabs defaultValue="scheduled" className="w-full">
-          <TabsList className="grid grid-cols-2 w-full mb-2 bg-white p-1 rounded-lg shadow-sm">
+          <TabsList className="grid grid-cols-2 w-full mb-0 bg-white border-b rounded-none shadow-none">
             <TabsTrigger 
               value="scheduled" 
-              className="rounded-md data-[state=active]:bg-green-500 data-[state=active]:text-white"
+              className="border-b-2 data-[state=active]:border-green-600 rounded-none data-[state=active]:bg-transparent data-[state=active]:text-green-600 data-[state=active]:shadow-none"
             >
               Scheduled
             </TabsTrigger>
             <TabsTrigger 
               value="completed" 
-              className="rounded-md data-[state=active]:bg-assist-blue data-[state=active]:text-white"
+              className="border-b-2 data-[state=active]:border-green-600 rounded-none data-[state=active]:bg-transparent data-[state=active]:text-green-600 data-[state=active]:shadow-none"
             >
               Completed
             </TabsTrigger>
           </TabsList>
           
-          <TabsContent value="scheduled" className="mt-2">
+          <TabsContent value="scheduled" className="mt-0">
             {renderScheduledTaskList(scheduledTasks)}
           </TabsContent>
           
-          <TabsContent value="completed" className="mt-2">
+          <TabsContent value="completed" className="mt-0">
             {renderCompletedTaskList(completedTasks)}
           </TabsContent>
         </Tabs>
