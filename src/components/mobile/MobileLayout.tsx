@@ -32,13 +32,17 @@ const MobileLayout = ({
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       {showHeader && (
-        <header className={cn("sticky top-0 z-10 bg-assist-blue shadow-sm p-4 text-white", headerClassName)}>
+        <header className={cn(
+          "sticky top-0 z-10 p-4 text-white shadow-sm", 
+          "bg-gradient-to-r from-blue-600 via-assist-blue to-blue-500",
+          headerClassName
+        )}>
           <div className="flex items-center justify-between">
             <div className={cn("flex items-center gap-3", !showLogo && !showBackButton && title ? "flex-1" : "")}>
               {showBackButton && (
                 <button 
                   onClick={onBack} 
-                  className="p-2 rounded-full hover:bg-assist-blue/80"
+                  className="p-2 rounded-full hover:bg-white/10"
                 >
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
