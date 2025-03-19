@@ -62,9 +62,9 @@ const MobileTasks = () => {
   const renderTaskList = (tasks: any[], emptyMessage: string, isScheduled: boolean) => {
     if (tasks.length === 0) {
       return (
-        <div className="flex flex-col items-center justify-center py-16 text-center">
-          <div className="bg-gray-100 rounded-full p-5 mb-4">
-            <ClipboardCheck className="h-10 w-10 text-gray-400" />
+        <div className="flex flex-col items-center justify-center py-16 text-center bg-white rounded-lg shadow-sm mx-1">
+          <div className="bg-blue-100 rounded-full p-5 mb-4">
+            <ClipboardCheck className="h-10 w-10 text-blue-500" />
           </div>
           <h3 className="text-xl font-semibold text-gray-800 mb-2">No Tasks</h3>
           <p className="text-gray-500 mb-6 max-w-xs">
@@ -81,10 +81,10 @@ const MobileTasks = () => {
     return tasks.map((task) => (
       <Card 
         key={task.id} 
-        className={`mb-4 cursor-pointer hover:shadow-md transition-shadow ${
+        className={`mb-4 cursor-pointer hover:shadow-md transition-shadow bg-white ${
           isScheduled 
-            ? "bg-gradient-to-r from-white to-soft-green/30" 
-            : "bg-gradient-to-r from-white to-assist-blue/30"
+            ? "border-l-4 border-l-green-500" 
+            : "border-l-4 border-l-assist-blue"
         }`}
         onClick={() => handleTaskClick(task)}
       >
@@ -125,11 +125,11 @@ const MobileTasks = () => {
         title="My Tasks" 
         showHeader={true}
         showLogo={false}
-        headerClassName="bg-assist-blue text-center text-white"
+        headerClassName="bg-gradient-to-r from-blue-400 via-assist-blue/90 to-blue-500 text-center text-white"
         contentClassName="pb-20"
       >
         <Tabs defaultValue="scheduled" className="w-full">
-          <TabsList className="grid grid-cols-2 w-full mb-4 bg-gray-100 p-1 rounded-lg">
+          <TabsList className="grid grid-cols-2 w-full mb-4 bg-white p-1 rounded-lg shadow-sm">
             <TabsTrigger 
               value="scheduled" 
               className="rounded-md data-[state=active]:bg-green-500 data-[state=active]:text-white"

@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import MobileLayout from "./MobileLayout";
 import BottomNavigation from "./BottomNavigation";
@@ -93,12 +92,7 @@ const MobileMessages = () => {
         title="Messages" 
         showHeader={true}
         showLogo={false}
-        headerClassName="bg-assist-blue text-center text-white"
-        headerAction={
-          <Button variant="ghost" size="icon" className="rounded-full text-white hover:bg-assist-blue/80">
-            <PenSquare className="h-5 w-5" />
-          </Button>
-        }
+        headerClassName="bg-gradient-to-r from-blue-400 via-assist-blue/90 to-blue-500 text-center text-white"
         contentClassName="pb-20 px-0"
       >
         <div className="px-5 mb-4">
@@ -107,19 +101,19 @@ const MobileMessages = () => {
             <Input
               type="text"
               placeholder="Search messages"
-              className="pl-10 bg-white border-assist-blue/30 focus:border-assist-blue"
+              className="pl-10 bg-white border-assist-blue/30 focus:border-assist-blue shadow-sm"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
         </div>
 
-        <div className="divide-y divide-gray-100">
+        <div className="divide-y divide-blue-100">
           {filteredMessages.length > 0 ? (
             filteredMessages.map((message) => (
               <div 
                 key={message.id}
-                className="flex items-start gap-3 p-4 hover:bg-gray-50 cursor-pointer"
+                className="flex items-start gap-3 p-4 bg-white shadow-sm hover:bg-blue-50/50 cursor-pointer"
               >
                 <div className="relative">
                   <Avatar className="h-12 w-12">
@@ -163,9 +157,9 @@ const MobileMessages = () => {
               </div>
             ))
           ) : (
-            <div className="flex flex-col items-center justify-center py-16 text-center px-5">
-              <div className="bg-gray-100 rounded-full p-4 mb-4">
-                <Search className="h-8 w-8 text-gray-400" />
+            <div className="flex flex-col items-center justify-center py-16 text-center px-5 bg-white mx-4 rounded-lg shadow-sm">
+              <div className="bg-blue-100 rounded-full p-4 mb-4">
+                <Search className="h-8 w-8 text-blue-500" />
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">No Messages Found</h3>
               <p className="text-gray-500 mb-6 max-w-xs">
