@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, MapPin, Check, X, Navigation, ArrowLeft } from "lucide-react";
@@ -240,7 +241,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
           {!searchQuery && (
             <div className="mb-3 text-left">
               <h1 className="text-2xl font-bold text-gray-900">
-                Hello, {userName}!
+                Hello, <span className="text-assist-blue">{userName}</span>!
               </h1>
               <p className="text-gray-600 text-sm font-medium mt-0.5">Find skilled students for your tasks</p>
             </div>
