@@ -35,7 +35,7 @@ const BottomNavigation = () => {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-10 shadow-md">
+    <nav className="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-blue-400 via-assist-blue/90 to-blue-500 border-t border-blue-300 z-10 shadow-md">
       <div className="flex justify-around h-16">
         {navItems.map((item, index) => (
           <Link
@@ -46,11 +46,11 @@ const BottomNavigation = () => {
           >
             <item.icon 
               size={22} 
-              className={item.active ? "text-assist-blue" : "text-gray-500"} 
+              className={item.active ? "text-white" : "text-white/70"} 
             />
             <span className={cn(
               "text-xs mt-1",
-              item.active ? "font-medium text-assist-blue" : "text-gray-500"
+              item.active ? "font-medium text-white" : "text-white/70"
             )}>
               {item.label}
             </span>

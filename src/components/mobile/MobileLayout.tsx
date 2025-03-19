@@ -70,7 +70,7 @@ const MobileLayout = ({
         </header>
       )}
       
-      <main className={cn("flex-1 overflow-auto", contentClassName)}>
+      <main className={cn("flex-1 overflow-auto pb-16", contentClassName)}>
         <div className={isMobile ? "px-5 py-6" : "container px-6 py-6"}>
           {children}
         </div>
