@@ -1,18 +1,17 @@
 
 import React from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Home, ClipboardList, MessageSquare, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const BottomNavigation = () => {
-  const navigate = useNavigate();
   const location = useLocation();
   
   const navItems = [
     { 
       icon: Home, 
       label: "Home", 
-      path: "/mobile", 
+      path: "/mobile/home", 
       active: location.pathname === "/mobile" || location.pathname === "/mobile/home" 
     },
     { 
@@ -39,10 +38,10 @@ const BottomNavigation = () => {
     <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-10 shadow-md">
       <div className="flex justify-around h-16">
         {navItems.map((item, index) => (
-          <button
+          <Link
             key={index}
+            to={item.path}
             className="flex flex-col items-center justify-center w-full transition-colors duration-200"
-            onClick={() => navigate(item.path)}
             aria-label={item.label}
           >
             <item.icon 
@@ -55,7 +54,7 @@ const BottomNavigation = () => {
             )}>
               {item.label}
             </span>
-          </button>
+          </Link>
         ))}
       </div>
     </nav>
