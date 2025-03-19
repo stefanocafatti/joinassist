@@ -10,6 +10,9 @@ import CustomerApp from "./pages/CustomerApp";
 import MobileHome from "./components/mobile/MobileHome";
 import MobileSignIn from "./components/mobile/MobileSignIn";
 import LoadingScreen from "./components/mobile/LoadingScreen";
+import MobileTasks from "./components/mobile/MobileTasks";
+import MobileProfile from "./components/mobile/MobileProfile";
+import MobileMessages from "./components/mobile/MobileMessages";
 
 const queryClient = new QueryClient();
 
@@ -30,10 +33,12 @@ const App = () => {
             <Route path="/mobile" element={<LoadingScreen />} />
             <Route path="/mobile/home" element={<MobileHome />} />
             <Route path="/mobile/sign-in" element={<MobileSignIn />} />
+            <Route path="/mobile/my-tasks" element={<MobileTasks />} />
+            <Route path="/mobile/profile" element={<MobileProfile />} />
+            <Route path="/mobile/messages" element={<MobileMessages />} />
             <Route path="/mobile/search" element={<MobileHome />} />
             <Route path="/mobile/new-task" element={<MobileHome />} />
             <Route path="/mobile/notifications" element={<MobileHome />} />
-            <Route path="/mobile/profile" element={<MobileHome />} />
             
             {/* Redirect old auth routes to download page */}
             <Route path="/login" element={<Navigate to="/customer-app" replace />} />
