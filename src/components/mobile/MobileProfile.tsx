@@ -1,11 +1,15 @@
-import React from "react";
+
+import React, { useState, useRef } from "react";
 import MobileLayout from "./MobileLayout";
 import BottomNavigation from "./BottomNavigation";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ArrowRight, Gift, ShieldCheck, KeyRound, CreditCard, Star, Bell, HelpCircle, Info, LogOut, UserPlus } from "lucide-react";
+import { ArrowRight, Gift, ShieldCheck, KeyRound, CreditCard, Star, Bell, HelpCircle, Info, LogOut, UserPlus, Camera } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { Form, FormField, FormItem, FormControl } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useForm } from "react-hook-form";
 
 const ProfileItem = ({ icon: Icon, title, value, onClick }: { 
   icon: React.ElementType; 
@@ -32,6 +36,39 @@ const ProfileItem = ({ icon: Icon, title, value, onClick }: {
 
 const MobileProfile = () => {
   const navigate = useNavigate();
+  const [avatarSrc, setAvatarSrc] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const userName = "John Doe"; // Would come from user data in a real app
+  const userEmail = "john.doe@example.com";
+  
+  const form = useForm();
+  
+  // Get initials from the user's name
+  const getInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map(part => part[0])
+      .join('')
+      .toUpperCase();
+  };
+  
+  const handleAvatarClick = () => {
+    // Trigger file input click when avatar is clicked
+    fileInputRef.current?.click();
+  };
+  
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const result = e.target?.result as string;
+        setAvatarSrc(result);
+        toast.success("Profile picture updated!");
+      };
+      reader.readAsDataURL(file);
+    }
+  };
   
   const handleLogout = () => {
     toast.success("You have been logged out successfully");
@@ -52,11 +89,31 @@ const MobileProfile = () => {
         contentClassName="pb-20"
       >
         <div className="flex flex-col items-center mb-8">
-          <Avatar className="h-24 w-24 mb-4">
-            <AvatarImage src="/placeholder.svg" alt="Profile picture" />
-            <AvatarFallback className="text-2xl bg-assist-blue text-white">JD</AvatarFallback>
-          </Avatar>
-          <h2 className="text-xl font-bold text-gray-900 mb-6">John Doe</h2>
+          <div className="relative group">
+            <Avatar 
+              className="h-24 w-24 mb-4 cursor-pointer border-4 border-white shadow-md" 
+              onClick={handleAvatarClick}
+            >
+              <AvatarImage src={avatarSrc || ""} alt="Profile picture" />
+              <AvatarFallback className="text-2xl bg-assist-blue text-white">
+                {getInitials(userName)}
+              </AvatarFallback>
+            </Avatar>
+            
+            <div className="absolute bottom-4 right-0 bg-white rounded-full p-1 shadow-md cursor-pointer" onClick={handleAvatarClick}>
+              <Camera className="h-5 w-5 text-assist-blue" />
+            </div>
+            
+            <Input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleFileChange}
+            />
+          </div>
+          
+          <h2 className="text-xl font-bold text-gray-900 mb-6">{userName}</h2>
           
           <Button 
             variant="outline" 
@@ -72,7 +129,7 @@ const MobileProfile = () => {
           <ProfileItem 
             icon={Info} 
             title="Account" 
-            value="john.doe@example.com" 
+            value={userEmail} 
           />
           <ProfileItem 
             icon={ShieldCheck} 
