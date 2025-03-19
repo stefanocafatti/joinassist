@@ -30,7 +30,7 @@ const MobileLayout = ({
   const isMobile = useIsMobile();
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-800">
+    <div className="flex flex-col min-h-screen bg-blue-50">
       {showHeader && (
         <header className={cn(
           "sticky top-0 z-10 p-4 text-white shadow-sm", 
