@@ -57,8 +57,8 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
             className="group bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-all overflow-hidden transform hover:scale-[1.01]"
             onClick={() => navigate(`/mobile/new-task?template=${task.title.toLowerCase().replace(/\s+/g, '-')}`)}
           >
-            <div className="flex items-start">
-              <div className={`bg-gradient-to-br ${getCategoryGradient(task.category)} p-3 flex items-center justify-center`}>
+            <div className="flex items-stretch">
+              <div className={`bg-gradient-to-br ${getCategoryGradient(task.category)} flex items-center justify-center h-auto min-w-[48px]`}>
                 <span className="text-xl">{task.category === 'Cleaning' ? '🧹' : task.category === 'Delivery' ? '🚚' : '📚'}</span>
               </div>
               <div className="flex-1 p-3">
