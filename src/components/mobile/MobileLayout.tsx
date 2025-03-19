@@ -34,7 +34,7 @@ const MobileLayout = ({
       {showHeader && (
         <header className={cn("sticky top-0 z-10 bg-white shadow-sm p-4", headerClassName)}>
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
+            <div className={cn("flex items-center gap-3", !showLogo && !showBackButton && title ? "flex-1" : "")}>
               {showBackButton && (
                 <button 
                   onClick={onBack} 
@@ -46,11 +46,22 @@ const MobileLayout = ({
                 </button>
               )}
               {showLogo && <Logo className="py-1" />}
-              {title && <h1 className="text-xl font-bold text-gray-800">{title}</h1>}
             </div>
-            {headerAction && (
-              <div className="flex items-center">{headerAction}</div>
+            
+            {title && (
+              <h1 className={cn(
+                "text-xl font-bold text-gray-800",
+                !showLogo && !showBackButton ? "text-center mx-auto" : ""
+              )}>
+                {title}
+              </h1>
             )}
+            
+            {headerAction ? (
+              <div className="flex items-center">{headerAction}</div>
+            ) : !showLogo && !showBackButton && title ? (
+              <div className="flex-1"></div> // Empty div for proper centering
+            ) : null}
           </div>
         </header>
       )}

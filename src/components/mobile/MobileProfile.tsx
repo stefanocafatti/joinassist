@@ -50,7 +50,8 @@ const MobileProfile = () => {
       <MobileLayout 
         title="Profile" 
         showHeader={true}
-        headerClassName="bg-white"
+        showLogo={false}
+        headerClassName="bg-white text-center"
         contentClassName="pb-20"
       >
         <div className="flex flex-col items-center mb-8">

@@ -124,7 +124,8 @@ const MobileTasks = () => {
       <MobileLayout 
         title="My Tasks" 
         showHeader={true}
-        headerClassName="bg-white"
+        showLogo={false}
+        headerClassName="bg-white text-center"
         contentClassName="pb-20"
       >
         <Tabs defaultValue="scheduled" className="w-full">

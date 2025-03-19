@@ -92,7 +92,8 @@ const MobileMessages = () => {
       <MobileLayout 
         title="Messages" 
         showHeader={true}
-        headerClassName="bg-white"
+        showLogo={false}
+        headerClassName="bg-white text-center"
         headerAction={
           <Button variant="ghost" size="icon" className="rounded-full">
             <PenSquare className="h-5 w-5 text-assist-blue" />
