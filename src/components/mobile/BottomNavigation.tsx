@@ -46,11 +46,11 @@ const BottomNavigation = () => {
           >
             <item.icon 
               size={22} 
-              className={item.active ? "text-white" : "text-white/70"} 
+              className={item.active ? "text-white" : "text-gray-200/70"} 
             />
             <span className={cn(
               "text-xs mt-1",
-              item.active ? "font-medium text-white" : "text-white/70"
+              item.active ? "font-medium text-white" : "text-gray-200/70"
             )}>
               {item.label}
             </span>
