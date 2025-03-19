@@ -41,34 +41,20 @@ const BottomNavigation = () => {
         {navItems.map((item, index) => (
           <button
             key={index}
-            className={cn(
-              "flex flex-col items-center justify-center w-full transition-colors duration-200",
-              item.active ? "text-assist-blue" : "text-gray-500"
-            )}
+            className="flex flex-col items-center justify-center w-full transition-colors duration-200"
             onClick={() => navigate(item.path)}
             aria-label={item.label}
           >
-            <div className={cn(
-              "flex items-center justify-center",
-              item.active && "bg-blue-100 p-2 rounded-full transition-all duration-300"
-            )}>
-              <item.icon 
-                size={22} 
-                className={cn(
-                  item.active ? "text-assist-blue" : "text-gray-500",
-                  item.active && "animate-pulse"
-                )} 
-              />
-            </div>
+            <item.icon 
+              size={22} 
+              className={item.active ? "text-assist-blue" : "text-gray-500"} 
+            />
             <span className={cn(
               "text-xs mt-1",
-              item.active ? "font-medium text-assist-blue" : ""
+              item.active ? "font-medium text-assist-blue" : "text-gray-500"
             )}>
               {item.label}
             </span>
-            {item.active && (
-              <div className="w-1.5 h-1.5 bg-assist-blue rounded-full mt-1"></div>
-            )}
           </button>
         ))}
       </div>
