@@ -12,7 +12,8 @@ import {
   Check, 
   Calendar, 
   DollarSign,
-  UserRound
+  UserRound,
+  Package
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -22,58 +23,9 @@ const MobileTasks = () => {
   const [selectedTask, setSelectedTask] = useState<any>(null);
   const [showTaskDetails, setShowTaskDetails] = useState(false);
 
-  // Sample data for tasks
-  const scheduledTasks = [
-    {
-      id: "task1",
-      title: "Home Cleaning",
-      date: "Tomorrow, 2:00 PM",
-      location: "123 Main St",
-      price: "$120",
-      status: "Confirmed",
-      description: "Deep cleaning of 2-bedroom apartment",
-      provider: "Sarah K.",
-      duration: "3 hours"
-    },
-    {
-      id: "task2",
-      title: "Furniture Assembly",
-      date: "Friday, 10:00 AM",
-      location: "456 Elm St",
-      price: "$85",
-      status: "Pending",
-      description: "Assembly of IKEA bookshelf and desk",
-      provider: "Mike L.",
-      duration: "2 hours"
-    }
-  ];
-
-  const completedTasks = [
-    {
-      id: "task3",
-      title: "Grocery Delivery",
-      date: "Oct 15, 2023",
-      location: "123 Main St",
-      price: "$45",
-      provider: "John D.",
-      status: "Completed",
-      rating: 5,
-      description: "Weekly grocery shopping from Trader Joe's",
-      duration: "1 hour"
-    },
-    {
-      id: "task4",
-      title: "Dog Walking",
-      date: "Oct 10, 2023",
-      location: "123 Main St",
-      price: "$30",
-      provider: "Sarah M.",
-      status: "Completed",
-      rating: 4,
-      description: "30-minute walk for Golden Retriever",
-      duration: "30 min"
-    }
-  ];
+  // Sample data for tasks - setting to empty arrays to show empty states
+  const scheduledTasks: any[] = [];
+  const completedTasks: any[] = [];
 
   const handleTaskClick = (task: any) => {
     setSelectedTask(task);
@@ -83,7 +35,11 @@ const MobileTasks = () => {
   const renderEmptyState = (message: string, isScheduled: boolean) => (
     <div className="flex flex-col items-center justify-center py-16 text-center bg-white rounded-lg shadow-sm mx-1 mt-4">
       <div className={`rounded-full p-5 mb-4 ${isScheduled ? 'bg-green-100' : 'bg-blue-100'}`}>
-        <ClipboardCheck className={`h-10 w-10 ${isScheduled ? 'text-green-500' : 'text-blue-500'}`} />
+        {isScheduled ? (
+          <Package className="h-10 w-10 text-green-500" />
+        ) : (
+          <ClipboardCheck className="h-10 w-10 text-blue-500" />
+        )}
       </div>
       <h3 className="text-xl font-semibold text-gray-800 mb-2">No Tasks</h3>
       <p className="text-gray-500 mb-6 max-w-xs px-6">
@@ -98,7 +54,7 @@ const MobileTasks = () => {
 
   const renderScheduledTaskList = (tasks: any[]) => {
     if (tasks.length === 0) {
-      return renderEmptyState("Let us help you get the job done. Book a task and see it here.", true);
+      return renderEmptyState("Let us help you get things done. Book your first task and see it here.", true);
     }
 
     return tasks.map((task) => (
@@ -155,7 +111,7 @@ const MobileTasks = () => {
 
   const renderCompletedTaskList = (tasks: any[]) => {
     if (tasks.length === 0) {
-      return renderEmptyState("You haven't completed any tasks yet. Once you do, they will appear here.", false);
+      return renderEmptyState("You haven't completed any tasks yet. Completed tasks will appear here.", false);
     }
 
     return tasks.map((task) => (
