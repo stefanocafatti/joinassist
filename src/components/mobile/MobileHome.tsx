@@ -7,7 +7,6 @@ import PastTasksSection from "./home/PastTasksSection";
 import FavoritesSection from "./home/FavoritesSection";
 import CategoriesSection from "./home/CategoriesSection";
 import PopularTasksSection from "./home/PopularTasksSection";
-import UpcomingSection from "./home/UpcomingSection";
 
 const MobileHome = () => {
   // Categories data to match the original data
@@ -84,7 +83,6 @@ const MobileHome = () => {
           <FavoritesSection favoritedTasks={favoritedTasks} />
           <CategoriesSection categories={categories} />
           <PopularTasksSection popularTasks={popularTasks} />
-          <UpcomingSection />
         </div>
       </MobileLayout>
       <BottomNavigation />

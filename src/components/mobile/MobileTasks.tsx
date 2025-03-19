@@ -59,7 +59,7 @@ const MobileTasks = () => {
     setShowTaskDetails(true);
   };
 
-  const renderTaskList = (tasks: any[], emptyMessage: string) => {
+  const renderTaskList = (tasks: any[], emptyMessage: string, isScheduled: boolean) => {
     if (tasks.length === 0) {
       return (
         <div className="flex flex-col items-center justify-center py-16 text-center">
@@ -81,7 +81,11 @@ const MobileTasks = () => {
     return tasks.map((task) => (
       <Card 
         key={task.id} 
-        className="mb-4 cursor-pointer hover:shadow-md transition-shadow"
+        className={`mb-4 cursor-pointer hover:shadow-md transition-shadow ${
+          isScheduled 
+            ? "bg-gradient-to-r from-white to-soft-green/30" 
+            : "bg-gradient-to-r from-white to-assist-blue/30"
+        }`}
         onClick={() => handleTaskClick(task)}
       >
         <CardContent className="p-4">
@@ -105,8 +109,10 @@ const MobileTasks = () => {
           <div className="text-sm text-gray-500">
             {task.location}
           </div>
-          <div className="mt-2 text-assist-blue font-medium">
-            {task.price}
+          <div className="mt-2 font-medium">
+            <span className={isScheduled ? "text-green-600" : "text-assist-blue"}>
+              {task.price}
+            </span>
           </div>
         </CardContent>
       </Card>
@@ -125,24 +131,24 @@ const MobileTasks = () => {
           <TabsList className="grid grid-cols-2 w-full mb-4 bg-gray-100 p-1 rounded-lg">
             <TabsTrigger 
               value="scheduled" 
-              className="rounded-md data-[state=active]:bg-white data-[state=active]:text-assist-blue"
+              className="rounded-md data-[state=active]:bg-green-500 data-[state=active]:text-white"
             >
               Scheduled
             </TabsTrigger>
             <TabsTrigger 
               value="completed" 
-              className="rounded-md data-[state=active]:bg-white data-[state=active]:text-assist-blue"
+              className="rounded-md data-[state=active]:bg-assist-blue data-[state=active]:text-white"
             >
               Completed
             </TabsTrigger>
           </TabsList>
           
           <TabsContent value="scheduled" className="mt-2">
-            {renderTaskList(scheduledTasks, "Let us help you get the job done. Book a task and see it here.")}
+            {renderTaskList(scheduledTasks, "Let us help you get the job done. Book a task and see it here.", true)}
           </TabsContent>
           
           <TabsContent value="completed" className="mt-2">
-            {renderTaskList(completedTasks, "You haven't completed any tasks yet.")}
+            {renderTaskList(completedTasks, "You haven't completed any tasks yet.", false)}
           </TabsContent>
         </Tabs>
       </MobileLayout>
