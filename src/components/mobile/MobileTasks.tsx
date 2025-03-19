@@ -125,7 +125,7 @@ const MobileTasks = () => {
         title="My Tasks" 
         showHeader={true}
         showLogo={false}
-        headerClassName="bg-white text-center"
+        headerClassName="bg-assist-blue text-center text-white"
         contentClassName="pb-20"
       >
         <Tabs defaultValue="scheduled" className="w-full">

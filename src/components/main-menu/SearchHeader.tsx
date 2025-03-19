@@ -64,7 +64,7 @@ const SearchHeader: React.FC<SearchHeaderProps> = ({
       <form ref={formRef} onSubmit={handleSubmit} className="group">
         <div className="relative flex items-center">
           <div className="absolute left-4 flex items-center pointer-events-none">
-            <Search className="h-5 w-5 text-assist-blue/70 group-hover:text-assist-blue transition-colors duration-200" />
+            <Search className="h-5 w-5 text-assist-blue/80 group-hover:text-assist-blue transition-colors duration-200" />
           </div>
           <Input 
             type="text" 
@@ -72,10 +72,10 @@ const SearchHeader: React.FC<SearchHeaderProps> = ({
             value={searchQuery}
             onChange={(e) => onSearchQueryChange(e.target.value)}
             onFocus={() => setIsInputFocused(true)}
-            className="pl-12 pr-12 h-14 rounded-full border-2 border-assist-blue/30 shadow-sm 
-                      bg-white focus:border-assist-blue/70 focus:ring-2 focus:ring-assist-blue/20 
-                      text-base placeholder:text-gray-400 group-hover:border-assist-blue/50 
-                      group-hover:shadow transition-all duration-200"
+            className="pl-12 pr-12 h-14 rounded-full border-2 border-assist-blue/40 shadow 
+                      bg-white focus:border-assist-blue focus:ring-2 focus:ring-assist-blue/20 
+                      text-base placeholder:text-gray-400 group-hover:border-assist-blue/60 
+                      group-hover:shadow-md transition-all duration-200"
           />
           {searchQuery && (
             <button 
@@ -89,14 +89,13 @@ const SearchHeader: React.FC<SearchHeaderProps> = ({
           )}
           <button 
             type="submit" 
-            className="absolute right-4 text-assist-blue hover:text-white bg-white hover:bg-assist-blue 
-                      p-2 rounded-full transition-all duration-200 border border-assist-blue/20
-                      hover:border-assist-blue shadow-sm hover:shadow"
+            className="absolute right-4 text-white bg-assist-blue hover:bg-assist-blue/90 
+                      p-2 rounded-full transition-all duration-200 shadow-sm hover:shadow"
           >
             <ArrowRight className="h-4 w-4" />
           </button>
         </div>
-        <div className="absolute bottom-0 left-5 right-5 h-0.5 bg-gradient-to-r from-assist-blue/50 to-soft-purple/70 
+        <div className="absolute bottom-0 left-5 right-5 h-0.5 bg-gradient-to-r from-assist-blue/70 to-assist-purple/80 
                       scale-x-0 group-hover:scale-x-100 rounded-full transition-transform duration-300 origin-left"></div>
       </form>
       

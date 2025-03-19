@@ -150,12 +150,12 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
       <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-assist-blue/15 to-soft-purple/40 -z-10"></div>
       
       <header className="p-4 bg-transparent">
-        <div className="fixed top-0 left-0 right-0 z-20 bg-white">
+        <div className="fixed top-0 left-0 right-0 z-20 bg-assist-blue">
           <div className="flex items-center justify-between p-4">
             <Popover open={isOpen} onOpenChange={setIsOpen}>
               <PopoverTrigger asChild>
-                <div className="flex items-center text-gray-600 text-sm cursor-pointer">
-                  <MapPin className="h-4 w-4 mr-1 text-assist-blue" />
+                <div className="flex items-center text-white text-sm cursor-pointer bg-assist-blue/50 hover:bg-assist-blue/70 px-3 py-1.5 rounded-full transition-colors">
+                  <MapPin className="h-4 w-4 mr-1 text-white" />
                   <span>{location}</span>
                 </div>
               </PopoverTrigger>
@@ -228,13 +228,13 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
             </Popover>
             
             <button 
-              className="flex items-center justify-center h-8 w-8 text-assist-blue bg-soft-blue/40 rounded-full hover:bg-soft-blue/70 transition-colors"
+              className="flex items-center justify-center h-8 w-8 text-white bg-white/20 rounded-full hover:bg-white/30 transition-colors"
               onClick={() => setSearchQuery(" ")}
             >
               <Search className="h-4 w-4" />
             </button>
           </div>
-          <Separator className="w-full h-[1px] bg-gray-200/70" />
+          <Separator className="w-full h-[1px] bg-white/20" />
         </div>
         
         <div className="pt-14 pb-1 px-1">
@@ -255,7 +255,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
               <input
                 type="text"
                 placeholder="How can we assist you today"
-                className="w-full h-12 pl-11 pr-4 bg-white/80 rounded-xl border-2 border-assist-blue/20 
+                className="w-full h-12 pl-11 pr-4 bg-white rounded-xl border-2 border-assist-blue/20 
                           focus:outline-none focus:ring-2 focus:ring-assist-blue/30 focus:border-assist-blue 
                           shadow-sm hover:border-assist-blue/40 hover:shadow 
                           transition-all duration-200 text-gray-800 placeholder:text-gray-600"
@@ -271,7 +271,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
           <div className="flex items-center gap-2 mb-6">
             <button 
               onClick={() => setSearchQuery("")}
-              className="text-gray-600 bg-soft-blue/30 p-2 rounded-full hover:bg-soft-blue/50 transition-colors"
+              className="text-white bg-assist-blue/80 p-2 rounded-full hover:bg-assist-blue transition-colors"
             >
               <ArrowLeft className="h-5 w-5" />
             </button>
@@ -284,7 +284,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Try 'moving help' or 'math tutoring'"
-                className="w-full h-10 pl-10 pr-4 bg-white rounded-full border border-gray-200
+                className="w-full h-10 pl-10 pr-4 bg-white rounded-full border border-assist-blue/30
                           focus:outline-none focus:ring-1 focus:ring-assist-blue focus:border-assist-blue
                           shadow-sm text-gray-800"
                 onKeyDown={(e) => {

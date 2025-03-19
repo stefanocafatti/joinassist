@@ -93,10 +93,10 @@ const MobileMessages = () => {
         title="Messages" 
         showHeader={true}
         showLogo={false}
-        headerClassName="bg-white text-center"
+        headerClassName="bg-assist-blue text-center text-white"
         headerAction={
-          <Button variant="ghost" size="icon" className="rounded-full">
-            <PenSquare className="h-5 w-5 text-assist-blue" />
+          <Button variant="ghost" size="icon" className="rounded-full text-white hover:bg-assist-blue/80">
+            <PenSquare className="h-5 w-5" />
           </Button>
         }
         contentClassName="pb-20 px-0"
@@ -107,7 +107,7 @@ const MobileMessages = () => {
             <Input
               type="text"
               placeholder="Search messages"
-              className="pl-10 bg-gray-100 border-gray-200"
+              className="pl-10 bg-white border-assist-blue/30 focus:border-assist-blue"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />

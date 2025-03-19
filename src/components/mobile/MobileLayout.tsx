@@ -32,25 +32,25 @@ const MobileLayout = ({
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       {showHeader && (
-        <header className={cn("sticky top-0 z-10 bg-white shadow-sm p-4", headerClassName)}>
+        <header className={cn("sticky top-0 z-10 bg-assist-blue shadow-sm p-4 text-white", headerClassName)}>
           <div className="flex items-center justify-between">
             <div className={cn("flex items-center gap-3", !showLogo && !showBackButton && title ? "flex-1" : "")}>
               {showBackButton && (
                 <button 
                   onClick={onBack} 
-                  className="p-2 rounded-full hover:bg-gray-100"
+                  className="p-2 rounded-full hover:bg-assist-blue/80"
                 >
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </button>
               )}
-              {showLogo && <Logo className="py-1" />}
+              {showLogo && <Logo className="py-1 text-white" />}
             </div>
             
             {title && (
               <h1 className={cn(
-                "text-xl font-bold text-gray-800",
+                "text-xl font-bold text-white",
                 !showLogo && !showBackButton ? "text-center mx-auto" : ""
               )}>
                 {title}
