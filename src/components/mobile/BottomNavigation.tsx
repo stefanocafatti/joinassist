@@ -35,7 +35,7 @@ const BottomNavigation = () => {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-blue-400 via-assist-blue to-blue-500 border-t border-blue-300 z-10 shadow-md">
+    <nav className="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-blue-400 via-assist-blue to-blue-500 border-t border-blue-300/30 z-10 shadow-md">
       <div className="flex justify-around h-16">
         {navItems.map((item, index) => (
           <Link
