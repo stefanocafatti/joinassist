@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, MapPin, Check, X, Navigation, ArrowLeft } from "lucide-react";
@@ -147,10 +146,12 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
 
   return (
     <>
-      <div className="absolute top-0 left-0 right-0 bottom-0 bg-black/5 -z-10"></div>
+      <div className="hidden">
+        {/* Removing the transparent background element */}
+      </div>
       
       <header className="p-4 bg-transparent">
-        <div className="fixed top-0 left-0 right-0 z-20 bg-gradient-to-r from-blue-400 via-assist-blue/90 to-blue-500">
+        <div className="fixed top-0 left-0 right-0 z-20 bg-gradient-to-r from-blue-400 via-assist-blue to-blue-500">
           <div className="flex items-center justify-between p-4">
             <Popover open={isOpen} onOpenChange={setIsOpen}>
               <PopoverTrigger asChild>
