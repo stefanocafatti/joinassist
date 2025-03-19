@@ -51,7 +51,7 @@ const MobileProfile = () => {
         title="Profile" 
         showHeader={true}
         showLogo={false}
-        headerClassName="bg-black text-center text-white"
+        headerClassName="bg-gradient-to-r from-blue-400 via-assist-blue/90 to-blue-500 text-center text-white"
         contentClassName="pb-20"
       >
         <div className="flex flex-col items-center mb-8">
