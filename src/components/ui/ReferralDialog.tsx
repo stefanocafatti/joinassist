@@ -2,7 +2,7 @@
 import React from "react";
 import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { X, Share } from "lucide-react";
+import { X, Share, Users, Bell, TrendingUp } from "lucide-react";
 
 interface ReferralDialogProps {
   isOpen: boolean;
@@ -35,42 +35,88 @@ const ReferralDialog: React.FC<ReferralDialogProps> = ({ isOpen, onClose }) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md p-0 gap-0 overflow-hidden border-none">
-        <div className="relative h-16 flex items-center justify-end p-4 border-b">
-          <DialogClose className="absolute right-4">
-            <X className="h-5 w-5 text-gray-500" />
-            <span className="sr-only">Close</span>
-          </DialogClose>
-        </div>
+      <DialogContent className="sm:max-w-md p-0 gap-0 overflow-hidden bg-gray-900 text-white border-none max-w-[90vw]">
+        <DialogClose className="absolute right-4 top-4 z-10">
+          <X className="h-6 w-6 text-white" />
+          <span className="sr-only">Close</span>
+        </DialogClose>
         
         <div className="flex flex-col items-center px-6 py-8">
-          <div className="bg-green-50 rounded-full p-8 mb-6">
-            <div className="relative">
-              <div className="w-20 h-20 bg-green-200 rounded-lg relative">
-                <div className="absolute -top-2 -right-2 w-8 h-8 flex items-center justify-center">
-                  <div className="text-red-500">❤️</div>
-                </div>
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-10 h-4 bg-green-400 rounded-sm"></div>
-                <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-6 h-4 border-l-2 border-r-2 border-t-2 border-green-400 rounded-t-sm"></div>
+          {/* Gold coin image */}
+          <div className="mb-6">
+            <div className="w-32 h-32 rounded-full bg-gradient-to-r from-yellow-400 to-yellow-300 flex items-center justify-center shadow-lg">
+              <div className="w-28 h-28 rounded-full bg-gradient-to-r from-yellow-300 to-yellow-200 flex items-center justify-center">
+                <div className="text-red-500 text-3xl">❤️</div>
               </div>
             </div>
           </div>
           
-          <h2 className="text-3xl font-bold text-center mb-4">Help Your Friends, Get $10</h2>
+          <h2 className="text-2xl font-bold text-center mb-6">
+            Referred friends get $10 to book their tasks, you get $10
+          </h2>
           
-          <p className="text-center text-gray-700 mb-8 max-w-xs">
-            Help a busy friend! Send them a $10 credit and get $10 when they complete their first task.
-          </p>
+          {/* Benefits section */}
+          <div className="w-full space-y-4 mb-8">
+            <div className="flex items-start gap-4">
+              <div className="bg-gray-800 rounded-full p-3">
+                <Users className="h-5 w-5 text-white" />
+              </div>
+              <div>
+                <h3 className="font-semibold">Build your network</h3>
+                <p className="text-sm text-gray-300">Referred friends will get $10 off their first task</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start gap-4">
+              <div className="bg-gray-800 rounded-full p-3">
+                <Bell className="h-5 w-5 text-white" />
+              </div>
+              <div>
+                <h3 className="font-semibold">Get notified</h3>
+                <p className="text-sm text-gray-300">You'll be notified when they complete their first task</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start gap-4">
+              <div className="bg-gray-800 rounded-full p-3">
+                <TrendingUp className="h-5 w-5 text-white" />
+              </div>
+              <div>
+                <h3 className="font-semibold">Earn rewards</h3>
+                <p className="text-sm text-gray-300">Get $10 credit when your friend completes their first task</p>
+              </div>
+            </div>
+          </div>
           
-          <p className="text-gray-500 mb-4">Copy link or share below:</p>
+          {/* Referral link section */}
+          <div className="w-full mb-6">
+            <div className="flex items-center border border-gray-700 rounded-md overflow-hidden bg-gray-800">
+              <div className="flex-1 px-4 py-3 text-sm overflow-hidden whitespace-nowrap overflow-ellipsis">
+                assist.com/invite/yourcode123
+              </div>
+              <button 
+                className="bg-white text-black px-6 py-3 font-medium"
+                onClick={() => {
+                  navigator.clipboard.writeText('assist.com/invite/yourcode123');
+                  alert('Copied to clipboard!');
+                }}
+              >
+                Copy
+              </button>
+            </div>
+          </div>
           
           <Button 
             onClick={handleShare}
-            className="rounded-full px-8 py-6 bg-white text-green-600 border border-green-500 hover:bg-green-50"
+            className="w-full rounded-full py-6 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold text-lg"
           >
-            <Share className="mr-2 h-4 w-4" />
-            Tap to Share
+            Share Invite
           </Button>
+          
+          <div className="w-full flex justify-between items-center mt-4 text-sm text-gray-400">
+            <span>Credits: $0</span>
+            <span className="underline">See Terms</span>
+          </div>
         </div>
       </DialogContent>
     </Dialog>

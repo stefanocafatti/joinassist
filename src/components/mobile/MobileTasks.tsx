@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import MobileLayout from "./MobileLayout";
 import BottomNavigation from "./BottomNavigation";
@@ -170,13 +171,13 @@ const MobileTasks = () => {
 
   const headerAction = (
     <Button 
-      size="sm" 
+      size="smallIcon" 
       variant="outline" 
-      className="bg-green-50 text-green-600 border-green-200 hover:bg-green-100 hover:text-green-700 hover:border-green-300"
+      className="bg-white text-green-600 border border-green-200 hover:bg-green-50 h-8 w-auto px-2"
       onClick={() => setShowReferralDialog(true)}
     >
-      <Gift className="h-4 w-4 mr-1" />
-      Get $10
+      <Gift className="h-3.5 w-3.5 mr-1" />
+      <span className="text-xs">Get $10</span>
     </Button>
   );
 
