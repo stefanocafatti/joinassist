@@ -48,18 +48,27 @@ const BottomNavigation = () => {
             onClick={() => navigate(item.path)}
             aria-label={item.label}
           >
-            <item.icon 
-              size={22} 
-              className={cn(
-                item.active ? "text-assist-blue" : "text-gray-500"
-              )} 
-            />
+            <div className={cn(
+              "flex items-center justify-center",
+              item.active && "bg-blue-100 p-2 rounded-full transition-all duration-300"
+            )}>
+              <item.icon 
+                size={22} 
+                className={cn(
+                  item.active ? "text-assist-blue" : "text-gray-500",
+                  item.active && "animate-pulse"
+                )} 
+              />
+            </div>
             <span className={cn(
               "text-xs mt-1",
-              item.active ? "font-medium" : ""
+              item.active ? "font-medium text-assist-blue" : ""
             )}>
               {item.label}
             </span>
+            {item.active && (
+              <div className="w-1.5 h-1.5 bg-assist-blue rounded-full mt-1"></div>
+            )}
           </button>
         ))}
       </div>
