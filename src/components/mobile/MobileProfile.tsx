@@ -20,9 +20,7 @@ const ProfileItem = ({ icon: Icon, title, value, onClick }: {
       onClick={onClick}
     >
       <div className="flex items-center gap-3">
-        <div className="bg-gray-100 p-2 rounded-full">
-          <Icon className="h-5 w-5 text-gray-600" />
-        </div>
+        <Icon className="h-5 w-5 text-gray-600" />
         <span className="font-medium text-gray-800">{title}</span>
       </div>
       <div className="flex items-center">
@@ -112,19 +110,16 @@ const MobileProfile = () => {
         
         <div className="space-y-4">
           <Button 
-            variant="outline" 
-            className="w-full justify-between py-6 px-4 h-auto border-assist-blue text-assist-blue hover:bg-assist-blue/5"
+            variant="default" 
+            className="w-full py-6 text-white bg-gradient-to-r from-blue-500 to-assist-blue hover:opacity-90 rounded-xl shadow-sm"
           >
-            <div className="flex items-center">
-              <UserPlus className="mr-2 h-5 w-5" />
-              <span>Become a Service Provider</span>
-            </div>
-            <ChevronRight className="h-5 w-5" />
+            <UserPlus className="mr-2 h-5 w-5" />
+            <span>Become an Assist Helper</span>
           </Button>
           
           <Button 
-            variant="ghost" 
-            className="w-full text-red-500 hover:text-red-600 hover:bg-red-50"
+            variant="outline" 
+            className="w-full py-5 border-red-300 text-red-500 hover:bg-red-50 hover:text-red-600 rounded-xl"
             onClick={handleLogout}
           >
             <LogOut className="mr-2 h-5 w-5" />
