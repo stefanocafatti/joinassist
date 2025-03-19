@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import MobileLayout from "./MobileLayout";
 import BottomNavigation from "./BottomNavigation";
@@ -13,15 +12,18 @@ import {
   Calendar, 
   DollarSign,
   UserRound,
-  Package
+  Package,
+  Gift
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import TaskStatusView from "@/components/ui/TaskStatusView";
+import ReferralDialog from "../ui/ReferralDialog";
 
 const MobileTasks = () => {
   const [selectedTask, setSelectedTask] = useState<any>(null);
   const [showTaskDetails, setShowTaskDetails] = useState(false);
+  const [showReferralDialog, setShowReferralDialog] = useState(false);
 
   // Sample data for tasks - setting to empty arrays to show empty states
   const scheduledTasks: any[] = [];
@@ -166,6 +168,18 @@ const MobileTasks = () => {
     ));
   };
 
+  const headerAction = (
+    <Button 
+      size="sm" 
+      variant="outline" 
+      className="bg-green-50 text-green-600 border-green-200 hover:bg-green-100 hover:text-green-700 hover:border-green-300"
+      onClick={() => setShowReferralDialog(true)}
+    >
+      <Gift className="h-4 w-4 mr-1" />
+      Get $10
+    </Button>
+  );
+
   return (
     <>
       <MobileLayout 
@@ -174,6 +188,7 @@ const MobileTasks = () => {
         showLogo={false}
         headerClassName="bg-gradient-to-r from-blue-400 via-assist-blue/90 to-blue-500 text-center text-white"
         contentClassName="pb-20"
+        headerAction={headerAction}
       >
         <Tabs defaultValue="scheduled" className="w-full">
           <TabsList className="grid grid-cols-2 w-full mb-2 bg-white p-1 rounded-lg shadow-sm">
@@ -205,6 +220,11 @@ const MobileTasks = () => {
         isOpen={showTaskDetails} 
         onClose={() => setShowTaskDetails(false)} 
         task={selectedTask}
+      />
+
+      <ReferralDialog 
+        isOpen={showReferralDialog}
+        onClose={() => setShowReferralDialog(false)}
       />
       
       <BottomNavigation />
