@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Search, X, Clock, ArrowRight } from "lucide-react";
@@ -67,7 +68,7 @@ const SearchHeader: React.FC<SearchHeaderProps> = ({
           </div>
           <Input 
             type="text" 
-            placeholder="Try &quot;help moving&quot; or &quot;need a ride&quot;"
+            placeholder="Try &quot;moving help&quot; or &quot;math tutoring&quot;"
             value={searchQuery}
             onChange={(e) => onSearchQueryChange(e.target.value)}
             onFocus={() => setIsInputFocused(true)}
