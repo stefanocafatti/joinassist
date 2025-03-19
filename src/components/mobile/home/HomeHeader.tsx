@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, MapPin, Check, X, Navigation, ArrowLeft } from "lucide-react";
