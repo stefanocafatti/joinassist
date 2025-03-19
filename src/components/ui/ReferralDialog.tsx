@@ -35,9 +35,9 @@ const ReferralDialog: React.FC<ReferralDialogProps> = ({ isOpen, onClose }) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md p-0 gap-0 overflow-hidden bg-gray-900 text-white border-none max-w-[90vw]">
+      <DialogContent className="sm:max-w-md p-0 gap-0 overflow-hidden bg-white text-gray-900 border-none max-w-[90vw]">
         <DialogClose className="absolute right-4 top-4 z-10">
-          <X className="h-6 w-6 text-white" />
+          <X className="h-6 w-6 text-gray-500" />
           <span className="sr-only">Close</span>
         </DialogClose>
         
@@ -58,44 +58,44 @@ const ReferralDialog: React.FC<ReferralDialogProps> = ({ isOpen, onClose }) => {
           {/* Benefits section */}
           <div className="w-full space-y-4 mb-8">
             <div className="flex items-start gap-4">
-              <div className="bg-gray-800 rounded-full p-3">
-                <Users className="h-5 w-5 text-white" />
+              <div className="bg-gray-100 rounded-full p-3">
+                <Users className="h-5 w-5 text-assist-blue" />
               </div>
               <div>
                 <h3 className="font-semibold">Build your network</h3>
-                <p className="text-sm text-gray-300">Referred friends will get $10 off their first task</p>
+                <p className="text-sm text-gray-600">Referred friends will get $10 off their first task</p>
               </div>
             </div>
             
             <div className="flex items-start gap-4">
-              <div className="bg-gray-800 rounded-full p-3">
-                <Bell className="h-5 w-5 text-white" />
+              <div className="bg-gray-100 rounded-full p-3">
+                <Bell className="h-5 w-5 text-assist-blue" />
               </div>
               <div>
                 <h3 className="font-semibold">Get notified</h3>
-                <p className="text-sm text-gray-300">You'll be notified when they complete their first task</p>
+                <p className="text-sm text-gray-600">You'll be notified when they complete their first task</p>
               </div>
             </div>
             
             <div className="flex items-start gap-4">
-              <div className="bg-gray-800 rounded-full p-3">
-                <TrendingUp className="h-5 w-5 text-white" />
+              <div className="bg-gray-100 rounded-full p-3">
+                <TrendingUp className="h-5 w-5 text-assist-blue" />
               </div>
               <div>
                 <h3 className="font-semibold">Earn rewards</h3>
-                <p className="text-sm text-gray-300">Get $10 credit when your friend completes their first task</p>
+                <p className="text-sm text-gray-600">Get $10 credit when your friend completes their first task</p>
               </div>
             </div>
           </div>
           
           {/* Referral link section */}
           <div className="w-full mb-6">
-            <div className="flex items-center border border-gray-700 rounded-md overflow-hidden bg-gray-800">
+            <div className="flex items-center border border-gray-200 rounded-md overflow-hidden bg-gray-50">
               <div className="flex-1 px-4 py-3 text-sm overflow-hidden whitespace-nowrap overflow-ellipsis">
                 assist.com/invite/yourcode123
               </div>
               <button 
-                className="bg-white text-black px-6 py-3 font-medium"
+                className="bg-assist-blue text-white px-6 py-3 font-medium"
                 onClick={() => {
                   navigator.clipboard.writeText('assist.com/invite/yourcode123');
                   alert('Copied to clipboard!');
@@ -113,7 +113,7 @@ const ReferralDialog: React.FC<ReferralDialogProps> = ({ isOpen, onClose }) => {
             Share Invite
           </Button>
           
-          <div className="w-full flex justify-between items-center mt-4 text-sm text-gray-400">
+          <div className="w-full flex justify-between items-center mt-4 text-sm text-gray-500">
             <span>Credits: $0</span>
             <span className="underline">See Terms</span>
           </div>
