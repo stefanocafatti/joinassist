@@ -34,7 +34,7 @@ const MobileLayout = ({
       {showHeader && (
         <header className={cn(
           "sticky top-0 z-10 p-4 text-white shadow-sm", 
-          "bg-gradient-to-r from-blue-600 via-assist-blue to-blue-500",
+          "bg-black",
           headerClassName
         )}>
           <div className="flex items-center justify-between">

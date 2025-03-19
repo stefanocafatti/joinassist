@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, MapPin, Check, X, Navigation, ArrowLeft } from "lucide-react";
@@ -147,14 +146,14 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
 
   return (
     <>
-      <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-assist-blue/15 to-soft-purple/40 -z-10"></div>
+      <div className="absolute top-0 left-0 right-0 bottom-0 bg-black/5 -z-10"></div>
       
       <header className="p-4 bg-transparent">
-        <div className="fixed top-0 left-0 right-0 z-20 bg-assist-blue">
+        <div className="fixed top-0 left-0 right-0 z-20 bg-black">
           <div className="flex items-center justify-between p-4">
             <Popover open={isOpen} onOpenChange={setIsOpen}>
               <PopoverTrigger asChild>
-                <div className="flex items-center text-white text-sm cursor-pointer bg-assist-blue/50 hover:bg-assist-blue/70 px-3 py-1.5 rounded-full transition-colors">
+                <div className="flex items-center text-white text-sm cursor-pointer bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-full transition-colors">
                   <MapPin className="h-4 w-4 mr-1 text-white" />
                   <span>{location}</span>
                 </div>
@@ -250,15 +249,14 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
           {!searchQuery && (
             <div className="relative mb-2">
               <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
-                <Search className="h-5 w-5 text-assist-blue" />
+                <Search className="h-5 w-5 text-gray-500" />
               </div>
               <input
                 type="text"
                 placeholder="How can we assist you today"
-                className="w-full h-12 pl-11 pr-4 bg-white rounded-xl border-2 border-assist-blue/20 
-                          focus:outline-none focus:ring-2 focus:ring-assist-blue/30 focus:border-assist-blue 
-                          shadow-sm hover:border-assist-blue/40 hover:shadow 
-                          transition-all duration-200 text-gray-800 placeholder:text-gray-600"
+                className="w-full h-12 pl-11 pr-4 bg-[#222222] rounded-xl border border-gray-700
+                          focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/50
+                          shadow-sm text-white placeholder:text-gray-400"
                 onClick={() => navigate('/mobile/search')}
               />
             </div>
@@ -267,26 +265,26 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
       </header>
       
       {searchQuery && (
-        <div className="fixed top-16 left-0 right-0 bottom-0 overflow-auto bg-white z-[5] px-4 pt-4">
+        <div className="fixed top-16 left-0 right-0 bottom-0 overflow-auto bg-[#121212] z-[5] px-4 pt-4">
           <div className="flex items-center gap-2 mb-6">
             <button 
               onClick={() => setSearchQuery("")}
-              className="text-white bg-assist-blue/80 p-2 rounded-full hover:bg-assist-blue transition-colors"
+              className="text-white bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors"
             >
               <ArrowLeft className="h-5 w-5" />
             </button>
             <div className="relative flex-1">
               <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                <Search className="h-5 w-5 text-assist-blue" />
+                <Search className="h-5 w-5 text-gray-400" />
               </div>
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Try 'moving help' or 'math tutoring'"
-                className="w-full h-10 pl-10 pr-4 bg-white rounded-full border border-assist-blue/30
-                          focus:outline-none focus:ring-1 focus:ring-assist-blue focus:border-assist-blue
-                          shadow-sm text-gray-800"
+                className="w-full h-10 pl-10 pr-4 bg-[#222222] rounded-full border border-gray-700
+                          focus:outline-none focus:ring-1 focus:ring-white/30 focus:border-white/40
+                          shadow-sm text-white placeholder:text-gray-400"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') handleSearch();
                 }}
