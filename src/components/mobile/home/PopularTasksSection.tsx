@@ -64,7 +64,7 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
               <div className="flex-1 p-3">
                 <h3 className="font-medium text-gray-900 flex items-center">
                   {task.title}
-                  {index === 0 && <Sparkles className="h-3.5 w-3.5 ml-1.5 text-amber-500" />}
+                  {/* Removed Sparkles icon from next to the first task title */}
                 </h3>
                 <p className="text-xs text-gray-500 mb-1">{task.description}</p>
                 <div className="flex items-center text-sm">
