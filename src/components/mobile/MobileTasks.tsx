@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import MobileLayout from "./MobileLayout";
 import BottomNavigation from "./BottomNavigation";
@@ -169,54 +168,53 @@ const MobileTasks = () => {
     ));
   };
 
-  const headerAction = (
-    <Button 
-      size="icon" 
-      variant="ghost" 
-      className="text-white hover:bg-white/10 h-8 w-8"
-      onClick={() => setShowReferralDialog(true)}
-    >
-      <Gift className="h-5 w-5" />
-    </Button>
+  const giftIcon = (
+    <div className="absolute top-4 right-4 z-10">
+      <Button 
+        size="icon" 
+        variant="ghost" 
+        className="text-assist-blue hover:bg-white/10 h-10 w-10 rounded-full bg-white shadow-sm"
+        onClick={() => setShowReferralDialog(true)}
+      >
+        <Gift className="h-5 w-5" />
+      </Button>
+    </div>
   );
 
   return (
     <>
-      <MobileLayout 
-        title="My Tasks" 
-        showHeader={true}
-        showLogo={false}
-        headerClassName="bg-gradient-to-r from-blue-400 via-assist-blue/90 to-blue-500 text-white"
-        contentClassName="pb-20"
-        headerAction={headerAction}
-      >
-        <div className="px-5 py-6 pb-20">
-          <Tabs defaultValue="scheduled" className="w-full">
-            <TabsList className="grid grid-cols-2 w-full mb-2 bg-white p-1 rounded-lg shadow-sm">
-              <TabsTrigger 
-                value="scheduled" 
-                className="rounded-md data-[state=active]:bg-green-500 data-[state=active]:text-white"
-              >
-                Scheduled
-              </TabsTrigger>
-              <TabsTrigger 
-                value="completed" 
-                className="rounded-md data-[state=active]:bg-assist-blue data-[state=active]:text-white"
-              >
-                Completed
-              </TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="scheduled" className="mt-2">
-              {renderScheduledTaskList(scheduledTasks)}
-            </TabsContent>
-            
-            <TabsContent value="completed" className="mt-2">
-              {renderCompletedTaskList(completedTasks)}
-            </TabsContent>
-          </Tabs>
-        </div>
-      </MobileLayout>
+      <div className="relative flex flex-col min-h-screen bg-blue-50">
+        {giftIcon}
+        
+        <main className="flex-1 overflow-auto pb-16 pt-16">
+          <div className="px-5 py-6 pb-20">
+            <Tabs defaultValue="scheduled" className="w-full">
+              <TabsList className="grid grid-cols-2 w-full mb-2 bg-white p-1 rounded-lg shadow-sm">
+                <TabsTrigger 
+                  value="scheduled" 
+                  className="rounded-md data-[state=active]:bg-green-500 data-[state=active]:text-white"
+                >
+                  Scheduled
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="completed" 
+                  className="rounded-md data-[state=active]:bg-assist-blue data-[state=active]:text-white"
+                >
+                  Completed
+                </TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="scheduled" className="mt-2">
+                {renderScheduledTaskList(scheduledTasks)}
+              </TabsContent>
+              
+              <TabsContent value="completed" className="mt-2">
+                {renderCompletedTaskList(completedTasks)}
+              </TabsContent>
+            </Tabs>
+          </div>
+        </main>
+      </div>
       
       <TaskStatusView 
         isOpen={showTaskDetails} 

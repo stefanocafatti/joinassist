@@ -1,6 +1,4 @@
-
 import React, { useState, useRef } from "react";
-import MobileLayout from "./MobileLayout";
 import BottomNavigation from "./BottomNavigation";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -43,7 +41,6 @@ const MobileProfile = () => {
   
   const form = useForm();
   
-  // Get initials from the user's name
   const getInitials = (name: string) => {
     return name
       .split(' ')
@@ -53,7 +50,6 @@ const MobileProfile = () => {
   };
   
   const handleAvatarClick = () => {
-    // Trigger file input click when avatar is clicked
     fileInputRef.current?.click();
   };
   
@@ -81,108 +77,104 @@ const MobileProfile = () => {
 
   return (
     <>
-      <MobileLayout 
-        title="Profile" 
-        showHeader={true}
-        showLogo={false}
-        headerClassName="bg-gradient-to-r from-blue-400 via-assist-blue/90 to-blue-500 text-center text-white"
-        contentClassName="pb-20"
-      >
-        <div className="flex flex-col items-center mb-8">
-          <div className="relative group">
-            <Avatar 
-              className="h-24 w-24 mb-4 cursor-pointer border-4 border-white shadow-md" 
-              onClick={handleAvatarClick}
-            >
-              <AvatarImage src={avatarSrc || ""} alt="Profile picture" />
-              <AvatarFallback className="text-2xl bg-assist-blue text-white">
-                {getInitials(userName)}
-              </AvatarFallback>
-            </Avatar>
-            
-            <div className="absolute bottom-4 right-0 bg-white rounded-full p-1 shadow-md cursor-pointer" onClick={handleAvatarClick}>
-              <Camera className="h-5 w-5 text-assist-blue" />
+      <div className="flex flex-col min-h-screen bg-blue-50">
+        <main className="flex-1 overflow-auto pb-16 pt-4">
+          <div className="flex flex-col items-center mb-8">
+            <div className="relative group">
+              <Avatar 
+                className="h-24 w-24 mb-4 cursor-pointer border-4 border-white shadow-md" 
+                onClick={handleAvatarClick}
+              >
+                <AvatarImage src={avatarSrc || ""} alt="Profile picture" />
+                <AvatarFallback className="text-2xl bg-assist-blue text-white">
+                  {getInitials(userName)}
+                </AvatarFallback>
+              </Avatar>
+              
+              <div className="absolute bottom-4 right-0 bg-white rounded-full p-1 shadow-md cursor-pointer" onClick={handleAvatarClick}>
+                <Camera className="h-5 w-5 text-assist-blue" />
+              </div>
+              
+              <Input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleFileChange}
+              />
             </div>
             
-            <Input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={handleFileChange}
+            <h2 className="text-xl font-bold text-gray-900 mb-6">{userName}</h2>
+            
+            <Button 
+              variant="outline" 
+              className="rounded-full border-2 border-assist-blue text-assist-blue hover:bg-assist-blue/5 w-full max-w-md"
+              onClick={handleShare}
+            >
+              <Gift className="mr-2 h-5 w-5" />
+              Help Your Friends, Get $10
+            </Button>
+          </div>
+          
+          <div className="bg-white rounded-xl shadow-sm mb-6 mx-4 px-4">
+            <ProfileItem 
+              icon={Info} 
+              title="Account" 
+              value={userEmail} 
+            />
+            <ProfileItem 
+              icon={ShieldCheck} 
+              title="Account Security" 
+            />
+            <ProfileItem 
+              icon={KeyRound} 
+              title="Change Password" 
+            />
+            <ProfileItem 
+              icon={CreditCard} 
+              title="Payment Methods" 
+            />
+            <ProfileItem 
+              icon={Star} 
+              title="Promos & Credits" 
             />
           </div>
           
-          <h2 className="text-xl font-bold text-gray-900 mb-6">{userName}</h2>
+          <div className="bg-white rounded-xl shadow-sm mb-6 mx-4 px-4">
+            <ProfileItem 
+              icon={Bell} 
+              title="Notifications" 
+            />
+            <ProfileItem 
+              icon={HelpCircle} 
+              title="Support" 
+            />
+            <ProfileItem 
+              icon={Info} 
+              title="About" 
+            />
+          </div>
           
-          <Button 
-            variant="outline" 
-            className="rounded-full border-2 border-assist-blue text-assist-blue hover:bg-assist-blue/5 w-full max-w-md"
-            onClick={handleShare}
-          >
-            <Gift className="mr-2 h-5 w-5" />
-            Help Your Friends, Get $10
-          </Button>
-        </div>
-        
-        <div className="bg-white rounded-xl shadow-sm mb-6 px-4">
-          <ProfileItem 
-            icon={Info} 
-            title="Account" 
-            value={userEmail} 
-          />
-          <ProfileItem 
-            icon={ShieldCheck} 
-            title="Account Security" 
-          />
-          <ProfileItem 
-            icon={KeyRound} 
-            title="Change Password" 
-          />
-          <ProfileItem 
-            icon={CreditCard} 
-            title="Payment Methods" 
-          />
-          <ProfileItem 
-            icon={Star} 
-            title="Promos & Credits" 
-          />
-        </div>
-        
-        <div className="bg-white rounded-xl shadow-sm mb-6 px-4">
-          <ProfileItem 
-            icon={Bell} 
-            title="Notifications" 
-          />
-          <ProfileItem 
-            icon={HelpCircle} 
-            title="Support" 
-          />
-          <ProfileItem 
-            icon={Info} 
-            title="About" 
-          />
-        </div>
-        
-        <div className="space-y-4 px-1">
-          <Button 
-            variant="default" 
-            className="w-full py-6 text-white bg-gradient-to-r from-blue-500 to-assist-blue hover:opacity-90 rounded-xl shadow-sm"
-          >
-            <UserPlus className="mr-2 h-5 w-5" />
-            <span>Become an Assist Helper</span>
-          </Button>
-          
-          <Button 
-            variant="outline" 
-            className="w-full py-5 border-red-300 text-red-500 hover:bg-red-50 hover:text-red-600 rounded-xl"
-            onClick={handleLogout}
-          >
-            <LogOut className="mr-2 h-5 w-5" />
-            Log Out
-          </Button>
-        </div>
-      </MobileLayout>
+          <div className="space-y-4 px-5">
+            <Button 
+              variant="default" 
+              className="w-full py-6 text-white bg-gradient-to-r from-blue-500 to-assist-blue hover:opacity-90 rounded-xl shadow-sm"
+            >
+              <UserPlus className="mr-2 h-5 w-5" />
+              <span>Become an Assist Helper</span>
+            </Button>
+            
+            <Button 
+              variant="outline" 
+              className="w-full py-5 border-red-300 text-red-500 hover:bg-red-50 hover:text-red-600 rounded-xl"
+              onClick={handleLogout}
+            >
+              <LogOut className="mr-2 h-5 w-5" />
+              Log Out
+            </Button>
+          </div>
+        </main>
+      </div>
       
       <BottomNavigation />
     </>
