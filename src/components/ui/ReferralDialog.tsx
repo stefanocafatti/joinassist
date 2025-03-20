@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { X, Share, Users, TrendingUp, Award } from "lucide-react";
 
@@ -11,31 +11,45 @@ interface ReferralDialogProps {
 
 const ReferralDialog: React.FC<ReferralDialogProps> = ({ isOpen, onClose }) => {
   const handleShare = () => {
-    // In a real implementation, this would use the Web Share API
-    // or copy a referral link to clipboard
+    // Build the share content
+    const shareTitle = 'Assist';
+    const shareText = "I'm using Assist to get all my tasks completed! Make your life easier with help for everyday needs. Get $10 off your first task using this link";
+    const shareUrl = 'https://www.assist.com/ref/123456';
+    
+    // Use Web Share API when available
     if (navigator.share) {
       navigator.share({
-        title: 'Join me on Assist',
-        text: 'Get $10 when you sign up and complete your first task!',
-        url: 'https://www.assist.com/ref/123456',
+        title: shareTitle,
+        text: shareText,
+        url: shareUrl,
       }).catch(err => {
         console.log('Error sharing:', err);
+        // Fallback to clipboard if sharing fails
+        copyToClipboard();
       });
     } else {
-      // Fallback for browsers that don't support the Web Share API
-      navigator.clipboard.writeText('https://www.assist.com/ref/123456')
-        .then(() => {
-          alert('Referral link copied to clipboard!');
-        })
-        .catch(err => {
-          console.error('Could not copy text: ', err);
-        });
+      // Fallback for browsers that don't support Web Share API
+      copyToClipboard();
     }
+  };
+  
+  const copyToClipboard = () => {
+    const shareText = "I'm using Assist to get all my tasks completed! Make your life easier with help for everyday needs. Get $10 off your first task using this link: https://www.assist.com/ref/123456";
+    
+    navigator.clipboard.writeText(shareText)
+      .then(() => {
+        alert('Referral link and message copied to clipboard!');
+      })
+      .catch(err => {
+        console.error('Could not copy text: ', err);
+      });
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md p-0 gap-0 overflow-hidden bg-white text-gray-900 border-none max-w-[90vw]">
+        <DialogTitle className="sr-only">Referral Program</DialogTitle>
+        
         <Button 
           variant="ghost" 
           size="smallIcon" 
@@ -85,6 +99,7 @@ const ReferralDialog: React.FC<ReferralDialogProps> = ({ isOpen, onClose }) => {
             onClick={handleShare}
             className="w-full rounded-full py-2 bg-gradient-to-r from-assist-blue to-blue-400 hover:opacity-90 text-white font-medium"
           >
+            <Share className="h-4 w-4 mr-2" />
             Share Invite
           </Button>
         </div>
