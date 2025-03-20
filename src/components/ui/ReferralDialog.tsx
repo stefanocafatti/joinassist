@@ -2,7 +2,7 @@
 import React from "react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { X, Share, Users, TrendingUp, Award } from "lucide-react";
+import { Share, Users, TrendingUp, Award } from "lucide-react";
 
 interface ReferralDialogProps {
   isOpen: boolean;
@@ -47,17 +47,17 @@ const ReferralDialog: React.FC<ReferralDialogProps> = ({ isOpen, onClose }) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md p-0 gap-0 overflow-hidden bg-white text-gray-900 border-none max-w-[90vw]">
+      <DialogContent className="sm:max-w-md p-0 gap-0 overflow-hidden bg-white text-gray-900 border-none max-w-[90vw] [&>button]:hidden">
         <DialogTitle className="sr-only">Referral Program</DialogTitle>
         
-        {/* Custom close button that replaces the default one */}
+        {/* Custom close button */}
         <Button 
           variant="ghost" 
           size="smallIcon" 
           className="absolute right-4 top-4 z-10 h-8 w-8 p-0" 
           onClick={onClose}
         >
-          <X className="h-5 w-5 text-gray-500" />
+          <span className="h-5 w-5 text-gray-500">✕</span>
           <span className="sr-only">Close</span>
         </Button>
         
