@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import MobileLayout from "./MobileLayout";
 import BottomNavigation from "./BottomNavigation";
@@ -188,7 +189,9 @@ const MobileTasks = () => {
         headerClassName="bg-gradient-to-r from-blue-400 via-assist-blue/90 to-blue-500 text-white"
         contentClassName="pb-20"
         headerAction={headerAction}
-      >
+      />
+      
+      <div className="px-5 py-6 pb-20">
         <Tabs defaultValue="scheduled" className="w-full">
           <TabsList className="grid grid-cols-2 w-full mb-2 bg-white p-1 rounded-lg shadow-sm">
             <TabsTrigger 
@@ -213,7 +216,7 @@ const MobileTasks = () => {
             {renderCompletedTaskList(completedTasks)}
           </TabsContent>
         </Tabs>
-      </MobileLayout>
+      </div>
       
       <TaskStatusView 
         isOpen={showTaskDetails} 
