@@ -189,34 +189,34 @@ const MobileTasks = () => {
         headerClassName="bg-gradient-to-r from-blue-400 via-assist-blue/90 to-blue-500 text-white"
         contentClassName="pb-20"
         headerAction={headerAction}
-      />
-      
-      <div className="px-5 py-6 pb-20">
-        <Tabs defaultValue="scheduled" className="w-full">
-          <TabsList className="grid grid-cols-2 w-full mb-2 bg-white p-1 rounded-lg shadow-sm">
-            <TabsTrigger 
-              value="scheduled" 
-              className="rounded-md data-[state=active]:bg-green-500 data-[state=active]:text-white"
-            >
-              Scheduled
-            </TabsTrigger>
-            <TabsTrigger 
-              value="completed" 
-              className="rounded-md data-[state=active]:bg-assist-blue data-[state=active]:text-white"
-            >
-              Completed
-            </TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="scheduled" className="mt-2">
-            {renderScheduledTaskList(scheduledTasks)}
-          </TabsContent>
-          
-          <TabsContent value="completed" className="mt-2">
-            {renderCompletedTaskList(completedTasks)}
-          </TabsContent>
-        </Tabs>
-      </div>
+      >
+        <div className="px-5 py-6 pb-20">
+          <Tabs defaultValue="scheduled" className="w-full">
+            <TabsList className="grid grid-cols-2 w-full mb-2 bg-white p-1 rounded-lg shadow-sm">
+              <TabsTrigger 
+                value="scheduled" 
+                className="rounded-md data-[state=active]:bg-green-500 data-[state=active]:text-white"
+              >
+                Scheduled
+              </TabsTrigger>
+              <TabsTrigger 
+                value="completed" 
+                className="rounded-md data-[state=active]:bg-assist-blue data-[state=active]:text-white"
+              >
+                Completed
+              </TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="scheduled" className="mt-2">
+              {renderScheduledTaskList(scheduledTasks)}
+            </TabsContent>
+            
+            <TabsContent value="completed" className="mt-2">
+              {renderCompletedTaskList(completedTasks)}
+            </TabsContent>
+          </Tabs>
+        </div>
+      </MobileLayout>
       
       <TaskStatusView 
         isOpen={showTaskDetails} 
