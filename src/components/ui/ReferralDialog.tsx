@@ -2,7 +2,7 @@
 import React from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { X, Share, Users, Bell, TrendingUp, Award } from "lucide-react";
+import { X, Share, Users, TrendingUp, Award } from "lucide-react";
 
 interface ReferralDialogProps {
   isOpen: boolean;
@@ -57,7 +57,7 @@ const ReferralDialog: React.FC<ReferralDialogProps> = ({ isOpen, onClose }) => {
           </div>
           
           <h2 className="text-xl font-bold text-center mb-5">
-            Share $10 with friends
+            Give $10, Get $10
           </h2>
           
           {/* Benefits section - simplified */}
@@ -76,26 +76,8 @@ const ReferralDialog: React.FC<ReferralDialogProps> = ({ isOpen, onClose }) => {
                 <TrendingUp className="h-4 w-4 text-assist-blue" />
               </div>
               <div>
-                <p className="text-sm text-gray-600">You get $10 when they complete a task</p>
+                <p className="text-sm text-gray-600">You get $10 when they complete their first task</p>
               </div>
-            </div>
-          </div>
-          
-          {/* Referral link section */}
-          <div className="w-full mb-5">
-            <div className="flex items-center border border-gray-200 rounded-md overflow-hidden bg-gray-50">
-              <div className="flex-1 px-3 py-2.5 text-sm overflow-hidden whitespace-nowrap overflow-ellipsis">
-                assist.com/invite/yourcode123
-              </div>
-              <button 
-                className="bg-assist-blue text-white px-4 py-2.5 font-medium text-sm"
-                onClick={() => {
-                  navigator.clipboard.writeText('assist.com/invite/yourcode123');
-                  alert('Copied to clipboard!');
-                }}
-              >
-                Copy
-              </button>
             </div>
           </div>
           
