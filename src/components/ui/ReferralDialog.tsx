@@ -47,7 +47,7 @@ const ReferralDialog: React.FC<ReferralDialogProps> = ({ isOpen, onClose }) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md p-0 gap-0 overflow-hidden bg-white text-gray-900 border-none max-w-[90vw]">
+      <DialogContent className="sm:max-w-md p-0 gap-0 overflow-hidden bg-white text-gray-900 border-none max-w-[90vw]" closeButton={false}>
         <DialogTitle className="sr-only">Referral Program</DialogTitle>
         
         <Button 
