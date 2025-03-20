@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import BottomNavigation from "./BottomNavigation";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -174,7 +175,7 @@ const MobileTasks = () => {
         className="text-assist-blue hover:bg-transparent"
         onClick={() => setShowReferralDialog(true)}
       >
-        <Gift className="h-10 w-10 text-assist-blue drop-shadow-md" strokeWidth={1.5} />
+        <Gift className="h-12 w-12 text-assist-blue drop-shadow-md" strokeWidth={1.5} />
       </Button>
     </div>
   );

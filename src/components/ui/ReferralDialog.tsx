@@ -61,11 +61,11 @@ const ReferralDialog: React.FC<ReferralDialogProps> = ({ isOpen, onClose }) => {
         </Button>
         
         <div className="flex flex-col items-center px-6 py-8">
-          {/* Gold coin image */}
+          {/* Blue coin image */}
           <div className="mb-6">
-            <div className="w-24 h-24 rounded-full bg-gradient-to-r from-yellow-400 to-yellow-300 flex items-center justify-center shadow-md">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-r from-yellow-300 to-yellow-200 flex items-center justify-center">
-                <Award className="h-10 w-10 text-yellow-600" strokeWidth={2} />
+            <div className="w-24 h-24 rounded-full bg-gradient-to-r from-blue-400 to-blue-300 flex items-center justify-center shadow-md">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-r from-blue-300 to-blue-200 flex items-center justify-center">
+                <Award className="h-10 w-10 text-assist-blue" strokeWidth={2} />
               </div>
             </div>
           </div>
