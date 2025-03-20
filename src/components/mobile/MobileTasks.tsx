@@ -1,5 +1,5 @@
+
 import React, { useState } from "react";
-import MobileLayout from "./MobileLayout";
 import BottomNavigation from "./BottomNavigation";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -171,12 +171,12 @@ const MobileTasks = () => {
   const giftIcon = (
     <div className="absolute top-4 right-4 z-10">
       <Button 
-        size="icon" 
+        size="smallIcon" 
         variant="ghost" 
-        className="text-assist-blue hover:bg-white/10 h-10 w-10 rounded-full bg-white shadow-sm"
+        className="text-assist-blue hover:bg-transparent"
         onClick={() => setShowReferralDialog(true)}
       >
-        <Gift className="h-5 w-5" />
+        <Gift className="h-6 w-6 text-assist-blue drop-shadow-sm" strokeWidth={1.5} />
       </Button>
     </div>
   );
@@ -186,8 +186,8 @@ const MobileTasks = () => {
       <div className="relative flex flex-col min-h-screen bg-blue-50">
         {giftIcon}
         
-        <main className="flex-1 overflow-auto pb-16 pt-16">
-          <div className="px-5 py-6 pb-20">
+        <main className="flex-1 overflow-auto pb-16 pt-10">
+          <div className="px-5 py-4 pb-20">
             <Tabs defaultValue="scheduled" className="w-full">
               <TabsList className="grid grid-cols-2 w-full mb-2 bg-white p-1 rounded-lg shadow-sm">
                 <TabsTrigger 
