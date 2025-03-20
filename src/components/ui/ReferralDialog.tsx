@@ -2,7 +2,7 @@
 import React from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { X, Share, Users, Bell, TrendingUp } from "lucide-react";
+import { X, Share, Users, Bell, TrendingUp, Award } from "lucide-react";
 
 interface ReferralDialogProps {
   isOpen: boolean;
@@ -51,7 +51,7 @@ const ReferralDialog: React.FC<ReferralDialogProps> = ({ isOpen, onClose }) => {
           <div className="mb-6">
             <div className="w-24 h-24 rounded-full bg-gradient-to-r from-yellow-400 to-yellow-300 flex items-center justify-center shadow-md">
               <div className="w-20 h-20 rounded-full bg-gradient-to-r from-yellow-300 to-yellow-200 flex items-center justify-center">
-                <div className="text-2xl">❤️</div>
+                <Award className="h-10 w-10 text-yellow-600" strokeWidth={2} />
               </div>
             </div>
           </div>
@@ -101,7 +101,7 @@ const ReferralDialog: React.FC<ReferralDialogProps> = ({ isOpen, onClose }) => {
           
           <Button 
             onClick={handleShare}
-            className="w-full rounded-full py-2 bg-yellow-400 hover:bg-yellow-500 text-black font-medium"
+            className="w-full rounded-full py-2 bg-gradient-to-r from-assist-blue to-blue-400 hover:opacity-90 text-white font-medium"
           >
             Share Invite
           </Button>

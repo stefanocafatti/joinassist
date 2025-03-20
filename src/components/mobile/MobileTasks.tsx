@@ -176,7 +176,7 @@ const MobileTasks = () => {
         className="text-assist-blue hover:bg-transparent"
         onClick={() => setShowReferralDialog(true)}
       >
-        <Gift className="h-6 w-6 text-assist-blue drop-shadow-sm" strokeWidth={1.5} />
+        <Gift className="h-8 w-8 text-assist-blue drop-shadow-md" strokeWidth={1.5} />
       </Button>
     </div>
   );
