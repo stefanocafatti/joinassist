@@ -168,14 +168,14 @@ const MobileTasks = () => {
   };
 
   const giftIcon = (
-    <div className="absolute top-4 right-4 z-10">
+    <div className="absolute top-3 right-3 z-10">
       <Button 
-        size="smallIcon" 
+        size="icon" 
         variant="ghost" 
-        className="text-assist-blue hover:bg-transparent"
+        className="p-0 h-auto w-auto text-assist-blue hover:bg-transparent"
         onClick={() => setShowReferralDialog(true)}
       >
-        <Gift className="h-64 w-64 text-assist-blue drop-shadow-md" strokeWidth={1.5} />
+        <Gift className="h-10 w-10 text-assist-blue drop-shadow-md" strokeWidth={1.5} />
       </Button>
     </div>
   );
