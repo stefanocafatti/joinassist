@@ -21,7 +21,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Calendar as CalendarIcon, Clock, MapPin, Info } from "lucide-react";
+import { Calendar as CalendarIcon, Clock, MapPin, Info, Home } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -345,14 +345,18 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
                 
                 <div className="space-y-2">
                   <Label htmlFor="location" className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4" /> Location
+                    <Home className="h-4 w-4" /> Service Location
                   </Label>
                   <Input
                     id="location"
-                    placeholder="Enter location"
+                    placeholder="Enter the physical address where you need this task completed"
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
+                    className="text-sm"
                   />
+                  <p className="text-xs text-gray-500">
+                    Please provide the complete address where the task performer should meet you.
+                  </p>
                 </div>
                 
                 <div className="space-y-2">
