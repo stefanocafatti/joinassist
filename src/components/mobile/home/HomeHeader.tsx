@@ -28,7 +28,6 @@ const taskItems = [
 
 interface HomeHeaderProps {
   userName?: string;
-  onTaskSelect?: (taskTitle: string) => void;
 }
 
 interface LocationData {
@@ -37,10 +36,7 @@ interface LocationData {
   state: string;
 }
 
-const HomeHeader: React.FC<HomeHeaderProps> = ({ 
-  userName = "User",
-  onTaskSelect = () => {} 
-}) => {
+const HomeHeader: React.FC<HomeHeaderProps> = ({ userName = "User" }) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isLocationDialogOpen, setIsLocationDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -140,12 +136,6 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({
     return `${location.street}, ${location.state}`;
   };
 
-  const handleTaskClick = (taskTitle: string) => {
-    setIsSearchOpen(false);
-    console.log(`Selected task: ${taskTitle}`);
-    onTaskSelect(taskTitle);
-  };
-
   return (
     <div className="pt-4 pb-2">
       <div className="flex justify-between items-center mb-4">
@@ -226,7 +216,10 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({
                   <div 
                     key={index}
                     className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer overflow-hidden border border-gray-100"
-                    onClick={() => handleTaskClick(task.title)}
+                    onClick={() => {
+                      console.log(`Selected task: ${task.title}`);
+                      setIsSearchOpen(false);
+                    }}
                   >
                     <div 
                       className="h-24 bg-cover bg-center" 
@@ -244,8 +237,8 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({
                 <Button 
                   className="mt-4 bg-assist-blue hover:bg-assist-blue/90"
                   onClick={() => {
+                    console.log("Create custom task");
                     setIsSearchOpen(false);
-                    onTaskSelect("Custom Task");
                   }}
                 >
                   Request Custom Task
