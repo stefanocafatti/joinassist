@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, MapPin, Check, X, Navigation, ArrowLeft, PlusCircle, Calendar, MapPinIcon, DollarSign } from "lucide-react";
+import { Search, MapPin, Check, X, Navigation, ArrowLeft, PlusCircle } from "lucide-react";
 import {
   Popover,
   PopoverContent,
@@ -23,7 +23,6 @@ interface Task {
   description: string;
   category: string;
   location: string;
-  price?: string;
   image: string;
 }
 
@@ -42,70 +41,64 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
   const [showTaskDetails, setShowTaskDetails] = useState(false);
   const [showCategories, setShowCategories] = useState(true);
 
+  const logoImage = "/public/lovable-uploads/fe08e9a7-ecd9-48d6-bef3-1abede7c601a.png";
+
   const availableTasks: Task[] = [
     {
       title: "Clean my apartment",
       description: "I need help cleaning my 1-bedroom apartment including dusting, vacuuming, and bathroom cleaning.",
       category: "Cleaning",
       location: "UCLA Area",
-      price: "$25/hr",
-      image: "/lovable-uploads/8d0891f3-e455-4ef9-9c2b-8b077062435d.png"
+      image: logoImage
     },
     {
       title: "Apartment deep cleaning",
       description: "Need a thorough cleaning of my apartment before move-out inspection.",
       category: "Cleaning",
       location: "Downtown LA",
-      price: "$30/hr",
-      image: "/lovable-uploads/e67a50a7-d7a9-4d4a-bdc8-b311dd1abaf4.png"
+      image: logoImage
     },
     {
       title: "Make my bed and change sheets",
       description: "Need help changing my bed sheets and making my bed nicely.",
       category: "Home Services",
       location: "USC Campus",
-      price: "$15",
-      image: "/lovable-uploads/119edf91-7d11-444b-9db6-41d9aa9800fe.png"
+      image: logoImage
     },
     {
       title: "Organize my closet",
       description: "Help me organize my closet and sort through clothes for donation.",
       category: "Home Services",
       location: "Westwood",
-      price: "$20/hr",
-      image: "/lovable-uploads/cbe8bf6e-c568-40f6-acf7-47eb4c4aa67c.png"
+      image: logoImage
     },
     {
       title: "Build my IKEA desk",
       description: "I need help assembling my new IKEA desk with drawers.",
       category: "Furniture Assembly",
       location: "Santa Monica",
-      price: "$35",
-      image: "/lovable-uploads/d3cfa02f-5bf5-438d-b0bd-97a6beb2ba63.png"
+      image: logoImage
     },
     {
       title: "Assemble bookshelf",
       description: "Need help putting together a 5-shelf bookcase from IKEA.",
       category: "Furniture Assembly",
       location: "Culver City",
-      price: "$30",
-      image: "/lovable-uploads/72545c93-f781-402e-ad25-5cd509be453c.png"
+      image: logoImage
     },
     {
       title: "Meal prep for the week",
       description: "Looking for someone to help me cook and prepare 5 meals for my work week.",
       category: "Grocery Shopping",
       location: "Venice",
-      price: "$40/hr",
-      image: "/lovable-uploads/913318c0-10d3-4c6d-91f5-accf9169ae81.png"
+      image: logoImage
     },
     {
       title: "Groceries and cooking dinner",
       description: "Need someone to pick up groceries and cook dinner for 4 people.",
       category: "Grocery Shopping",
       location: "Pasadena",
-      price: "$45",
-      image: "/lovable-uploads/79b50b55-1c38-4f6c-8542-561bb97fde56.png"
+      image: logoImage
     }
   ];
 
@@ -127,20 +120,20 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
   ];
 
   const keywordMappings: Record<string, string[]> = {
-    "Help Moving": ["move", "moving", "relocation", "transport", "carry", "haul", "shift", "furniture moving"],
-    "Furniture Assembly": ["assemble", "build", "construct", "put together", "ikea", "desk", "chair", "table", "shelf", "bookcase", "bed frame", "make my bed", "assemble bed"],
-    "General Mounting": ["mount", "hang", "install", "setup", "attach", "wall", "drill", "fix", "picture", "mirror", "shelf"],
-    "Cleaning": ["clean", "wash", "tidy", "dust", "sweep", "mop", "vacuum", "sanitize", "apartment", "house", "room", "bathroom", "kitchen", "make my bed", "make bed", "fold sheets", "change sheets", "change linens", "bed sheets"],
-    "TV Mounting": ["tv", "television", "mount", "install", "hang", "setup", "wall", "bracket"],
-    "Heavy Lifting": ["lift", "heavy", "move", "weight", "big", "bulky", "large"],
-    "Academic Tutoring": ["tutor", "help", "study", "homework", "math", "science", "english", "history", "exam", "essay", "assignment", "paper"],
-    "Laundry Help": ["laundry", "wash", "fold", "clothes", "dry cleaning", "iron", "ironing", "bedding", "sheets", "make my bed", "make bed", "change sheets"],
-    "Grocery Shopping": ["grocery", "shop", "shopping", "food", "supermarket", "store", "buy", "purchase", "market", "cook", "cooking", "meal", "dinner", "lunch", "breakfast", "prepare food", "meal prep"],
-    "Pet Sitting": ["pet", "dog", "cat", "walk", "sit", "feed", "animal", "care", "boarding"],
-    "Photography": ["photo", "picture", "portrait", "event", "session", "camera", "photoshoot", "headshot"],
-    "Tech Support": ["tech", "computer", "laptop", "phone", "setup", "fix", "repair", "install", "software", "hardware", "printer", "wifi", "internet"],
-    "Home Services": ["home", "house", "apartment", "room", "bedroom", "kitchen", "bathroom", "living room", "make my bed", "make bed", "organize", "setup", "furniture", "decorate", "decorating"],
-    "Custom Task": ["custom", "specific", "unique", "special", "personalized", "tailored"],
+    "Help Moving": ["move", "moving", "relocation", "transport", "carry", "haul", "shift", "furniture moving", "help move", "relocate", "packing", "unpacking", "move out", "move in", "boxes"],
+    "Furniture Assembly": ["assemble", "build", "construct", "put together", "ikea", "desk", "chair", "table", "shelf", "bookcase", "bed frame", "make my bed", "assemble bed", "furniture build", "build furniture", "setup furniture", "construct furniture", "assembly", "flat pack", "drawer", "cabinet"],
+    "General Mounting": ["mount", "hang", "install", "setup", "attach", "wall", "drill", "fix", "picture", "mirror", "shelf", "mounting", "bracket", "wall mount", "put up", "secure", "fasten", "nail", "anchor"],
+    "Cleaning": ["clean", "wash", "tidy", "dust", "sweep", "mop", "vacuum", "sanitize", "apartment", "house", "room", "bathroom", "kitchen", "make my bed", "make bed", "fold sheets", "change sheets", "change linens", "bed sheets", "cleaning", "cleaner", "housekeeping", "tidy up", "scrub", "wipe", "polish", "disinfect", "neat", "spotless", "fresh"],
+    "TV Mounting": ["tv", "television", "mount", "install", "hang", "setup", "wall", "bracket", "screen", "display", "monitor", "flat screen", "plasma", "lcd", "led", "hdtv", "home theater"],
+    "Heavy Lifting": ["lift", "heavy", "move", "weight", "big", "bulky", "large", "furniture", "appliance", "strength", "strong", "muscle", "assistance", "help lifting", "couch", "sofa", "fridge", "refrigerator", "washing machine"],
+    "Academic Tutoring": ["tutor", "help", "study", "homework", "math", "science", "english", "history", "exam", "essay", "assignment", "paper", "school", "college", "university", "learning", "education", "academic", "writing", "editing", "proofreading", "test", "quiz", "research", "lecture"],
+    "Laundry Help": ["laundry", "wash", "fold", "clothes", "dry cleaning", "iron", "ironing", "bedding", "sheets", "make my bed", "make bed", "change sheets", "washer", "dryer", "detergent", "delicates", "garments", "wardrobe", "fabrics"],
+    "Grocery Shopping": ["grocery", "shop", "shopping", "food", "supermarket", "store", "buy", "purchase", "market", "cook", "cooking", "meal", "dinner", "lunch", "breakfast", "prepare food", "meal prep", "provisions", "groceries", "ingredients", "shopping list", "pantry", "fridge", "fresh produce"],
+    "Pet Sitting": ["pet", "dog", "cat", "walk", "sit", "feed", "animal", "care", "boarding", "dog walking", "cat sitting", "puppy", "kitten", "pet care", "dog sitter", "grooming", "pet food", "pet supply", "leash", "collar", "fur", "companion", "litter box"],
+    "Photography": ["photo", "picture", "portrait", "event", "session", "camera", "photoshoot", "headshot", "photography", "photographer", "shoot", "snapshot", "candid", "pose", "lighting", "editing", "retouching", "album", "portfolio", "lens", "shutter", "canon", "nikon", "dslr"],
+    "Tech Support": ["tech", "computer", "laptop", "phone", "setup", "fix", "repair", "install", "software", "hardware", "printer", "wifi", "internet", "technical", "it help", "networking", "troubleshoot", "configuration", "router", "modem", "device", "smart home", "gadget", "electronic", "digital"],
+    "Home Services": ["home", "house", "apartment", "room", "bedroom", "kitchen", "bathroom", "living room", "make my bed", "make bed", "organize", "setup", "furniture", "decorate", "decorating", "home improvement", "maintenance", "fix", "repair", "household", "residence", "dwelling", "interior", "domestic"],
+    "Custom Task": ["custom", "specific", "unique", "special", "personalized", "tailored", "bespoke", "particular", "individual", "distinctive", "unusual", "rare", "one-of-a-kind", "customized", "modified", "specialized", "adapted", "adjusted"],
   };
 
   const handleEditLocation = () => {
@@ -256,15 +249,26 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
       let matchedCategories: string[] = [];
       
       Object.entries(keywordMappings).forEach(([category, keywords]) => {
-        if (keywords.some(keyword => 
-          query.includes(keyword.toLowerCase()) || 
-          keyword.toLowerCase().includes(query)
-        )) {
+        if (keywords.some(keyword => {
+          if (query.includes(keyword.toLowerCase())) return true;
+          if (keyword.toLowerCase().includes(query)) return true;
+          if (query.length >= 3) {
+            const queryWords = query.split(' ');
+            const keywordWords = keyword.toLowerCase().split(' ');
+            
+            return queryWords.some(qword => 
+              keywordWords.some(kword => 
+                kword.includes(qword) || qword.includes(kword)
+              )
+            );
+          }
+          return false;
+        })) {
           matchedCategories.push(category);
         }
       });
       
-      if (query.includes("make my bed") || query.includes("make bed")) {
+      if (query.includes("make my bed") || query.includes("make bed") || query.includes("bed")) {
         matchedCategories = [
           ...new Set([
             ...matchedCategories,
@@ -276,7 +280,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
         ];
       }
       
-      if (query.includes("cook") || query.includes("meal") || query.includes("food preparation")) {
+      if (query.includes("cook") || query.includes("meal") || query.includes("food preparation") || query.includes("dinner")) {
         matchedCategories = [
           ...new Set([
             ...matchedCategories,
@@ -286,11 +290,22 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
       }
       
       const matched = availableTasks.filter(task => {
-        const titleMatch = task.title.toLowerCase().includes(query);
-        const descMatch = task.description.toLowerCase().includes(query);
+        const titleMatch = task.title.toLowerCase().includes(query) ||
+                          query.split(' ').some(word => word.length > 2 && task.title.toLowerCase().includes(word));
+                          
+        const descMatch = task.description.toLowerCase().includes(query) ||
+                          query.split(' ').some(word => word.length > 2 && task.description.toLowerCase().includes(word));
+                          
         const categoryMatch = matchedCategories.includes(task.category);
         
-        return titleMatch || descMatch || categoryMatch;
+        const specialCaseMatch = (
+          (query.includes("clean") && task.category === "Cleaning") ||
+          (query.includes("bed") && task.title.toLowerCase().includes("bed")) ||
+          (query.includes("assemble") && task.category === "Furniture Assembly") ||
+          (query.includes("cook") && task.category === "Grocery Shopping")
+        );
+        
+        return titleMatch || descMatch || categoryMatch || specialCaseMatch;
       });
       
       setFilteredTasks(matched);
@@ -557,32 +572,17 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
                     className="bg-white p-3 rounded-xl shadow-sm border border-gray-100 hover:shadow-md hover:border-assist-blue/20 transition-all duration-200"
                     onClick={() => handleViewTask(task)}
                   >
-                    <div className="flex">
-                      <div className="w-24 h-24 rounded-lg overflow-hidden mr-3">
+                    <div className="flex items-center">
+                      <div className="w-16 h-16 rounded-lg overflow-hidden mr-3 flex-shrink-0">
                         <img src={task.image} alt={task.title} className="w-full h-full object-cover" />
                       </div>
                       <div className="flex-1">
-                        <h4 className="font-medium text-gray-900 mb-1">
+                        <h4 className="font-medium text-gray-900">
                           {highlightMatchingText(task.title, searchQuery)}
                         </h4>
-                        <p className="text-xs text-gray-600 mb-2 line-clamp-2">
-                          {highlightMatchingText(task.description, searchQuery)}
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          <Badge variant="outline" className="flex items-center gap-1 bg-gray-50 text-xs py-0.5">
-                            <MapPinIcon className="h-3 w-3 text-gray-500" />
-                            {task.location}
-                          </Badge>
-                          {task.price && (
-                            <Badge variant="outline" className="flex items-center gap-1 bg-gray-50 text-xs py-0.5">
-                              <DollarSign className="h-3 w-3 text-gray-500" />
-                              {task.price}
-                            </Badge>
-                          )}
-                          <Badge variant="secondary" className="bg-soft-blue/20 text-blue-700 border-0 text-xs py-0.5">
-                            {task.category}
-                          </Badge>
-                        </div>
+                        <Badge variant="secondary" className="bg-soft-blue/20 text-blue-700 border-0 text-xs py-0.5 mt-1">
+                          {task.category}
+                        </Badge>
                       </div>
                     </div>
                   </div>
@@ -607,7 +607,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
                   onClick={handleCreateCustomTask}
                 >
                   <PlusCircle className="h-4 w-4 mr-2" />
-                  Create Custom Task
+                  Request Custom Task
                 </Button>
               </div>
             </div>
@@ -633,7 +633,6 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
             description: selectedTask.description,
             category: selectedTask.category,
             location: selectedTask.location,
-            price: selectedTask.price || "$25/hr",
             image: selectedTask.image
           }}
         />

@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Search, X, MapPin, DollarSign, Plus, Eye } from "lucide-react";
+import { Search, X, Plus, Eye } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 interface SearchResultsSectionProps {
@@ -93,19 +93,13 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
                 />
               </div>
               <div className="p-4">
-                <h3 className="font-semibold text-gray-900 mb-1">
+                <h3 className="font-semibold text-gray-900 mb-2">
                   {highlightMatchingText(task.title, searchQuery)}
                 </h3>
-                <p className="text-gray-500 text-sm mb-2">
-                  {highlightMatchingText(task.description, searchQuery)}
-                </p>
-                <div className="flex flex-wrap gap-2 mb-3">
-                  <Badge variant="outline" className="flex items-center gap-1 bg-gray-50">
-                    <MapPin className="h-3 w-3 text-gray-500" />
-                    {task.location}
-                  </Badge>
-                </div>
-                <div className="flex justify-between items-center">
+                <Badge variant="secondary" className="bg-soft-blue/20 text-blue-700 border-0">
+                  {task.category}
+                </Badge>
+                <div className="flex justify-between items-center mt-3">
                   <button
                     className="text-red-500"
                     onClick={(e) => {
@@ -165,7 +159,7 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
               onClick={onRequestTask}
             >
               <Plus className="h-4 w-4 mr-2" />
-              Create Custom Task
+              Request Custom Task
             </Button>
             <div className="block text-center my-2">or</div>
             <Button
