@@ -6,6 +6,7 @@ import HomeHeader from "./home/HomeHeader";
 import PopularTasksSection from "./home/PopularTasksSection";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { PlusCircle } from "lucide-react";
 
 const MobileHome = () => {
   const navigate = useNavigate();
@@ -126,6 +127,11 @@ const MobileHome = () => {
     // navigate(`/tasks/${task.toLowerCase().replace(' ', '-')}`);
   };
 
+  const handleRequestTask = () => {
+    console.log("Request a custom task");
+    // Navigate to task request page or show task request form
+  };
+
   return (
     <>
       <MobileLayout showHeader={false} contentClassName="pb-20 pt-0">
@@ -135,20 +141,32 @@ const MobileHome = () => {
           {/* Popular Tasks Section - now first */}
           <PopularTasksSection popularTasks={popularTasks} />
           
-          {/* Common Tasks Buttons - now second */}
+          {/* Common Tasks Buttons - now second with updated title */}
           <div className="my-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-3">Common Tasks</h2>
+            <h2 className="text-lg font-semibold text-gray-900 mb-3">Looking for something else?</h2>
             <div className="grid grid-cols-2 gap-3">
               {commonTasks.map((task, index) => (
                 <Button
                   key={index}
                   variant="outline"
-                  className="h-12 bg-white text-assist-blue border border-gray-200 shadow-sm hover:bg-gray-50 font-medium"
+                  className="h-12 bg-white text-assist-blue border border-gray-200 shadow-sm hover:bg-gray-50 font-medium rounded-full"
                   onClick={() => handleTaskClick(task)}
                 >
                   {task}
                 </Button>
               ))}
+            </div>
+            
+            {/* Request a Task Button */}
+            <div className="mt-3">
+              <Button
+                variant="outline"
+                className="w-full h-12 bg-white text-assist-blue border border-gray-200 shadow-sm hover:bg-gray-50 font-medium rounded-full flex items-center justify-center"
+                onClick={handleRequestTask}
+              >
+                <PlusCircle className="mr-2 h-5 w-5" />
+                Request a Task
+              </Button>
             </div>
           </div>
         </div>
