@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Bell, Search, MapPin, X, Check, Navigation } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -7,7 +6,6 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
 
-// Task items that will be displayed in the search dialog
 const taskItems = [
   { title: "Help Moving", image: "/lovable-uploads/72545c93-f781-402e-ad25-5cd509be453c.png" },
   { title: "Furniture Assembly", image: "/lovable-uploads/83abea36-642f-4147-865a-c43794680e3b.png" },
@@ -54,7 +52,6 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ userName = "User" }) => {
   const [isGettingLocation, setIsGettingLocation] = useState(false);
   const { toast } = useToast();
 
-  // Initialize temp location when dialog opens
   useEffect(() => {
     if (isLocationDialogOpen) {
       setTempLocation({ ...location });
@@ -93,8 +90,6 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ userName = "User" }) => {
     
     navigator.geolocation.getCurrentPosition(
       position => {
-        // In a real app, you would use a reverse geocoding service here
-        // For demo purposes, we're just setting a placeholder
         setTempLocation({
           street: "Current Location",
           city: "Near You",
@@ -145,9 +140,7 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ userName = "User" }) => {
       <div className="flex justify-between items-center mb-4">
         <div>
           <h1 className="font-bold text-xl">
-            <span className="bg-gradient-to-r from-assist-blue via-blue-500 to-blue-400 bg-clip-text text-transparent">
-              Hi, {userName}! 👋
-            </span>
+            Hi, <span className="bg-gradient-to-r from-assist-blue via-blue-500 to-blue-400 bg-clip-text text-transparent">{userName}</span>! 👋
           </h1>
           <div 
             className="flex items-center mt-1 text-sm text-gray-500 cursor-pointer"
@@ -175,7 +168,6 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ userName = "User" }) => {
         <span className="text-gray-400 font-normal">Try "walk my dog" or "wash my car"</span>
       </div>
 
-      {/* Search Dialog */}
       <Dialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>
         <DialogContent className="sm:max-w-md p-0 gap-0">
           <div className="sticky top-0 z-10 bg-white p-4 border-b border-gray-100">
@@ -256,7 +248,6 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ userName = "User" }) => {
         </DialogContent>
       </Dialog>
 
-      {/* Location Edit Dialog */}
       <Dialog open={isLocationDialogOpen} onOpenChange={setIsLocationDialogOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogTitle>Update Your Location</DialogTitle>
