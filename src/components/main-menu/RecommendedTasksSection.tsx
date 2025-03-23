@@ -6,12 +6,15 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 
+// Import the default image
+const DEFAULT_TASK_IMAGE = "/lovable-uploads/d1a14d8f-8a54-45a2-9662-376fac8076d3.png";
+
 interface Task {
   title: string;
   description: string;
   category: string;
   location: string;
-  image: string;
+  image?: string; // Make image optional
 }
 
 interface RecommendedTasksSectionProps {
@@ -70,7 +73,7 @@ const RecommendedTasksSection: React.FC<RecommendedTasksSectionProps> = ({
             <div className="relative">
               <div 
                 className="h-40 bg-cover bg-center" 
-                style={{ backgroundImage: `url(${task.image})` }}
+                style={{ backgroundImage: `url(${DEFAULT_TASK_IMAGE})` }}
               />
               <button 
                 className="absolute top-3 right-3 z-10"
