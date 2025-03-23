@@ -20,7 +20,7 @@ const MobileHome = () => {
   // Expanded popular tasks tailored for college student helpers
   const popularTasks = [
     {
-      title: "Weekly Apartment Cleaning",
+      title: "Apartment Cleaning", // Updated from "Weekly Apartment Cleaning"
       description: "Professional cleaning services by verified students",
       price: "From $25/hr",
       category: "Cleaning",
@@ -36,7 +36,7 @@ const MobileHome = () => {
       image: "https://images.unsplash.com/photo-1581078426770-6d336e5de7bf?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      title: "Help Moving",
+      title: "Apartment Move", // Updated from "Help Moving"
       description: "Assistance with moving and packing your belongings",
       price: "From $30/hr",
       category: "Moving",
@@ -52,7 +52,7 @@ const MobileHome = () => {
       image: "https://images.unsplash.com/photo-1593784991095-a205069470b6?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      title: "Deep House Cleaning",
+      title: "Car Cleaning", // Updated from "Deep House Cleaning"
       description: "Thorough cleaning service for your entire home",
       price: "From $40/hr",
       category: "Cleaning",
