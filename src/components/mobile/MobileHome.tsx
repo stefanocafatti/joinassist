@@ -42,7 +42,7 @@ const MobileHome = () => {
       price: "From $30/hr",
       category: "Home Services",
       location: "Midtown",
-      image: "/lovable-uploads/1dcc2d11-c9a3-4da3-91b5-187b6f61f0f5.png"
+      image: "/lovable-uploads/bd95bdf7-c140-465b-8e12-3a21d5d46a94.png"
     },
     {
       title: "Organize my closet",
