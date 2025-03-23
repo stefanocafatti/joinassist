@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
@@ -76,65 +77,56 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
     setShowCustomTaskForm(false);
   };
 
-  const getCategoryBorder = (category: string) => {
+  const getCategoryColor = (category: string) => {
     switch(category.toLowerCase()) {
       case 'cleaning':
-        return 'border-soft-blue';
-      case 'furniture':
-        return 'border-soft-green';
+        return {
+          border: 'border-soft-blue',
+          text: 'text-blue-600',
+          bg: 'bg-blue-100'
+        };
+      case 'furniture assembly':
+        return {
+          border: 'border-soft-orange',
+          text: 'text-orange-600',
+          bg: 'bg-orange-100'
+        };
+      case 'home services':
+        return {
+          border: 'border-soft-green',
+          text: 'text-green-600',
+          bg: 'bg-green-100'
+        };
       case 'moving':
-        return 'border-soft-yellow';
-      case 'mounting':
-        return 'border-soft-purple';
+        return {
+          border: 'border-soft-yellow',
+          text: 'text-amber-600',
+          bg: 'bg-amber-100'
+        };
+      case 'academic':
+        return {
+          border: 'border-soft-purple',
+          text: 'text-purple-600',
+          bg: 'bg-purple-100'
+        };
+      case 'errands':
+        return {
+          border: 'border-soft-pink',
+          text: 'text-pink-600',
+          bg: 'bg-pink-100'
+        };
+      case 'tech':
+        return {
+          border: 'border-soft-blue',
+          text: 'text-cyan-600',
+          bg: 'bg-cyan-100'
+        };
       default:
-        return 'border-soft-orange';
-    }
-  };
-
-  const getCategoryTextColor = (category: string) => {
-    switch(category.toLowerCase()) {
-      case 'cleaning':
-        return 'text-blue-600';
-      case 'furniture':
-        return 'text-green-600';
-      case 'moving':
-        return 'text-amber-600';
-      case 'mounting':
-        return 'text-purple-600';
-      default:
-        return 'text-orange-600';
-    }
-  };
-
-  const getCategoryBgColor = (category: string) => {
-    switch(category.toLowerCase()) {
-      case 'cleaning':
-        return 'bg-blue-100';
-      case 'furniture':
-        return 'bg-green-100';
-      case 'moving':
-        return 'bg-amber-100';
-      case 'mounting':
-        return 'bg-purple-100';
-      default:
-        return 'bg-orange-100';
-    }
-  };
-
-  const getCategoryButtonColor = (category: string) => {
-    const isSelected = selectedCategory === category;
-    
-    switch(category.toLowerCase()) {
-      case 'cleaning':
-        return isSelected ? 'bg-blue-100 text-blue-700' : 'bg-white text-gray-700';
-      case 'furniture':
-        return isSelected ? 'bg-green-100 text-green-700' : 'bg-white text-gray-700';
-      case 'moving':
-        return isSelected ? 'bg-amber-100 text-amber-700' : 'bg-white text-gray-700';
-      case 'mounting':
-        return isSelected ? 'bg-purple-100 text-purple-700' : 'bg-white text-gray-700';
-      default:
-        return isSelected ? 'bg-orange-100 text-orange-700' : 'bg-white text-gray-700';
+        return {
+          border: 'border-soft-orange',
+          text: 'text-orange-600',
+          bg: 'bg-orange-100'
+        };
     }
   };
 
@@ -151,20 +143,23 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
                 <span className="text-xs whitespace-nowrap">All</span>
               </div>
             </CarouselItem>
-            {categories.map((category, index) => (
-              <CarouselItem key={index} className="pl-2 basis-auto">
-                <div 
-                  className={`px-4 py-2 rounded-full border shadow-sm cursor-pointer whitespace-nowrap ${
-                    selectedCategory === category 
-                      ? `${getCategoryBgColor(category)} ${getCategoryTextColor(category)} font-medium` 
-                      : 'bg-white text-gray-700'
-                  }`}
-                  onClick={() => handleCategorySelect(category)}
-                >
-                  <span className="text-xs">{category}</span>
-                </div>
-              </CarouselItem>
-            ))}
+            {categories.map((category, index) => {
+              const colors = getCategoryColor(category);
+              return (
+                <CarouselItem key={index} className="pl-2 basis-auto">
+                  <div 
+                    className={`px-4 py-2 rounded-full border shadow-sm cursor-pointer whitespace-nowrap ${
+                      selectedCategory === category 
+                        ? `${colors.bg} ${colors.text} font-medium` 
+                        : 'bg-white text-gray-700'
+                    }`}
+                    onClick={() => handleCategorySelect(category)}
+                  >
+                    <span className="text-xs">{category}</span>
+                  </div>
+                </CarouselItem>
+              );
+            })}
           </CarouselContent>
         </Carousel>
       </div>
@@ -173,32 +168,35 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
         <h2 className="text-lg font-semibold text-gray-900">Browse Tasks</h2>
       </div>
       <div className="grid grid-cols-2 gap-3">
-        {getDisplayedTasks().map((task, index) => (
-          <div 
-            key={index} 
-            className={`group bg-white rounded-lg border ${getCategoryBorder(task.category)} shadow-sm hover:shadow-md transition-all overflow-hidden transform hover:scale-[1.01]`}
-            onClick={() => handleTaskClick(task)}
-          >
-            <div className="relative">
-              <div 
-                className="h-28 bg-cover bg-center" 
-                style={{ 
-                  backgroundImage: `url(${task.image})`
-                }}
-              />
-              <Badge 
-                className={`absolute top-2 right-2 text-xs ${getCategoryTextColor(task.category)} ${getCategoryBgColor(task.category)} hover:${getCategoryBgColor(task.category)}`}
-              >
-                {task.category}
-              </Badge>
+        {getDisplayedTasks().map((task, index) => {
+          const colors = getCategoryColor(task.category);
+          return (
+            <div 
+              key={index} 
+              className={`group bg-white rounded-lg border ${colors.border} shadow-sm hover:shadow-md transition-all overflow-hidden transform hover:scale-[1.01]`}
+              onClick={() => handleTaskClick(task)}
+            >
+              <div className="relative">
+                <div 
+                  className="h-28 bg-cover bg-center" 
+                  style={{ 
+                    backgroundImage: `url(${task.image})`
+                  }}
+                />
+                <Badge 
+                  className={`absolute top-2 right-2 text-xs ${colors.text} ${colors.bg} hover:${colors.bg}`}
+                >
+                  {task.category}
+                </Badge>
+              </div>
+              <div className="p-3 flex items-center justify-center">
+                <h3 className="font-medium text-sm text-gray-900 text-center line-clamp-2">
+                  {task.title}
+                </h3>
+              </div>
             </div>
-            <div className="p-3 flex items-center justify-center">
-              <h3 className="font-medium text-sm text-gray-900 text-center line-clamp-2">
-                {task.title}
-              </h3>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
       
       {selectedTask && (
