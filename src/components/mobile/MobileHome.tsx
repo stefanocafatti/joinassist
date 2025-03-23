@@ -7,14 +7,14 @@ import CategoriesSection from "./home/CategoriesSection";
 import PopularTasksSection from "./home/PopularTasksSection";
 
 const MobileHome = () => {
-  // Categories data to match the original data
-  const categories = [
-    { name: "Help Moving", icon: "📦", color: "bg-soft-blue" },
-    { name: "Furniture Assembly", icon: "🪑", color: "bg-soft-green" },
-    { name: "General Mounting", icon: "🔨", color: "bg-soft-yellow" },
-    { name: "Cleaning", icon: "🧹", color: "bg-soft-purple" },
-    { name: "TV Mounting", icon: "📺", color: "bg-soft-pink" },
-    { name: "Heavy Lifting", icon: "💪", color: "bg-soft-orange" }
+  // Additional tasks data to display in the "Looking for something else?" section
+  const additionalTasks = [
+    { title: "Garden Work", icon: "🌱", color: "bg-soft-green" },
+    { title: "Computer Help", icon: "💻", color: "bg-soft-blue" },
+    { title: "Pet Sitting", icon: "🐾", color: "bg-soft-orange" },
+    { title: "Electrical Work", icon: "⚡", color: "bg-soft-yellow" },
+    { title: "Tutoring", icon: "📚", color: "bg-soft-purple" },
+    { title: "Painting", icon: "🎨", color: "bg-soft-pink" }
   ];
 
   // Expanded popular tasks with at least 12 items to support pagination
@@ -123,9 +123,9 @@ const MobileHome = () => {
         <div className="space-y-3"> {/* Reduced vertical spacing between sections */}
           <HomeHeader userName="Sarah" />
           
-          {/* Only show PopularTasks and Categories sections */}
+          {/* Only show PopularTasks and Additional Tasks sections */}
           <PopularTasksSection popularTasks={popularTasks} />
-          <CategoriesSection categories={categories} />
+          <CategoriesSection additionalTasks={additionalTasks} />
         </div>
       </MobileLayout>
       <BottomNavigation />
