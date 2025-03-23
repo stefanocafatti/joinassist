@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { format } from "date-fns";
 import { 
@@ -55,6 +54,7 @@ interface TaskDetailViewProps {
   isCustomTask?: boolean;
   isFavorite?: boolean;
   onFavoriteToggle?: (taskTitle: string) => void;
+  initialTaskTitle?: string;
 }
 
 const times = [
@@ -119,14 +119,15 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
   task,
   isCustomTask = false,
   isFavorite = false,
-  onFavoriteToggle
+  onFavoriteToggle,
+  initialTaskTitle = ""
 }) => {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [time, setTime] = useState<string>(times[0]);
   const [location, setLocation] = useState<string>(task?.location || "");
   const [additionalInfo, setAdditionalInfo] = useState<string>("");
   
-  const [customTitle, setCustomTitle] = useState<string>("");
+  const [customTitle, setCustomTitle] = useState<string>(initialTaskTitle);
   const [customDescription, setCustomDescription] = useState<string>("");
   const [customCategory, setCustomCategory] = useState<string>("Special Tasks");
   
