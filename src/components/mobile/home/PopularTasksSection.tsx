@@ -1,4 +1,16 @@
-import React from "react";
+
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Badge } from "@/components/ui/badge";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
+import TaskDetailView from "@/components/ui/TaskDetailView";
+
+// Define the TASK_IMAGE constant
+const TASK_IMAGE = "/lovable-uploads/239bf11e-868d-49c4-b2cf-e3fdd3bc7c20.png";
 
 interface Task {
   title: string;
