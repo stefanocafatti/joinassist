@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, MapPin, Check, X, Navigation, ArrowLeft, PlusCircle } from "lucide-react";
@@ -28,7 +27,6 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showCustomTaskForm, setShowCustomTaskForm] = useState(false);
   
-  // Search results state
   const [filteredCategories, setFilteredCategories] = useState<Array<{name: string, icon: string, color: string}>>([]);
 
   const categories = [
@@ -45,6 +43,21 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
     { name: "Photography", icon: "📸", color: "bg-soft-pink" },
     { name: "Tech Support", icon: "💻", color: "bg-soft-orange" },
   ];
+
+  const keywordMappings: Record<string, string[]> = {
+    "Help Moving": ["move", "moving", "relocation", "transport", "carry", "haul", "shift", "furniture moving"],
+    "Furniture Assembly": ["assemble", "build", "construct", "put together", "ikea", "desk", "chair", "table", "shelf", "bookcase", "bed frame"],
+    "General Mounting": ["mount", "hang", "install", "setup", "attach", "wall", "drill", "fix", "picture", "mirror", "shelf"],
+    "Cleaning": ["clean", "wash", "tidy", "dust", "sweep", "mop", "vacuum", "sanitize", "apartment", "house", "room", "bathroom", "kitchen"],
+    "TV Mounting": ["tv", "television", "mount", "install", "hang", "setup", "wall", "bracket"],
+    "Heavy Lifting": ["lift", "heavy", "move", "weight", "big", "bulky", "large"],
+    "Academic Tutoring": ["tutor", "help", "study", "homework", "math", "science", "english", "history", "exam", "essay", "assignment", "paper"],
+    "Laundry Help": ["laundry", "wash", "fold", "clothes", "dry cleaning", "iron", "ironing"],
+    "Grocery Shopping": ["grocery", "shop", "shopping", "food", "supermarket", "store", "buy", "purchase", "market"],
+    "Pet Sitting": ["pet", "dog", "cat", "walk", "sit", "feed", "animal", "care", "boarding"],
+    "Photography": ["photo", "picture", "portrait", "event", "session", "camera", "photoshoot", "headshot"],
+    "Tech Support": ["tech", "computer", "laptop", "phone", "setup", "fix", "repair", "install", "software", "hardware", "printer", "wifi", "internet"],
+  };
 
   const handleEditLocation = () => {
     if (editLocation.trim()) {
@@ -150,13 +163,25 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
     }
   }, [useDeviceLocation]);
 
-  // Filter categories based on search query
   useEffect(() => {
     if (searchQuery.trim()) {
-      const filtered = categories.filter(category =>
-        category.name.toLowerCase().includes(searchQuery.toLowerCase())
+      const query = searchQuery.toLowerCase();
+      
+      let matched = categories.filter(category => 
+        category.name.toLowerCase().includes(query)
       );
-      setFilteredCategories(filtered);
+      
+      if (matched.length === 0) {
+        matched = categories.filter(category => {
+          const keywords = keywordMappings[category.name] || [];
+          return keywords.some(keyword => 
+            query.includes(keyword.toLowerCase()) || 
+            keyword.toLowerCase().includes(query)
+          );
+        });
+      }
+      
+      setFilteredCategories(matched);
     } else {
       setFilteredCategories(categories);
     }
@@ -333,7 +358,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Try 'moving help' or 'math tutoring'"
+                placeholder="Try 'clean my apartment' or 'build my desk'"
                 className="w-full h-10 pl-10 pr-4 bg-white rounded-full border border-gray-300
                           focus:outline-none focus:ring-1 focus:ring-assist-blue/30 focus:border-assist-blue/40
                           shadow-sm text-gray-800 placeholder:text-gray-400"

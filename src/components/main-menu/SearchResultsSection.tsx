@@ -31,6 +31,24 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
   onRequestTask,
   onBrowseTasks
 }) => {
+  // Helper function to highlight matching text in search results
+  const highlightMatchingText = (text: string, query: string) => {
+    if (!query.trim()) return text;
+    
+    const regex = new RegExp(`(${query.trim()})`, 'gi');
+    const parts = text.split(regex);
+    
+    return (
+      <>
+        {parts.map((part, i) => 
+          regex.test(part) ? 
+            <span key={i} className="bg-yellow-100 text-yellow-800 px-1 rounded">{part}</span> : 
+            part
+        )}
+      </>
+    );
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -65,9 +83,11 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
               </div>
               <div className="p-4">
                 <h3 className="font-semibold text-gray-900 mb-1">
-                  {task.title}
+                  {highlightMatchingText(task.title, searchQuery)}
                 </h3>
-                <p className="text-gray-500 text-sm mb-2">{task.description}</p>
+                <p className="text-gray-500 text-sm mb-2">
+                  {highlightMatchingText(task.description, searchQuery)}
+                </p>
                 <div className="flex flex-wrap gap-2 mb-3">
                   <Badge variant="outline" className="flex items-center gap-1 bg-gray-50">
                     <MapPin className="h-3 w-3 text-gray-500" />
