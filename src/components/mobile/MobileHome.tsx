@@ -1,4 +1,3 @@
-
 import React from "react";
 import MobileLayout from "./MobileLayout";
 import BottomNavigation from "./BottomNavigation";
@@ -9,12 +8,12 @@ import PopularTasksSection from "./home/PopularTasksSection";
 const MobileHome = () => {
   // Additional tasks data to display in the "Looking for something else?" section
   const additionalTasks = [
-    { title: "Garden Work", icon: "🌱", color: "bg-soft-green" },
-    { title: "Computer Help", icon: "💻", color: "bg-soft-blue" },
-    { title: "Pet Sitting", icon: "🐾", color: "bg-soft-orange" },
-    { title: "Electrical Work", icon: "⚡", color: "bg-soft-yellow" },
-    { title: "Tutoring", icon: "📚", color: "bg-soft-purple" },
-    { title: "Painting", icon: "🎨", color: "bg-soft-pink" }
+    { title: "Garden Work", color: "bg-soft-green" },
+    { title: "Computer Help", color: "bg-soft-blue" },
+    { title: "Pet Sitting", color: "bg-soft-orange" },
+    { title: "Electrical Work", color: "bg-soft-yellow" },
+    { title: "Tutoring", color: "bg-soft-purple" },
+    { title: "Painting", color: "bg-soft-pink" }
   ];
 
   // Expanded popular tasks with at least 12 items to support pagination
@@ -97,7 +96,7 @@ const MobileHome = () => {
       price: "From $28/job",
       category: "Furniture",
       location: "Upper West Side",
-      image: "https://images.unsplash.com/photo-1577304573337-f70d9863936a?q=80&w=1000&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1577724513455-8315962c6f14?q=80&w=1000&auto=format&fit=crop"
     },
     {
       title: "Dorm Room Setup",
