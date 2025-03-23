@@ -1,3 +1,4 @@
+
 import React from "react";
 import MobileLayout from "./MobileLayout";
 import BottomNavigation from "./BottomNavigation";
@@ -15,7 +16,7 @@ const MobileHome = () => {
     { name: "TV Setup", icon: "📺" },
     { name: "Heavy Lifting", icon: "💪" },
     { name: "Yard Work", icon: "🌿" },
-    { name: "Painting", icon: "🎨" },
+    { name: "Water Plants", icon: "🪴" },
     { name: "Pet Sitting", icon: "🐾" }
   ];
 
