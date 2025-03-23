@@ -1,13 +1,24 @@
+
 import React from "react";
 import MobileLayout from "./MobileLayout";
 import BottomNavigation from "./BottomNavigation";
 import HomeHeader from "./home/HomeHeader";
+import CategoriesSection from "./home/CategoriesSection";
 import PopularTasksSection from "./home/PopularTasksSection";
 
 const MobileHome = () => {
-  // No need for additionalTasks as we're removing the CategoriesSection
+  // Additional tasks data to display in the "Looking for something else?" section
+  // No color property needed anymore since we're using standard white background
+  const additionalTasks = [
+    { title: "Research Assistant" },
+    { title: "Presentation Help" },
+    { title: "Essay Editing" },
+    { title: "Study Partner" },
+    { title: "Language Tutor" },
+    { title: "Grocery Shopping" }
+  ];
 
-  // Keeping the popular tasks data
+  // Expanded popular tasks tailored for college student helpers
   const popularTasks = [
     {
       title: "Clean my apartment",
@@ -113,8 +124,9 @@ const MobileHome = () => {
         <div className="space-y-3">
           <HomeHeader userName="Sarah" />
           
-          {/* Only showing PopularTasksSection now, CategoriesSection has been removed */}
+          {/* Reordered: PopularTasksSection first, then CategoriesSection */}
           <PopularTasksSection popularTasks={popularTasks} />
+          <CategoriesSection additionalTasks={additionalTasks} />
         </div>
       </MobileLayout>
       <BottomNavigation />
