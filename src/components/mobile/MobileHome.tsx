@@ -1,3 +1,4 @@
+
 import React from "react";
 import MobileLayout from "./MobileLayout";
 import BottomNavigation from "./BottomNavigation";
@@ -65,7 +66,7 @@ const MobileHome = () => {
       price: "From $15/hr",
       category: "Academic",
       location: "Harlem",
-      image: "/lovable-uploads/e44adaaa-4a6d-435e-a3de-9355591817a8.png"
+      image: "/lovable-uploads/f7d753ad-9aa3-4359-bd07-95d91daaa903.png"
     },
     {
       title: "Food Delivery",
@@ -113,7 +114,7 @@ const MobileHome = () => {
       price: "From $25/hr",
       category: "Academic",
       location: "Greenwich Village",
-      image: "/lovable-uploads/e44adaaa-4a6d-435e-a3de-9355591817a8.png"
+      image: "/lovable-uploads/f7d753ad-9aa3-4359-bd07-95d91daaa903.png"
     }
   ];
 
