@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
@@ -181,7 +180,6 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
         <div className="flex items-center gap-1.5">
           <h2 className="text-lg font-semibold text-gray-900">Browse Tasks</h2>
         </div>
-        {/* Plus button removed from here */}
       </div>
       <div className="grid grid-cols-2 gap-3">
         {getDisplayedTasks().map((task, index) => (
@@ -207,7 +205,6 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
               <h3 className="font-medium text-sm text-gray-900 truncate flex items-center">
                 {task.title}
               </h3>
-              {/* Price display has been removed */}
             </div>
           </div>
         ))}

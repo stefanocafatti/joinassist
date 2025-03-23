@@ -1,10 +1,7 @@
-
 import React from "react";
 import MobileLayout from "./MobileLayout";
 import BottomNavigation from "./BottomNavigation";
 import HomeHeader from "./home/HomeHeader";
-import PastTasksSection from "./home/PastTasksSection";
-import FavoritesSection from "./home/FavoritesSection";
 import CategoriesSection from "./home/CategoriesSection";
 import PopularTasksSection from "./home/PopularTasksSection";
 
@@ -17,36 +14,6 @@ const MobileHome = () => {
     { name: "Cleaning", icon: "🧹", color: "bg-soft-purple" },
     { name: "TV Mounting", icon: "📺", color: "bg-soft-pink" },
     { name: "Heavy Lifting", icon: "💪", color: "bg-soft-orange" }
-  ];
-
-  // Past orders data
-  const pastTasks = [
-    { 
-      title: "Apartment Cleaning", 
-      date: "May 15, 2023", 
-      provider: "Jessica T.",
-      image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1000&auto=format&fit=crop"
-    },
-    { 
-      title: "Dog Walking", 
-      date: "Apr 28, 2023", 
-      provider: "Michael R.",
-      image: "https://images.unsplash.com/photo-1541364983171-a8ba01e95cfc?q=80&w=1000&auto=format&fit=crop"
-    }
-  ];
-
-  // Favorited tasks
-  const favoritedTasks = [
-    {
-      title: "Weekly House Cleaning",
-      price: "From $25/hr",
-      image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1000&auto=format&fit=crop"
-    },
-    {
-      title: "Dog Walking Service",
-      price: "From $20/hr",
-      image: "https://images.unsplash.com/photo-1541364983171-a8ba01e95cfc?q=80&w=1000&auto=format&fit=crop"
-    }
   ];
 
   // Expanded popular tasks with at least 12 items to support pagination
@@ -129,7 +96,7 @@ const MobileHome = () => {
       price: "From $28/job",
       category: "Furniture",
       location: "Upper West Side",
-      image: "https://images.unsplash.com/photo-1577304573337-f70d9863936a?q=80&w=1000&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1577724513455-8315962c6f14?q=80&w=1000&auto=format&fit=crop"
     },
     {
       title: "Dorm Room Setup",
@@ -155,10 +122,8 @@ const MobileHome = () => {
         <div className="space-y-3"> {/* Reduced vertical spacing between sections */}
           <HomeHeader userName="Sarah" />
           
-          {/* Tasks first, categories last */}
+          {/* Only showing PopularTasks and Categories */}
           <PopularTasksSection popularTasks={popularTasks} />
-          <PastTasksSection pastTasks={pastTasks} />
-          <FavoritesSection favoritedTasks={favoritedTasks} />
           <CategoriesSection categories={categories} />
         </div>
       </MobileLayout>
