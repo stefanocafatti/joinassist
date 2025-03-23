@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, MapPin, Check, X, Navigation, ArrowLeft } from "lucide-react";
+import { Search, MapPin, Check, X, Navigation, ArrowLeft, PlusCircle } from "lucide-react";
 import {
   Popover,
   PopoverContent,
@@ -11,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
+import TaskDetailView from "@/components/ui/TaskDetailView";
 
 interface HomeHeaderProps {
   userName: string;
@@ -24,6 +26,10 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
   const [useDeviceLocation, setUseDeviceLocation] = useState(false);
   const [isGettingLocation, setIsGettingLocation] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [showCustomTaskForm, setShowCustomTaskForm] = useState(false);
+  
+  // Search results state
+  const [filteredCategories, setFilteredCategories] = useState<Array<{name: string, icon: string, color: string}>>([]);
 
   const categories = [
     { name: "Help Moving", icon: "📦", color: "bg-soft-blue" },
@@ -31,7 +37,13 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
     { name: "General Mounting", icon: "🔨", color: "bg-soft-yellow" },
     { name: "Cleaning", icon: "🧹", color: "bg-soft-purple" },
     { name: "TV Mounting", icon: "📺", color: "bg-soft-pink" },
-    { name: "Heavy Lifting", icon: "💪", color: "bg-soft-orange" }
+    { name: "Heavy Lifting", icon: "💪", color: "bg-soft-orange" },
+    { name: "Academic Tutoring", icon: "📚", color: "bg-soft-blue" },
+    { name: "Laundry Help", icon: "👕", color: "bg-soft-green" },
+    { name: "Grocery Shopping", icon: "🛒", color: "bg-soft-yellow" },
+    { name: "Pet Sitting", icon: "🐕", color: "bg-soft-purple" },
+    { name: "Photography", icon: "📸", color: "bg-soft-pink" },
+    { name: "Tech Support", icon: "💻", color: "bg-soft-orange" },
   ];
 
   const handleEditLocation = () => {
@@ -138,10 +150,48 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
     }
   }, [useDeviceLocation]);
 
+  // Filter categories based on search query
+  useEffect(() => {
+    if (searchQuery.trim()) {
+      const filtered = categories.filter(category =>
+        category.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredCategories(filtered);
+    } else {
+      setFilteredCategories(categories);
+    }
+  }, [searchQuery]);
+
   const handleSearch = () => {
     if (searchQuery.trim()) {
       navigate(`/mobile/search?q=${encodeURIComponent(searchQuery)}`);
     }
+  };
+
+  const handleTaskBooked = (
+    taskTitle: string, 
+    date: Date, 
+    time: string, 
+    priceType?: string, 
+    price?: number,
+    location?: string,
+    additionalInfo?: string
+  ) => {
+    console.log("Task booked:", {
+      taskTitle,
+      date,
+      time,
+      priceType,
+      price,
+      location,
+      additionalInfo
+    });
+    toast.success("Your custom task has been created");
+    setShowCustomTaskForm(false);
+  };
+
+  const handleCreateCustomTask = () => {
+    setShowCustomTaskForm(true);
   };
 
   return (
@@ -259,7 +309,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
                 className="w-full h-12 pl-11 pr-4 bg-white rounded-xl border border-gray-200
                           focus:outline-none focus:ring-2 focus:ring-assist-blue/30 focus:border-assist-blue/50
                           shadow-sm text-gray-800 placeholder:text-gray-400"
-                onClick={() => navigate('/mobile/search')}
+                onClick={() => setSearchQuery(" ")}
               />
             </div>
           )}
@@ -294,22 +344,53 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
             </div>
           </div>
           
-          <div className="grid grid-cols-2 gap-4 pb-20">
-            {categories.map((category, index) => (
-              <div 
-                key={index}
-                className="flex items-center bg-white p-3 rounded-xl shadow-sm border border-gray-100 hover:shadow-md hover:border-assist-blue/20 transition-all duration-200 transform hover:scale-[1.02]"
-                onClick={() => navigate(`/mobile/category/${category.name.toLowerCase().replace(/\s+/g, '-')}`)}
-              >
-                <div className={`w-12 h-12 ${category.color} rounded-lg flex items-center justify-center mr-3 shadow-sm`}>
-                  <span className="text-xl">{category.icon}</span>
+          {filteredCategories.length > 0 ? (
+            <div className="grid grid-cols-2 gap-4 pb-20">
+              {filteredCategories.map((category, index) => (
+                <div 
+                  key={index}
+                  className="flex items-center bg-white p-3 rounded-xl shadow-sm border border-gray-100 hover:shadow-md hover:border-assist-blue/20 transition-all duration-200 transform hover:scale-[1.02]"
+                  onClick={() => navigate(`/mobile/category/${category.name.toLowerCase().replace(/\s+/g, '-')}`)}
+                >
+                  <div className={`w-12 h-12 ${category.color} rounded-lg flex items-center justify-center mr-3 shadow-sm`}>
+                    <span className="text-xl">{category.icon}</span>
+                  </div>
+                  <span className="text-sm font-medium text-gray-800">{category.name}</span>
                 </div>
-                <span className="text-sm font-medium text-gray-800">{category.name}</span>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-8">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
+                <Search className="h-8 w-8 text-gray-400" />
               </div>
-            ))}
-          </div>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">
+                No results found
+              </h3>
+              <p className="text-gray-500 mb-6">
+                We couldn't find any tasks matching "{searchQuery.trim()}"
+              </p>
+              <div className="space-y-4">
+                <Button
+                  variant="default"
+                  className="bg-assist-blue hover:bg-assist-blue/90"
+                  onClick={handleCreateCustomTask}
+                >
+                  <PlusCircle className="h-4 w-4 mr-2" />
+                  Create Custom Task
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
       )}
+
+      <TaskDetailView 
+        isOpen={showCustomTaskForm}
+        onClose={() => setShowCustomTaskForm(false)}
+        onTaskBooked={handleTaskBooked}
+        isCustomTask={true}
+      />
     </>
   );
 };
