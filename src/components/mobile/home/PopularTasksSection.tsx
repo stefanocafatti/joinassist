@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
@@ -9,8 +8,6 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import TaskDetailView from "@/components/ui/TaskDetailView";
-
-const TASK_IMAGE = "/lovable-uploads/239bf11e-868d-49c4-b2cf-e3fdd3bc7c20.png";
 
 interface PopularTask {
   title: string;
@@ -186,7 +183,7 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
               <div 
                 className="h-28 bg-cover bg-center" 
                 style={{ 
-                  backgroundImage: `url(${TASK_IMAGE})`
+                  backgroundImage: `url(${task.image})`
                 }}
               />
               <Badge 
@@ -214,7 +211,7 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
             description: selectedTask.description,
             category: selectedTask.category,
             location: selectedTask.location,
-            image: TASK_IMAGE
+            image: selectedTask.image
           }}
         />
       )}
