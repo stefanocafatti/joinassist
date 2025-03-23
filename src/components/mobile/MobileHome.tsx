@@ -162,7 +162,7 @@ const MobileHome = () => {
         <div className="space-y-4">
           <HomeHeader userName="Sarah" />
           
-          <FavoritesSection favoriteTasks={favoriteTasks} />
+          <FavoritesSection favoritedTasks={favoriteTasks} />
           <PopularTasksSection popularTasks={popularTasks} />
           <PastTasksSection pastTasks={pastTasks} />
           <CategoriesSection categories={categories} />
