@@ -37,7 +37,7 @@ const MobileHome = () => {
       image: "/lovable-uploads/1dcc2d11-c9a3-4da3-91b5-187b6f61f0f5.png"
     },
     {
-      title: "Make my bed and change sheets", 
+      title: "Do my laundry", 
       description: "Assistance with moving and packing your belongings",
       price: "From $30/hr",
       category: "Home Services",
