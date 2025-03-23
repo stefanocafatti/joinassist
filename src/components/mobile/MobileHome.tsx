@@ -9,10 +9,10 @@ import PopularTasksSection from "./home/PopularTasksSection";
 const MobileHome = () => {
   // Additional tasks data to display in the "Looking for something else?" section
   const additionalTasks = [
-    { title: "Research Help", color: "bg-soft-green" },
+    { title: "Garden Work", color: "bg-soft-green" },
     { title: "Computer Help", color: "bg-soft-blue" },
-    { title: "Campus Delivery", color: "bg-soft-orange" },
-    { title: "Note Taking", color: "bg-soft-yellow" },
+    { title: "Pet Sitting", color: "bg-soft-orange" },
+    { title: "Electrical Work", color: "bg-soft-yellow" },
     { title: "Tutoring", color: "bg-soft-purple" },
     { title: "Grocery Shopping", color: "bg-soft-pink" }
   ];
@@ -28,15 +28,15 @@ const MobileHome = () => {
       image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      title: "Dorm Room Organization",
-      description: "Get help organizing your dorm from fellow students",
-      price: "From $20/hr",
-      category: "Cleaning",
+      title: "Furniture Assembly",
+      description: "Students help with assembling your furniture",
+      price: "From $30/hr",
+      category: "Furniture",
       location: "NYU Area",
       image: "https://images.unsplash.com/photo-1581078426770-6d336e5de7bf?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      title: "Help Moving In/Out",
+      title: "Help Moving",
       description: "Assistance with moving and packing your belongings",
       price: "From $35/hr",
       category: "Moving",
@@ -44,74 +44,74 @@ const MobileHome = () => {
       image: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      title: "Tech Setup Assistance",
-      description: "Get help setting up your devices and software",
-      price: "From $30/job",
-      category: "Tech",
+      title: "TV Mounting Service",
+      description: "Get your TV mounted securely by student experts",
+      price: "From $40/job",
+      category: "Mounting",
       location: "Brooklyn",
       image: "https://images.unsplash.com/photo-1593784991095-a205069470b6?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      title: "Research Assistance",
-      description: "Get help finding sources for your papers and projects",
-      price: "From $25/hr",
-      category: "Academic",
+      title: "Deep House Cleaning",
+      description: "Thorough cleaning service for your entire home",
+      price: "From $40/hr",
+      category: "Cleaning",
       location: "Upper East Side",
       image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      title: "Study Group Organization",
-      description: "Help setting up and coordinating study groups for your classes",
-      price: "From $15/hr",
-      category: "Academic",
+      title: "Ikea Desk Assembly",
+      description: "Get your new desk assembled by experienced students",
+      price: "From $25/job",
+      category: "Furniture",
       location: "Harlem",
       image: "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      title: "Grocery Delivery",
-      description: "Get groceries delivered to your dorm or apartment",
-      price: "From $15/hr",
-      category: "Errands",
+      title: "Small Apartment Move",
+      description: "Help moving your studio or 1-bedroom apartment",
+      price: "From $40/hr",
+      category: "Moving",
       location: "Lower East Side",
       image: "https://images.unsplash.com/photo-1600585152220-90363fe7e115?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      title: "Meal Prep Assistance",
-      description: "Help with preparing meals for the week ahead",
-      price: "From $25/hr",
-      category: "Food",
+      title: "Shelving Installation",
+      description: "Get floating shelves or bookcases mounted securely",
+      price: "From $35/job",
+      category: "Mounting",
       location: "Chelsea",
       image: "https://images.unsplash.com/photo-1594540634759-8e42a1991cf7?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      title: "Resume Review",
-      description: "Get feedback on your resume from experienced students",
-      price: "From $20/hr",
-      category: "Academic",
+      title: "Window Cleaning",
+      description: "Professional window cleaning for sparkling results",
+      price: "From $30/hr",
+      category: "Cleaning",
       location: "Financial District",
       image: "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      title: "LinkedIn Profile Optimization",
-      description: "Improve your LinkedIn profile with help from marketing students",
-      price: "From $25/job",
-      category: "Academic",
+      title: "Bookshelf Assembly",
+      description: "Get your new bookshelf assembled quickly",
+      price: "From $28/job",
+      category: "Furniture",
       location: "Upper West Side",
       image: "https://images.unsplash.com/photo-1577724513455-8315962c6f14?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      title: "Campus Tour Guide",
-      description: "Private campus tours for prospective students or visitors",
+      title: "Dorm Room Setup",
+      description: "Help setting up your dorm room efficiently",
       price: "From $20/hr",
-      category: "Errands",
+      category: "Moving",
       location: "Columbia University",
       image: "https://images.unsplash.com/photo-1634823668943-96e1d18845e5?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      title: "Presentation Design Help",
-      description: "Get help creating professional presentations for class",
-      price: "From $30/job",
-      category: "Academic",
+      title: "Picture Frame Hanging",
+      description: "Get your artwork and photos hung perfectly",
+      price: "From $25/job",
+      category: "Mounting",
       location: "Greenwich Village",
       image: "https://images.unsplash.com/photo-1577724513455-8315962c6f14?q=80&w=1000&auto=format&fit=crop"
     }
