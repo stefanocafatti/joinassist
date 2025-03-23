@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronRight, MapPin, DollarSign } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -172,15 +172,8 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
               <h3 className="font-medium text-sm text-gray-900 truncate flex items-center">
                 {task.title}
               </h3>
-              <div className="flex items-center text-xs text-gray-500 mt-1 mb-1">
-                <MapPin size={12} className="mr-1" />
-                <span className="truncate">{task.location}</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <DollarSign size={12} className="text-green-600" />
-                  <span className="text-xs font-medium text-green-600">{task.price.replace('From ', '')}</span>
-                </div>
+              <div className="flex items-center justify-between mt-2">
+                <span className="text-xs font-medium text-green-600">{task.price.replace('From ', '')}</span>
                 <ChevronRight size={14} className="text-gray-400 group-hover:text-assist-blue transition-colors" />
               </div>
             </div>
