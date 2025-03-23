@@ -40,6 +40,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
   const [filteredTasks, setFilteredTasks] = useState<Task[]>([]);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [showTaskDetails, setShowTaskDetails] = useState(false);
+  const [showCategories, setShowCategories] = useState(true);
 
   const availableTasks: Task[] = [
     {
@@ -248,6 +249,8 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
 
   useEffect(() => {
     if (searchQuery.trim()) {
+      setShowCategories(false);
+      
       const query = searchQuery.toLowerCase();
       
       let matchedCategories: string[] = [];
@@ -292,6 +295,7 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
       
       setFilteredTasks(matched);
     } else {
+      setShowCategories(true);
       setFilteredTasks([]);
     }
   }, [searchQuery]);
@@ -331,6 +335,19 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
 
   const handleCreateCustomTask = () => {
     setShowCustomTaskForm(true);
+  };
+
+  const handleCategoryClick = (categoryName: string) => {
+    const tasksInCategory = availableTasks.filter(task => 
+      task.category === categoryName ||
+      (categoryName === "Help Moving" && task.category === "Transportation") ||
+      (categoryName === "Laundry Help" && task.category.includes("Cleaning")) ||
+      (categoryName === "Heavy Lifting" && task.category.includes("Moving"))
+    );
+    
+    setFilteredTasks(tasksInCategory);
+    setShowCategories(false);
+    setSearchQuery(categoryName);
   };
 
   const highlightMatchingText = (text: string, query: string) => {
@@ -508,7 +525,27 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
             </div>
           </div>
           
-          {filteredTasks.length > 0 ? (
+          {showCategories ? (
+            <div className="pb-20">
+              <h3 className="text-md font-medium text-gray-700 mb-4">
+                Categories
+              </h3>
+              <div className="grid grid-cols-2 gap-3">
+                {categories.map((category, index) => (
+                  <div 
+                    key={index}
+                    className={`${category.color} p-4 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-200 cursor-pointer`}
+                    onClick={() => handleCategoryClick(category.name)}
+                  >
+                    <div className="flex items-center">
+                      <span className="text-2xl mr-3">{category.icon}</span>
+                      <span className="font-medium">{category.name}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : filteredTasks.length > 0 ? (
             <div className="pb-20">
               <h3 className="text-md font-medium text-gray-700 mb-4">
                 Found {filteredTasks.length} tasks matching "{searchQuery.trim()}"
@@ -606,4 +643,3 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
 };
 
 export default HomeHeader;
-

@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Search, X, Clock, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 interface SearchHeaderProps {
   searchQuery: string;
@@ -21,6 +22,7 @@ const SearchHeader: React.FC<SearchHeaderProps> = ({
   onSearchClick,
   isVisible = true
 }) => {
+  const navigate = useNavigate();
   const [isInputFocused, setIsInputFocused] = useState(false);
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -54,6 +56,12 @@ const SearchHeader: React.FC<SearchHeaderProps> = ({
     e.preventDefault();
     if (searchQuery.trim()) {
       onSearch(e);
+    }
+  };
+
+  const handleMobileRedirect = () => {
+    if (searchQuery.trim()) {
+      navigate(`/mobile/home?q=${encodeURIComponent(searchQuery)}`);
     }
   };
 
@@ -91,6 +99,7 @@ const SearchHeader: React.FC<SearchHeaderProps> = ({
             type="submit" 
             className="absolute right-4 text-white bg-assist-blue hover:bg-assist-blue/90 
                       p-2 rounded-full transition-all duration-200 shadow-sm hover:shadow"
+            onClick={handleMobileRedirect}
           >
             <ArrowRight className="h-4 w-4" />
           </button>
