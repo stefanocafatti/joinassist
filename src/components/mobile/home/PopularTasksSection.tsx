@@ -207,9 +207,7 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
               <h3 className="font-medium text-sm text-gray-900 truncate flex items-center">
                 {task.title}
               </h3>
-              <div className="flex items-center justify-between mt-2">
-                <span className="text-xs font-medium text-green-600">{task.price.replace('From ', '')}</span>
-              </div>
+              {/* Price display has been removed */}
             </div>
           </div>
         ))}
