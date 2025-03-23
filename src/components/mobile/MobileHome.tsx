@@ -1,4 +1,3 @@
-
 import React from "react";
 import MobileLayout from "./MobileLayout";
 import BottomNavigation from "./BottomNavigation";
@@ -49,13 +48,14 @@ const MobileHome = () => {
     }
   ];
 
-  // Popular tasks
+  // Popular tasks with additional location info
   const popularTasks = [
     {
       title: "Weekly Apartment Cleaning",
       description: "Professional cleaning services by verified students",
       price: "From $25/hr",
       category: "Cleaning",
+      location: "Columbia University",
       image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1000&auto=format&fit=crop"
     },
     {
@@ -63,6 +63,7 @@ const MobileHome = () => {
       description: "Students help with assembling your furniture",
       price: "From $30/hr",
       category: "Furniture",
+      location: "NYU Area",
       image: "https://images.unsplash.com/photo-1581078426770-6d336e5de7bf?q=80&w=1000&auto=format&fit=crop"
     },
     {
@@ -70,7 +71,16 @@ const MobileHome = () => {
       description: "Assistance with moving and packing your belongings",
       price: "From $35/hr",
       category: "Moving",
+      location: "Midtown",
       image: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1000&auto=format&fit=crop"
+    },
+    {
+      title: "TV Mounting Service",
+      description: "Get your TV mounted securely by student experts",
+      price: "From $40/job",
+      category: "Mounting",
+      location: "Brooklyn",
+      image: "https://images.unsplash.com/photo-1593784991095-a205069470b6?q=80&w=1000&auto=format&fit=crop"
     }
   ];
 
@@ -80,11 +90,11 @@ const MobileHome = () => {
         <div className="space-y-3"> {/* Reduced vertical spacing between sections */}
           <HomeHeader userName="Sarah" />
           
-          {/* Reordered sections to prioritize browsing tasks */}
-          <CategoriesSection categories={categories} />
+          {/* Tasks first, categories last */}
           <PopularTasksSection popularTasks={popularTasks} />
           <PastTasksSection pastTasks={pastTasks} />
           <FavoritesSection favoritedTasks={favoritedTasks} />
+          <CategoriesSection categories={categories} />
         </div>
       </MobileLayout>
       <BottomNavigation />
