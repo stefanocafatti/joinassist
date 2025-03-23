@@ -1,21 +1,22 @@
-
 import React from "react";
 import MobileLayout from "./MobileLayout";
 import BottomNavigation from "./BottomNavigation";
 import HomeHeader from "./home/HomeHeader";
-import CategoriesSection from "./home/CategoriesSection";
 import PopularTasksSection from "./home/PopularTasksSection";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const MobileHome = () => {
-  // Additional tasks data to display in the "Looking for something else?" section
-  // No color property needed anymore since we're using standard white background
-  const additionalTasks = [
-    { title: "Research Assistant" },
-    { title: "Presentation Help" },
-    { title: "Essay Editing" },
-    { title: "Study Partner" },
-    { title: "Language Tutor" },
-    { title: "Grocery Shopping" }
+  const navigate = useNavigate();
+
+  // Common tasks represented as buttons
+  const commonTasks = [
+    "Cleaning",
+    "Furniture Assembly",
+    "Moving Help",
+    "Delivery",
+    "Heavy Lifting",
+    "Handyman"
   ];
 
   // Expanded popular tasks tailored for college student helpers
@@ -118,15 +119,37 @@ const MobileHome = () => {
     }
   ];
 
+  const handleTaskClick = (task: string) => {
+    console.log(`Selected task: ${task}`);
+    // Navigate to task-specific page or show task detail
+    // navigate(`/tasks/${task.toLowerCase().replace(' ', '-')}`);
+  };
+
   return (
     <>
       <MobileLayout showHeader={false} contentClassName="pb-20 pt-0">
         <div className="space-y-3">
           <HomeHeader userName="Sarah" />
           
-          {/* Reordered: PopularTasksSection first, then CategoriesSection */}
+          {/* Common Tasks Buttons */}
+          <div className="my-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-3">Common Tasks</h2>
+            <div className="grid grid-cols-2 gap-3">
+              {commonTasks.map((task, index) => (
+                <Button
+                  key={index}
+                  variant="outline"
+                  className="h-12 bg-white text-assist-blue border border-gray-200 shadow-sm hover:bg-gray-50 font-medium"
+                  onClick={() => handleTaskClick(task)}
+                >
+                  {task}
+                </Button>
+              ))}
+            </div>
+          </div>
+          
+          {/* Popular Tasks Section */}
           <PopularTasksSection popularTasks={popularTasks} />
-          <CategoriesSection additionalTasks={additionalTasks} />
         </div>
       </MobileLayout>
       <BottomNavigation />
