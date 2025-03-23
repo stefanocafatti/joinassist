@@ -94,6 +94,22 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
   };
 
   // Function to get background color for category buttons
+  const getCategoryBgColor = (category: string) => {
+    switch(category.toLowerCase()) {
+      case 'cleaning':
+        return 'bg-blue-100';
+      case 'furniture':
+        return 'bg-green-100';
+      case 'moving':
+        return 'bg-amber-100';
+      case 'mounting':
+        return 'bg-purple-100';
+      default:
+        return 'bg-orange-100';
+    }
+  };
+
+  // Function to get background and text color for category buttons
   const getCategoryButtonColor = (category: string) => {
     const isSelected = selectedCategory === category;
     
@@ -113,24 +129,28 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
 
   return (
     <section className="mb-1">
-      <div className="mb-3">
-        <Carousel className="w-full">
+      <div className="mb-3 overflow-x-auto">
+        <Carousel className="w-full" opts={{ align: "start", loop: false }}>
           <CarouselContent className="-ml-2">
             <CarouselItem className="pl-2 basis-auto">
               <div 
-                className={`px-4 py-2 rounded-full border shadow-sm cursor-pointer ${selectedCategory === null ? 'bg-gray-100 text-gray-800' : 'bg-white text-gray-700'}`}
+                className={`px-4 py-2 rounded-full border shadow-sm cursor-pointer ${selectedCategory === null ? 'bg-gray-100 text-gray-800 font-medium' : 'bg-white text-gray-700'}`}
                 onClick={() => setSelectedCategory(null)}
               >
-                <span className="text-xs font-medium whitespace-nowrap">All</span>
+                <span className="text-xs whitespace-nowrap">All</span>
               </div>
             </CarouselItem>
             {categories.map((category, index) => (
               <CarouselItem key={index} className="pl-2 basis-auto">
                 <div 
-                  className={`px-4 py-2 rounded-full border shadow-sm cursor-pointer ${getCategoryButtonColor(category)}`}
+                  className={`px-4 py-2 rounded-full border shadow-sm cursor-pointer whitespace-nowrap ${
+                    selectedCategory === category 
+                      ? `${getCategoryBgColor(category)} ${getCategoryTextColor(category)} font-medium` 
+                      : 'bg-white text-gray-700'
+                  }`}
                   onClick={() => handleCategorySelect(category)}
                 >
-                  <span className="text-xs font-medium whitespace-nowrap">{category}</span>
+                  <span className="text-xs">{category}</span>
                 </div>
               </CarouselItem>
             ))}
@@ -164,7 +184,7 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
                 className="h-28 bg-cover bg-center" 
                 style={{ backgroundImage: `url(${task.image})` }}
               />
-              <Badge className={`absolute top-2 right-2 text-xs ${getCategoryTextColor(task.category)} bg-white`}>
+              <Badge className={`absolute top-2 right-2 text-xs ${getCategoryTextColor(task.category)} ${getCategoryBgColor(task.category)}`}>
                 {task.category}
               </Badge>
             </div>
