@@ -60,6 +60,9 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
     );
   };
 
+  // Default task image
+  const DEFAULT_TASK_IMAGE = "/lovable-uploads/8e3ea234-55c0-4aa9-87c5-565913181531.png";
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -87,18 +90,20 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
             >
               <div className="h-40 overflow-hidden">
                 <img
-                  src={task.image}
+                  src={DEFAULT_TASK_IMAGE}
                   alt={task.title}
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="p-4">
-                <h3 className="font-semibold text-gray-900 mb-2">
-                  {highlightMatchingText(task.title, searchQuery)}
-                </h3>
-                <Badge variant="secondary" className="bg-soft-blue/20 text-blue-700 border-0">
-                  {task.category}
-                </Badge>
+                <div className="flex justify-between items-center">
+                  <h3 className="font-semibold text-gray-900">
+                    {highlightMatchingText(task.title, searchQuery)}
+                  </h3>
+                  <Badge variant="secondary" className="bg-soft-blue/20 text-blue-700 border-0 ml-2">
+                    {task.category}
+                  </Badge>
+                </div>
                 <div className="flex justify-between items-center mt-3">
                   <button
                     className="text-red-500"
