@@ -1,4 +1,3 @@
-
 import React from "react";
 import MobileLayout from "./MobileLayout";
 import BottomNavigation from "./BottomNavigation";
@@ -74,7 +73,7 @@ const MobileHome = () => {
       price: "From $15/hr",
       category: "Errands",
       location: "Lower East Side",
-      image: "/lovable-uploads/e44adaaa-4a6d-435e-a3de-9355591817a8.png"
+      image: "/lovable-uploads/c63ac0bf-b196-42d2-8004-012ba59ad57e.png"
     },
     {
       title: "Tech Support",
