@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const DEFAULT_TASK_IMAGE = "/lovable-uploads/d1a14d8f-8a54-45a2-9662-376fac8076d3.png";
+const DEFAULT_TASK_IMAGE = "/lovable-uploads/8e3ea234-55c0-4aa9-87c5-565913181531.png";
 
 interface TaskCategoriesProps {
   showAllTasks?: boolean;
@@ -847,3 +847,4 @@ const TaskCategories = ({
 };
 
 export default TaskCategories;
+

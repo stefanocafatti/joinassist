@@ -1,4 +1,3 @@
-
 import { 
   Trash2, 
   Car, 
@@ -17,6 +16,8 @@ import { Button } from "@/components/ui/button";
 import CategoryCard from "../ui/CategoryCard";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+
+const DEFAULT_TASK_IMAGE = "/lovable-uploads/8e3ea234-55c0-4aa9-87c5-565913181531.png";
 
 interface TaskCategoriesProps {
   showAllTasks?: boolean;
@@ -42,7 +43,6 @@ const TaskCategories = ({
     if (showAllTasks) {
       setSelectedCategory(category === selectedCategory ? null : category);
     } else {
-      // When clicking from home page, navigate to all tasks with the selected category
       navigate('/main-menu', { 
         state: { 
           activeTab: "allTasks", 
@@ -56,7 +56,6 @@ const TaskCategories = ({
   const handleLoadMore = () => {
     setIsLoading(true);
     
-    // Simulate loading delay for smooth transition
     setTimeout(() => {
       setVisibleTaskCount(prev => prev + 6);
       setIsLoading(false);
@@ -466,7 +465,7 @@ const TaskCategories = ({
       <div className="relative">
         <div 
           className="h-40 bg-cover bg-center" 
-          style={{ backgroundImage: `url(${task.image})` }}
+          style={{ backgroundImage: `url(${DEFAULT_TASK_IMAGE})` }}
         />
         <button 
           className="absolute top-3 right-3 z-10"
