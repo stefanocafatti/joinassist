@@ -1,4 +1,5 @@
-import React from "react";
+
+import React, { useState } from "react";
 import MobileLayout from "./MobileLayout";
 import BottomNavigation from "./BottomNavigation";
 import HomeHeader from "./home/HomeHeader";
@@ -6,9 +7,18 @@ import PopularTasksSection from "./home/PopularTasksSection";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { PlusCircle } from "lucide-react";
+import TaskDetailView from "@/components/ui/TaskDetailView";
 
 const MobileHome = () => {
   const navigate = useNavigate();
+  const [selectedTask, setSelectedTask] = useState<{
+    title: string;
+    description: string;
+    category: string;
+    location: string;
+    image?: string;
+  } | null>(null);
+  const [isTaskDetailOpen, setIsTaskDetailOpen] = useState(false);
 
   // Common tasks represented as buttons
   const commonTasks = [
@@ -122,23 +132,77 @@ const MobileHome = () => {
 
   const handleTaskClick = (task: string) => {
     console.log(`Selected task: ${task}`);
-    // Navigate to task-specific page or show task detail
-    // navigate(`/tasks/${task.toLowerCase().replace(' ', '-')}`);
+    // Find a matching task from popularTasks or create a generic one
+    const matchingTask = popularTasks.find(t => 
+      t.title.toLowerCase() === task.toLowerCase() || 
+      t.category.toLowerCase() === task.toLowerCase()
+    );
+    
+    if (matchingTask) {
+      setSelectedTask(matchingTask);
+    } else {
+      // Create a generic task for common task buttons
+      setSelectedTask({
+        title: task,
+        description: `Get help with ${task.toLowerCase()} from verified student helpers`,
+        category: task,
+        location: "Campus Area",
+        image: getGenericTaskImage(task)
+      });
+    }
+    
+    setIsTaskDetailOpen(true);
+  };
+
+  const getGenericTaskImage = (taskType: string) => {
+    // Map common tasks to appropriate images
+    const taskImageMap: {[key: string]: string} = {
+      "Cleaning": "/lovable-uploads/84373410-0ca0-44aa-bce4-fecda1465ffb.png",
+      "Furniture Assembly": "/lovable-uploads/83abea36-642f-4147-865a-c43794680e3b.png",
+      "Moving Help": "/lovable-uploads/72545c93-f781-402e-ad25-5cd509be453c.png",
+      "Delivery": "/lovable-uploads/b1aee96b-9a26-4fd9-9872-57f40cbe16d7.png",
+      "Heavy Lifting": "/lovable-uploads/72545c93-f781-402e-ad25-5cd509be453c.png",
+      "Handyman": "/lovable-uploads/36f389d4-c8c6-40a8-9cc4-2ed5306d7dd5.png"
+    };
+    
+    return taskImageMap[taskType] || "/lovable-uploads/36f389d4-c8c6-40a8-9cc4-2ed5306d7dd5.png";
   };
 
   const handleRequestTask = () => {
     console.log("Request a custom task");
-    // Navigate to task request page or show task request form
+    setSelectedTask(null);
+    setIsTaskDetailOpen(true);
+  };
+  
+  const handleTaskBooked = (
+    taskTitle: string, 
+    date: Date, 
+    time: string, 
+    priceType?: string, 
+    price?: number,
+    location?: string,
+    additionalInfo?: string
+  ) => {
+    console.log("Task booked:", {
+      taskTitle,
+      date,
+      time,
+      priceType,
+      price,
+      location,
+      additionalInfo
+    });
+    setIsTaskDetailOpen(false);
   };
 
   return (
     <>
       <MobileLayout showHeader={false} contentClassName="pb-20 pt-0">
         <div className="space-y-3">
-          <HomeHeader userName="Sarah" />
+          <HomeHeader userName="Sarah" onTaskSelect={handleTaskClick} />
           
           {/* Popular Tasks Section - now first */}
-          <PopularTasksSection popularTasks={popularTasks} />
+          <PopularTasksSection popularTasks={popularTasks} onTaskSelect={handleTaskClick} />
           
           {/* Common Tasks Buttons - now second with updated title */}
           <div className="my-6">
@@ -170,6 +234,15 @@ const MobileHome = () => {
         </div>
       </MobileLayout>
       <BottomNavigation />
+      
+      {/* Task Detail Popup */}
+      <TaskDetailView
+        isOpen={isTaskDetailOpen}
+        onClose={() => setIsTaskDetailOpen(false)}
+        onTaskBooked={handleTaskBooked}
+        task={selectedTask}
+        isCustomTask={!selectedTask}
+      />
     </>
   );
 };
