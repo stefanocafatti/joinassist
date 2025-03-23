@@ -144,7 +144,11 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ userName = "User" }) => {
     <div className="pt-4 pb-2">
       <div className="flex justify-between items-center mb-4">
         <div>
-          <h1 className="font-bold text-xl text-gray-900">Hi, {userName}! 👋</h1>
+          <h1 className="font-bold text-xl">
+            <span className="bg-gradient-to-r from-assist-blue via-blue-500 to-blue-400 bg-clip-text text-transparent">
+              Hi, {userName}! 👋
+            </span>
+          </h1>
           <div 
             className="flex items-center mt-1 text-sm text-gray-500 cursor-pointer"
             onClick={handleLocationClick}
