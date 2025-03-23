@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, MapPin, Check, X, Navigation, ArrowLeft, PlusCircle, Calendar, MapPinIcon, DollarSign } from "lucide-react";
@@ -42,7 +41,6 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [showTaskDetails, setShowTaskDetails] = useState(false);
 
-  // Example task data - in a real app, this would come from an API
   const availableTasks: Task[] = [
     {
       title: "Clean my apartment",
@@ -248,12 +246,10 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
     }
   }, [useDeviceLocation]);
 
-  // Function to find relevant tasks based on search query
   useEffect(() => {
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
       
-      // First identify which categories might be relevant to this search
       let matchedCategories: string[] = [];
       
       Object.entries(keywordMappings).forEach(([category, keywords]) => {
@@ -265,7 +261,6 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
         }
       });
       
-      // Special case for "make my bed"
       if (query.includes("make my bed") || query.includes("make bed")) {
         matchedCategories = [
           ...new Set([
@@ -278,7 +273,6 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
         ];
       }
       
-      // For cooking related queries
       if (query.includes("cook") || query.includes("meal") || query.includes("food preparation")) {
         matchedCategories = [
           ...new Set([
@@ -288,7 +282,6 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
         ];
       }
       
-      // Now find tasks that fall under these categories or directly match the query
       const matched = availableTasks.filter(task => {
         const titleMatch = task.title.toLowerCase().includes(query);
         const descMatch = task.description.toLowerCase().includes(query);
@@ -340,14 +333,11 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
     setShowCustomTaskForm(true);
   };
 
-  // Function to highlight matching text in search results
   const highlightMatchingText = (text: string, query: string) => {
     if (!query.trim()) return text;
     
-    // Split query into words for better matching
     const queryWords = query.trim().toLowerCase().split(/\s+/);
     
-    // Check if any of the query words appear in the text
     let hasMatch = false;
     for (const word of queryWords) {
       if (text.toLowerCase().includes(word)) {
@@ -356,19 +346,14 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
       }
     }
     
-    // If no match, just return the original text
     if (!hasMatch) return text;
     
-    // Create regex pattern that matches any of the words
     const pattern = queryWords.map(word => `(${word})`).join('|');
     const regex = new RegExp(pattern, 'gi');
     
-    // Split the text based on matches
     const parts = text.split(regex);
     
-    // Filter out empty parts and reconstruct with highlights
     return parts.map((part, i) => {
-      // Check if this part matches any of our query words
       const isMatch = queryWords.some(word => 
         part.toLowerCase() === word
       );
@@ -621,3 +606,4 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
 };
 
 export default HomeHeader;
+
