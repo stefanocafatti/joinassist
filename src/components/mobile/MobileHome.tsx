@@ -1,3 +1,4 @@
+
 import React from "react";
 import MobileLayout from "./MobileLayout";
 import BottomNavigation from "./BottomNavigation";
@@ -13,7 +14,7 @@ const MobileHome = () => {
     { title: "Pet Sitting", color: "bg-soft-orange" },
     { title: "Electrical Work", color: "bg-soft-yellow" },
     { title: "Tutoring", color: "bg-soft-purple" },
-    { title: "Painting", color: "bg-soft-pink" }
+    { title: "Grocery Shopping", color: "bg-soft-pink" }
   ];
 
   // Expanded popular tasks with at least 12 items to support pagination
