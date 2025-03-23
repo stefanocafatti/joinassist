@@ -3,11 +3,10 @@ import React from "react";
 import MobileLayout from "./MobileLayout";
 import BottomNavigation from "./BottomNavigation";
 import HomeHeader from "./home/HomeHeader";
-import CategoriesSection from "./home/CategoriesSection";
 import PopularTasksSection from "./home/PopularTasksSection";
 
 const MobileHome = () => {
-  // Categories data to match the original data
+  // Categories data kept but not displayed in UI
   const categories = [
     { name: "Help Moving", icon: "📦", color: "bg-soft-blue" },
     { name: "Furniture Assembly", icon: "🪑", color: "bg-soft-green" },
@@ -123,9 +122,8 @@ const MobileHome = () => {
         <div className="space-y-3"> {/* Reduced vertical spacing between sections */}
           <HomeHeader userName="Sarah" />
           
-          {/* Only show PopularTasks and Categories sections */}
+          {/* Only showing PopularTasks section, removed CategoriesSection */}
           <PopularTasksSection popularTasks={popularTasks} />
-          <CategoriesSection categories={categories} />
         </div>
       </MobileLayout>
       <BottomNavigation />

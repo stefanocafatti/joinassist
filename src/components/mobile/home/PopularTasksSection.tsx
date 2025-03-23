@@ -1,6 +1,7 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronRight, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -178,7 +179,7 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
 
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-1.5">
-          <h2 className="text-lg font-semibold text-gray-900">Browse Tasks</h2>
+          <h2 className="text-lg font-semibold text-gray-900">Looking for something else?</h2>
         </div>
         <Button 
           size="smallIcon" 
