@@ -28,6 +28,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import ConfettiPopup from "./ConfettiPopup";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface Task {
   title: string;
@@ -314,12 +315,14 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
                       <SelectTrigger id="time">
                         <SelectValue placeholder="Select Time" />
                       </SelectTrigger>
-                      <SelectContent className="bg-white max-h-[200px] overflow-y-auto">
-                        {times.map((t) => (
-                          <SelectItem key={t} value={t}>
-                            {t}
-                          </SelectItem>
-                        ))}
+                      <SelectContent className="bg-white max-h-[200px]">
+                        <ScrollArea className="h-[180px]">
+                          {times.map((t) => (
+                            <SelectItem key={t} value={t}>
+                              {t}
+                            </SelectItem>
+                          ))}
+                        </ScrollArea>
                       </SelectContent>
                     </Select>
                   </div>
