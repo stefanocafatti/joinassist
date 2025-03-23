@@ -1,3 +1,4 @@
+
 import React from "react";
 import MobileLayout from "./MobileLayout";
 import BottomNavigation from "./BottomNavigation";
@@ -131,7 +132,10 @@ const MobileHome = () => {
         <div className="space-y-3">
           <HomeHeader userName="Sarah" />
           
-          {/* Common Tasks Buttons */}
+          {/* Popular Tasks Section - now first */}
+          <PopularTasksSection popularTasks={popularTasks} />
+          
+          {/* Common Tasks Buttons - now second */}
           <div className="my-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-3">Common Tasks</h2>
             <div className="grid grid-cols-2 gap-3">
@@ -147,9 +151,6 @@ const MobileHome = () => {
               ))}
             </div>
           </div>
-          
-          {/* Popular Tasks Section */}
-          <PopularTasksSection popularTasks={popularTasks} />
         </div>
       </MobileLayout>
       <BottomNavigation />
