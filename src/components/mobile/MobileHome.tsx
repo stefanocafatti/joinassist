@@ -50,7 +50,7 @@ const MobileHome = () => {
       price: "From $25/hr",
       category: "Home Services",
       location: "Brooklyn",
-      image: "/lovable-uploads/1dcc2d11-c9a3-4da3-91b5-187b6f61f0f5.png"
+      image: "/lovable-uploads/049d1420-586e-4794-b6e1-5c14cfeb328e.png"
     },
     {
       title: "Build my IKEA desk", 
@@ -66,7 +66,7 @@ const MobileHome = () => {
       price: "From $15/hr",
       category: "Academic",
       location: "Harlem",
-      image: "/lovable-uploads/f7d753ad-9aa3-4359-bd07-95d91daaa903.png"
+      image: "/lovable-uploads/049d1420-586e-4794-b6e1-5c14cfeb328e.png"
     },
     {
       title: "Food Delivery",
@@ -106,7 +106,7 @@ const MobileHome = () => {
       price: "From $20/hr",
       category: "Moving",
       location: "Columbia University",
-      image: "/lovable-uploads/e44adaaa-4a6d-435e-a3de-9355591817a8.png"
+      image: "/lovable-uploads/049d1420-586e-4794-b6e1-5c14cfeb328e.png"
     },
     {
       title: "Language Tutoring",
@@ -114,7 +114,7 @@ const MobileHome = () => {
       price: "From $25/hr",
       category: "Academic",
       location: "Greenwich Village",
-      image: "/lovable-uploads/f7d753ad-9aa3-4359-bd07-95d91daaa903.png"
+      image: "/lovable-uploads/049d1420-586e-4794-b6e1-5c14cfeb328e.png"
     }
   ];
 
