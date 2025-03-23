@@ -17,7 +17,7 @@ interface Task {
   category: string;
   location: string;
   image: string;
-  price: string;
+  price: string;  // Making price required to fix TypeScript error
 }
 
 interface PopularTasksSectionProps {

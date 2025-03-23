@@ -23,8 +23,8 @@ interface Task {
   description: string;
   category: string;
   location: string;
-  price?: string;
   image: string;
+  price: string;  // Making price required to fix TypeScript error
 }
 
 const HomeHeader = ({ userName }: HomeHeaderProps) => {
