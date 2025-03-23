@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import TaskDetailView from "@/components/ui/TaskDetailView";
 
-// Default image from user upload
-const USER_UPLOADED_IMAGE = "/lovable-uploads/8e3ea234-55c0-4aa9-87c5-565913181531.png";
+// Updated image path
+const TASK_IMAGE = "/lovable-uploads/239bf11e-868d-49c4-b2cf-e3fdd3bc7c20.png";
 
 interface PastTask {
   title: string;
@@ -89,7 +89,7 @@ const PastTasksSection = ({ pastTasks }: PastTasksSectionProps) => {
                 <div className="flex items-center">
                   <div 
                     className="h-16 w-16 bg-cover bg-center" 
-                    style={{ backgroundImage: `url(${USER_UPLOADED_IMAGE})` }} 
+                    style={{ backgroundImage: `url(${TASK_IMAGE})` }} 
                   />
                   <div className="flex-1 p-3">
                     <h3 className="font-medium text-sm text-gray-900">{task.title}</h3>
@@ -127,7 +127,7 @@ const PastTasksSection = ({ pastTasks }: PastTasksSectionProps) => {
             description: selectedTask.description || `This is a past task for ${selectedTask.title} completed on ${selectedTask.date}`,
             category: selectedTask.category || "Completed Tasks",
             location: selectedTask.location || "Not specified",
-            image: USER_UPLOADED_IMAGE
+            image: TASK_IMAGE
           }}
         />
       )}

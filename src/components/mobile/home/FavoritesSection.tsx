@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import TaskDetailView from "@/components/ui/TaskDetailView";
 
-// Default image from user upload
-const USER_UPLOADED_IMAGE = "/lovable-uploads/8e3ea234-55c0-4aa9-87c5-565913181531.png";
+// Updated image path
+const TASK_IMAGE = "/lovable-uploads/239bf11e-868d-49c4-b2cf-e3fdd3bc7c20.png";
 
 interface FavoriteTask {
   title: string;
@@ -87,7 +87,7 @@ const FavoritesSection = ({ favoritedTasks }: FavoritesSectionProps) => {
               <CardContent className="p-0">
                 <div 
                   className="h-28 bg-cover bg-center" 
-                  style={{ backgroundImage: `url(${USER_UPLOADED_IMAGE})` }}
+                  style={{ backgroundImage: `url(${TASK_IMAGE})` }}
                 />
                 <div className="p-3">
                   <h3 className="font-medium text-sm text-gray-900 mb-1">{task.title}</h3>
@@ -113,7 +113,7 @@ const FavoritesSection = ({ favoritedTasks }: FavoritesSectionProps) => {
             description: selectedTask.description || `Details for ${selectedTask.title}`,
             category: selectedTask.category || "Special Tasks",
             location: selectedTask.location || "Not specified",
-            image: USER_UPLOADED_IMAGE
+            image: TASK_IMAGE
           }}
         />
       )}

@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
@@ -11,11 +10,8 @@ import {
 } from "@/components/ui/carousel";
 import TaskDetailView from "@/components/ui/TaskDetailView";
 
-// Default image as fallback
-const DEFAULT_TASK_IMAGE = "/lovable-uploads/d1a14d8f-8a54-45a2-9662-376fac8076d3.png";
-
-// New image from user upload
-const USER_UPLOADED_IMAGE = "/lovable-uploads/8e3ea234-55c0-4aa9-87c5-565913181531.png";
+// Updated image path for all tasks
+const TASK_IMAGE = "/lovable-uploads/239bf11e-868d-49c4-b2cf-e3fdd3bc7c20.png";
 
 interface PopularTask {
   title: string;
@@ -201,7 +197,7 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
               <div 
                 className="h-28 bg-cover bg-center" 
                 style={{ 
-                  backgroundImage: `url(${USER_UPLOADED_IMAGE})`
+                  backgroundImage: `url(${TASK_IMAGE})`
                 }}
               />
               <Badge className={`absolute top-2 right-2 text-xs ${getCategoryTextColor(task.category)} ${getCategoryBgColor(task.category)}`}>
@@ -230,7 +226,7 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
             description: selectedTask.description,
             category: selectedTask.category,
             location: selectedTask.location,
-            image: USER_UPLOADED_IMAGE
+            image: TASK_IMAGE
           }}
         />
       )}
