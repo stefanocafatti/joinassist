@@ -58,7 +58,7 @@ const MobileHome = () => {
       price: "From $40/hr",
       category: "Furniture Assembly",
       location: "Upper East Side",
-      image: "/lovable-uploads/1dcc2d11-c9a3-4da3-91b5-187b6f61f0f5.png"
+      image: "/lovable-uploads/eb78ee8e-c334-4102-b507-3e323c2fc98c.png"
     },
     {
       title: "Proofreading",
