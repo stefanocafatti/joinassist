@@ -60,8 +60,8 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
     );
   };
 
-  // Default task image
-  const DEFAULT_TASK_IMAGE = "/lovable-uploads/8e3ea234-55c0-4aa9-87c5-565913181531.png";
+  // Default task image - updated to the blue Assist image
+  const DEFAULT_TASK_IMAGE = "/lovable-uploads/4fd295fb-ae2b-476a-bbb5-81d22bceeba5.png";
 
   return (
     <div className="space-y-6">
