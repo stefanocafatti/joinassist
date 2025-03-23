@@ -48,42 +48,47 @@ const CategoriesSection = ({ additionalTasks }: CategoriesSectionProps) => {
     setShowTaskDetail(false);
   };
 
-  // List of tasks with their background colors and emoji icons
+  // List of tasks with their images
   const taskItems = [
-    { title: "Help Moving", bgColor: "bg-blue-50", emoji: "📦" },
-    { title: "Furniture Assembly", bgColor: "bg-green-50", emoji: "🪑" },
-    { title: "General Mounting", bgColor: "bg-yellow-50", emoji: "🔨" },
-    { title: "Cleaning", bgColor: "bg-purple-50", emoji: "🧹" },
-    { title: "TV Mounting", bgColor: "bg-pink-50", emoji: "📺" },
-    { title: "Heavy Lifting", bgColor: "bg-orange-50", emoji: "💪" },
-    { title: "Academic Tutoring", bgColor: "bg-blue-50", emoji: "📚" },
-    { title: "Laundry Help", bgColor: "bg-green-50", emoji: "👕" },
-    { title: "Grocery Shopping", bgColor: "bg-yellow-50", emoji: "🛒" },
-    { title: "Pet Sitting", bgColor: "bg-purple-50", emoji: "🐕" },
-    { title: "House Cleaning", bgColor: "bg-pink-50", emoji: "✨" },
-    { title: "Car Wash", bgColor: "bg-orange-50", emoji: "🚗" },
-    { title: "Yard Work", bgColor: "bg-blue-50", emoji: "🌿" },
-    { title: "Meal Preparation", bgColor: "bg-green-50", emoji: "🍳" },
-    { title: "Tech Support", bgColor: "bg-yellow-50", emoji: "💻" },
-    { title: "Plant Watering", bgColor: "bg-purple-50", emoji: "🪴" }
+    { title: "Help Moving", image: "/lovable-uploads/72545c93-f781-402e-ad25-5cd509be453c.png" },
+    { title: "Furniture Assembly", image: "/lovable-uploads/83abea36-642f-4147-865a-c43794680e3b.png" },
+    { title: "General Mounting", image: "/lovable-uploads/36f389d4-c8c6-40a8-9cc4-2ed5306d7dd5.png" },
+    { title: "Cleaning", image: "/lovable-uploads/84373410-0ca0-44aa-bce4-fecda1465ffb.png" },
+    { title: "TV Mounting", image: "/lovable-uploads/36f389d4-c8c6-40a8-9cc4-2ed5306d7dd5.png" },
+    { title: "Heavy Lifting", image: "/lovable-uploads/72545c93-f781-402e-ad25-5cd509be453c.png" },
+    { title: "Academic Tutoring", image: "/lovable-uploads/603a2dee-f790-49b1-aade-54b5318f754a.png" },
+    { title: "Laundry Help", image: "/lovable-uploads/bd95bdf7-c140-465b-8e12-3a21d5d46a94.png" },
+    { title: "Grocery Shopping", image: "/lovable-uploads/b1aee96b-9a26-4fd9-9872-57f40cbe16d7.png" },
+    { title: "Pet Sitting", image: "/lovable-uploads/55ae04cd-8676-4a1c-b2b3-36c7005144af.png" },
+    { title: "House Cleaning", image: "/lovable-uploads/84373410-0ca0-44aa-bce4-fecda1465ffb.png" },
+    { title: "Car Wash", image: "/lovable-uploads/c9d970a2-7da1-4c02-997f-aa30ef2e5bba.png" },
+    { title: "Yard Work", image: "/lovable-uploads/55ae04cd-8676-4a1c-b2b3-36c7005144af.png" },
+    { title: "Meal Preparation", image: "/lovable-uploads/c63ac0bf-b196-42d2-8004-012ba59ad57e.png" },
+    { title: "Tech Support", image: "/lovable-uploads/bab65021-5d30-4495-bcd8-b77a329626c7.png" },
+    { title: "Plant Watering", image: "/lovable-uploads/55ae04cd-8676-4a1c-b2b3-36c7005144af.png" }
   ];
 
   return (
     <section className="mb-1">
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-1.5">
-          <h2 className="text-lg font-semibold text-gray-900">All Services</h2>
+          <h2 className="text-lg font-semibold text-gray-900">Tasks</h2>
         </div>
       </div>
       <div className="grid grid-cols-2 gap-3">
         {taskItems.map((task, index) => (
           <div 
             key={index}
-            className={`${task.bgColor} rounded-xl p-3 shadow-sm hover:shadow-md transition-all cursor-pointer flex items-center gap-3`}
+            className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer overflow-hidden border border-gray-100"
             onClick={() => handleTaskClick(task)}
           >
-            <div className="text-2xl">{task.emoji}</div>
-            <span className="text-sm font-medium text-gray-900">{task.title}</span>
+            <div 
+              className="h-24 bg-cover bg-center" 
+              style={{ backgroundImage: `url(${task.image})` }}
+            />
+            <div className="p-2">
+              <p className="text-sm font-medium text-gray-900">{task.title}</p>
+            </div>
           </div>
         ))}
       </div>
