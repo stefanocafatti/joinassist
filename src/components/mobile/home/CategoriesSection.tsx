@@ -22,22 +22,17 @@ const CategoriesSection = ({ additionalTasks }: CategoriesSectionProps) => {
         </div>
       </div>
       <div className="grid grid-cols-3 gap-2">
-        {additionalTasks.map((task, index) => {
-          // Determine text size based on title length
-          const textSizeClass = task.title.length > 12 ? "text-xs" : "text-sm";
-
-          return (
-            <div 
-              key={index}
-              className={`${task.color} rounded-xl flex flex-col items-center justify-center py-3 px-2 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer transform hover:scale-105`}
-              onClick={() => navigate(`/mobile/task/${task.title.toLowerCase()}`)}
-            >
-              <span className={`${textSizeClass} font-medium text-gray-800 text-center w-full`}>
-                {task.title}
-              </span>
-            </div>
-          );
-        })}
+        {additionalTasks.map((task, index) => (
+          <div 
+            key={index}
+            className={`${task.color} rounded-xl flex flex-col items-center justify-center py-3 px-2 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer transform hover:scale-105`}
+            onClick={() => navigate(`/mobile/task/${task.title.toLowerCase()}`)}
+          >
+            <span className="text-sm font-medium text-gray-800 text-center w-full">
+              {task.title}
+            </span>
+          </div>
+        ))}
       </div>
     </section>
   );
