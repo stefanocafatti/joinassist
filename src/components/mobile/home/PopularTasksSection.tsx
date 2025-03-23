@@ -202,8 +202,8 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
                 {task.category}
               </Badge>
             </div>
-            <div className="p-3 flex items-center justify-center">
-              <h3 className="font-medium text-sm text-gray-900 text-center line-clamp-2">
+            <div className="p-3">
+              <h3 className="font-medium text-sm text-gray-900 text-left line-clamp-2">
                 {task.title}
               </h3>
             </div>
