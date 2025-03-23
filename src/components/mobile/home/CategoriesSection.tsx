@@ -42,13 +42,13 @@ const CategoriesSection = ({ additionalTasks }: CategoriesSectionProps) => {
         ))}
       </div>
       
-      {/* Create Custom Task button */}
+      {/* Request Custom Task button */}
       <Button 
-        className="w-full bg-assist-blue hover:bg-assist-blue/90 text-white rounded-2xl mt-4 py-6 flex items-center justify-center gap-2"
+        className="w-full bg-assist-blue hover:bg-assist-blue/90 text-white rounded-2xl mt-4 py-3 px-4 flex items-center justify-center gap-2"
         onClick={handleCreateCustomTask}
       >
         <Plus className="h-5 w-5" />
-        <span className="text-base font-medium">Create Custom Task</span>
+        <span className="text-sm font-medium">Request Custom Task</span>
       </Button>
     </section>
   );
