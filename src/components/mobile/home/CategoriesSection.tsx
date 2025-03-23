@@ -21,14 +21,14 @@ const CategoriesSection = ({ additionalTasks }: CategoriesSectionProps) => {
           <h2 className="text-lg font-semibold text-gray-900">Looking for something else?</h2>
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-2">
+      <div className="flex flex-wrap gap-2">
         {additionalTasks.map((task, index) => (
           <div 
             key={index}
-            className={`${task.color} rounded-xl flex flex-col items-center justify-center py-3 px-2 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer transform hover:scale-105`}
+            className={`${task.color} rounded-xl flex flex-col items-center justify-center py-3 px-3 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer transform hover:scale-105`}
             onClick={() => navigate(`/mobile/task/${task.title.toLowerCase()}`)}
           >
-            <span className="text-sm font-medium text-gray-800 text-center w-full">
+            <span className="text-sm font-medium text-gray-800 text-center whitespace-nowrap">
               {task.title}
             </span>
           </div>
