@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
@@ -9,13 +10,16 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 
+// Import the default image
+const DEFAULT_TASK_IMAGE = "/lovable-uploads/d1a14d8f-8a54-45a2-9662-376fac8076d3.png";
+
 interface PopularTask {
   title: string;
   description: string;
   price: string;
   category: string;
   location: string;
-  image: string;
+  image?: string; // Make image optional
 }
 
 interface PopularTasksSectionProps {
@@ -159,7 +163,9 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
             <div className="relative">
               <div 
                 className="h-28 bg-cover bg-center" 
-                style={{ backgroundImage: `url(${task.image})` }}
+                style={{ 
+                  backgroundImage: `url(${task.image || DEFAULT_TASK_IMAGE})` 
+                }}
               />
               <Badge className={`absolute top-2 right-2 text-xs ${getCategoryTextColor(task.category)} ${getCategoryBgColor(task.category)}`}>
                 {task.category}
