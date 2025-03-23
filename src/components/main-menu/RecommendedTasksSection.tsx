@@ -7,8 +7,8 @@ import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 import TaskDetailView from "@/components/ui/TaskDetailView";
 
-// Default image for all tasks
-const DEFAULT_TASK_IMAGE = "/lovable-uploads/8e3ea234-55c0-4aa9-87c5-565913181531.png";
+// Default image for all tasks - updated to the blue Assist image
+const DEFAULT_TASK_IMAGE = "/lovable-uploads/e44adaaa-4a6d-435e-a3de-9355591817a8.png";
 
 interface Task {
   title: string;

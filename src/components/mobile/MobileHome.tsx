@@ -21,44 +21,44 @@ const MobileHome = () => {
   // Expanded popular tasks tailored for college student helpers
   const popularTasks = [
     {
-      title: "Apartment Cleaning",
+      title: "Clean my apartment",
       description: "Professional cleaning services by verified students",
       price: "From $25/hr",
       category: "Cleaning",
       location: "Columbia University",
-      image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1000&auto=format&fit=crop"
+      image: "/lovable-uploads/1dcc2d11-c9a3-4da3-91b5-187b6f61f0f5.png"
     },
     {
-      title: "Resume Review",
+      title: "Apartment deep cleaning",
       description: "Get your resume reviewed by students in business or HR",
       price: "From $20/hr",
-      category: "Academic",
+      category: "Cleaning",
       location: "NYU Area",
-      image: "https://images.unsplash.com/photo-1581078426770-6d336e5de7bf?q=80&w=1000&auto=format&fit=crop"
+      image: "/lovable-uploads/1dcc2d11-c9a3-4da3-91b5-187b6f61f0f5.png"
     },
     {
-      title: "Apartment Move", // Updated from "Help Moving"
+      title: "Make my bed and change sheets", 
       description: "Assistance with moving and packing your belongings",
       price: "From $30/hr",
-      category: "Moving",
+      category: "Home Services",
       location: "Midtown",
-      image: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1000&auto=format&fit=crop"
+      image: "/lovable-uploads/1dcc2d11-c9a3-4da3-91b5-187b6f61f0f5.png"
     },
     {
-      title: "Math Tutoring",
+      title: "Organize my closet",
       description: "One-on-one math tutoring from STEM students",
       price: "From $25/hr",
-      category: "Academic",
+      category: "Home Services",
       location: "Brooklyn",
-      image: "https://images.unsplash.com/photo-1593784991095-a205069470b6?q=80&w=1000&auto=format&fit=crop"
+      image: "/lovable-uploads/1dcc2d11-c9a3-4da3-91b5-187b6f61f0f5.png"
     },
     {
-      title: "Car Cleaning", // Updated from "Deep House Cleaning"
+      title: "Build my IKEA desk", 
       description: "Thorough cleaning service for your entire home",
       price: "From $40/hr",
-      category: "Cleaning",
+      category: "Furniture Assembly",
       location: "Upper East Side",
-      image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=1000&auto=format&fit=crop"
+      image: "/lovable-uploads/1dcc2d11-c9a3-4da3-91b5-187b6f61f0f5.png"
     },
     {
       title: "Proofreading",
@@ -66,7 +66,7 @@ const MobileHome = () => {
       price: "From $15/hr",
       category: "Academic",
       location: "Harlem",
-      image: "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?q=80&w=1000&auto=format&fit=crop"
+      image: "/lovable-uploads/e44adaaa-4a6d-435e-a3de-9355591817a8.png"
     },
     {
       title: "Food Delivery",
@@ -74,7 +74,7 @@ const MobileHome = () => {
       price: "From $15/hr",
       category: "Errands",
       location: "Lower East Side",
-      image: "https://images.unsplash.com/photo-1600585152220-90363fe7e115?q=80&w=1000&auto=format&fit=crop"
+      image: "/lovable-uploads/e44adaaa-4a6d-435e-a3de-9355591817a8.png"
     },
     {
       title: "Tech Support",
@@ -82,7 +82,7 @@ const MobileHome = () => {
       price: "From $20/hr",
       category: "Tech",
       location: "Chelsea",
-      image: "https://images.unsplash.com/photo-1594540634759-8e42a1991cf7?q=80&w=1000&auto=format&fit=crop"
+      image: "/lovable-uploads/e44adaaa-4a6d-435e-a3de-9355591817a8.png"
     },
     {
       title: "Grocery Delivery",
@@ -90,7 +90,7 @@ const MobileHome = () => {
       price: "From $15/hr",
       category: "Errands",
       location: "Financial District",
-      image: "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?q=80&w=1000&auto=format&fit=crop"
+      image: "/lovable-uploads/e44adaaa-4a6d-435e-a3de-9355591817a8.png"
     },
     {
       title: "Website Building",
@@ -98,7 +98,7 @@ const MobileHome = () => {
       price: "From $30/hr",
       category: "Tech",
       location: "Upper West Side",
-      image: "https://images.unsplash.com/photo-1577724513455-8315962c6f14?q=80&w=1000&auto=format&fit=crop"
+      image: "/lovable-uploads/e44adaaa-4a6d-435e-a3de-9355591817a8.png"
     },
     {
       title: "Dorm Room Setup",
@@ -106,7 +106,7 @@ const MobileHome = () => {
       price: "From $20/hr",
       category: "Moving",
       location: "Columbia University",
-      image: "https://images.unsplash.com/photo-1634823668943-96e1d18845e5?q=80&w=1000&auto=format&fit=crop"
+      image: "/lovable-uploads/e44adaaa-4a6d-435e-a3de-9355591817a8.png"
     },
     {
       title: "Language Tutoring",
@@ -114,7 +114,7 @@ const MobileHome = () => {
       price: "From $25/hr",
       category: "Academic",
       location: "Greenwich Village",
-      image: "https://images.unsplash.com/photo-1577724513455-8315962c6f14?q=80&w=1000&auto=format&fit=crop"
+      image: "/lovable-uploads/e44adaaa-4a6d-435e-a3de-9355591817a8.png"
     }
   ];
 
