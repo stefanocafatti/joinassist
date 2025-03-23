@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Bell, Search, MapPin, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 
 // Task items that will be displayed in the search dialog
@@ -73,7 +73,7 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ userName = "User" }) => {
         onClick={() => setIsSearchOpen(true)}
       >
         <Search className="h-5 w-5 text-gray-400 mr-3" />
-        <span className="text-gray-400 font-normal">What task do you need help with?</span>
+        <span className="text-gray-400 font-normal">Try "walk my dog" or "wash my car"</span>
       </div>
 
       <Dialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>
@@ -113,6 +113,8 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ userName = "User" }) => {
               )}
             </div>
           </div>
+          
+          <DialogTitle className="sr-only">Find a task</DialogTitle>
           
           <div className="p-4 overflow-y-auto max-h-[70vh]">
             {filteredTasks.length > 0 ? (
