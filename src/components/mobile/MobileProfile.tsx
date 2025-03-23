@@ -108,11 +108,11 @@ const MobileProfile = () => {
             
             <Button 
               variant="outline" 
-              className="rounded-full border-2 border-assist-blue text-assist-blue hover:bg-assist-blue/5 w-full max-w-md"
+              className="rounded-full border-2 border-assist-blue text-assist-blue hover:bg-assist-blue/5 w-auto px-4 py-1 text-sm"
               onClick={handleShare}
             >
-              <Gift className="mr-2 h-5 w-5" />
-              Help Your Friends, Get $10
+              <Gift className="mr-1 h-4 w-4" />
+              Help Friends, Get $10
             </Button>
           </div>
           
