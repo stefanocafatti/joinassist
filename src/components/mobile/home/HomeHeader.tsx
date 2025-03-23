@@ -1,10 +1,11 @@
 
-import React, { useState } from "react";
-import { Bell, Search, MapPin, X } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Bell, Search, MapPin, X, Check, Navigation } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
+import { Input } from "@/components/ui/input";
 
 // Task items that will be displayed in the search dialog
 const taskItems = [
@@ -30,10 +31,35 @@ interface HomeHeaderProps {
   userName?: string;
 }
 
+interface LocationData {
+  street: string;
+  city: string;
+  state: string;
+}
+
 const HomeHeader: React.FC<HomeHeaderProps> = ({ userName = "User" }) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isLocationDialogOpen, setIsLocationDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [location, setLocation] = useState<LocationData>({
+    street: "Columbia University",
+    city: "New York City",
+    state: "New York"
+  });
+  const [tempLocation, setTempLocation] = useState<LocationData>({
+    street: "",
+    city: "",
+    state: ""
+  });
+  const [isGettingLocation, setIsGettingLocation] = useState(false);
   const { toast } = useToast();
+
+  // Initialize temp location when dialog opens
+  useEffect(() => {
+    if (isLocationDialogOpen) {
+      setTempLocation({ ...location });
+    }
+  }, [isLocationDialogOpen]);
 
   const filteredTasks = searchQuery 
     ? taskItems.filter(task => 
@@ -48,14 +74,83 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ userName = "User" }) => {
     });
   };
 
+  const handleLocationClick = () => {
+    setIsLocationDialogOpen(true);
+  };
+
+  const handleGetCurrentLocation = () => {
+    setIsGettingLocation(true);
+    
+    if (!navigator.geolocation) {
+      toast({
+        title: "Error",
+        description: "Geolocation is not supported by your browser",
+        variant: "destructive",
+      });
+      setIsGettingLocation(false);
+      return;
+    }
+    
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        // In a real app, you would use a reverse geocoding service here
+        // For demo purposes, we're just setting a placeholder
+        setTempLocation({
+          street: "Current Location",
+          city: "Near You",
+          state: "Current Area"
+        });
+        
+        toast({
+          title: "Location Updated",
+          description: "Using your current location"
+        });
+        
+        setIsGettingLocation(false);
+      },
+      error => {
+        let errorMessage = "Unable to retrieve your location";
+        
+        if (error.code === 1) {
+          errorMessage = "Location access denied. Please enable location services.";
+        }
+        
+        toast({
+          title: "Location Error",
+          description: errorMessage,
+          variant: "destructive",
+        });
+        
+        setIsGettingLocation(false);
+      }
+    );
+  };
+
+  const handleSaveLocation = () => {
+    setLocation(tempLocation);
+    setIsLocationDialogOpen(false);
+    
+    toast({
+      title: "Location Updated",
+      description: "Your service location has been updated"
+    });
+  };
+
+  const getDisplayLocation = () => {
+    return `${location.street}, ${location.state}`;
+  };
+
   return (
     <div className="pt-4 pb-2">
       <div className="flex justify-between items-center mb-4">
         <div>
           <h1 className="font-bold text-xl text-gray-900">Hi, {userName}! 👋</h1>
-          <div className="flex items-center mt-1 text-sm text-gray-500">
+          <div 
+            className="flex items-center mt-1 text-sm text-gray-500 cursor-pointer"
+            onClick={handleLocationClick}
+          >
             <MapPin className="h-3.5 w-3.5 mr-1 text-assist-blue" />
-            Columbia University, New York
+            <span className="truncate max-w-[200px]">{getDisplayLocation()}</span>
           </div>
         </div>
         <Button
@@ -76,6 +171,7 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ userName = "User" }) => {
         <span className="text-gray-400 font-normal">Try "walk my dog" or "wash my car"</span>
       </div>
 
+      {/* Search Dialog */}
       <Dialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>
         <DialogContent className="sm:max-w-md p-0 gap-0">
           <div className="sticky top-0 z-10 bg-white p-4 border-b border-gray-100">
@@ -152,6 +248,81 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ userName = "User" }) => {
                 </Button>
               </div>
             )}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Location Edit Dialog */}
+      <Dialog open={isLocationDialogOpen} onOpenChange={setIsLocationDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogTitle>Update Your Location</DialogTitle>
+          
+          <div className="space-y-4 py-2">
+            <div>
+              <label htmlFor="street" className="block text-sm font-medium text-gray-700 mb-1">
+                Street Address
+              </label>
+              <Input
+                id="street"
+                value={tempLocation.street}
+                onChange={(e) => setTempLocation({...tempLocation, street: e.target.value})}
+                placeholder="Enter street address"
+              />
+            </div>
+            
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">
+                  City
+                </label>
+                <Input
+                  id="city"
+                  value={tempLocation.city}
+                  onChange={(e) => setTempLocation({...tempLocation, city: e.target.value})}
+                  placeholder="City"
+                />
+              </div>
+              
+              <div>
+                <label htmlFor="state" className="block text-sm font-medium text-gray-700 mb-1">
+                  State
+                </label>
+                <Input
+                  id="state"
+                  value={tempLocation.state}
+                  onChange={(e) => setTempLocation({...tempLocation, state: e.target.value})}
+                  placeholder="State"
+                />
+              </div>
+            </div>
+            
+            <div className="pt-2">
+              <Button
+                variant="outline"
+                type="button"
+                className="w-full flex justify-center items-center gap-2"
+                onClick={handleGetCurrentLocation}
+                disabled={isGettingLocation}
+              >
+                <Navigation className="h-4 w-4" />
+                {isGettingLocation ? "Getting location..." : "Use Current Location"}
+              </Button>
+            </div>
+          </div>
+          
+          <div className="flex justify-end gap-3 mt-2">
+            <Button 
+              variant="outline" 
+              onClick={() => setIsLocationDialogOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button 
+              onClick={handleSaveLocation}
+              className="bg-assist-blue hover:bg-assist-blue/90"
+            >
+              <Check className="h-4 w-4 mr-1" /> Save
+            </Button>
           </div>
         </DialogContent>
       </Dialog>
