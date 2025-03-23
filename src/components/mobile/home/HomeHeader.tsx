@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, MapPin, Check, X, Navigation, ArrowLeft, PlusCircle } from "lucide-react";
@@ -41,64 +42,105 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
   const [showTaskDetails, setShowTaskDetails] = useState(false);
   const [showCategories, setShowCategories] = useState(true);
 
-  const logoImage = "/public/lovable-uploads/fe08e9a7-ecd9-48d6-bef3-1abede7c601a.png";
-
+  // Use the same task images as defined in MobileHome component for consistency
   const availableTasks: Task[] = [
     {
       title: "Clean my apartment",
       description: "I need help cleaning my 1-bedroom apartment including dusting, vacuuming, and bathroom cleaning.",
       category: "Cleaning",
       location: "UCLA Area",
-      image: logoImage
+      image: "/lovable-uploads/84373410-0ca0-44aa-bce4-fecda1465ffb.png"
     },
     {
       title: "Apartment deep cleaning",
       description: "Need a thorough cleaning of my apartment before move-out inspection.",
       category: "Cleaning",
       location: "Downtown LA",
-      image: logoImage
+      image: "/lovable-uploads/84373410-0ca0-44aa-bce4-fecda1465ffb.png"
     },
     {
       title: "Make my bed and change sheets",
       description: "Need help changing my bed sheets and making my bed nicely.",
       category: "Home Services",
       location: "USC Campus",
-      image: logoImage
+      image: "/lovable-uploads/bd95bdf7-c140-465b-8e12-3a21d5d46a94.png"
     },
     {
       title: "Organize my closet",
       description: "Help me organize my closet and sort through clothes for donation.",
       category: "Home Services",
       location: "Westwood",
-      image: logoImage
+      image: "/lovable-uploads/049d1420-586e-4794-b6e1-5c14cfeb328e.png"
     },
     {
       title: "Build my IKEA desk",
       description: "I need help assembling my new IKEA desk with drawers.",
       category: "Furniture Assembly",
       location: "Santa Monica",
-      image: logoImage
+      image: "/lovable-uploads/eb78ee8e-c334-4102-b507-3e323c2fc98c.png"
     },
     {
       title: "Assemble bookshelf",
       description: "Need help putting together a 5-shelf bookcase from IKEA.",
       category: "Furniture Assembly",
       location: "Culver City",
-      image: logoImage
+      image: "/lovable-uploads/eb78ee8e-c334-4102-b507-3e323c2fc98c.png"
     },
     {
       title: "Meal prep for the week",
       description: "Looking for someone to help me cook and prepare 5 meals for my work week.",
       category: "Grocery Shopping",
       location: "Venice",
-      image: logoImage
+      image: "/lovable-uploads/b1aee96b-9a26-4fd9-9872-57f40cbe16d7.png"
     },
     {
       title: "Groceries and cooking dinner",
       description: "Need someone to pick up groceries and cook dinner for 4 people.",
       category: "Grocery Shopping",
       location: "Pasadena",
-      image: logoImage
+      image: "/lovable-uploads/b1aee96b-9a26-4fd9-9872-57f40cbe16d7.png"
+    },
+    {
+      title: "Proofreading",
+      description: "Get your essays and papers proofread by English majors",
+      category: "Academic",
+      location: "Harlem",
+      image: "/lovable-uploads/603a2dee-f790-49b1-aade-54b5318f754a.png"
+    },
+    {
+      title: "Language Tutoring",
+      description: "Learn a new language from native-speaking students",
+      category: "Academic",
+      location: "Greenwich Village",
+      image: "/lovable-uploads/603a2dee-f790-49b1-aade-54b5318f754a.png"
+    },
+    {
+      title: "Dorm Room Setup",
+      description: "Help setting up your dorm room efficiently",
+      category: "Moving",
+      location: "Columbia University",
+      image: "/lovable-uploads/049d1420-586e-4794-b6e1-5c14cfeb328e.png"
+    },
+    {
+      title: "Food Delivery",
+      description: "Get food delivered from your favorite restaurants",
+      category: "Errands",
+      location: "Lower East Side",
+      image: "/lovable-uploads/c63ac0bf-b196-42d2-8004-012ba59ad57e.png"
+    },
+    {
+      title: "Tech Support",
+      description: "Troubleshooting and tech setup by IT students",
+      category: "Tech",
+      location: "Chelsea",
+      image: "/lovable-uploads/bab65021-5d30-4495-bcd8-b77a329626c7.png"
+    },
+    {
+      title: "Website Building",
+      description: "Basic website creation by CS students",
+      category: "Tech",
+      location: "Upper West Side",
+      image: "/lovable-uploads/bab65021-5d30-4495-bcd8-b77a329626c7.png"
     }
   ];
 

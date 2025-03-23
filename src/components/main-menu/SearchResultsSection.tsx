@@ -60,9 +60,6 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
     );
   };
 
-  // Default task image - using the blue Assist logo
-  const DEFAULT_TASK_IMAGE = "/lovable-uploads/e44adaaa-4a6d-435e-a3de-9355591817a8.png";
-
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -90,7 +87,7 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
             >
               <div className="h-40 overflow-hidden">
                 <img
-                  src={DEFAULT_TASK_IMAGE}
+                  src={task.image}
                   alt={task.title}
                   className="w-full h-full object-cover"
                 />
