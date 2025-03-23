@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
@@ -25,32 +24,18 @@ interface PopularTasksSectionProps {
 
 const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
   const navigate = useNavigate();
-  const [viewAll, setViewAll] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const tasksPerPage = 4;
 
   // Extract unique categories from tasks
   const categories = Array.from(new Set(popularTasks.map(task => task.category)));
 
-  // Get filtered tasks based on selected category and view mode
+  // Get filtered tasks based on selected category
   const getDisplayedTasks = () => {
-    // First apply category filter (if any)
-    const filteredTasks = selectedCategory
+    // If a category is selected, filter tasks by that category
+    // Otherwise show all tasks
+    return selectedCategory
       ? popularTasks.filter(task => task.category === selectedCategory)
       : popularTasks;
-    
-    // When "All" category is selected, show all tasks
-    // When specific category is selected but not viewing all, apply page limit
-    if (selectedCategory !== null && !viewAll) {
-      return filteredTasks.slice(0, tasksPerPage);
-    }
-    
-    // When viewAll is true, show all filtered tasks
-    return filteredTasks;
-  };
-
-  const handleViewAllToggle = () => {
-    setViewAll(!viewAll);
   };
 
   const handleCategorySelect = (category: string) => {
@@ -163,15 +148,6 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
         <div className="flex items-center gap-1.5">
           <h2 className="text-lg font-semibold text-gray-900">Browse Tasks</h2>
         </div>
-        <Button 
-          variant="ghost" 
-          size="sm" 
-          className="text-assist-blue text-sm p-0 hover:bg-transparent" 
-          onClick={handleViewAllToggle}
-        >
-          {viewAll ? "Show Less" : "View All"}
-          <ChevronRight size={16} />
-        </Button>
       </div>
       <div className="grid grid-cols-2 gap-3">
         {getDisplayedTasks().map((task, index) => (
