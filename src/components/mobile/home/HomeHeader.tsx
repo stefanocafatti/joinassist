@@ -141,7 +141,7 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ userName = "User" }) => {
       <div className="flex justify-between items-center mb-4">
         <div>
           <h1 className="font-bold text-xl">
-            Hi, <span className="bg-gradient-to-r from-assist-blue via-blue-500 to-blue-400 bg-clip-text text-transparent">{userName}</span>, 👋
+            Hi <span className="bg-gradient-to-r from-assist-blue via-blue-500 to-blue-400 bg-clip-text text-transparent">{userName}<span>,</span></span> 👋
           </h1>
           <div 
             className="flex items-center mt-1 text-sm text-gray-500 cursor-pointer"
