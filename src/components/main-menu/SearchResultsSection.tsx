@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Search, X, MapPin, DollarSign, Plus } from "lucide-react";
+import { Search, X, MapPin, DollarSign, Plus, Eye } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 interface SearchResultsSectionProps {
@@ -35,16 +35,27 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
   const highlightMatchingText = (text: string, query: string) => {
     if (!query.trim()) return text;
     
-    const regex = new RegExp(`(${query.trim()})`, 'gi');
+    // Split query into words for better matching
+    const queryWords = query.trim().toLowerCase().split(/\s+/);
+    
+    // Create regex pattern that matches any of the words
+    const pattern = queryWords.map(word => `(${word})`).join('|');
+    const regex = new RegExp(pattern, 'gi');
+    
     const parts = text.split(regex);
     
     return (
       <>
-        {parts.map((part, i) => 
-          regex.test(part) ? 
+        {parts.map((part, i) => {
+          // Check if this part matches any of our query words
+          const isMatch = queryWords.some(word => 
+            part.toLowerCase() === word
+          );
+          
+          return isMatch ? 
             <span key={i} className="bg-yellow-100 text-yellow-800 px-1 rounded">{part}</span> : 
-            part
-        )}
+            part;
+        })}
       </>
     );
   };
@@ -121,6 +132,16 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
                       />
                     </svg>
                   </button>
+                  <Button 
+                    size="sm" 
+                    className="bg-assist-blue hover:bg-assist-blue/90"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onBookNow(task.title);
+                    }}
+                  >
+                    <Eye className="h-4 w-4 mr-1" /> View Task
+                  </Button>
                 </div>
               </div>
             </div>

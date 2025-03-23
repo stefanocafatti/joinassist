@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, MapPin, Check, X, Navigation, ArrowLeft, PlusCircle } from "lucide-react";
@@ -42,21 +43,25 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
     { name: "Pet Sitting", icon: "🐕", color: "bg-soft-purple" },
     { name: "Photography", icon: "📸", color: "bg-soft-pink" },
     { name: "Tech Support", icon: "💻", color: "bg-soft-orange" },
+    { name: "Home Services", icon: "🏠", color: "bg-soft-blue" }, // Added new category
+    { name: "Custom Task", icon: "✨", color: "bg-soft-green" }, // Added new category
   ];
 
   const keywordMappings: Record<string, string[]> = {
     "Help Moving": ["move", "moving", "relocation", "transport", "carry", "haul", "shift", "furniture moving"],
-    "Furniture Assembly": ["assemble", "build", "construct", "put together", "ikea", "desk", "chair", "table", "shelf", "bookcase", "bed frame"],
+    "Furniture Assembly": ["assemble", "build", "construct", "put together", "ikea", "desk", "chair", "table", "shelf", "bookcase", "bed frame", "make my bed", "assemble bed"],
     "General Mounting": ["mount", "hang", "install", "setup", "attach", "wall", "drill", "fix", "picture", "mirror", "shelf"],
-    "Cleaning": ["clean", "wash", "tidy", "dust", "sweep", "mop", "vacuum", "sanitize", "apartment", "house", "room", "bathroom", "kitchen"],
+    "Cleaning": ["clean", "wash", "tidy", "dust", "sweep", "mop", "vacuum", "sanitize", "apartment", "house", "room", "bathroom", "kitchen", "make my bed", "make bed", "fold sheets", "change sheets", "change linens", "bed sheets"],
     "TV Mounting": ["tv", "television", "mount", "install", "hang", "setup", "wall", "bracket"],
     "Heavy Lifting": ["lift", "heavy", "move", "weight", "big", "bulky", "large"],
     "Academic Tutoring": ["tutor", "help", "study", "homework", "math", "science", "english", "history", "exam", "essay", "assignment", "paper"],
-    "Laundry Help": ["laundry", "wash", "fold", "clothes", "dry cleaning", "iron", "ironing"],
-    "Grocery Shopping": ["grocery", "shop", "shopping", "food", "supermarket", "store", "buy", "purchase", "market"],
+    "Laundry Help": ["laundry", "wash", "fold", "clothes", "dry cleaning", "iron", "ironing", "bedding", "sheets", "make my bed", "make bed", "change sheets"],
+    "Grocery Shopping": ["grocery", "shop", "shopping", "food", "supermarket", "store", "buy", "purchase", "market", "cook", "cooking", "meal", "dinner", "lunch", "breakfast", "prepare food", "meal prep"],
     "Pet Sitting": ["pet", "dog", "cat", "walk", "sit", "feed", "animal", "care", "boarding"],
     "Photography": ["photo", "picture", "portrait", "event", "session", "camera", "photoshoot", "headshot"],
     "Tech Support": ["tech", "computer", "laptop", "phone", "setup", "fix", "repair", "install", "software", "hardware", "printer", "wifi", "internet"],
+    "Home Services": ["home", "house", "apartment", "room", "bedroom", "kitchen", "bathroom", "living room", "make my bed", "make bed", "organize", "setup", "furniture", "decorate", "decorating"],
+    "Custom Task": ["custom", "specific", "unique", "special", "personalized", "tailored"],
   };
 
   const handleEditLocation = () => {
@@ -167,10 +172,12 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
       
+      // First try direct matches with category names
       let matched = categories.filter(category => 
         category.name.toLowerCase().includes(query)
       );
       
+      // If no direct matches, try keyword matching
       if (matched.length === 0) {
         matched = categories.filter(category => {
           const keywords = keywordMappings[category.name] || [];
@@ -179,6 +186,31 @@ const HomeHeader = ({ userName }: HomeHeaderProps) => {
             keyword.toLowerCase().includes(query)
           );
         });
+      }
+      
+      // Special handling for specific phrases like "make my bed"
+      if (query.includes("make my bed") || query.includes("make bed")) {
+        // Ensure both cleaning and furniture assembly categories are included
+        const relevantCategories = ["Cleaning", "Laundry Help", "Furniture Assembly", "Home Services"];
+        
+        matched = [
+          ...matched,
+          ...categories.filter(category => 
+            relevantCategories.includes(category.name) && 
+            !matched.some(m => m.name === category.name)
+          )
+        ];
+      }
+      
+      // For cooking related queries
+      if (query.includes("cook") || query.includes("meal") || query.includes("food preparation")) {
+        matched = [
+          ...matched,
+          ...categories.filter(category => 
+            category.name === "Grocery Shopping" && 
+            !matched.some(m => m.name === "Grocery Shopping")
+          )
+        ];
       }
       
       setFilteredCategories(matched);

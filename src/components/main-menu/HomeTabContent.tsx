@@ -1,5 +1,3 @@
-
-// Import needed components
 import React, { useState } from "react";
 import SearchResultsSection from "./SearchResultsSection";
 import InterestsSection from "./InterestsSection";
@@ -10,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
 import TaskDetailView from "@/components/ui/TaskDetailView";
 
-// Define the types for task objects
 interface Task {
   title: string;
   description: string;
@@ -48,9 +45,9 @@ interface HomeTabContentProps {
   onBookNow: (taskTitle: string) => void;
   onRequestTask: () => void;
   onSetActiveTab?: (tab: string) => void;
-  recentSearches?: string[]; // Add this to match RecentSearchesSection props
-  onSearchClick?: (search: string) => void; // Add this to match RecentSearchesSection props
-  onBrowseTasks?: () => void; // Add this new prop
+  recentSearches?: string[];
+  onSearchClick?: (search: string) => void;
+  onBrowseTasks?: () => void;
 }
 
 const HomeTabContent: React.FC<HomeTabContentProps> = ({
@@ -69,14 +66,20 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
   onBookNow,
   onRequestTask,
   onSetActiveTab,
-  recentSearches = [], // Default to empty array
-  onSearchClick = () => {}, // Default to empty function
-  onBrowseTasks = () => {} // Default value for the new prop
+  recentSearches = [],
+  onSearchClick = () => {},
+  onBrowseTasks = () => {}
 }) => {
   const [showCustomTaskForm, setShowCustomTaskForm] = useState(false);
 
   const handleRequestCustomTask = () => {
-    setShowCustomTaskForm(true);
+    if (searchPerformed && (!searchResults || searchResults.length === 0) && 
+        searchQuery.toLowerCase().includes("make my bed")) {
+      console.log("Creating a custom 'make my bed' task");
+      setShowCustomTaskForm(true);
+    } else {
+      setShowCustomTaskForm(true);
+    }
   };
 
   const handleTaskBooked = (
@@ -100,7 +103,6 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
     setShowCustomTaskForm(false);
   };
 
-  // Render based on search state
   if (searchPerformed && searchResults) {
     return (
       <>
@@ -120,12 +122,12 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
           onClose={() => setShowCustomTaskForm(false)}
           onTaskBooked={handleTaskBooked}
           isCustomTask={true}
+          initialTaskTitle={searchQuery.includes("make my bed") ? "Make My Bed" : ""}
         />
       </>
     );
   }
 
-  // Category emojis for the Browse by Category section
   const categoryEmojis = {
     "Cleaning": "🧹",
     "Moving": "🚚",
