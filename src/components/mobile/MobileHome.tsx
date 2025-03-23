@@ -5,6 +5,8 @@ import BottomNavigation from "./BottomNavigation";
 import HomeHeader from "./home/HomeHeader";
 import CategoriesSection from "./home/CategoriesSection";
 import PopularTasksSection from "./home/PopularTasksSection";
+import FavoritesSection from "./home/FavoritesSection";
+import PastTasksSection from "./home/PastTasksSection";
 
 // Define the Task interface to ensure consistency across components
 interface Task {
@@ -114,14 +116,55 @@ const MobileHome = () => {
     }
   ];
 
+  // Sample favorite tasks data
+  const favoriteTasks = [
+    {
+      title: "Laundry Service",
+      description: "Wash, dry, and fold your clothes",
+      category: "Services",
+      location: "Pickup Available",
+      image: "/lovable-uploads/8e3ea234-55c0-4aa9-87c5-565913181531.png"
+    },
+    {
+      title: "Home Cleaning",
+      description: "Full apartment or specific room cleaning",
+      category: "Cleaning",
+      location: "Your Location",
+      image: "/lovable-uploads/8e3ea234-55c0-4aa9-87c5-565913181531.png"
+    }
+  ];
+
+  // Sample past tasks data
+  const pastTasks = [
+    {
+      title: "Room Cleaning",
+      date: "May 5, 2023",
+      provider: "Alex J.",
+      image: "/lovable-uploads/239bf11e-868d-49c4-b2cf-e3fdd3bc7c20.png",
+      description: "Weekly Room Cleaning",
+      category: "Cleaning",
+      location: "Columbia Campus"
+    },
+    {
+      title: "Furniture Assembly",
+      date: "April 28, 2023",
+      provider: "Maria L.",
+      image: "/lovable-uploads/239bf11e-868d-49c4-b2cf-e3fdd3bc7c20.png",
+      description: "Ikea Desk Assembly",
+      category: "Assembly",
+      location: "Your Dorm"
+    }
+  ];
+
   return (
     <>
       <MobileLayout showHeader={false} contentClassName="pb-20 pt-0">
-        <div className="space-y-4"> {/* Slightly increased spacing */}
+        <div className="space-y-4">
           <HomeHeader userName="Sarah" />
           
-          {/* Only showing PopularTasks and Categories */}
+          <FavoritesSection favoriteTasks={favoriteTasks} />
           <PopularTasksSection popularTasks={popularTasks} />
+          <PastTasksSection pastTasks={pastTasks} />
           <CategoriesSection categories={categories} />
         </div>
       </MobileLayout>
