@@ -9,15 +9,15 @@ import PopularTasksSection from "./home/PopularTasksSection";
 const MobileHome = () => {
   // Additional tasks data to display in the "Looking for something else?" section
   const additionalTasks = [
-    { title: "Garden Work", color: "bg-soft-green" },
-    { title: "Computer Help", color: "bg-soft-blue" },
-    { title: "Pet Sitting", color: "bg-soft-orange" },
-    { title: "Electrical Work", color: "bg-soft-yellow" },
-    { title: "Tutoring", color: "bg-soft-purple" },
+    { title: "Research Assistant", color: "bg-soft-blue" },
+    { title: "Presentation Help", color: "bg-soft-green" },
+    { title: "Essay Editing", color: "bg-soft-orange" },
+    { title: "Study Partner", color: "bg-soft-yellow" },
+    { title: "Language Tutor", color: "bg-soft-purple" },
     { title: "Grocery Shopping", color: "bg-soft-pink" }
   ];
 
-  // Expanded popular tasks with at least 12 items to support pagination
+  // Expanded popular tasks tailored for college student helpers
   const popularTasks = [
     {
       title: "Weekly Apartment Cleaning",
@@ -28,26 +28,26 @@ const MobileHome = () => {
       image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      title: "Furniture Assembly",
-      description: "Students help with assembling your furniture",
-      price: "From $30/hr",
-      category: "Furniture",
+      title: "Resume Review",
+      description: "Get your resume reviewed by students in business or HR",
+      price: "From $20/hr",
+      category: "Academic",
       location: "NYU Area",
       image: "https://images.unsplash.com/photo-1581078426770-6d336e5de7bf?q=80&w=1000&auto=format&fit=crop"
     },
     {
       title: "Help Moving",
       description: "Assistance with moving and packing your belongings",
-      price: "From $35/hr",
+      price: "From $30/hr",
       category: "Moving",
       location: "Midtown",
       image: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      title: "TV Mounting Service",
-      description: "Get your TV mounted securely by student experts",
-      price: "From $40/job",
-      category: "Mounting",
+      title: "Math Tutoring",
+      description: "One-on-one math tutoring from STEM students",
+      price: "From $25/hr",
+      category: "Academic",
       location: "Brooklyn",
       image: "https://images.unsplash.com/photo-1593784991095-a205069470b6?q=80&w=1000&auto=format&fit=crop"
     },
@@ -60,42 +60,42 @@ const MobileHome = () => {
       image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      title: "Ikea Desk Assembly",
-      description: "Get your new desk assembled by experienced students",
-      price: "From $25/job",
-      category: "Furniture",
+      title: "Proofreading",
+      description: "Get your essays and papers proofread by English majors",
+      price: "From $15/hr",
+      category: "Academic",
       location: "Harlem",
       image: "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?q=80&w=1000&auto=format&fit=crop"
     },
     {
       title: "Small Apartment Move",
       description: "Help moving your studio or 1-bedroom apartment",
-      price: "From $40/hr",
+      price: "From $35/hr",
       category: "Moving",
       location: "Lower East Side",
       image: "https://images.unsplash.com/photo-1600585152220-90363fe7e115?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      title: "Shelving Installation",
-      description: "Get floating shelves or bookcases mounted securely",
-      price: "From $35/job",
-      category: "Mounting",
+      title: "Tech Support",
+      description: "Troubleshooting and tech setup by IT students",
+      price: "From $20/hr",
+      category: "Tech",
       location: "Chelsea",
       image: "https://images.unsplash.com/photo-1594540634759-8e42a1991cf7?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      title: "Window Cleaning",
-      description: "Professional window cleaning for sparkling results",
-      price: "From $30/hr",
-      category: "Cleaning",
+      title: "Grocery Delivery",
+      description: "Student runners for your grocery shopping needs",
+      price: "From $15/hr",
+      category: "Errands",
       location: "Financial District",
       image: "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      title: "Bookshelf Assembly",
-      description: "Get your new bookshelf assembled quickly",
-      price: "From $28/job",
-      category: "Furniture",
+      title: "Website Building",
+      description: "Basic website creation by CS students",
+      price: "From $30/hr",
+      category: "Tech",
       location: "Upper West Side",
       image: "https://images.unsplash.com/photo-1577724513455-8315962c6f14?q=80&w=1000&auto=format&fit=crop"
     },
@@ -108,10 +108,10 @@ const MobileHome = () => {
       image: "https://images.unsplash.com/photo-1634823668943-96e1d18845e5?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      title: "Picture Frame Hanging",
-      description: "Get your artwork and photos hung perfectly",
-      price: "From $25/job",
-      category: "Mounting",
+      title: "Language Tutoring",
+      description: "Learn a new language from native-speaking students",
+      price: "From $25/hr",
+      category: "Academic",
       location: "Greenwich Village",
       image: "https://images.unsplash.com/photo-1577724513455-8315962c6f14?q=80&w=1000&auto=format&fit=crop"
     }
