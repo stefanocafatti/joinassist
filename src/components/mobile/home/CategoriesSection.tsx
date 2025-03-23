@@ -2,13 +2,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-interface TaskItem {
+interface Category {
   name: string;
   icon: string;
 }
 
 interface CategoriesSectionProps {
-  categories: TaskItem[];
+  categories: Category[];
 }
 
 const CategoriesSection = ({ categories }: CategoriesSectionProps) => {
@@ -22,16 +22,16 @@ const CategoriesSection = ({ categories }: CategoriesSectionProps) => {
         </div>
       </div>
       <div className="grid grid-cols-3 gap-2">
-        {categories.map((task, index) => (
+        {categories.map((category, index) => (
           <div 
             key={index}
             className="bg-white rounded-xl flex flex-col items-center justify-center py-3 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer transform hover:scale-105 border border-blue-400"
-            onClick={() => navigate(`/mobile/new-task?task=${task.name.toLowerCase().replace(/\s+/g, '-')}`)}
+            onClick={() => navigate(`/mobile/category/${category.name.toLowerCase()}`)}
           >
             <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center mb-1.5 shadow-sm border border-blue-300">
-              <span className="text-lg">{task.icon}</span>
+              <span className="text-lg">{category.icon}</span>
             </div>
-            <span className="text-xs font-medium text-blue-600 text-center px-1">{task.name}</span>
+            <span className="text-xs font-medium text-blue-600 text-center px-1">{category.name}</span>
           </div>
         ))}
       </div>
