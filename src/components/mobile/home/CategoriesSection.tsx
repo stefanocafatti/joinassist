@@ -25,10 +25,13 @@ const CategoriesSection = ({ categories }: CategoriesSectionProps) => {
         {categories.map((task, index) => (
           <div 
             key={index}
-            className="bg-white rounded-xl flex items-center justify-center py-2 px-2 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer transform hover:scale-105 border border-blue-400"
+            className="bg-white rounded-xl flex flex-col items-center justify-center py-3 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer transform hover:scale-105 border border-blue-400"
             onClick={() => navigate(`/mobile/new-task?task=${task.name.toLowerCase().replace(/\s+/g, '-')}`)}
           >
-            <span className="text-xs font-medium text-blue-600 text-center">{task.name}</span>
+            <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center mb-1.5 shadow-sm border border-blue-300">
+              <span className="text-lg">{task.icon}</span>
+            </div>
+            <span className="text-xs font-medium text-blue-600 text-center px-1">{task.name}</span>
           </div>
         ))}
       </div>

@@ -1,6 +1,7 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
   Carousel,
@@ -9,26 +10,25 @@ import {
 } from "@/components/ui/carousel";
 import TaskDetailView from "@/components/ui/TaskDetailView";
 
-// Define the TASK_IMAGE constant
 const TASK_IMAGE = "/lovable-uploads/239bf11e-868d-49c4-b2cf-e3fdd3bc7c20.png";
 
-interface Task {
+interface PopularTask {
   title: string;
   description: string;
+  price: string;
   category: string;
   location: string;
-  image: string;
-  price?: string;
+  image?: string;
 }
 
 interface PopularTasksSectionProps {
-  popularTasks: Task[];
+  popularTasks: PopularTask[];
 }
 
 const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [selectedTask, setSelectedTask] = useState<PopularTask | null>(null);
   const [showTaskDetail, setShowTaskDetail] = useState(false);
   const [showCustomTaskForm, setShowCustomTaskForm] = useState(false);
 
@@ -48,7 +48,7 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
     }
   };
 
-  const handleTaskClick = (task: Task) => {
+  const handleTaskClick = (task: PopularTask) => {
     setSelectedTask(task);
     setShowTaskDetail(true);
   };
