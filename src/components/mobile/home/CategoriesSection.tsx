@@ -5,26 +5,20 @@ import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import TaskDetailView from "@/components/ui/TaskDetailView";
 
-interface Task {
-  title: string;
-  color?: string; // Making this optional since we're using a standard style now
-}
-
 interface CategoriesSectionProps {
-  additionalTasks: Task[];
+  additionalTasks: { title: string; color?: string }[];
 }
 
 const CategoriesSection = ({ additionalTasks }: CategoriesSectionProps) => {
   const navigate = useNavigate();
-  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [selectedTask, setSelectedTask] = useState<{ title: string } | null>(null);
   const [showTaskDetail, setShowTaskDetail] = useState(false);
 
   const handleCreateCustomTask = () => {
-    // This function will open the custom task form
     navigate("/mobile/new-task");
   };
 
-  const handleTaskClick = (task: Task) => {
+  const handleTaskClick = (task: { title: string }) => {
     setSelectedTask(task);
     setShowTaskDetail(true);
   };
@@ -54,23 +48,42 @@ const CategoriesSection = ({ additionalTasks }: CategoriesSectionProps) => {
     setShowTaskDetail(false);
   };
 
+  // List of tasks with their background colors and emoji icons
+  const taskItems = [
+    { title: "Help Moving", bgColor: "bg-blue-50", emoji: "📦" },
+    { title: "Furniture Assembly", bgColor: "bg-green-50", emoji: "🪑" },
+    { title: "General Mounting", bgColor: "bg-yellow-50", emoji: "🔨" },
+    { title: "Cleaning", bgColor: "bg-purple-50", emoji: "🧹" },
+    { title: "TV Mounting", bgColor: "bg-pink-50", emoji: "📺" },
+    { title: "Heavy Lifting", bgColor: "bg-orange-50", emoji: "💪" },
+    { title: "Academic Tutoring", bgColor: "bg-blue-50", emoji: "📚" },
+    { title: "Laundry Help", bgColor: "bg-green-50", emoji: "👕" },
+    { title: "Grocery Shopping", bgColor: "bg-yellow-50", emoji: "🛒" },
+    { title: "Pet Sitting", bgColor: "bg-purple-50", emoji: "🐕" },
+    { title: "House Cleaning", bgColor: "bg-pink-50", emoji: "✨" },
+    { title: "Car Wash", bgColor: "bg-orange-50", emoji: "🚗" },
+    { title: "Yard Work", bgColor: "bg-blue-50", emoji: "🌿" },
+    { title: "Meal Preparation", bgColor: "bg-green-50", emoji: "🍳" },
+    { title: "Tech Support", bgColor: "bg-yellow-50", emoji: "💻" },
+    { title: "Plant Watering", bgColor: "bg-purple-50", emoji: "🪴" }
+  ];
+
   return (
     <section className="mb-1">
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-1.5">
-          <h2 className="text-lg font-semibold text-gray-900">Looking for something else?</h2>
+          <h2 className="text-lg font-semibold text-gray-900">All Services</h2>
         </div>
       </div>
-      <div className="flex flex-wrap gap-2">
-        {additionalTasks.map((task, index) => (
+      <div className="grid grid-cols-2 gap-3">
+        {taskItems.map((task, index) => (
           <div 
             key={index}
-            className="bg-white rounded-2xl flex flex-col items-center justify-center py-3 px-4 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer transform hover:scale-105 border border-gray-100"
+            className={`${task.bgColor} rounded-xl p-3 shadow-sm hover:shadow-md transition-all cursor-pointer flex items-center gap-3`}
             onClick={() => handleTaskClick(task)}
           >
-            <span className="text-sm font-medium text-assist-blue text-center whitespace-nowrap">
-              {task.title}
-            </span>
+            <div className="text-2xl">{task.emoji}</div>
+            <span className="text-sm font-medium text-gray-900">{task.title}</span>
           </div>
         ))}
       </div>
@@ -92,7 +105,7 @@ const CategoriesSection = ({ additionalTasks }: CategoriesSectionProps) => {
           task={{
             title: selectedTask.title,
             description: `Professional ${selectedTask.title.toLowerCase()} service provided by local students`,
-            category: "Academic Help",
+            category: "Services",
             location: "Your location",
             image: undefined
           }}
