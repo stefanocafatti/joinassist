@@ -176,6 +176,24 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
     }
   ];
 
+  const getCategoryColor = (category: string) => {
+    const categoryColorMap: {[key: string]: string} = {
+      "Cleaning": "bg-sky-100 text-sky-800",
+      "Furniture Assembly": "bg-purple-100 text-purple-800",
+      "Help Moving": "bg-indigo-100 text-indigo-800",
+      "Moving": "bg-indigo-100 text-indigo-800",
+      "Academic Tutoring": "bg-yellow-100 text-yellow-800",
+      "Tech": "bg-red-100 text-red-800",
+      "Errands": "bg-teal-100 text-teal-800",
+      "Home Services": "bg-emerald-100 text-emerald-800",
+      "Pet Sitting": "bg-amber-100 text-amber-800",
+      "Cooking": "bg-orange-100 text-orange-800",
+      "TV Mounting": "bg-pink-100 text-pink-800"
+    };
+    
+    return categoryColorMap[category] || "bg-gray-100 text-gray-800";
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -285,44 +303,31 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
             <h3 className="text-lg font-medium text-gray-900 mb-4">
               Popular Tasks
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {popularTasks.map((task) => (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {popularTasks.slice(0, 16).map((task) => (
                 <div
                   key={task.title}
-                  className="bg-white rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer"
+                  className="bg-white rounded-lg overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-all cursor-pointer relative"
                   onClick={() => onBookNow(task.title)}
                 >
-                  <div className="h-40 overflow-hidden">
+                  <div className="h-28 overflow-hidden">
                     <img
                       src={task.image}
                       alt={task.title}
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <div className="p-4">
-                    <div className="flex justify-between items-center">
-                      <h3 className="font-semibold text-gray-900">
-                        {task.title}
-                      </h3>
-                      <Badge variant="secondary" className="bg-soft-blue/20 text-blue-700 border-0 ml-2">
+                  <div className="p-3">
+                    <div className="mb-1">
+                      <Badge 
+                        className={`text-xs ${getCategoryColor(task.category)}`}
+                      >
                         {task.category}
                       </Badge>
                     </div>
-                    <p className="text-sm text-gray-500 mt-1 line-clamp-2">
-                      {task.description}
-                    </p>
-                    <div className="flex justify-end mt-3">
-                      <Button 
-                        size="sm" 
-                        className="bg-assist-blue hover:bg-assist-blue/90"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onBookNow(task.title);
-                        }}
-                      >
-                        <Eye className="h-4 w-4 mr-1" /> View Task
-                      </Button>
-                    </div>
+                    <h3 className="font-medium text-sm text-gray-900 line-clamp-2">
+                      {task.title}
+                    </h3>
                   </div>
                 </div>
               ))}
