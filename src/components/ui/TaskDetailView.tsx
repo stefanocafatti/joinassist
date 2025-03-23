@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { format } from "date-fns";
 import { 
@@ -57,9 +56,17 @@ interface TaskDetailViewProps {
 }
 
 const times = [
-  "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM",
-  "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM",
-  "6:00 PM", "7:00 PM", "8:00 PM"
+  "8:00 AM", "8:30 AM", 
+  "9:00 AM", "9:30 AM", 
+  "10:00 AM", "10:30 AM", 
+  "11:00 AM", "11:30 AM", 
+  "12:00 PM", "12:30 PM",
+  "1:00 PM", "1:30 PM", 
+  "2:00 PM", "2:30 PM", 
+  "3:00 PM", "3:30 PM", 
+  "4:00 PM", "4:30 PM", 
+  "5:00 PM", "5:30 PM",
+  "6:00 PM"
 ];
 
 const companyDefinedPrices: {[key: string]: number} = {
@@ -293,6 +300,7 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
                           onSelect={setDate}
                           initialFocus
                           disabled={(date) => date < new Date()}
+                          className="p-3 pointer-events-auto"
                         />
                       </PopoverContent>
                     </Popover>
@@ -306,7 +314,7 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
                       <SelectTrigger id="time">
                         <SelectValue placeholder="Select Time" />
                       </SelectTrigger>
-                      <SelectContent className="bg-white">
+                      <SelectContent className="bg-white max-h-[200px] overflow-y-auto">
                         {times.map((t) => (
                           <SelectItem key={t} value={t}>
                             {t}
