@@ -1,6 +1,6 @@
 
 // Import needed components
-import React from "react";
+import React, { useState } from "react";
 import SearchResultsSection from "./SearchResultsSection";
 import InterestsSection from "./InterestsSection";
 import RecentSearchesSection from "./RecentSearchesSection";
@@ -8,6 +8,7 @@ import RecommendedTasksSection from "./RecommendedTasksSection";
 import PastTasksSection from "./PastTasksSection";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
+import TaskDetailView from "@/components/ui/TaskDetailView";
 
 // Define the types for task objects
 interface Task {
@@ -72,19 +73,55 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
   onSearchClick = () => {}, // Default to empty function
   onBrowseTasks = () => {} // Default value for the new prop
 }) => {
+  const [showCustomTaskForm, setShowCustomTaskForm] = useState(false);
+
+  const handleRequestCustomTask = () => {
+    setShowCustomTaskForm(true);
+  };
+
+  const handleTaskBooked = (
+    taskTitle: string, 
+    date: Date, 
+    time: string, 
+    priceType?: string, 
+    price?: number,
+    location?: string,
+    additionalInfo?: string
+  ) => {
+    console.log("Task booked:", {
+      taskTitle,
+      date,
+      time,
+      priceType,
+      price,
+      location,
+      additionalInfo
+    });
+    setShowCustomTaskForm(false);
+  };
+
   // Render based on search state
   if (searchPerformed && searchResults) {
     return (
-      <SearchResultsSection
-        searchQuery={searchQuery}
-        searchResults={searchResults}
-        favoriteTaskIds={favoriteTaskIds}
-        onFavoriteToggle={onFavoriteToggle}
-        onBookNow={onBookNow}
-        onClearResults={onClearResults}
-        onRequestTask={onRequestTask}
-        onBrowseTasks={onBrowseTasks}
-      />
+      <>
+        <SearchResultsSection
+          searchQuery={searchQuery}
+          searchResults={searchResults}
+          favoriteTaskIds={favoriteTaskIds}
+          onFavoriteToggle={onFavoriteToggle}
+          onBookNow={onBookNow}
+          onClearResults={onClearResults}
+          onRequestTask={handleRequestCustomTask}
+          onBrowseTasks={onBrowseTasks}
+        />
+        
+        <TaskDetailView 
+          isOpen={showCustomTaskForm}
+          onClose={() => setShowCustomTaskForm(false)}
+          onTaskBooked={handleTaskBooked}
+          isCustomTask={true}
+        />
+      </>
     );
   }
 
@@ -208,12 +245,19 @@ const HomeTabContent: React.FC<HomeTabContentProps> = ({
           variant="outline" 
           size="lg" 
           className="rounded-full px-6 border-assist-blue text-assist-blue hover:bg-assist-blue/10"
-          onClick={onRequestTask}
+          onClick={handleRequestCustomTask}
         >
           <PlusCircle className="h-5 w-5 mr-2" />
           Request Custom Task
         </Button>
       </div>
+
+      <TaskDetailView 
+        isOpen={showCustomTaskForm}
+        onClose={() => setShowCustomTaskForm(false)}
+        onTaskBooked={handleTaskBooked}
+        isCustomTask={true}
+      />
     </div>
   );
 };

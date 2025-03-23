@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -30,6 +30,7 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedTask, setSelectedTask] = useState<PopularTask | null>(null);
   const [showTaskDetail, setShowTaskDetail] = useState(false);
+  const [showCustomTaskForm, setShowCustomTaskForm] = useState(false);
 
   const categories = Array.from(new Set(popularTasks.map(task => task.category)));
 
@@ -56,6 +57,10 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
     setShowTaskDetail(false);
   };
 
+  const handleCreateCustomTask = () => {
+    setShowCustomTaskForm(true);
+  };
+
   const handleBookTask = (
     taskTitle: string, 
     date: Date, 
@@ -75,6 +80,7 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
       additionalInfo
     });
     setShowTaskDetail(false);
+    setShowCustomTaskForm(false);
   };
 
   const getCategoryBorder = (category: string) => {
@@ -174,6 +180,14 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
         <div className="flex items-center gap-1.5">
           <h2 className="text-lg font-semibold text-gray-900">Browse Tasks</h2>
         </div>
+        <Button 
+          size="smallIcon" 
+          variant="outline"
+          className="rounded-full border-assist-blue text-assist-blue"
+          onClick={handleCreateCustomTask}
+        >
+          <Plus className="h-4 w-4" />
+        </Button>
       </div>
       <div className="grid grid-cols-2 gap-3">
         {getDisplayedTasks().map((task, index) => (
@@ -221,6 +235,13 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
           }}
         />
       )}
+
+      <TaskDetailView 
+        isOpen={showCustomTaskForm}
+        onClose={() => setShowCustomTaskForm(false)}
+        onTaskBooked={handleBookTask}
+        isCustomTask={true}
+      />
     </section>
   );
 };

@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Search, X, MapPin, DollarSign } from "lucide-react";
+import { Search, X, MapPin, DollarSign, Plus } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 interface SearchResultsSectionProps {
@@ -119,19 +119,20 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
           </p>
           <div className="space-y-4">
             <Button
+              variant="default"
+              className="bg-assist-blue hover:bg-assist-blue/90"
+              onClick={onRequestTask}
+            >
+              <Plus className="h-4 w-4 mr-2" />
+              Create Custom Task
+            </Button>
+            <div className="block text-center my-2">or</div>
+            <Button
               variant="outline"
               className="border-assist-blue text-assist-blue hover:bg-assist-blue/5"
               onClick={onBrowseTasks}
             >
               Browse Other Tasks
-            </Button>
-            <div className="block text-center my-2">or</div>
-            <Button
-              variant="default"
-              className="bg-assist-blue hover:bg-assist-blue/90"
-              onClick={onRequestTask}
-            >
-              Request Custom Task
             </Button>
           </div>
         </div>
