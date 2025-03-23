@@ -1,6 +1,8 @@
 
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface Task {
   title: string;
@@ -13,6 +15,11 @@ interface CategoriesSectionProps {
 
 const CategoriesSection = ({ additionalTasks }: CategoriesSectionProps) => {
   const navigate = useNavigate();
+
+  const handleCreateCustomTask = () => {
+    // This function will open the custom task form
+    navigate("/mobile/new-task");
+  };
 
   return (
     <section className="mb-1">
@@ -34,6 +41,15 @@ const CategoriesSection = ({ additionalTasks }: CategoriesSectionProps) => {
           </div>
         ))}
       </div>
+      
+      {/* Create Custom Task button */}
+      <Button 
+        className="w-full bg-assist-blue hover:bg-assist-blue/90 text-white rounded-2xl mt-4 py-6 flex items-center justify-center gap-2"
+        onClick={handleCreateCustomTask}
+      >
+        <Plus className="h-5 w-5" />
+        <span className="text-base font-medium">Create Custom Task</span>
+      </Button>
     </section>
   );
 };

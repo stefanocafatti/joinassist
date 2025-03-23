@@ -1,4 +1,3 @@
-
 import React from "react";
 import MobileLayout from "./MobileLayout";
 import BottomNavigation from "./BottomNavigation";
@@ -124,9 +123,9 @@ const MobileHome = () => {
         <div className="space-y-3">
           <HomeHeader userName="Sarah" />
           
-          {/* Only show PopularTasks and Additional Tasks sections */}
-          <PopularTasksSection popularTasks={popularTasks} />
+          {/* Reordered: CategoriesSection first, then PopularTasksSection */}
           <CategoriesSection additionalTasks={additionalTasks} />
+          <PopularTasksSection popularTasks={popularTasks} />
         </div>
       </MobileLayout>
       <BottomNavigation />

@@ -1,8 +1,7 @@
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronRight, Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ChevronRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
   Carousel,
@@ -56,10 +55,6 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
 
   const handleCloseTaskDetail = () => {
     setShowTaskDetail(false);
-  };
-
-  const handleCreateCustomTask = () => {
-    setShowCustomTaskForm(true);
   };
 
   const handleBookTask = (
@@ -177,18 +172,8 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
         </Carousel>
       </div>
 
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-1.5">
-          <h2 className="text-lg font-semibold text-gray-900">Browse Tasks</h2>
-        </div>
-        <Button 
-          size="smallIcon" 
-          variant="outline"
-          className="rounded-full border-assist-blue text-assist-blue"
-          onClick={handleCreateCustomTask}
-        >
-          <Plus className="h-4 w-4" />
-        </Button>
+      <div className="flex items-center mb-4">
+        <h2 className="text-lg font-semibold text-gray-900">Browse Tasks</h2>
       </div>
       <div className="grid grid-cols-2 gap-3">
         {getDisplayedTasks().map((task, index) => (
