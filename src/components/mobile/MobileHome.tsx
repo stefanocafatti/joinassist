@@ -1,4 +1,3 @@
-
 import React from "react";
 import MobileLayout from "./MobileLayout";
 import BottomNavigation from "./BottomNavigation";
@@ -14,7 +13,7 @@ const MobileHome = () => {
   // Common tasks represented as buttons
   const commonTasks = [
     "Cleaning",
-    "Furniture Assembly",
+    "Furniture Assembly", 
     "Moving Help",
     "Delivery",
     "Heavy Lifting",
@@ -157,11 +156,10 @@ const MobileHome = () => {
               ))}
             </div>
             
-            {/* Request a Task Button */}
+            {/* Request a Task Button - Updated with blue background and white text */}
             <div className="mt-3">
               <Button
-                variant="outline"
-                className="w-full h-12 bg-white text-assist-blue border border-gray-200 shadow-sm hover:bg-gray-50 font-medium rounded-full flex items-center justify-center"
+                className="w-full h-12 bg-assist-blue text-white border border-assist-blue shadow-sm hover:bg-assist-blue/90 font-medium rounded-full flex items-center justify-center"
                 onClick={handleRequestTask}
               >
                 <PlusCircle className="mr-2 h-5 w-5" />
