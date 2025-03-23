@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import MobileLayout from "./MobileLayout";
 import BottomNavigation from "./BottomNavigation";
 import HomeHeader from "./home/HomeHeader";
@@ -6,11 +6,15 @@ import PopularTasksSection from "./home/PopularTasksSection";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { PlusCircle } from "lucide-react";
+import TaskDetailView from "@/components/ui/TaskDetailView";
+import { useToast } from "@/hooks/use-toast";
 
 const MobileHome = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const [selectedTask, setSelectedTask] = useState<{ title: string; description?: string; category?: string; location?: string; image?: string } | null>(null);
+  const [showTaskDetail, setShowTaskDetail] = useState(false);
 
-  // Common tasks represented as buttons
   const commonTasks = [
     "Cleaning",
     "Furniture Assembly", 
@@ -20,7 +24,6 @@ const MobileHome = () => {
     "Handyman"
   ];
 
-  // Expanded popular tasks tailored for college student helpers
   const popularTasks = [
     {
       title: "Clean my apartment",
@@ -122,13 +125,46 @@ const MobileHome = () => {
 
   const handleTaskClick = (task: string) => {
     console.log(`Selected task: ${task}`);
-    // Navigate to task-specific page or show task detail
-    // navigate(`/tasks/${task.toLowerCase().replace(' ', '-')}`);
+    setSelectedTask({
+      title: task,
+      description: `Professional ${task.toLowerCase()} service provided by verified students`,
+      category: "Services",
+      location: "Your location"
+    });
+    setShowTaskDetail(true);
   };
 
   const handleRequestTask = () => {
     console.log("Request a custom task");
-    // Navigate to task request page or show task request form
+  };
+
+  const handleCloseTaskDetail = () => {
+    setShowTaskDetail(false);
+  };
+
+  const handleBookTask = (
+    taskTitle: string, 
+    date: Date, 
+    time: string, 
+    priceType?: string, 
+    price?: number,
+    location?: string,
+    additionalInfo?: string
+  ) => {
+    console.log("Task booked:", {
+      taskTitle,
+      date,
+      time,
+      priceType,
+      price,
+      location,
+      additionalInfo
+    });
+    toast({
+      title: "Task Booked!",
+      description: `Your ${taskTitle} has been scheduled for ${date.toLocaleDateString()} at ${time}`,
+    });
+    setShowTaskDetail(false);
   };
 
   return (
@@ -137,10 +173,8 @@ const MobileHome = () => {
         <div className="space-y-3">
           <HomeHeader userName="Sarah" />
           
-          {/* Popular Tasks Section - now first */}
           <PopularTasksSection popularTasks={popularTasks} />
           
-          {/* Common Tasks Buttons - now second with updated title */}
           <div className="my-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-3">Looking for something else?</h2>
             <div className="grid grid-cols-2 gap-3">
@@ -156,7 +190,6 @@ const MobileHome = () => {
               ))}
             </div>
             
-            {/* Request a Task Button - Updated with blue background and white text */}
             <div className="mt-3">
               <Button
                 className="w-full h-12 bg-assist-blue text-white border border-assist-blue shadow-sm hover:bg-assist-blue/90 font-medium rounded-full flex items-center justify-center"
@@ -170,6 +203,15 @@ const MobileHome = () => {
         </div>
       </MobileLayout>
       <BottomNavigation />
+
+      {selectedTask && (
+        <TaskDetailView 
+          isOpen={showTaskDetail}
+          onClose={handleCloseTaskDetail}
+          onTaskBooked={handleBookTask}
+          task={selectedTask}
+        />
+      )}
     </>
   );
 };
