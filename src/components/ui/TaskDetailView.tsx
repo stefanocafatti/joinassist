@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { format } from "date-fns";
 import { 
@@ -152,7 +153,7 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
     ? companyDefinedPrices[customCategory] || companyDefinedPrices["default"] 
     : task ? companyDefinedPrices[task.category] || companyDefinedPrices["default"] : companyDefinedPrices["default"];
   
-  const trustAndSupportFee = Math.round(taskPrice * 0.15); // 15% fee
+  const trustAndSupportFee = Math.round(taskPrice * 0.4); // 40% fee (changed from 15%)
   const totalPrice = taskPrice + trustAndSupportFee;
   
   const handleSubmit = (e: React.FormEvent) => {
