@@ -1,9 +1,17 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Star, ChevronRight, Sparkles, MapPin, DollarSign } from "lucide-react";
+import { ChevronRight, Sparkles, MapPin, DollarSign } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { 
+  Pagination, 
+  PaginationContent, 
+  PaginationItem, 
+  PaginationLink, 
+  PaginationNext, 
+  PaginationPrevious 
+} from "@/components/ui/pagination";
 
 interface PopularTask {
   title: string;
@@ -20,21 +28,27 @@ interface PopularTasksSectionProps {
 
 const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
   const navigate = useNavigate();
+  const [viewAll, setViewAll] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const tasksPerPage = 4;
 
-  // Function to get a gradient based on category
-  const getCategoryGradient = (category: string) => {
-    switch(category.toLowerCase()) {
-      case 'cleaning':
-        return 'from-soft-blue to-assist-blue/20';
-      case 'furniture':
-        return 'from-soft-green to-green-300/20';
-      case 'moving':
-        return 'from-soft-yellow to-amber-300/20';
-      case 'mounting':
-        return 'from-soft-purple to-purple-300/20';
-      default:
-        return 'from-soft-orange to-orange-300/20';
+  // Calculate total number of pages
+  const totalPages = Math.ceil(popularTasks.length / tasksPerPage);
+  
+  // Get current tasks based on page
+  const getCurrentTasks = () => {
+    if (!viewAll) {
+      return popularTasks.slice(0, tasksPerPage);
     }
+    
+    const indexOfLastTask = currentPage * tasksPerPage;
+    const indexOfFirstTask = indexOfLastTask - tasksPerPage;
+    return popularTasks.slice(indexOfFirstTask, indexOfLastTask);
+  };
+
+  const handleViewAllToggle = () => {
+    setViewAll(!viewAll);
+    setCurrentPage(1); // Reset to first page when toggling view
   };
 
   // Function to get a border color based on category
@@ -89,21 +103,20 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
     <section className="mb-1">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-1.5">
-          <Star size={18} className="text-amber-500" />
           <h2 className="text-lg font-semibold text-gray-900">Browse Tasks</h2>
         </div>
         <Button 
           variant="ghost" 
           size="sm" 
           className="text-assist-blue text-sm p-0 hover:bg-transparent" 
-          onClick={() => navigate('/mobile/popular')}
+          onClick={handleViewAllToggle}
         >
-          View All
+          {viewAll ? "Show Less" : "View All"}
           <ChevronRight size={16} />
         </Button>
       </div>
       <div className="grid grid-cols-2 gap-3">
-        {popularTasks.map((task, index) => (
+        {getCurrentTasks().map((task, index) => (
           <div 
             key={index} 
             className={`group bg-white rounded-lg border ${getCategoryBorder(task.category)} shadow-sm hover:shadow-md transition-all overflow-hidden transform hover:scale-[1.01]`}
@@ -140,6 +153,37 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
           </div>
         ))}
       </div>
+      
+      {viewAll && totalPages > 1 && (
+        <div className="mt-4">
+          <Pagination>
+            <PaginationContent>
+              {currentPage > 1 && (
+                <PaginationItem>
+                  <PaginationPrevious onClick={() => setCurrentPage(currentPage - 1)} />
+                </PaginationItem>
+              )}
+              
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                <PaginationItem key={page}>
+                  <PaginationLink 
+                    isActive={page === currentPage}
+                    onClick={() => setCurrentPage(page)}
+                  >
+                    {page}
+                  </PaginationLink>
+                </PaginationItem>
+              ))}
+              
+              {currentPage < totalPages && (
+                <PaginationItem>
+                  <PaginationNext onClick={() => setCurrentPage(currentPage + 1)} />
+                </PaginationItem>
+              )}
+            </PaginationContent>
+          </Pagination>
+        </div>
+      )}
     </section>
   );
 };
