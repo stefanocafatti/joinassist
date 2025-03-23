@@ -1,13 +1,21 @@
-import React from "react";
+
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Heart, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import TaskDetailView from "@/components/ui/TaskDetailView";
+
+// Default image from user upload
+const USER_UPLOADED_IMAGE = "/lovable-uploads/8e3ea234-55c0-4aa9-87c5-565913181531.png";
 
 interface FavoriteTask {
   title: string;
   price: string;
   image: string;
+  description?: string;
+  category?: string;
+  location?: string;
 }
 
 interface FavoritesSectionProps {
@@ -16,6 +24,39 @@ interface FavoritesSectionProps {
 
 const FavoritesSection = ({ favoritedTasks }: FavoritesSectionProps) => {
   const navigate = useNavigate();
+  const [selectedTask, setSelectedTask] = useState<FavoriteTask | null>(null);
+  const [showTaskDetail, setShowTaskDetail] = useState(false);
+
+  const handleTaskClick = (task: FavoriteTask) => {
+    setSelectedTask(task);
+    setShowTaskDetail(true);
+  };
+
+  const handleCloseTaskDetail = () => {
+    setShowTaskDetail(false);
+  };
+
+  const handleBookTask = (
+    taskTitle: string, 
+    date: Date, 
+    time: string, 
+    priceType?: string, 
+    price?: number,
+    location?: string,
+    additionalInfo?: string
+  ) => {
+    console.log("Task booked:", {
+      taskTitle,
+      date,
+      time,
+      priceType,
+      price,
+      location,
+      additionalInfo
+    });
+    // Close the detail view after booking
+    setShowTaskDetail(false);
+  };
 
   return (
     <section className="mb-1">
@@ -38,11 +79,15 @@ const FavoritesSection = ({ favoritedTasks }: FavoritesSectionProps) => {
       {favoritedTasks.length > 0 ? (
         <div className="grid grid-cols-2 gap-2">
           {favoritedTasks.map((task, index) => (
-            <Card key={index} className="overflow-hidden border-gray-100 shadow-sm hover:shadow transition-all">
+            <Card 
+              key={index} 
+              className="overflow-hidden border-gray-100 shadow-sm hover:shadow transition-all cursor-pointer"
+              onClick={() => handleTaskClick(task)}
+            >
               <CardContent className="p-0">
                 <div 
                   className="h-28 bg-cover bg-center" 
-                  style={{ backgroundImage: `url(${task.image})` }}
+                  style={{ backgroundImage: `url(${USER_UPLOADED_IMAGE})` }}
                 />
                 <div className="p-3">
                   <h3 className="font-medium text-sm text-gray-900 mb-1">{task.title}</h3>
@@ -56,6 +101,21 @@ const FavoritesSection = ({ favoritedTasks }: FavoritesSectionProps) => {
         <div className="text-center bg-gray-50 rounded-lg p-6 border border-gray-100">
           <p className="text-gray-600 text-sm">No favorite tasks yet</p>
         </div>
+      )}
+
+      {selectedTask && (
+        <TaskDetailView 
+          isOpen={showTaskDetail}
+          onClose={handleCloseTaskDetail}
+          onTaskBooked={handleBookTask}
+          task={{
+            title: selectedTask.title,
+            description: selectedTask.description || `Details for ${selectedTask.title}`,
+            category: selectedTask.category || "Special Tasks",
+            location: selectedTask.location || "Not specified",
+            image: USER_UPLOADED_IMAGE
+          }}
+        />
       )}
     </section>
   );

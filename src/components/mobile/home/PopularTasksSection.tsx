@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
@@ -8,6 +9,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import TaskDetailView from "@/components/ui/TaskDetailView";
 
 // Default image as fallback
 const DEFAULT_TASK_IMAGE = "/lovable-uploads/d1a14d8f-8a54-45a2-9662-376fac8076d3.png";
@@ -31,6 +33,8 @@ interface PopularTasksSectionProps {
 const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedTask, setSelectedTask] = useState<PopularTask | null>(null);
+  const [showTaskDetail, setShowTaskDetail] = useState(false);
 
   // Extract unique categories from tasks
   const categories = Array.from(new Set(popularTasks.map(task => task.category)));
@@ -51,6 +55,37 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
     } else {
       setSelectedCategory(category);
     }
+  };
+
+  const handleTaskClick = (task: PopularTask) => {
+    setSelectedTask(task);
+    setShowTaskDetail(true);
+  };
+
+  const handleCloseTaskDetail = () => {
+    setShowTaskDetail(false);
+  };
+
+  const handleBookTask = (
+    taskTitle: string, 
+    date: Date, 
+    time: string, 
+    priceType?: string, 
+    price?: number,
+    location?: string,
+    additionalInfo?: string
+  ) => {
+    console.log("Task booked:", {
+      taskTitle,
+      date,
+      time,
+      priceType,
+      price,
+      location,
+      additionalInfo
+    });
+    // Close the detail view after booking
+    setShowTaskDetail(false);
   };
 
   // Function to get a border color based on category
@@ -160,13 +195,13 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
           <div 
             key={index} 
             className={`group bg-white rounded-lg border ${getCategoryBorder(task.category)} shadow-sm hover:shadow-md transition-all overflow-hidden transform hover:scale-[1.01]`}
-            onClick={() => navigate(`/mobile/new-task?template=${task.title.toLowerCase().replace(/\s+/g, '-')}`)}
+            onClick={() => handleTaskClick(task)}
           >
             <div className="relative">
               <div 
                 className="h-28 bg-cover bg-center" 
                 style={{ 
-                  backgroundImage: `url(${task.image})`
+                  backgroundImage: `url(${USER_UPLOADED_IMAGE})`
                 }}
               />
               <Badge className={`absolute top-2 right-2 text-xs ${getCategoryTextColor(task.category)} ${getCategoryBgColor(task.category)}`}>
@@ -179,12 +214,26 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
               </h3>
               <div className="flex items-center justify-between mt-2">
                 <span className="text-xs font-medium text-green-600">{task.price.replace('From ', '')}</span>
-                <ChevronRight size={14} className="text-gray-400 group-hover:text-assist-blue transition-colors" />
               </div>
             </div>
           </div>
         ))}
       </div>
+      
+      {selectedTask && (
+        <TaskDetailView 
+          isOpen={showTaskDetail}
+          onClose={handleCloseTaskDetail}
+          onTaskBooked={handleBookTask}
+          task={{
+            title: selectedTask.title,
+            description: selectedTask.description,
+            category: selectedTask.category,
+            location: selectedTask.location,
+            image: USER_UPLOADED_IMAGE
+          }}
+        />
+      )}
     </section>
   );
 };

@@ -1,10 +1,11 @@
 
-import React from "react";
-import { Heart, Eye, Coins } from "lucide-react";
+import React, { useState } from "react";
+import { Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
+import TaskDetailView from "@/components/ui/TaskDetailView";
 
 // Default image for all tasks
 const DEFAULT_TASK_IMAGE = "/lovable-uploads/8e3ea234-55c0-4aa9-87c5-565913181531.png";
@@ -35,6 +36,8 @@ const RecommendedTasksSection: React.FC<RecommendedTasksSectionProps> = ({
   onBrowseTasks
 }) => {
   const navigate = useNavigate();
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [showTaskDetail, setShowTaskDetail] = useState(false);
   
   // Get tag color based on category
   const getCategoryColor = (category: string) => {
@@ -47,6 +50,37 @@ const RecommendedTasksSection: React.FC<RecommendedTasksSectionProps> = ({
     };
     
     return categoryColorMap[category] || "bg-gray-100 text-gray-800";
+  };
+
+  const handleTaskClick = (task: Task) => {
+    setSelectedTask(task);
+    setShowTaskDetail(true);
+  };
+
+  const handleCloseTaskDetail = () => {
+    setShowTaskDetail(false);
+  };
+
+  const handleBookTask = (
+    taskTitle: string, 
+    date: Date, 
+    time: string, 
+    priceType?: string, 
+    price?: number,
+    location?: string,
+    additionalInfo?: string
+  ) => {
+    console.log("Task booked:", {
+      taskTitle,
+      date,
+      time,
+      priceType,
+      price,
+      location,
+      additionalInfo
+    });
+    onBookNow(taskTitle);
+    setShowTaskDetail(false);
   };
 
   return (
@@ -69,6 +103,7 @@ const RecommendedTasksSection: React.FC<RecommendedTasksSectionProps> = ({
           <div 
             key={index} 
             className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 cursor-pointer relative"
+            onClick={() => handleTaskClick(task)}
           >
             <div className="relative">
               <div 
@@ -88,7 +123,6 @@ const RecommendedTasksSection: React.FC<RecommendedTasksSectionProps> = ({
               </button>
               <div className="absolute bottom-3 left-3">
                 <Badge className="bg-amber-100 text-amber-800 flex items-center gap-1">
-                  <Coins className="h-3 w-3" />
                   <span>Earn points</span>
                 </Badge>
               </div>
@@ -99,22 +133,19 @@ const RecommendedTasksSection: React.FC<RecommendedTasksSectionProps> = ({
                 <Badge className={cn(getCategoryColor(task.category), "hover:opacity-90")}>{task.category}</Badge>
               </div>
               <p className="text-sm text-gray-600 mb-4">{task.description}</p>
-              <div className="flex items-center justify-center">
-                <Button 
-                  size="sm" 
-                  className="bg-assist-blue hover:bg-assist-blue/90 w-full"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onBookNow(task.title);
-                  }}
-                >
-                  <Eye className="h-4 w-4 mr-1" /> View Task
-                </Button>
-              </div>
             </div>
           </div>
         ))}
       </div>
+
+      {selectedTask && (
+        <TaskDetailView 
+          isOpen={showTaskDetail}
+          onClose={handleCloseTaskDetail}
+          onTaskBooked={handleBookTask}
+          task={selectedTask}
+        />
+      )}
     </section>
   );
 };
