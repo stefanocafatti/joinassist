@@ -29,12 +29,12 @@ const MobileHome = () => {
       image: "/lovable-uploads/84373410-0ca0-44aa-bce4-fecda1465ffb.png"
     },
     {
-      title: "Apartment deep cleaning",
-      description: "Get your resume reviewed by students in business or HR",
+      title: "Wash my car",
+      description: "Get your car washed by students for an affordable price",
       price: "From $20/hr",
       category: "Cleaning",
       location: "NYU Area",
-      image: "/lovable-uploads/1dcc2d11-c9a3-4da3-91b5-187b6f61f0f5.png"
+      image: "/lovable-uploads/c9d970a2-7da1-4c02-997f-aa30ef2e5bba.png"
     },
     {
       title: "Do my laundry", 
