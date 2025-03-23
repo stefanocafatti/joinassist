@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import MobileLayout from "./MobileLayout";
 import BottomNavigation from "./BottomNavigation";
@@ -9,10 +10,18 @@ import { PlusCircle } from "lucide-react";
 import TaskDetailView from "@/components/ui/TaskDetailView";
 import { useToast } from "@/hooks/use-toast";
 
+interface Task {
+  title: string;
+  description: string;
+  category: string;
+  location: string;
+  image?: string;
+}
+
 const MobileHome = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [selectedTask, setSelectedTask] = useState<{ title: string; description?: string; category?: string; location?: string; image?: string } | null>(null);
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [showTaskDetail, setShowTaskDetail] = useState(false);
 
   const commonTasks = [
@@ -134,6 +143,12 @@ const MobileHome = () => {
     setShowTaskDetail(true);
   };
 
+  const handleSearchTaskSelect = (task: Task) => {
+    console.log("Search task selected:", task);
+    setSelectedTask(task);
+    setShowTaskDetail(true);
+  };
+
   const handleRequestTask = () => {
     console.log("Request a custom task");
   };
@@ -171,7 +186,10 @@ const MobileHome = () => {
     <>
       <MobileLayout showHeader={false} contentClassName="pb-20 pt-0">
         <div className="space-y-3">
-          <HomeHeader userName="Sarah" />
+          <HomeHeader 
+            userName="Sarah" 
+            onTaskSelect={handleSearchTaskSelect}
+          />
           
           <PopularTasksSection popularTasks={popularTasks} />
           

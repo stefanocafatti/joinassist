@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { Bell, Search, MapPin, X, Check, Navigation } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
@@ -28,6 +27,7 @@ const taskItems = [
 
 interface HomeHeaderProps {
   userName?: string;
+  onTaskSelect?: (task: { title: string; description: string; category: string; location: string; image?: string }) => void;
 }
 
 interface LocationData {
@@ -36,7 +36,7 @@ interface LocationData {
   state: string;
 }
 
-const HomeHeader: React.FC<HomeHeaderProps> = ({ userName = "User" }) => {
+const HomeHeader: React.FC<HomeHeaderProps> = ({ userName = "User", onTaskSelect }) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isLocationDialogOpen, setIsLocationDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -74,6 +74,22 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ userName = "User" }) => {
 
   const handleLocationClick = () => {
     setIsLocationDialogOpen(true);
+  };
+
+  const handleTaskClick = (task: typeof taskItems[0]) => {
+    console.log(`Selected task: ${task.title}`);
+    
+    if (onTaskSelect) {
+      onTaskSelect({
+        title: task.title,
+        description: `Professional ${task.title.toLowerCase()} service provided by verified students`,
+        category: "Services",
+        location: `${location.street}, ${location.state}`,
+        image: task.image
+      });
+    }
+    
+    setIsSearchOpen(false);
   };
 
   const handleGetCurrentLocation = () => {
@@ -216,10 +232,7 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ userName = "User" }) => {
                   <div 
                     key={index}
                     className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer overflow-hidden border border-gray-100"
-                    onClick={() => {
-                      console.log(`Selected task: ${task.title}`);
-                      setIsSearchOpen(false);
-                    }}
+                    onClick={() => handleTaskClick(task)}
                   >
                     <div 
                       className="h-24 bg-cover bg-center" 
