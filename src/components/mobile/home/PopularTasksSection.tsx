@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronRight, Plus } from "lucide-react";
@@ -210,11 +211,11 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
               </Badge>
             </div>
             <div className="p-2.5">
-              <h3 className="font-medium text-sm text-gray-900 truncate flex items-center">
+              <h3 className="font-medium text-sm text-gray-900 h-[40px] line-clamp-2">
                 {task.title}
               </h3>
               <div className="flex items-center justify-between mt-2">
-                <span className="text-xs font-medium text-green-600">{task.price.replace('From ', '')}</span>
+                <span className="text-xs text-gray-500">{task.location}</span>
               </div>
             </div>
           </div>
