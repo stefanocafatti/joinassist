@@ -36,7 +36,7 @@ const MobileHome = () => {
       image: "https://images.unsplash.com/photo-1581078426770-6d336e5de7bf?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      title: "Small Apartment Move",
+      title: "Help Moving",
       description: "Assistance with moving and packing your belongings",
       price: "From $30/hr",
       category: "Moving",
@@ -52,8 +52,8 @@ const MobileHome = () => {
       image: "https://images.unsplash.com/photo-1593784991095-a205069470b6?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      title: "Car Cleaning",
-      description: "Thorough cleaning service for your entire vehicle",
+      title: "Deep House Cleaning",
+      description: "Thorough cleaning service for your entire home",
       price: "From $40/hr",
       category: "Cleaning",
       location: "Upper East Side",

@@ -25,10 +25,10 @@ const CategoriesSection = ({ additionalTasks }: CategoriesSectionProps) => {
         {additionalTasks.map((task, index) => (
           <div 
             key={index}
-            className="bg-white rounded-xl flex flex-col items-center justify-center py-3 px-3 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer transform hover:scale-105 border border-gray-100"
+            className={`${task.color} rounded-xl flex flex-col items-center justify-center py-3 px-3 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer transform hover:scale-105`}
             onClick={() => navigate(`/mobile/task/${task.title.toLowerCase()}`)}
           >
-            <span className="text-sm font-medium text-blue-600 text-center whitespace-nowrap">
+            <span className="text-sm font-medium text-gray-800 text-center whitespace-nowrap">
               {task.title}
             </span>
           </div>
