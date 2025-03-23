@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/carousel";
 import TaskDetailView from "@/components/ui/TaskDetailView";
 
-// Updated image path for all tasks
 const TASK_IMAGE = "/lovable-uploads/239bf11e-868d-49c4-b2cf-e3fdd3bc7c20.png";
 
 interface PopularTask {
@@ -32,20 +31,15 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
   const [selectedTask, setSelectedTask] = useState<PopularTask | null>(null);
   const [showTaskDetail, setShowTaskDetail] = useState(false);
 
-  // Extract unique categories from tasks
   const categories = Array.from(new Set(popularTasks.map(task => task.category)));
 
-  // Get filtered tasks based on selected category
   const getDisplayedTasks = () => {
-    // If a category is selected, filter tasks by that category
-    // Otherwise show all tasks
     return selectedCategory
       ? popularTasks.filter(task => task.category === selectedCategory)
       : popularTasks;
   };
 
   const handleCategorySelect = (category: string) => {
-    // If we click the already selected category, clear the filter
     if (selectedCategory === category) {
       setSelectedCategory(null);
     } else {
@@ -80,11 +74,9 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
       location,
       additionalInfo
     });
-    // Close the detail view after booking
     setShowTaskDetail(false);
   };
 
-  // Function to get a border color based on category
   const getCategoryBorder = (category: string) => {
     switch(category.toLowerCase()) {
       case 'cleaning':
@@ -100,7 +92,6 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
     }
   };
 
-  // Function to get a text color based on category
   const getCategoryTextColor = (category: string) => {
     switch(category.toLowerCase()) {
       case 'cleaning':
@@ -116,7 +107,6 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
     }
   };
 
-  // Function to get background color for category buttons
   const getCategoryBgColor = (category: string) => {
     switch(category.toLowerCase()) {
       case 'cleaning':
@@ -132,7 +122,6 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
     }
   };
 
-  // Function to get background and text color for category buttons
   const getCategoryButtonColor = (category: string) => {
     const isSelected = selectedCategory === category;
     
@@ -200,7 +189,9 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
                   backgroundImage: `url(${TASK_IMAGE})`
                 }}
               />
-              <Badge className={`absolute top-2 right-2 text-xs ${getCategoryTextColor(task.category)} ${getCategoryBgColor(task.category)}`}>
+              <Badge 
+                className={`absolute top-2 right-2 text-xs ${getCategoryTextColor(task.category)} ${getCategoryBgColor(task.category)} hover:${getCategoryBgColor(task.category)}`}
+              >
                 {task.category}
               </Badge>
             </div>
