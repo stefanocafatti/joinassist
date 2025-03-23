@@ -79,10 +79,12 @@ const MobileHome = () => {
       <MobileLayout showHeader={false} contentClassName="pb-20 pt-0">
         <div className="space-y-3"> {/* Reduced vertical spacing between sections */}
           <HomeHeader userName="Sarah" />
-          <PastTasksSection pastTasks={pastTasks} />
-          <FavoritesSection favoritedTasks={favoritedTasks} />
+          
+          {/* Reordered sections to prioritize browsing tasks */}
           <CategoriesSection categories={categories} />
           <PopularTasksSection popularTasks={popularTasks} />
+          <PastTasksSection pastTasks={pastTasks} />
+          <FavoritesSection favoritedTasks={favoritedTasks} />
         </div>
       </MobileLayout>
       <BottomNavigation />

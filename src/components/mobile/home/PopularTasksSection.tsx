@@ -38,7 +38,7 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-1.5">
           <Star size={18} className="text-amber-500" />
-          <h2 className="text-lg font-semibold text-gray-900">Popular Tasks</h2>
+          <h2 className="text-lg font-semibold text-gray-900">Browse Tasks</h2>
         </div>
         <Button 
           variant="ghost" 
@@ -64,7 +64,9 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
               <div className="flex-1 p-3">
                 <h3 className="font-medium text-gray-900 flex items-center">
                   {task.title}
-                  {/* Removed Sparkles icon from next to the first task title */}
+                  {index === 0 && (
+                    <Sparkles size={16} className="ml-1 text-amber-500" />
+                  )}
                 </h3>
                 <p className="text-xs text-gray-500 mb-1">{task.description}</p>
                 <div className="flex items-center text-sm">
