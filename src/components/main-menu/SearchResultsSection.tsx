@@ -60,6 +60,122 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
     );
   };
 
+  // Additional popular tasks to show when no results are found
+  const popularTasks = [
+    {
+      title: "Clean my apartment",
+      description: "Professional cleaning services by verified students",
+      category: "Cleaning",
+      location: "Campus Area",
+      image: "/lovable-uploads/84373410-0ca0-44aa-bce4-fecda1465ffb.png"
+    },
+    {
+      title: "Build my IKEA desk",
+      description: "Expert furniture assembly by skilled students",
+      category: "Furniture Assembly",
+      location: "Various Locations",
+      image: "/lovable-uploads/e7eb2a95-9b98-41ac-ae57-c3c88485715c.png"
+    },
+    {
+      title: "Help me move",
+      description: "Get assistance with your move from strong student helpers",
+      category: "Help Moving",
+      location: "Campus Area",
+      image: "/lovable-uploads/049d1420-586e-4794-b6e1-5c14cfeb328e.png"
+    },
+    {
+      title: "Language tutoring",
+      description: "Learn a new language from native-speaking students",
+      category: "Academic Tutoring",
+      location: "Online or In-person",
+      image: "/lovable-uploads/603a2dee-f790-49b1-aade-54b5318f754a.png"
+    },
+    {
+      title: "Proofreading",
+      description: "Get your essays and papers proofread by English majors",
+      category: "Academic Tutoring",
+      location: "Online",
+      image: "/lovable-uploads/603a2dee-f790-49b1-aade-54b5318f754a.png"
+    },
+    {
+      title: "Grocery shopping",
+      description: "Student runners for your grocery shopping needs",
+      category: "Errands",
+      location: "Local Area",
+      image: "/lovable-uploads/b1aee96b-9a26-4fd9-9872-57f40cbe16d7.png"
+    },
+    {
+      title: "Wash my car",
+      description: "Get your car washed and detailed by students",
+      category: "Cleaning",
+      location: "Campus Area",
+      image: "/lovable-uploads/c9d970a2-7da1-4c02-997f-aa30ef2e5bba.png"
+    },
+    {
+      title: "Make my bed and change sheets",
+      description: "Need help changing my bed sheets and making my bed nicely",
+      category: "Home Services",
+      location: "Dorms & Apartments",
+      image: "/lovable-uploads/bd95bdf7-c140-465b-8e12-3a21d5d46a94.png"
+    },
+    {
+      title: "Organize my closet",
+      description: "Help organizing your clothes and storage spaces",
+      category: "Home Services",
+      location: "Dorms & Apartments",
+      image: "/lovable-uploads/049d1420-586e-4794-b6e1-5c14cfeb328e.png"
+    },
+    {
+      title: "Tech support",
+      description: "Troubleshooting and tech setup by IT students",
+      category: "Tech",
+      location: "Campus Area",
+      image: "/lovable-uploads/bab65021-5d30-4495-bcd8-b77a329626c7.png"
+    },
+    {
+      title: "Website building",
+      description: "Basic website creation by CS students",
+      category: "Tech",
+      location: "Online",
+      image: "/lovable-uploads/bab65021-5d30-4495-bcd8-b77a329626c7.png"
+    },
+    {
+      title: "Assemble bookshelf",
+      description: "Need help putting together a bookcase",
+      category: "Furniture Assembly",
+      location: "Various Locations",
+      image: "/lovable-uploads/e7eb2a95-9b98-41ac-ae57-c3c88485715c.png"
+    },
+    {
+      title: "Dog walking",
+      description: "Student pet sitters to walk and care for your dog",
+      category: "Pet Sitting",
+      location: "Campus Area",
+      image: "/lovable-uploads/33ac30a4-4b4d-47a9-89a9-63711ff5e3fd.png"
+    },
+    {
+      title: "Meal prep for the week",
+      description: "Student chefs prepare weekly meals for you",
+      category: "Cooking",
+      location: "Various Locations",
+      image: "/lovable-uploads/b1aee96b-9a26-4fd9-9872-57f40cbe16d7.png"
+    },
+    {
+      title: "TV mounting",
+      description: "Professional TV mounting by skilled students",
+      category: "TV Mounting",
+      location: "Dorms & Apartments",
+      image: "/lovable-uploads/eb78ee8e-c334-4102-b507-3e323c2fc98c.png"
+    },
+    {
+      title: "Dorm room setup",
+      description: "Help setting up your dorm room efficiently",
+      category: "Moving",
+      location: "Campus Housing",
+      image: "/lovable-uploads/049d1420-586e-4794-b6e1-5c14cfeb328e.png"
+    }
+  ];
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -144,33 +260,73 @@ const SearchResultsSection: React.FC<SearchResultsSectionProps> = ({
           ))}
         </div>
       ) : (
-        <div className="text-center py-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
-            <Search className="h-8 w-8 text-gray-400" />
-          </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">
-            No results found
-          </h3>
-          <p className="text-gray-500 mb-6">
-            We couldn't find any tasks matching "{searchQuery}"
-          </p>
-          <div className="space-y-4">
+        <div className="space-y-6">
+          <div className="text-center mb-6">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
+              <Search className="h-8 w-8 text-gray-400" />
+            </div>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
+              No results found
+            </h3>
+            <p className="text-gray-500 mb-2">
+              We couldn't find any tasks matching "{searchQuery}"
+            </p>
             <Button
               variant="default"
-              className="bg-assist-blue hover:bg-assist-blue/90"
+              className="bg-assist-blue hover:bg-assist-blue/90 mx-auto mt-2"
               onClick={onRequestTask}
             >
               <Plus className="h-4 w-4 mr-2" />
               Request Custom Task
             </Button>
-            <div className="block text-center my-2">or</div>
-            <Button
-              variant="outline"
-              className="border-assist-blue text-assist-blue hover:bg-assist-blue/5"
-              onClick={onBrowseTasks}
-            >
-              Browse Other Tasks
-            </Button>
+          </div>
+          
+          <div>
+            <h3 className="text-lg font-medium text-gray-900 mb-4">
+              Popular Tasks
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {popularTasks.map((task) => (
+                <div
+                  key={task.title}
+                  className="bg-white rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer"
+                  onClick={() => onBookNow(task.title)}
+                >
+                  <div className="h-40 overflow-hidden">
+                    <img
+                      src={task.image}
+                      alt={task.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="p-4">
+                    <div className="flex justify-between items-center">
+                      <h3 className="font-semibold text-gray-900">
+                        {task.title}
+                      </h3>
+                      <Badge variant="secondary" className="bg-soft-blue/20 text-blue-700 border-0 ml-2">
+                        {task.category}
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-gray-500 mt-1 line-clamp-2">
+                      {task.description}
+                    </p>
+                    <div className="flex justify-end mt-3">
+                      <Button 
+                        size="sm" 
+                        className="bg-assist-blue hover:bg-assist-blue/90"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onBookNow(task.title);
+                        }}
+                      >
+                        <Eye className="h-4 w-4 mr-1" /> View Task
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}
