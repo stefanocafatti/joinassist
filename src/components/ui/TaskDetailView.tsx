@@ -21,7 +21,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Calendar as CalendarIcon, Clock, MapPin, Info, Home } from "lucide-react";
+import { Calendar as CalendarIcon, Clock, MapPin, Info, Home, CreditCard } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -55,6 +55,14 @@ interface TaskDetailViewProps {
   isFavorite?: boolean;
   onFavoriteToggle?: (taskTitle: string) => void;
   initialTaskTitle?: string;
+}
+
+interface PaymentMethod {
+  id: string;
+  type: string;
+  last4: string;
+  expiry?: string;
+  isDefault: boolean;
 }
 
 const times = [
@@ -112,6 +120,11 @@ const customTaskPlaceholderImages = [
   "https://images.unsplash.com/photo-1721322800607-8c38375eef04"
 ];
 
+const mockPaymentMethods: PaymentMethod[] = [
+  { id: "pm_1", type: "visa", last4: "4242", expiry: "04/25", isDefault: true },
+  { id: "pm_2", type: "mastercard", last4: "5678", expiry: "08/26", isDefault: false },
+];
+
 const TaskDetailView: React.FC<TaskDetailViewProps> = ({ 
   isOpen, 
   onClose, 
@@ -133,10 +146,14 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
   
   const [showConfetti, setShowConfetti] = useState(false);
   const [bookedTaskTitle, setBookedTaskTitle] = useState("");
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string>(mockPaymentMethods[0].id);
   
   const taskPrice = isCustomTask 
     ? companyDefinedPrices[customCategory] || companyDefinedPrices["default"] 
     : task ? companyDefinedPrices[task.category] || companyDefinedPrices["default"] : companyDefinedPrices["default"];
+  
+  const trustAndSupportFee = Math.round(taskPrice * 0.15); // 15% fee
+  const totalPrice = taskPrice + trustAndSupportFee;
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -149,8 +166,12 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
       return;
     }
     
+    if (!location.trim()) {
+      return;
+    }
+    
     const finalTitle = isCustomTask ? customTitle : (task ? task.title : "");
-    const finalLocation = location || "Not specified";
+    const finalLocation = location;
     
     if (isCustomTask && !customTitle.trim()) {
       return;
@@ -332,22 +353,30 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
                 
                 <div className="space-y-3">
                   <Label className="flex items-center gap-2">
-                    Price Information
+                    Price Breakdown
                   </Label>
                   <div className="p-4 rounded-md bg-gray-50 border border-gray-200">
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-900 font-medium">Company Rate:</span>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-gray-900 font-medium">Service Rate:</span>
                       <span className="text-lg font-semibold text-assist-blue">${taskPrice}/hr</span>
                     </div>
-                    <p className="text-xs text-gray-500 mt-1">
-                      This is our standard rate for {isCustomTask ? customCategory.toLowerCase() : (task ? task.category.toLowerCase() : "special")} tasks.
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-gray-900 font-medium">Trust & Support Fee:</span>
+                      <span className="text-lg font-semibold text-gray-600">${trustAndSupportFee}</span>
+                    </div>
+                    <div className="border-t border-gray-200 my-2 pt-2 flex items-center justify-between">
+                      <span className="text-gray-900 font-medium">Total:</span>
+                      <span className="text-lg font-bold text-assist-blue">${totalPrice}/hr</span>
+                    </div>
+                    <p className="text-xs text-gray-500 mt-2">
+                      Trust & Support fee helps us provide 24/7 customer support, vetting of students, insurance, and secure payment handling.
                     </p>
                   </div>
                 </div>
                 
                 <div className="space-y-2">
                   <Label htmlFor="location" className="flex items-center gap-2">
-                    <Home className="h-4 w-4" /> Service Location
+                    <Home className="h-4 w-4" /> Service Location (Required)
                   </Label>
                   <Input
                     id="location"
@@ -355,10 +384,34 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
                     className="text-sm"
+                    required
                   />
                   <p className="text-xs text-gray-500">
                     Please provide the complete address where the task performer should meet you.
                   </p>
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="payment-method" className="flex items-center gap-2">
+                    <CreditCard className="h-4 w-4" /> Payment Method
+                  </Label>
+                  <Select value={selectedPaymentMethod} onValueChange={setSelectedPaymentMethod}>
+                    <SelectTrigger id="payment-method" className="text-sm">
+                      <SelectValue placeholder="Select Payment Method" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-white">
+                      {mockPaymentMethods.map((method) => (
+                        <SelectItem key={method.id} value={method.id}>
+                          {method.type.charAt(0).toUpperCase() + method.type.slice(1)} •••• {method.last4} {method.isDefault && "(Default)"}
+                        </SelectItem>
+                      ))}
+                      <SelectItem value="add_new">
+                        <div className="flex items-center text-assist-blue">
+                          <span className="mr-1">+</span>Add new payment method
+                        </div>
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
                 
                 <div className="space-y-2">
@@ -379,7 +432,11 @@ const TaskDetailView: React.FC<TaskDetailViewProps> = ({
                 <Button variant="outline" type="button" onClick={onClose}>
                   Cancel
                 </Button>
-                <Button type="submit" className="bg-assist-blue hover:bg-assist-blue/90">
+                <Button 
+                  type="submit" 
+                  className="bg-assist-blue hover:bg-assist-blue/90"
+                  disabled={!location.trim()}
+                >
                   {isCustomTask ? "Submit Request" : "Book Now"}
                 </Button>
               </DialogFooter>
