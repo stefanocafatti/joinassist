@@ -4,6 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { ChevronRight, MapPin, DollarSign } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
 
 interface PopularTask {
   title: string;
@@ -21,20 +26,39 @@ interface PopularTasksSectionProps {
 const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
   const navigate = useNavigate();
   const [viewAll, setViewAll] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const tasksPerPage = 4;
 
-  // Get current tasks based on view mode
+  // Extract unique categories from tasks
+  const categories = Array.from(new Set(popularTasks.map(task => task.category)));
+
+  // Get filtered tasks based on selected category and view mode
   const getDisplayedTasks = () => {
+    // First apply category filter (if any)
+    const filteredTasks = selectedCategory
+      ? popularTasks.filter(task => task.category === selectedCategory)
+      : popularTasks;
+    
+    // Then apply view mode limit (if not viewing all)
     if (!viewAll) {
-      return popularTasks.slice(0, tasksPerPage);
+      return filteredTasks.slice(0, tasksPerPage);
     }
     
-    // When viewAll is true, show all tasks
-    return popularTasks;
+    // When viewAll is true, show all filtered tasks
+    return filteredTasks;
   };
 
   const handleViewAllToggle = () => {
     setViewAll(!viewAll);
+  };
+
+  const handleCategorySelect = (category: string) => {
+    // If we click the already selected category, clear the filter
+    if (selectedCategory === category) {
+      setSelectedCategory(null);
+    } else {
+      setSelectedCategory(category);
+    }
   };
 
   // Function to get a border color based on category
@@ -69,8 +93,51 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
     }
   };
 
+  // Function to get background color for category buttons
+  const getCategoryButtonColor = (category: string) => {
+    const isSelected = selectedCategory === category;
+    
+    switch(category.toLowerCase()) {
+      case 'cleaning':
+        return isSelected ? 'bg-blue-100 text-blue-700' : 'bg-white text-gray-700';
+      case 'furniture':
+        return isSelected ? 'bg-green-100 text-green-700' : 'bg-white text-gray-700';
+      case 'moving':
+        return isSelected ? 'bg-amber-100 text-amber-700' : 'bg-white text-gray-700';
+      case 'mounting':
+        return isSelected ? 'bg-purple-100 text-purple-700' : 'bg-white text-gray-700';
+      default:
+        return isSelected ? 'bg-orange-100 text-orange-700' : 'bg-white text-gray-700';
+    }
+  };
+
   return (
     <section className="mb-1">
+      <div className="mb-3">
+        <Carousel className="w-full">
+          <CarouselContent className="-ml-2">
+            <CarouselItem className="pl-2 basis-auto">
+              <div 
+                className={`px-4 py-2 rounded-full border shadow-sm cursor-pointer ${selectedCategory === null ? 'bg-gray-100 text-gray-800' : 'bg-white text-gray-700'}`}
+                onClick={() => setSelectedCategory(null)}
+              >
+                <span className="text-xs font-medium whitespace-nowrap">All</span>
+              </div>
+            </CarouselItem>
+            {categories.map((category, index) => (
+              <CarouselItem key={index} className="pl-2 basis-auto">
+                <div 
+                  className={`px-4 py-2 rounded-full border shadow-sm cursor-pointer ${getCategoryButtonColor(category)}`}
+                  onClick={() => handleCategorySelect(category)}
+                >
+                  <span className="text-xs font-medium whitespace-nowrap">{category}</span>
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
+      </div>
+
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-1.5">
           <h2 className="text-lg font-semibold text-gray-900">Browse Tasks</h2>
