@@ -1,4 +1,5 @@
-import React from "react";
+
+import React, { useState } from "react";
 import MobileLayout from "./MobileLayout";
 import BottomNavigation from "./BottomNavigation";
 import HomeHeader from "./home/HomeHeader";
@@ -6,9 +7,12 @@ import PopularTasksSection from "./home/PopularTasksSection";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { PlusCircle } from "lucide-react";
+import TaskDetailView from "@/components/ui/TaskDetailView";
 
 const MobileHome = () => {
   const navigate = useNavigate();
+  const [selectedTask, setSelectedTask] = useState<any | null>(null);
+  const [isTaskDetailOpen, setIsTaskDetailOpen] = useState(false);
 
   // Common tasks represented as buttons
   const commonTasks = [
@@ -122,23 +126,93 @@ const MobileHome = () => {
 
   const handleTaskClick = (task: string) => {
     console.log(`Selected task: ${task}`);
-    // Navigate to task-specific page or show task detail
-    // navigate(`/tasks/${task.toLowerCase().replace(' ', '-')}`);
+    // Find task data or create a new task object
+    const foundTask = popularTasks.find(t => t.title.includes(task));
+    
+    if (foundTask) {
+      setSelectedTask(foundTask);
+    } else {
+      // Create a generic task object if not found
+      setSelectedTask({
+        title: task,
+        description: `Get help with ${task}`,
+        category: task,
+        location: "Near you",
+        price: "From $20/hr",
+        image: "/lovable-uploads/8e3ea234-55c0-4aa9-87c5-565913181531.png"
+      });
+    }
+    
+    setIsTaskDetailOpen(true);
   };
 
   const handleRequestTask = () => {
     console.log("Request a custom task");
-    // Navigate to task request page or show task request form
+    setSelectedTask({
+      title: "Custom Task",
+      description: "Tell us what you need help with",
+      category: "Custom",
+      location: "You decide",
+      isCustomTask: true
+    });
+    setIsTaskDetailOpen(true);
+  };
+  
+  const handleTaskBooked = (
+    taskTitle: string, 
+    date: Date, 
+    time: string, 
+    priceType?: string, 
+    price?: number,
+    location?: string,
+    additionalInfo?: string
+  ) => {
+    console.log("Task booked:", {
+      taskTitle,
+      date,
+      time,
+      priceType,
+      price,
+      location,
+      additionalInfo
+    });
+    
+    // Close the task detail view after booking
+    setIsTaskDetailOpen(false);
+    
+    // Show a success toast or navigate to a confirmation page
+    toast?.success("Task booked successfully!");
   };
 
   return (
     <>
       <MobileLayout showHeader={false} contentClassName="pb-20 pt-0">
         <div className="space-y-3">
-          <HomeHeader userName="Sarah" />
+          <HomeHeader 
+            userName="Sarah" 
+            onSearch={(query) => {
+              // If a task matches the search query, open its detail view
+              const foundTask = popularTasks.find(task => 
+                task.title.toLowerCase().includes(query.toLowerCase())
+              );
+              
+              if (foundTask) {
+                setSelectedTask(foundTask);
+                setIsTaskDetailOpen(true);
+                return true; // Indicate that a task was found
+              }
+              return false; // No task found
+            }} 
+          />
           
           {/* Popular Tasks Section - now first */}
-          <PopularTasksSection popularTasks={popularTasks} />
+          <PopularTasksSection 
+            popularTasks={popularTasks} 
+            onTaskClick={(task) => {
+              setSelectedTask(task);
+              setIsTaskDetailOpen(true);
+            }}
+          />
           
           {/* Common Tasks Buttons - now second with updated title */}
           <div className="my-6">
@@ -169,6 +243,18 @@ const MobileHome = () => {
           </div>
         </div>
       </MobileLayout>
+      
+      {/* Task Detail View */}
+      {selectedTask && (
+        <TaskDetailView 
+          isOpen={isTaskDetailOpen}
+          onClose={() => setIsTaskDetailOpen(false)}
+          task={selectedTask}
+          onTaskBooked={handleTaskBooked}
+          isCustomTask={selectedTask.isCustomTask}
+        />
+      )}
+      
       <BottomNavigation />
     </>
   );
