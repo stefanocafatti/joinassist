@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import BottomNavigation from "./BottomNavigation";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -48,12 +47,6 @@ const MobileTasks = () => {
       <p className="text-gray-500 mb-6 max-w-xs px-6">
         {message}
       </p>
-      {isScheduled && (
-        <Button className="bg-assist-blue hover:bg-assist-blue/90">
-          <PlusCircle className="mr-2 h-4 w-4" />
-          Book a Task
-        </Button>
-      )}
     </div>
   );
 
