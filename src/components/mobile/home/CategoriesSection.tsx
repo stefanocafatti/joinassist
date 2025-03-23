@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 interface Task {
   title: string;
-  icon: string;
   color: string;
 }
 
@@ -29,10 +28,7 @@ const CategoriesSection = ({ additionalTasks }: CategoriesSectionProps) => {
             className={`${task.color} rounded-xl flex flex-col items-center justify-center py-3 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer transform hover:scale-105`}
             onClick={() => navigate(`/mobile/task/${task.title.toLowerCase()}`)}
           >
-            <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center mb-1.5 shadow-sm">
-              <span className="text-lg">{task.icon}</span>
-            </div>
-            <span className="text-xs font-medium text-gray-800 text-center px-1">{task.title}</span>
+            <span className="text-sm font-medium text-gray-800 text-center px-1 w-full truncate">{task.title}</span>
           </div>
         ))}
       </div>
