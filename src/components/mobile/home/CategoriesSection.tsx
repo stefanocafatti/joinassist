@@ -1,8 +1,6 @@
 
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 interface Category {
   name: string;
@@ -23,15 +21,6 @@ const CategoriesSection = ({ categories }: CategoriesSectionProps) => {
         <div className="flex items-center gap-1.5">
           <h2 className="text-lg font-semibold text-gray-900">Popular Categories</h2>
         </div>
-        <Button 
-          variant="ghost" 
-          size="sm" 
-          className="text-assist-blue text-sm p-0 hover:bg-transparent" 
-          onClick={() => navigate('/mobile/categories')}
-        >
-          View All
-          <ChevronRight size={16} />
-        </Button>
       </div>
       <div className="grid grid-cols-3 gap-2">
         {categories.map((category, index) => (
