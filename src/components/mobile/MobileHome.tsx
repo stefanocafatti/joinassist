@@ -68,10 +68,10 @@ const MobileHome = () => {
       image: "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?q=80&w=1000&auto=format&fit=crop"
     },
     {
-      title: "Small Apartment Move",
-      description: "Help moving your studio or 1-bedroom apartment",
-      price: "From $35/hr",
-      category: "Moving",
+      title: "Food Delivery",
+      description: "Get food delivered from your favorite restaurants",
+      price: "From $15/hr",
+      category: "Errands",
       location: "Lower East Side",
       image: "https://images.unsplash.com/photo-1600585152220-90363fe7e115?q=80&w=1000&auto=format&fit=crop"
     },
