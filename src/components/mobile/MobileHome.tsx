@@ -8,19 +8,20 @@ import PopularTasksSection from "./home/PopularTasksSection";
 
 const MobileHome = () => {
   // Additional tasks data to display in the "Looking for something else?" section
+  // No color property needed anymore since we're using standard white background
   const additionalTasks = [
-    { title: "Research Assistant", color: "bg-soft-blue" },
-    { title: "Presentation Help", color: "bg-soft-green" },
-    { title: "Essay Editing", color: "bg-soft-orange" },
-    { title: "Study Partner", color: "bg-soft-yellow" },
-    { title: "Language Tutor", color: "bg-soft-purple" },
-    { title: "Grocery Shopping", color: "bg-soft-pink" }
+    { title: "Research Assistant" },
+    { title: "Presentation Help" },
+    { title: "Essay Editing" },
+    { title: "Study Partner" },
+    { title: "Language Tutor" },
+    { title: "Grocery Shopping" }
   ];
 
   // Expanded popular tasks tailored for college student helpers
   const popularTasks = [
     {
-      title: "Apartment Cleaning", // Updated from "Weekly Apartment Cleaning"
+      title: "Apartment Cleaning",
       description: "Professional cleaning services by verified students",
       price: "From $25/hr",
       category: "Cleaning",
@@ -120,7 +121,7 @@ const MobileHome = () => {
   return (
     <>
       <MobileLayout showHeader={false} contentClassName="pb-20 pt-0">
-        <div className="space-y-3"> {/* Reduced vertical spacing between sections */}
+        <div className="space-y-3">
           <HomeHeader userName="Sarah" />
           
           {/* Only show PopularTasks and Additional Tasks sections */}
