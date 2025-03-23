@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -18,7 +17,7 @@ interface Task {
   category: string;
   location: string;
   image: string;
-  price?: string;
+  price: string;
 }
 
 interface PopularTasksSectionProps {
