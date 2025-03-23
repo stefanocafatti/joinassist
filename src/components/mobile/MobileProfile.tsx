@@ -1,8 +1,9 @@
+
 import React, { useState, useRef } from "react";
 import BottomNavigation from "./BottomNavigation";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ArrowRight, Gift, ShieldCheck, KeyRound, CreditCard, Star, Bell, HelpCircle, Info, LogOut, UserPlus, Camera } from "lucide-react";
+import { Gift, ShieldCheck, KeyRound, CreditCard, Star, Bell, HelpCircle, Info, LogOut, UserPlus, Camera } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { Form, FormField, FormItem, FormControl } from "@/components/ui/form";
@@ -24,10 +25,7 @@ const ProfileItem = ({ icon: Icon, title, value, onClick }: {
         <Icon className="h-5 w-5 text-gray-600 flex-shrink-0" />
         <span className="font-medium text-gray-800">{title}</span>
       </div>
-      <div className="flex items-center">
-        {value && <span className="text-gray-500 mr-2">{value}</span>}
-        <ArrowRight className="h-4 w-4 text-blue-400" />
-      </div>
+      {value && <span className="text-gray-500">{value}</span>}
     </div>
   );
 };
