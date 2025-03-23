@@ -39,8 +39,9 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
       ? popularTasks.filter(task => task.category === selectedCategory)
       : popularTasks;
     
-    // Then apply view mode limit (if not viewing all)
-    if (!viewAll) {
+    // When "All" category is selected, show all tasks
+    // When specific category is selected but not viewing all, apply page limit
+    if (selectedCategory !== null && !viewAll) {
       return filteredTasks.slice(0, tasksPerPage);
     }
     
