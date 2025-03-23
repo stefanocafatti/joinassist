@@ -4,16 +4,21 @@ import BottomNavigation from "./BottomNavigation";
 import HomeHeader from "./home/HomeHeader";
 import CategoriesSection from "./home/CategoriesSection";
 import PopularTasksSection from "./home/PopularTasksSection";
+import FavoritesSection from "./home/FavoritesSection";
+import PastTasksSection from "./home/PastTasksSection";
 
 const MobileHome = () => {
-  // Categories data to match the original data
+  // Categories data - expanded list with more options
   const categories = [
-    { name: "Help Moving", icon: "📦", color: "bg-soft-blue" },
-    { name: "Furniture Assembly", icon: "🪑", color: "bg-soft-green" },
-    { name: "General Mounting", icon: "🔨", color: "bg-soft-yellow" },
-    { name: "Cleaning", icon: "🧹", color: "bg-soft-purple" },
-    { name: "TV Mounting", icon: "📺", color: "bg-soft-pink" },
-    { name: "Heavy Lifting", icon: "💪", color: "bg-soft-orange" }
+    { name: "Help Moving", icon: "📦" },
+    { name: "Furniture Assembly", icon: "🪑" },
+    { name: "Mounting", icon: "🔨" },
+    { name: "Cleaning", icon: "🧹" },
+    { name: "TV Setup", icon: "📺" },
+    { name: "Heavy Lifting", icon: "💪" },
+    { name: "Yard Work", icon: "🌿" },
+    { name: "Painting", icon: "🎨" },
+    { name: "Pet Sitting", icon: "🐾" }
   ];
 
   // Expanded popular tasks with at least 12 items to support pagination
@@ -116,14 +121,62 @@ const MobileHome = () => {
     }
   ];
 
+  // Sample favorites tasks
+  const favoritedTasks = [
+    {
+      title: "Weekly Apartment Cleaning",
+      description: "Professional cleaning services by verified students",
+      price: "From $25/hr",
+      category: "Cleaning",
+      location: "Columbia University",
+      image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1000&auto=format&fit=crop"
+    },
+    {
+      title: "Help Moving",
+      description: "Assistance with moving and packing your belongings",
+      price: "From $35/hr",
+      category: "Moving",
+      location: "Midtown",
+      image: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1000&auto=format&fit=crop"
+    }
+  ];
+
+  // Past tasks data
+  const pastTasks = [
+    {
+      title: "Help Moving",
+      date: "Mar 15, 2023",
+      price: "$120",
+      status: "Completed",
+      tasker: {
+        name: "John D.",
+        rating: 4.9,
+        image: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
+      }
+    },
+    {
+      title: "Furniture Assembly",
+      date: "Feb 28, 2023",
+      price: "$85",
+      status: "Completed",
+      tasker: {
+        name: "Sarah M.",
+        rating: 4.8,
+        image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
+      }
+    }
+  ];
+
   return (
     <>
       <MobileLayout showHeader={false} contentClassName="pb-20 pt-0">
         <div className="space-y-3"> {/* Reduced vertical spacing between sections */}
           <HomeHeader userName="Sarah" />
           
-          {/* Only showing PopularTasks and Categories */}
+          {/* All the sections */}
+          <FavoritesSection favoritedTasks={favoritedTasks} />
           <PopularTasksSection popularTasks={popularTasks} />
+          <PastTasksSection pastTasks={pastTasks} />
           <CategoriesSection categories={categories} />
         </div>
       </MobileLayout>
