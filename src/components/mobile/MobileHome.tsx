@@ -1,3 +1,4 @@
+
 import React from "react";
 import MobileLayout from "./MobileLayout";
 import BottomNavigation from "./BottomNavigation";
@@ -81,7 +82,7 @@ const MobileHome = () => {
       price: "From $20/hr",
       category: "Tech",
       location: "Chelsea",
-      image: "/lovable-uploads/e44adaaa-4a6d-435e-a3de-9355591817a8.png"
+      image: "/lovable-uploads/bab65021-5d30-4495-bcd8-b77a329626c7.png"
     },
     {
       title: "Grocery Delivery",
@@ -97,7 +98,7 @@ const MobileHome = () => {
       price: "From $30/hr",
       category: "Tech",
       location: "Upper West Side",
-      image: "/lovable-uploads/e44adaaa-4a6d-435e-a3de-9355591817a8.png"
+      image: "/lovable-uploads/bab65021-5d30-4495-bcd8-b77a329626c7.png"
     },
     {
       title: "Dorm Room Setup",
