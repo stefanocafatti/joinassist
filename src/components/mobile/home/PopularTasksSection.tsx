@@ -1,17 +1,9 @@
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronRight, Sparkles, MapPin, DollarSign } from "lucide-react";
+import { ChevronRight, MapPin, DollarSign } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Pagination, 
-  PaginationContent, 
-  PaginationItem, 
-  PaginationLink, 
-  PaginationNext, 
-  PaginationPrevious 
-} from "@/components/ui/pagination";
 
 interface PopularTask {
   title: string;
@@ -29,26 +21,20 @@ interface PopularTasksSectionProps {
 const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
   const navigate = useNavigate();
   const [viewAll, setViewAll] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
   const tasksPerPage = 4;
 
-  // Calculate total number of pages
-  const totalPages = Math.ceil(popularTasks.length / tasksPerPage);
-  
-  // Get current tasks based on page
-  const getCurrentTasks = () => {
+  // Get current tasks based on view mode
+  const getDisplayedTasks = () => {
     if (!viewAll) {
       return popularTasks.slice(0, tasksPerPage);
     }
     
-    const indexOfLastTask = currentPage * tasksPerPage;
-    const indexOfFirstTask = indexOfLastTask - tasksPerPage;
-    return popularTasks.slice(indexOfFirstTask, indexOfLastTask);
+    // When viewAll is true, show all tasks
+    return popularTasks;
   };
 
   const handleViewAllToggle = () => {
     setViewAll(!viewAll);
-    setCurrentPage(1); // Reset to first page when toggling view
   };
 
   // Function to get a border color based on category
@@ -83,22 +69,6 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
     }
   };
 
-  // Function to get an icon based on category
-  const getCategoryIcon = (category: string) => {
-    switch(category.toLowerCase()) {
-      case 'cleaning':
-        return '🧹';
-      case 'furniture':
-        return '🪑';
-      case 'moving':
-        return '📦';
-      case 'mounting':
-        return '🔨';
-      default:
-        return '🛠️';
-    }
-  };
-
   return (
     <section className="mb-1">
       <div className="flex items-center justify-between mb-4">
@@ -116,7 +86,7 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
         </Button>
       </div>
       <div className="grid grid-cols-2 gap-3">
-        {getCurrentTasks().map((task, index) => (
+        {getDisplayedTasks().map((task, index) => (
           <div 
             key={index} 
             className={`group bg-white rounded-lg border ${getCategoryBorder(task.category)} shadow-sm hover:shadow-md transition-all overflow-hidden transform hover:scale-[1.01]`}
@@ -134,9 +104,6 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
             <div className="p-2.5">
               <h3 className="font-medium text-sm text-gray-900 truncate flex items-center">
                 {task.title}
-                {index === 0 && (
-                  <Sparkles size={12} className="ml-1 text-amber-500" />
-                )}
               </h3>
               <div className="flex items-center text-xs text-gray-500 mt-1 mb-1">
                 <MapPin size={12} className="mr-1" />
@@ -153,37 +120,6 @@ const PopularTasksSection = ({ popularTasks }: PopularTasksSectionProps) => {
           </div>
         ))}
       </div>
-      
-      {viewAll && totalPages > 1 && (
-        <div className="mt-4">
-          <Pagination>
-            <PaginationContent>
-              {currentPage > 1 && (
-                <PaginationItem>
-                  <PaginationPrevious onClick={() => setCurrentPage(currentPage - 1)} />
-                </PaginationItem>
-              )}
-              
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                <PaginationItem key={page}>
-                  <PaginationLink 
-                    isActive={page === currentPage}
-                    onClick={() => setCurrentPage(page)}
-                  >
-                    {page}
-                  </PaginationLink>
-                </PaginationItem>
-              ))}
-              
-              {currentPage < totalPages && (
-                <PaginationItem>
-                  <PaginationNext onClick={() => setCurrentPage(currentPage + 1)} />
-                </PaginationItem>
-              )}
-            </PaginationContent>
-          </Pagination>
-        </div>
-      )}
     </section>
   );
 };
